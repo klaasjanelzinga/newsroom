@@ -1,0 +1,4 @@
+-e ../core_lib
+
+setuptools==46.1.3
+wheel==0.34.2

@@ -1,0 +1,42 @@
+version: '3.3'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: api/Dockerfile
+    environment:
+      PORT: 8080
+      ENVIRONMENT: LOCALHOST
+      GOOGLE_APPLICATION_CREDENTIALS: /usr/src/app/secrets/google-appengine-credentials.json
+    ports:
+      - 8080:8080
+    volumes:
+      - .:/usr/src/app
+    command: api/entrypoint-dev.sh
+
+#  cron:
+#    build:
+#      context: .
+#      dockerfile: cron/Dockerfile
+#    environment:
+#      PORT: 8080
+#      ENVIRONMENT: LOCALHOST
+#      GOOGLE_APPLICATION_CREDENTIALS: /usr/src/app/secrets/google-appengine-credentials.json
+#    ports:
+#      - 8090:8080
+#    volumes:
+#      - .:/usr/src/app
+#    command: cron/entrypoint-dev.sh
+#
+  frontend:
+    build: frontend
+    tty: true
+    environment:
+      PORT: 3000
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend:/usr/src/app
+    command: sh -c "cd /usr/src/app && cp src/Config.localhost.js src/Config.js && npm i && npm start && wait $$"
+
