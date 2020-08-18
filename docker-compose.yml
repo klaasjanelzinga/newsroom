@@ -10,7 +10,7 @@ services:
       ENVIRONMENT: LOCALHOST
       GOOGLE_APPLICATION_CREDENTIALS: /usr/src/app/secrets/google-appengine-credentials.json
     ports:
-      - 8080:8080
+      - 9080:8080
     volumes:
       - .:/usr/src/app
     command: api/entrypoint-dev.sh
@@ -35,8 +35,8 @@ services:
     environment:
       PORT: 3000
     ports:
-      - 3000:3000
+      - 4000:3000
     volumes:
       - ./frontend:/usr/src/app
-    command: sh -c "cd /usr/src/app && cp src/Config.localhost.js src/Config.js && npm i && npm start && wait $$"
+    command: sh -c "cd /usr/src/app && cp src/Config.localhost.js src/Config.js && yarn install && yarn start && wait $$"
 

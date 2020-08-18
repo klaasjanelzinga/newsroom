@@ -1,3 +1,3 @@
 export default {
-    apihost: "https://api-venues.n-kj.nl"
+    apihost: "https://api-newsroom.n-kj.nl"
 }
