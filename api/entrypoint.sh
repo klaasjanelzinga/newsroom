@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# Meant to run in a docker container for dev purposes
 
 cd api
-python -m api
+uvicorn api.__main__:app --reload --host 0.0.0.0 --port 8080

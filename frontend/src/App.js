@@ -15,7 +15,7 @@ class App extends Component {
 
   render() {
     return <h1>
-      Application is ready and you are logged in!
+      Application is ready and you are logged in! { this.userProfile.email}
     </h1>
   }
 

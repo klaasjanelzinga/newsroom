@@ -59,9 +59,12 @@ class SignIn extends React.Component {
     }
 
     validateSignInWithServer(userProfile) {
+
+        console.log("Getting userprofile", userProfile)
+
         this.userProfile = UserProfile.save(userProfile);
 
-        const request = new Request(`${config.apihost}/api/user/signup`, {
+        const request = new Request(`${config.apihost}/user/signup`, {
             method: 'POST',
             headers: {
                 'Authorization': userProfile.bearerToken,

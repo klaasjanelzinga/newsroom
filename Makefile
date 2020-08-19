@@ -29,6 +29,11 @@ tests:
 dev-requirements:
 	pip install -r requirements.txt
 
+requirements: dev-requirements
+	(cd api && pip install --upgrade -r requirements.txt)
+	(cd core_lib && pip install --upgrade -r requirements.txt)
+
+
 build-docker-images:
 	scripts/build-docker-images.sh
 
@@ -43,4 +48,3 @@ up:
 	docker-compose up --build
 
 before-commit: flakes tests build-docker-images integration-tests
-

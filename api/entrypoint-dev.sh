@@ -3,4 +3,4 @@
 
 pip install -r requirements.txt
 cd api
-watchmedo auto-restart --recursive --pattern=*.py --directory=.. -- python -m api
+uvicorn api.__main__:app --reload --host 0.0.0.0 --port 8080
