@@ -22,6 +22,8 @@ then
     echo "password not set"
     exit 1
 fi
+mkdir -p secrets
+
 gpg --quiet --batch --yes --decrypt --passphrase="$GOOGLE_APP_ENGINE_KEY" --output $project_dir/secrets/google-appengine-credentials.json $project_dir/etc/google-appengine-credentials.json.gpg
 
 echo "Credentials created in secrets/google-appengine-credentials.json"
