@@ -2,20 +2,17 @@ import logging
 from typing import Dict, Optional
 
 import aiohttp
-from fastapi import APIRouter, Header, HTTPException
+from fastapi import APIRouter, Response, Header, HTTPException
 from google.auth import jwt
+from google.cloud.client import Client
 from pydantic.main import BaseModel
 from starlette import status
 
+from core_lib.application_data import user_repository
+from core_lib.user import User
+
 user_router = APIRouter()
 logger = logging.getLogger(__name__)
-
-
-class User(BaseModel):
-    given_name: str
-    family_name: str
-    email: str
-    avatar_url: str
 
 
 class ErrorMessage(BaseModel):
@@ -27,6 +24,10 @@ class TokenVerificationException(Exception):
 
 
 class TokenVerifier:
+
+    def __init__(self, client: Client):
+        self.client = client
+
     @staticmethod
     async def _fetch_certs() -> Dict:
         timeout = aiohttp.ClientTimeout(total=10)
@@ -61,6 +62,7 @@ class TokenVerifier:
                 family_name=result["family_name"],
                 email=result["email"],
                 avatar_url=result["picture"],
+                is_approved=False,
             )
         except ValueError as error:
             raise TokenVerificationException(error.__str__())
@@ -70,20 +72,29 @@ class TokenVerifier:
     "/user/signup",
     response_model=User,
     responses={
-        status.HTTP_201_CREATED: {"model": ErrorMessage},
-        status.HTTP_200_OK: {"model": ErrorMessage},
+        status.HTTP_201_CREATED: {"model": User, "description": "The user is created and logged in."},
+        status.HTTP_200_OK: {"model": ErrorMessage, "description": "The user is logged in."},
         status.HTTP_401_UNAUTHORIZED: {"model": ErrorMessage},
     },
 )
-async def signup(authorization: Optional[str] = Header(None)) -> User:
+async def signup(response: Response, authorization: Optional[str] = Header(None)) -> User:
     """
     Either login or sign the user up (create)  for this service.
 
+    :param response: The response object from FastAPI.
     :param authorization: The authorization bearer.
     :return: User object with user details.
     """
     try:
-        return await TokenVerifier.verify(authorization)
+        user_from_token = await TokenVerifier.verify(authorization)
+        user = user_repository.fetch_user_by_email(email=user_from_token.email)
+        if user is None:
+            user = user_repository.upsert(user_from_token)
+            response.status_code = status.HTTP_201_CREATED
+            return user
+        response.status_code = status.HTTP_200_OK
+        return user
+
     except TokenVerificationException as tve:
         logging.warning("Unable to verify jwt: %s", tve.__str__())
         raise HTTPException(status_code=401, detail="Unauthorized")
