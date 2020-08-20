@@ -24,7 +24,6 @@ class TokenVerificationException(Exception):
 
 
 class TokenVerifier:
-
     def __init__(self, client: Client):
         self.client = client
 
@@ -72,12 +71,20 @@ class TokenVerifier:
     "/user/signup",
     response_model=User,
     responses={
-        status.HTTP_201_CREATED: {"model": User, "description": "The user is created and logged in."},
-        status.HTTP_200_OK: {"model": ErrorMessage, "description": "The user is logged in."},
+        status.HTTP_201_CREATED: {
+            "model": User,
+            "description": "The user is created and logged in.",
+        },
+        status.HTTP_200_OK: {
+            "model": ErrorMessage,
+            "description": "The user is logged in.",
+        },
         status.HTTP_401_UNAUTHORIZED: {"model": ErrorMessage},
     },
 )
-async def signup(response: Response, authorization: Optional[str] = Header(None)) -> User:
+async def signup(
+    response: Response, authorization: Optional[str] = Header(None)
+) -> User:
     """
     Either login or sign the user up (create)  for this service.
 

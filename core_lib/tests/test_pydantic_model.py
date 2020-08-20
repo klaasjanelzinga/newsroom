@@ -13,4 +13,3 @@ def test_to_dict_and_parse_obj(mock_user: User):
 def test_unmodifiable_objects(mock_user: User):
     with pytest.raises(TypeError):
         mock_user.email = None
-

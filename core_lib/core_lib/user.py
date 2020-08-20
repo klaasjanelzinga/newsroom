@@ -10,6 +10,7 @@ from pydantic import BaseModel
 class User(BaseModel):
     class Config:
         allow_mutation = False
+
     email: str
     given_name: str
     family_name: str
