@@ -60,10 +60,6 @@ class SignIn extends React.Component {
 
     validateSignInWithServer(userProfile) {
 
-        console.log("Getting userprofile", userProfile)
-
-        this.userProfile = UserProfile.save(userProfile);
-
         const request = new Request(`${config.apihost}/user/signup`, {
             method: 'POST',
             headers: {
@@ -75,16 +71,17 @@ class SignIn extends React.Component {
         fetch(request)
             .then(response => {
                 if (response.status === 200) {
+                    this.userProfile = UserProfile.save(userProfile);
                     response.json().then(json => {
                         this.saveAndRedirect(json, '/');
                     })
                 } else if (response.status === 201) {
+                    this.userProfile = UserProfile.save(userProfile);
                     response.json().then(json => {
                         this.saveAndRedirect(json, '/user/profile');
                     })
                 } else {
                     this.notifyError(`Cannot register user at server: ${response.statusText}`);
-                    UserProfile.delete();
                 }
             });
     }

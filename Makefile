@@ -9,7 +9,7 @@ black-check:
 	# black --check cron/cron cron/tests
 
 pylint:
-	pylint core_lib/core_lib api/api cron/cron
+	pylint core_lib/core_lib api/api
 
 mypy:
 	(cd core_lib && mypy --config-file ../mypy.ini -p core_lib)
@@ -19,7 +19,7 @@ mypy:
 outdated:
 	pip list --outdated
 
-flakes: black-check pylint mypy outdated flake8
+flakes: black-check mypy outdated flake8
 
 flake8:
 	flake8 core_lib/core_lib

@@ -1,45 +1,36 @@
 import React, {Component} from 'react';
+import {LinearProgress} from "@material-ui/core";
 import './App.css';
 import UserProfile from "./user/UserProfile";
 
 
 class App extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = { userProfile: null }
+  }
 
-  componentWillMount() {
-    this.userProfile = UserProfile.load();
-    if (this.userProfile === null) {
+  componentDidMount() {
+    const userProfile = UserProfile.load();
+    if (userProfile === null) {
       this.props.history.push('/user/signin');
     }
+    this.setState({userProfile: userProfile})
   }
 
   render() {
+    if (!this.state.userProfile) {
+        return <div>
+            <LinearProgress />
+        </div>
+    } else {
     return <h1>
-      Application is ready and you are logged in! { this.userProfile.email}
+      Application is ready and you are logged in! { this.state.userProfile.email}
     </h1>
+    }
   }
 
 }
-
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <img src={logo} className="App-logo" alt="logo" />
-//         <p>
-//           Edit <code>src/2211p.js</code> and save to reload.
-//         </p>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Learn React
-//         </a>
-//       </header>
-//     </div>
-//   );
-// }
 
 export default App;

@@ -1,0 +1,20 @@
+name: Run tests
+on:
+  push:
+    branches-ignore:
+      - master
+jobs:
+  build:
+    name: make-docker-image-and-test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+#      - name: Decrypt the secret for google-app-engine
+#        run: scripts/decrypt-google-appengine-credentials.sh
+#        env:
+#          GOOGLE_APP_ENGINE_KEY: ${{ secrets.GOOGLE_APP_ENGINE_KEY }}
+      - name: Build the python docker image
+        run: scripts/build-docker-images.sh --version $GITHUB_SHA
+      - name: Verify the build
+        run: docker run --env ENVIRONMENT=LOCALHOST -v `pwd`:/usr/src/app rss-aggregator/api:latest make dev-requirements flakes tests

@@ -19,7 +19,7 @@ class SignOut extends React.Component {
     }
 
 
-    componentWillMount() {
+    componentDidMount() {
         UserProfile.delete();
         this.notifySuccesfulUpdate();
         this.props.history.push('/');
