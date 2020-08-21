@@ -14,6 +14,14 @@ jobs:
         run: scripts/decrypt-google-appengine-credentials.sh
         env:
           GOOGLE_APP_ENGINE_KEY: ${{ secrets.GOOGLE_APP_ENGINE_KEY }}
+      - name: Decrypt the secret for google-app-engine
+        run: scripts/decrypt-deployer-key.sh
+        env:
+          DEPLOYER_KEY: ${{ secrets.DEPLOYER_KEY }}
+      - name: Login to gcloud
+        run: gcloud auth activate-service-account --key-file secrets/deployer.json --project newsroom-v1
+      - name: Login docker to gcloud
+        run: gcloud auth configure-docker
       - name: Build the python docker image
         run: scripts/build-docker-images.sh --version $GITHUB_SHA
       - name: Verify the build
