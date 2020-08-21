@@ -10,10 +10,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v1
-      - name: Login to gcloud
-        run: gcloud auth activate-service-account --key-file secrets/deployer.json --project newsroom-v1
-      - name: Login docker to gcloud
-        run: gcloud auth configure-docker
       - name: Decrypt the secret for google-app-engine
         run: scripts/decrypt-google-appengine-credentials.sh
         env:
@@ -22,6 +18,10 @@ jobs:
         run: scripts/decrypt-deployer-key.sh
         env:
           DEPLOYER_KEY: ${{ secrets.DEPLOYER_KEY }}
+      - name: Login to gcloud
+        run: gcloud auth activate-service-account --key-file secrets/deployer.json --project newsroom-v1
+      - name: Login docker to gcloud
+        run: gcloud auth configure-docker
       - name: Build the python docker image
         run: scripts/build-docker-images.sh --version $GITHUB_SHA
       - name: Verify the build
