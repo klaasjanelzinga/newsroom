@@ -26,14 +26,6 @@ echo "Building app containers"
 for service in api frontend
 do
   docker pull gcr.io/newsroom-v1/${service}:latest
+  (cd $script_dir/.. && docker build --cache-from gcr.io/newsroom-v1/${service}:latest -t ${application}/${service}:$VERSION -f ${service}/Dockerfile .)
+  docker tag ${application}/${service}:$VERSION ${application}/${service}:latest
 done
-
-
-(cd $script_dir/.. && docker build --cache-from gcr.io/newsroom-v1/api:latest -t ${application}/api:$VERSION -f api/Dockerfile .)
-# (cd $script_dir/.. && docker build --cache-from gcr.io/newsroom-v1/frontend:latest -t ${application}/cron:$VERSION -f cron/Dockerfile .)
-(cd $script_dir/../frontend && docker build --cache-from gcr.io/newsroom-v1/frontend:latest -t ${application}/frontend:$VERSION .)
-
-# tag application version -> latest
-docker tag ${application}/api:$VERSION ${application}/api:latest
-# docker tag ${application}/cron:$VERSION ${application}/cron:latest
-docker tag ${application}/frontend:$VERSION ${application}/frontend:latest

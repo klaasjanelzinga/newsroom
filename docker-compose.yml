@@ -30,7 +30,9 @@ services:
 #    command: cron/entrypoint-dev.sh
 #
   frontend:
-    build: frontend
+    build:
+      dockerfile: frontend/Dockerfile
+      context: .
     tty: true
     environment:
       PORT: 3000

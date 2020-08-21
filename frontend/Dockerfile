@@ -2,10 +2,10 @@ FROM node:alpine3.10
 
 WORKDIR /usr/src/app
 
-COPY src /usr/src/app/src
-COPY public /usr/src/app/public
-COPY package.json /usr/src/app
-COPY package-lock.json /usr/src/app
+COPY frontend/src /usr/src/app/src
+COPY frontend/public /usr/src/app/public
+COPY frontend/package.json /usr/src/app
+COPY frontend/package-lock.json /usr/src/app
 
 EXPOSE 3000
 
