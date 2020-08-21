@@ -78,7 +78,7 @@ class SignIn extends React.Component {
                 } else if (response.status === 201) {
                     this.userProfile = UserProfile.save(userProfile);
                     response.json().then(json => {
-                        this.saveAndRedirect(json, '/user/profile');
+                        this.saveAndRedirect(json, '/user/needs-approval');
                     })
                 } else {
                     this.notifyError(`Cannot register user at server: ${response.statusText}`);

@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from datetime import datetime
-from typing import List, Dict, Optional
+from typing import List, Optional
 
 from google.cloud import datastore
 from google.cloud.client import Client
@@ -46,7 +46,7 @@ class Feed:
 
 @dataclass
 class FeedItem:
-    id: str
+    feed_id: str
     body: str
     url: str
     feed: Feed

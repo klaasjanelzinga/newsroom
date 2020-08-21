@@ -1,36 +1,40 @@
 import React, {Component} from 'react';
 import {LinearProgress} from "@material-ui/core";
 import './App.css';
-import UserProfile from "./user/UserProfile";
-
+import {ApiFetch} from "./ApiFetch"
+import {withSnackbar} from "notistack";
 
 class App extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { userProfile: null }
+    this.state = { user: null }
+    this.apiFetch = new ApiFetch(props)
+    this.userProfile = this.apiFetch.userProfile
   }
 
   componentDidMount() {
-    const userProfile = UserProfile.load();
-    if (userProfile === null) {
-      this.props.history.push('/user/signin');
+    if (this.userProfile) {
+      this.apiFetch.fetchAuthorized(`user/${this.userProfile.email}`, (json) => {
+        this.setState({user: json})
+      })
+    } else {
+      this.props.history.push("/user/signin")
     }
-    this.setState({userProfile: userProfile})
   }
 
   render() {
-    if (!this.state.userProfile) {
+    if (this.state.user == null) {
         return <div>
             <LinearProgress />
         </div>
     } else {
-    return <h1>
-      Application is ready and you are logged in! { this.state.userProfile.email}
-    </h1>
+      return <h1>
+        App is ready and you are logged in! { this.state.user.email}
+      </h1>
     }
   }
 
 }
 
-export default App;
+export default withSnackbar(App);

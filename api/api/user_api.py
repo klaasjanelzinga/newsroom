@@ -38,18 +38,22 @@ class TokenVerifier:
 
     @staticmethod
     async def verify(bearer_token: Optional[str]) -> User:
+        """
+        Verifies the bearer token.
+
+        :param bearer_token: The content of the authorization header.
+        :return: A User object constructed from the token with is_approved set to False.
+        :raises Http
+
+        """
         token_certs = TokenVerifier._fetch_certs()
         try:
             if bearer_token is None:
-                raise TokenVerificationException("Authorization header is not set")
+                raise HTTPException(status_code=401, detail="Unauthorized")
             if len(bearer_token) < 15:
-                raise TokenVerificationException(
-                    "Unlikely content of authorization header"
-                )
+                raise HTTPException(status_code=401, detail="Unauthorized")
             if not bearer_token.startswith("Bearer"):
-                raise TokenVerificationException(
-                    "Unlikely content of authorization header"
-                )
+                raise HTTPException(status_code=401, detail="Unauthorized")
             token = bearer_token[7:]
             result = jwt.decode(
                 token=token,
@@ -64,7 +68,7 @@ class TokenVerifier:
                 is_approved=False,
             )
         except ValueError as error:
-            raise TokenVerificationException(error.__str__())
+            raise HTTPException(status_code=401, detail=error.__str__())
 
 
 @user_router.post(
@@ -92,16 +96,35 @@ async def signup(
     :param authorization: The authorization bearer.
     :return: User object with user details.
     """
-    try:
-        user_from_token = await TokenVerifier.verify(authorization)
-        user = user_repository.fetch_user_by_email(email=user_from_token.email)
-        if user is None:
-            user = user_repository.upsert(user_from_token)
-            response.status_code = status.HTTP_201_CREATED
-            return user
-        response.status_code = status.HTTP_200_OK
+    user_from_token = await TokenVerifier.verify(authorization)
+    user = user_repository.fetch_user_by_email(email=user_from_token.email)
+    if user is None:
+        user = user_repository.upsert(user_from_token)
+        response.status_code = status.HTTP_201_CREATED
         return user
+    response.status_code = status.HTTP_200_OK
+    return user
 
-    except TokenVerificationException as tve:
-        logging.warning("Unable to verify jwt: %s", tve.__str__())
-        raise HTTPException(status_code=401, detail="Unauthorized")
+
+@user_router.get(
+    "/user/{email_address}",
+    response_model=User,
+    responses={
+        status.HTTP_200_OK: {
+            "model": ErrorMessage,
+            "description": "The user is logged in.",
+        },
+        status.HTTP_401_UNAUTHORIZED: {"model": ErrorMessage},
+        status.HTTP_403_FORBIDDEN: {"model": ErrorMessage},
+    },
+)
+async def fetch_user(
+    email_address: str, authorization: Optional[str] = Header(None)
+) -> User:
+    await TokenVerifier.verify(authorization)
+    user = user_repository.fetch_user_by_email(email=email_address)
+    if not user.is_approved:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN, detail="Account not yet approved"
+        )
+    return user

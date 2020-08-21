@@ -13,3 +13,11 @@ def test_to_dict_and_parse_obj(mock_user: User):
 def test_unmodifiable_objects(mock_user: User):
     with pytest.raises(TypeError):
         mock_user.email = None
+
+
+def test_equality(mock_user: User):
+    mock_2_user = mock_user.copy()
+    assert mock_user == mock_2_user
+
+    mock_3_user = mock_user.copy(update={"given_name": "other- name"})
+    assert mock_user != mock_3_user

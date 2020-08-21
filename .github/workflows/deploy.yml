@@ -17,7 +17,7 @@ jobs:
       - name: Build the python docker image
         run: scripts/build-docker-images.sh --version $GITHUB_SHA
       - name: Verify the build
-        run: docker run --env ENVIRONMENT=LOCALHOST -v `pwd`:/usr/src/app newsrooom/api:latest make dev-requirements flakes tests
+        run: docker run --env ENVIRONMENT=LOCALHOST -v `pwd`:/usr/src/app newsrooom/api:latest make dev-requirements flakes-check tests
       - name: Decrypt the secret for google-app-engine
         run: scripts/decrypt-deployer-key.sh
         env:

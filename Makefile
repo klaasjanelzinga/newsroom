@@ -19,7 +19,9 @@ mypy:
 outdated:
 	pip list --outdated
 
-flakes: black-check mypy outdated flake8
+flakes: black flake8 mypy
+
+flakes-check: black-check mypy outdated flake8
 
 flake8:
 	flake8 core_lib/core_lib

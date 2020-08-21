@@ -19,8 +19,9 @@ class AppMenu extends React.Component {
 
     this.handleClose = this.handleClose.bind(this);
     this.handleMenu = this.handleMenu.bind(this);
-    this.handleEvents = this.handleEvents.bind(this);
-    this.handleVenues = this.handleVenues.bind(this);
+    this.handleManageSubscriptions = this.handleManageSubscriptions.bind(this);
+    this.handleNews = this.handleNews.bind(this);
+    this.handleSignout = this.handleSignout.bind(this);
   }
 
   handleMenu(event) {
@@ -37,12 +38,17 @@ class AppMenu extends React.Component {
     });
   }
 
-  handleVenues() {
+  handleSignout() {
     this.handleClose();
-    this.props.history.push('/venues');
+    this.props.history.push('/user/signout');
   }
 
-  handleEvents() {
+  handleManageSubscriptions() {
+    this.handleClose();
+    this.props.history.push('/user/manage-subscriptions');
+  }
+
+  handleNews() {
     this.handleClose();
     this.props.history.push('/');
   }
@@ -65,8 +71,9 @@ class AppMenu extends React.Component {
           keepMounted
           open={this.state.menuOpen}
           onClose={this.handleClose} >
-          <MenuItem onClick={this.handleEvents}>Events</MenuItem>
-          <MenuItem onClick={this.handleVenues}>Venues</MenuItem>
+          <MenuItem onClick={this.handleNews}>News</MenuItem>
+          <MenuItem onClick={this.handleManageSubscriptions}>Manage subscriptions</MenuItem>
+          <MenuItem onClick={this.handleSignout}>Signout</MenuItem>
         </Menu>
       </div>
     );
