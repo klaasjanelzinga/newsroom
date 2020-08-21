@@ -36,7 +36,9 @@ do
   source ${project_dir}/etc/deploy-settings-$service.env
 
   docker tag newsrooom/$service:$version gcr.io/newsroom-v1/$service:$version
-  docker push gcr.io/newsroom-v1/$service
+  docker tag newsrooom/$service:$version gcr.io/newsroom-v1/$service:latest
+  docker push gcr.io/newsroom-v1/$service:$version
+  docker push gcr.io/newsroom-v1/$service:latest
   gcloud --project newsroom-v1 run deploy $service --platform managed --region europe-west4 $EXTRA_ARGS --image=gcr.io/newsroom-v1/$service:$version
 done
 

@@ -23,14 +23,14 @@ script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 application=newsrooom
 
 echo "Building app container"
-docker pull gcr.io/newsroom-v1/api
-docker pull gcr.io/newsroom-v1/frontend
+#docker pull gcr.io/newsroom-v1/api
+#docker pull gcr.io/newsroom-v1/frontend
 #docker pull gcr.io/newsroom-v1/cron
 
 
-(cd $script_dir/.. && docker build --cache-from gcr.io/newsroom-v1/api -t ${application}/api:$VERSION -f api/Dockerfile .)
-# (cd $script_dir/.. && docker build --cache-from gcr.io/newsroom-v1/cron -t ${application}/cron:$VERSION -f cron/Dockerfile .)
-(cd $script_dir/../frontend && docker build --cache-from gcr.io/newsroom-v1/frontend -t ${application}/frontend:$VERSION .)
+(cd $script_dir/.. && docker build -t ${application}/api:$VERSION -f api/Dockerfile .)
+# (cd $script_dir/.. && docker build -t ${application}/cron:$VERSION -f cron/Dockerfile .)
+(cd $script_dir/../frontend && docker build -t ${application}/frontend:$VERSION .)
 
 # tag application version -> latest
 docker tag ${application}/api:$VERSION ${application}/api:latest
