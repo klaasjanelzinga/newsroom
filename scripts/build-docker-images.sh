@@ -23,9 +23,14 @@ script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 application=newsrooom
 
 echo "Building app container"
-(cd $script_dir/.. && docker build -t ${application}/api:$VERSION -f api/Dockerfile .)
-# (cd $script_dir/.. && docker build -t ${application}/cron:$VERSION -f cron/Dockerfile .)
-(cd $script_dir/../frontend && docker build -t ${application}/frontend:$VERSION .)
+docker pull ${application}/api:latest
+docker pull ${application}/frontend:latest
+#docker pull ${application}/cron:latest
+
+
+(cd $script_dir/.. && docker build --cache-from ${application}/api:latest -t ${application}/api:$VERSION -f api/Dockerfile .)
+# (cd $script_dir/.. && docker build --cache-from ${application}/cron:latest -t ${application}/cron:$VERSION -f cron/Dockerfile .)
+(cd $script_dir/../frontend && docker build --cache-from ${application}/frontend:latest -t ${application}/frontend:$VERSION .)
 
 # tag application version -> latest
 docker tag ${application}/api:$VERSION ${application}/api:latest
