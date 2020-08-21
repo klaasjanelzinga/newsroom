@@ -25,7 +25,7 @@ application=newsrooom
 echo "Building app containers"
 for service in api frontend
 do
-  docker pull gcr.io/newsroom-v1/api:${service}
+  docker pull gcr.io/newsroom-v1/${service}:latest
 done
 
 
