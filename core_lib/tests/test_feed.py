@@ -9,7 +9,6 @@ from core_lib.feed import fetch_feed_information_for
 
 
 def aiohttp_client_session_for_file(file_names: List[str]) -> MagicMock:
-
     def _response_for_file(file_name: str) -> AsyncMock:
         with open(file_name) as f:
             file = f.read()
@@ -22,13 +21,19 @@ def aiohttp_client_session_for_file(file_names: List[str]) -> MagicMock:
             return response
 
     client_session = AsyncMock(ClientSession)
-    client_session.get.side_effect = [_response_for_file(file_name) for file_name in file_names]
+    client_session.get.side_effect = [
+        _response_for_file(file_name) for file_name in file_names
+    ]
     return client_session
 
 
 @pytest.mark.asyncio
 async def test_fetch_information_for():
-    xml_files = ["tests/sample_rss_feeds/venues.xml", "tests/sample_rss_feeds/ars_technica.xml", "tests/sample_rss_feeds/pitchfork_best.xml"]
+    xml_files = [
+        "tests/sample_rss_feeds/venues.xml",
+        "tests/sample_rss_feeds/ars_technica.xml",
+        "tests/sample_rss_feeds/pitchfork_best.xml",
+    ]
     for xml_file in xml_files:
         url = "https://venues.n-kj.nl/events.xml"
         client_session = aiohttp_client_session_for_file([xml_file])

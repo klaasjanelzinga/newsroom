@@ -26,9 +26,9 @@ class Feed(BaseModel):
 
 def _parse_feed_information_from_rss_document(rss_url: str, tree: Element) -> Feed:
     # required rss channel items
-    title = tree.find("channel/title").text
-    description = tree.find("channel/description").text
-    link = tree.find("channel/link").text
+    title = tree.findtext("channel/title")
+    description = tree.findtext("channel/description")
+    link = tree.findtext("channel/link")
     # optional rss channel items
     category = tree.find("channel/category")
     image_url = tree.find("channel/image/url")
@@ -66,8 +66,9 @@ async def fetch_feed_information_for(session: ClientSession, url: str) -> Feed:
             if len(rss_links) == 1:
                 rss_url = rss_links[0].get("href")
                 async with session.get(rss_url) as xml_response:
-                    return _parse_feed_information_from_rss_document(rss_url, fromstring(await xml_response.text()))
-        if text.find("<rss") != -1:
+                    return _parse_feed_information_from_rss_document(
+                        rss_url, fromstring(await xml_response.text())
+                    )
+        elif text.find("<rss") != -1:
             return _parse_feed_information_from_rss_document(url, fromstring(text))
-
-
+    raise ValueError("Document is neither html or rss")
