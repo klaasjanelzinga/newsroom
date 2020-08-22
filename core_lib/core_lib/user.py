@@ -6,6 +6,8 @@ from google.cloud import datastore
 from google.cloud.client import Client
 from pydantic import BaseModel
 
+from core_lib.feed import Feed
+
 
 class User(BaseModel):
     class Config:
@@ -35,13 +37,6 @@ class UserRepository:
         entity.update(user_profile.dict())
         self.client.put(entity)
         return User.parse_obj(entity)
-
-
-@dataclass
-class Feed:
-    url: str
-    description: str
-    last_fetched: datetime
 
 
 @dataclass
