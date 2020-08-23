@@ -15,7 +15,7 @@ class App extends Component {
 
   componentDidMount() {
     if (this.userProfile) {
-      this.apiFetch.fetchAuthorized(`user/${this.userProfile.email}`, (json) => {
+      this.apiFetch.fetchAuthorized('user', (json) => {
         this.setState({user: json})
       })
     } else {

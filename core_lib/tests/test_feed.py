@@ -40,6 +40,7 @@ async def test_fetch_information_for():
         feed = await fetch_feed_information_for(client_session, url)
         xml_element = parse(xml_file)
         assert feed is not None
+        assert feed.id is not None
         assert feed.description == xml_element.find("channel/description").text
         assert feed.title == xml_element.find("channel/title").text
         assert feed.link == xml_element.find("channel/link").text

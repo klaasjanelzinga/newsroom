@@ -1,15 +1,21 @@
 from datetime import datetime
 from typing import Optional
+from uuid import uuid4
 from xml.etree.ElementTree import Element
 
 from aiohttp import ClientSession
 from bs4 import BeautifulSoup
+from defusedxml.ElementTree import fromstring
+from pydantic import Field
 from pydantic.main import BaseModel
 
-from defusedxml.ElementTree import fromstring
+
+def uuid4_str() -> str:
+    return uuid4().__str__()
 
 
 class Feed(BaseModel):
+    feed_id: str = Field(default_factory=uuid4_str)
     url: str
     title: str
     link: str

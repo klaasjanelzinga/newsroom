@@ -17,6 +17,7 @@ class User(BaseModel):
     family_name: str
     avatar_url: str
     is_approved: bool
+    subscribed_to: List[str] = []
 
 
 class UserRepository:
