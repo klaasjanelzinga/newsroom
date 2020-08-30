@@ -2,6 +2,8 @@ import logging
 from typing import Optional
 
 from fastapi import APIRouter, Response, Header, HTTPException
+from fastapi.params import Body
+from pydantic import BaseModel
 from starlette import status
 
 from api.api_application_data import security
@@ -63,8 +65,31 @@ async def signup(
 async def fetch_user(authorization: Optional[str] = Header(None)) -> User:
     """ Fetches all the details of the user. """
     user = await security.get_approved_user(authorization)
-    if not user.is_approved:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN, detail="Account not yet approved"
-        )
+    return user
+
+
+class UpdateUserProfileRequest(BaseModel):
+    given_name: str
+    family_name: str
+
+
+@user_router.post(
+    "/user/profile",
+    summary="Updates the mutable details of the logged in user",
+    tags=["user"],
+    response_model=User,
+    responses={
+        status.HTTP_200_OK: {
+            "model": User,
+            "description": "The user profile is updated",
+        },
+        status.HTTP_401_UNAUTHORIZED: {"model": ErrorMessage},
+        status.HTTP_403_FORBIDDEN: {"model": ErrorMessage},
+    },
+)
+async def update_user_profile(updated_user_request: UpdateUserProfileRequest = Body(...), authorization: Optional[str] = Header(None)) -> User:
+    user = await security.get_approved_user(authorization)
+    user.given_name = updated_user_request.given_name
+    user.family_name = updated_user_request.family_name
+    user_repository.upsert(user)
     return user

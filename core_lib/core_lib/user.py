@@ -3,15 +3,12 @@ from typing import List, Optional
 
 from google.cloud import datastore
 from google.cloud.client import Client
-from pydantic import BaseModel
+from pydantic.main import BaseModel
 
 from core_lib.feed import Feed
 
 
 class User(BaseModel):
-    class Config:
-        allow_mutation = False
-
     email: str
     given_name: str
     family_name: str

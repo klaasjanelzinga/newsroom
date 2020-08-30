@@ -5,10 +5,10 @@ from fastapi import APIRouter, Header, Response, HTTPException
 from pydantic.main import BaseModel
 from starlette.status import HTTP_200_OK, HTTP_201_CREATED, HTTP_404_NOT_FOUND
 
-from api.api_application_data import security
+from api.api_application_data import security, client_session
 from api.api_utils import ErrorMessage
 from core_lib.application_data import feed_repository, user_repository
-from core_lib.feed import Feed
+from core_lib.feed import Feed, fetch_feed_information_for
 from core_lib.user import User
 
 feed_router = APIRouter()
@@ -43,7 +43,7 @@ async def fetch_feed_information_for_url(
 
     # find location, and store information.
     try:
-        feed = await fetch_feed_information_for_url(url)
+        feed = await fetch_feed_information_for(session=client_session, url=url)
         feed = feed_repository.upsert_feed(feed)
         response.status_code = HTTP_201_CREATED
         return feed

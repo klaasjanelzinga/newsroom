@@ -16,10 +16,13 @@ mypy:
 	(cd api && mypy --config-file ../mypy.ini -p api)
 	# (cd cron && mypy --config-file ../mypy.ini  -p cron)
 
+tslint:
+	docker-compose run frontend npm run lint
+
 outdated:
 	pip list --outdated
 
-flakes: black flake8 mypy
+flakes: black flake8 mypy pylint tslint
 
 flakes-check: black-check mypy outdated flake8
 

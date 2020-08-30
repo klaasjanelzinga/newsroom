@@ -14,7 +14,7 @@ def uuid4_str() -> str:
     return uuid4().__str__()
 
 
-class Feed(BaseModel):
+class Feed(BaseModel):  # pylint: disable=too-few-public-methods
     feed_id: str = Field(default_factory=uuid4_str)
     url: str
     title: str

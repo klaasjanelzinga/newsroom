@@ -7,8 +7,9 @@ import App from './App';
 import profile from './user/profile';
 import signin from './user/signin';
 import signout from './user/signout';
-import needsApproval from './user/needs-approval';
+import NeedsApproval from './user/needs-approval';
 import * as serviceWorker from './serviceWorker';
+import ManageSubscriptions from "./user/manage-subscriptions";
 
 ReactDOM.render(
     <Router>
@@ -20,7 +21,8 @@ ReactDOM.render(
             <Route exact path="/user/signin" component={signin} />
             <Route exact path="/user/signout" component={signout} />
             <Route exact path="/user/profile" component={profile} />
-            <Route exact path="/user/needs-approval" component={needsApproval} />
+            <Route exact path="/user/needs-approval" component={NeedsApproval} />
+            <Route exact path="/user/manage-subscriptions" component={ManageSubscriptions} />
         </SnackbarProvider>
     </Router>
     ,
