@@ -3,30 +3,35 @@ import config from './Config'
 import {RouteComponentProps} from "react-router-dom";
 import {WithSnackbarProps} from "notistack";
 
-interface ApiFetchProps extends WithSnackbarProps, RouteComponentProps {
+interface ApiProps extends WithSnackbarProps, RouteComponentProps {
 }
 
-export class ApiFetch {
-    props: ApiFetchProps
+export class Api {
+    props: ApiProps
     userProfile: UserProfile | null
 
-    constructor(props: ApiFetchProps) {
+    constructor(props: ApiProps) {
         this.props = props
         this.userProfile = UserProfile.load()
     }
 
-    _headers_from(userProfile: UserProfile| null): Headers {
+    static createBearerTokenFrom(id_token: string): string {
+        return `Bearer ${id_token}`
+    }
+
+
+    _headers_from(id_token: string| null): Headers {
         const headers: HeadersInit = new Headers()
         headers.set('Content-Type', 'application/json')
-        if (userProfile != null) {
-            headers.set("Authorization", userProfile.bearerToken)
+        if (id_token) {
+            headers.set("Authorization", Api.createBearerTokenFrom(id_token))
         }
         return headers;
     }
 
     async _parseResponse<T>(response: Response):Promise<T> {
         if (response.status === 401) {
-            this.props.history.push("/user/signin");
+            this.props.history.push(`/user/signin?redirect_to=${this.props.history.location.pathname}`);
             this.props.enqueueSnackbar('You need to signin again.', {
                 variant: 'warning',
             });
@@ -43,20 +48,29 @@ export class ApiFetch {
 
     async get<T>(endpoint: string): Promise<[number, T]> {
 
+        if (!this.userProfile) {
+            throw new Error("Unauthorized for authorized call")
+        }
         const url = `${config.apihost}${endpoint}`
 
         const request = new Request(url, {
             method: 'GET',
-            headers: this._headers_from(this.userProfile)
+            headers: this._headers_from(this.userProfile.id_token)
         });
         const response = await fetch(request)
         return [response.status, await this._parseResponse(response)]
     }
 
-    async post<T>(endpoint: string, body: string| null = null, userProfile = this.userProfile): Promise<[number, T]> {
+    async post<T>(endpoint: string, body: string| null = null, withToken: string | null = null): Promise<[number, T]> {
+        if (!withToken && !this.userProfile) {
+            throw new Error("Authorized call without authorization")
+        }
+        if (!withToken && this.userProfile) {
+            withToken = this.userProfile.id_token
+        }
         const url = `${config.apihost}${endpoint}`
         const response = await fetch(url, {
-            headers: this._headers_from(userProfile),
+            headers: this._headers_from(withToken),
             method: "POST",
             body: body,
         })

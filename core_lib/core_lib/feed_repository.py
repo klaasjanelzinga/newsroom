@@ -21,7 +21,7 @@ class FeedRepository:
 
     def upsert_feed(self, feed: Feed) -> Feed:
         """ Upsert a feed into the repository. """
-        entity = datastore.Entity(self.client.key("User", feed.feed_id))
+        entity = datastore.Entity(self.client.key("Feed", feed.feed_id))
         entity.update(feed.dict())
         self.client.put(entity)
         return Feed.parse_obj(entity)

@@ -5,7 +5,9 @@ import {RouteComponentProps, withRouter} from 'react-router-dom';
 import HeaderBar from '../headerbar/HeaderBar';
 import GoogleCard from './googlecard';
 import UserProfile from './UserProfile';
-import {ApiFetch} from "../ApiFetch";
+import {Api} from "../Api";
+import {UserProfileResponse} from "./model";
+import queryString from 'query-string';
 
 
 const styles = createStyles({
@@ -41,23 +43,29 @@ interface SigninProps extends WithStyles<typeof styles>, RouteComponentProps, Wi
 
 class SignIn extends React.Component<SigninProps> {
 
-    apiFetch: ApiFetch
+    apiFetch: Api
+    redirect_to: string | null
 
     constructor(props: SigninProps) {
         super(props);
-        this.apiFetch = new ApiFetch(props)
+        this.apiFetch = new Api(props)
+        this.redirect_to = queryString.parse(this.props.location.search).redirect_to as string || null
+        if (this.redirect_to === this.props.location.pathname) {
+            this.redirect_to = null
+        }
     }
 
-    validateSignInWithServer= (userProfile: UserProfile):void => {
-        this.apiFetch.post<UserProfile>('/user/signup', null, userProfile)
+    validateSignInWithServer= (bearerToken: string):void => {
+        this.apiFetch.post<UserProfileResponse>('/user/signup', null, bearerToken)
             .then((response) => {
                 this.props.enqueueSnackbar('Succesfully signed in', {
                     variant: 'info',
                 });
-                UserProfile.save(userProfile)
-                console.log(response)
+                const user_profile_response = response[1]
+                user_profile_response.id_token = bearerToken
+                UserProfile.save(response[1])
                 if (response[0] === 200) {
-                    this.props.history.push('/')
+                    this.props.history.push(this.redirect_to || '/')
                 } else {
                     this.props.history.push('/user/needs-approval')
                 }

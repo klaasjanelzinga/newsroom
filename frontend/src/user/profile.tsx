@@ -9,8 +9,9 @@ import {default as React} from 'react';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import HeaderBar from '../headerbar/HeaderBar';
 import UserProfile from './UserProfile';
-import {ApiFetch} from "../ApiFetch";
+import {Api} from "../Api";
 import Header from "./header";
+import {UserProfileResponse} from "./model";
 
 const styles = (theme: Theme) => createStyles({
     saveButton: {
@@ -44,7 +45,7 @@ interface ProfileState {
 class Profile extends React.Component<ProfileProps, ProfileState> {
 
     userProfile: UserProfile
-    apiFetch: ApiFetch
+    apiFetch: Api
 
     constructor(props: ProfileProps) {
         super(props);
@@ -54,7 +55,7 @@ class Profile extends React.Component<ProfileProps, ProfileState> {
             familyName: '',
         }
         this.userProfile = UserProfile.get()
-        this.apiFetch  = new ApiFetch(props)
+        this.apiFetch  = new Api(props)
     }
 
     componentDidMount() {
@@ -76,16 +77,17 @@ class Profile extends React.Component<ProfileProps, ProfileState> {
     }
 
     updateProfile = (): void => {
-        this.apiFetch.post<UserProfile>('/user/profile', JSON.stringify({
+        this.apiFetch.post<UserProfileResponse>('/user/profile', JSON.stringify({
             given_name: this.state.givenName,
             family_name: this.state.familyName}))
             .then(response => {
                 this.props.enqueueSnackbar('Profile was succesfully updated.', {
                     variant: 'info',
                 });
+                const user_response = response[1]
+                user_response.id_token = this.userProfile.id_token
+                this.userProfile = UserProfile.save(user_response)
                 this.props.history.push('/')
-                this.userProfile = response[1]
-                UserProfile.save(this.userProfile)
             })
             .catch(error => console.error(error))
     }

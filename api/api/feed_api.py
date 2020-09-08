@@ -15,10 +15,15 @@ feed_router = APIRouter()
 logger = logging.getLogger(__name__)
 
 
+class FeedWithSubscriptionInformationResponse(BaseModel):
+    feed: Feed
+    user_is_subscribed: bool
+
+
 @feed_router.post(
     "/feeds/for_url",
     tags=["feed"],
-    response_model=Feed,
+    response_model=FeedWithSubscriptionInformationResponse,
     responses={
         HTTP_201_CREATED: {
             "model": Feed,
@@ -30,16 +35,18 @@ logger = logging.getLogger(__name__)
 )
 async def fetch_feed_information_for_url(
     response: Response, url: str, authorization: Optional[str] = Header(None)
-) -> Feed:
+) -> FeedWithSubscriptionInformationResponse:
     """
     If the feed is known in the system (by url), return this information. If the feed is unknown retrieve the url
     and create a new Feed Entity. Return this entity.
     """
-    await security.get_approved_user(authorization)
+    user = await security.get_approved_user(authorization)
     feed = feed_repository.find_by_url(url)
     if feed is not None:
         response.status_code = HTTP_200_OK
-        return feed
+        return FeedWithSubscriptionInformationResponse(
+            feed=feed, user_is_subscribed=feed.feed_id in user.subscribed_to
+        )
 
     # find location, and store information.
     try:
@@ -51,11 +58,6 @@ async def fetch_feed_information_for_url(
         raise HTTPException(
             status_code=HTTP_404_NOT_FOUND, detail=f"No feed with url {url} found"
         )
-
-
-class FeedWithSubscriptionInformationResponse(BaseModel):
-    feed: Feed
-    user_is_subscribed: bool
 
 
 @feed_router.get("/feeds", tags=["feed"])

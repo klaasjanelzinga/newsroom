@@ -1,9 +1,8 @@
 import logging
 from typing import Optional
 
-from fastapi import APIRouter, Response, Header, HTTPException
-from fastapi.params import Body
-from pydantic import BaseModel
+from fastapi import APIRouter, Response, Header
+from pydantic.main import BaseModel
 from starlette import status
 
 from api.api_application_data import security
@@ -87,7 +86,10 @@ class UpdateUserProfileRequest(BaseModel):
         status.HTTP_403_FORBIDDEN: {"model": ErrorMessage},
     },
 )
-async def update_user_profile(updated_user_request: UpdateUserProfileRequest = Body(...), authorization: Optional[str] = Header(None)) -> User:
+async def update_user_profile(
+    updated_user_request: UpdateUserProfileRequest,
+    authorization: Optional[str] = Header(None),
+) -> User:
     user = await security.get_approved_user(authorization)
     user.given_name = updated_user_request.given_name
     user.family_name = updated_user_request.family_name

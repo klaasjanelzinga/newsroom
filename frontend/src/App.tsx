@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {LinearProgress} from "@material-ui/core";
 import './App.css';
-import {ApiFetch} from "./ApiFetch"
+import {Api} from "./Api"
 import {withSnackbar, WithSnackbarProps} from "notistack";
 import {RouteComponentProps} from "react-router";
 import UserProfile from "./user/UserProfile";
@@ -20,25 +20,19 @@ class App extends React.Component<AppProps, AppState> {
         userProfile: null
     }
 
-    apiFetch: ApiFetch
+    apiFetch: Api
 
     constructor(props: AppProps) {
         super(props);
-        this.apiFetch = new ApiFetch(props)
+        this.apiFetch = new Api(props)
     }
 
     componentDidMount() {
         const userProfile = UserProfile.load()
-        this.setState({userProfile: userProfile})
-        if (userProfile) {
-            this.apiFetch.get<UserProfile>('/user')
-                .then((response) => {
-                    this.setState({userProfile: response[1]})
-                })
-                .catch(reason => console.error(reason))
-        } else {
+        if (!userProfile) {
             this.props.history.push("/user/signin")
         }
+        this.setState({userProfile: userProfile})
     }
 
     render() {

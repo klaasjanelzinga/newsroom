@@ -3,7 +3,6 @@ import {Card, CardContent, createStyles, Typography, WithStyles, withStyles} fro
 import {withSnackbar, WithSnackbarProps} from 'notistack';
 import GoogleLogin, {GoogleLoginResponse, GoogleLoginResponseOffline} from 'react-google-login';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
-import UserProfile from './UserProfile';
 
 
 const styles = createStyles({
@@ -28,7 +27,7 @@ const styles = createStyles({
 });
 
 interface GoogleCardProps extends RouteComponentProps, WithSnackbarProps, WithStyles<typeof styles>{
-    validateSignInWithServer: (userProfile: UserProfile) => void
+    validateSignInWithServer: (bearerToken: string) => void
 }
 
 class GoogleCard extends React.Component<GoogleCardProps> {
@@ -43,15 +42,7 @@ class GoogleCard extends React.Component<GoogleCardProps> {
     responseGoogle = (response: GoogleLoginResponse | GoogleLoginResponseOffline): void => {
         const loginResponse = response as GoogleLoginResponse
         if (loginResponse.profileObj) {
-            const userProfile = new UserProfile(
-                loginResponse.profileObj.givenName,
-                loginResponse.profileObj.familyName,
-                loginResponse.profileObj.email,
-                loginResponse.profileObj.imageUrl,
-                loginResponse.accessToken,
-                loginResponse.tokenId,
-            );
-            this.props.validateSignInWithServer(userProfile);
+            this.props.validateSignInWithServer(loginResponse.tokenId);
         } else {
             this.props.enqueueSnackbar("Cannot login, we appear to be offline!", {
                 variant: 'error',

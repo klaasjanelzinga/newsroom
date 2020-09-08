@@ -1,3 +1,5 @@
+import logging
+from asyncio.tasks import Task
 from typing import Dict, Optional
 
 import aiohttp
@@ -10,6 +12,9 @@ from core_lib.user import User, UserRepository
 
 class TokenVerificationException(Exception):
     pass
+
+
+log = logging.getLogger(__file__)
 
 
 class TokenVerifier:
@@ -32,15 +37,19 @@ class TokenVerifier:
         :raises Http
 
         """
-        token_certs = TokenVerifier._fetch_certs()
+        token_certs = Task(TokenVerifier._fetch_certs())
         try:
             if bearer_token is None:
+                token_certs.cancel()
                 raise HTTPException(status_code=401, detail="Unauthorized")
             if len(bearer_token) < 15:
+                token_certs.cancel()
                 raise HTTPException(status_code=401, detail="Unauthorized")
             if not bearer_token.startswith("Bearer"):
+                token_certs.cancel()
                 raise HTTPException(status_code=401, detail="Unauthorized")
             token = bearer_token[7:]
+            log.info("Verifying token")
             result = jwt.decode(
                 token=token,
                 certs=await token_certs,

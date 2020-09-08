@@ -9,7 +9,7 @@ import signin from './user/signin';
 import signout from './user/signout';
 import NeedsApproval from './user/needs-approval';
 import * as serviceWorker from './serviceWorker';
-import ManageSubscriptions from "./user/manage-subscriptions";
+import ManageSubscriptions from "./user/manage_subscriptions/manage_subscriptions";
 
 ReactDOM.render(
     <Router>
