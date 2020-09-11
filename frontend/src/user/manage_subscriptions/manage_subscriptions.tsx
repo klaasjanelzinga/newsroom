@@ -23,6 +23,8 @@ import NewRssFeed from './new_rss_feed';
 import ImageAndTitle from "./feed_image_and_title";
 import {GetFeedsResponse} from "../model";
 import SubscribeUnsubscribeButton from "./subscribe_unsubscribe_button";
+import LinearProgress from "@material-ui/core/LinearProgress";
+
 
 const styles = createStyles({
     signedInUI: {
@@ -43,6 +45,7 @@ interface SubscribeResponse {
 
 interface MangeSubscriptionsState {
     feedsForUser: GetFeedsResponse[];
+    isLoading: boolean
 }
 
 class ManageSubscriptions extends React.Component<ManageSubscriptionsProps, MangeSubscriptionsState> {
@@ -51,6 +54,7 @@ class ManageSubscriptions extends React.Component<ManageSubscriptionsProps, Mang
     api: Api
     state: MangeSubscriptionsState = {
         feedsForUser: [],
+        isLoading: false,
     }
 
     constructor(props: ManageSubscriptionsProps) {
@@ -62,11 +66,13 @@ class ManageSubscriptions extends React.Component<ManageSubscriptionsProps, Mang
     }
 
     fetchAvailableFeeds() {
+        this.setState({isLoading: true})
         this.api.get<[GetFeedsResponse]>("/feeds")
             .then(feedsWithInfo => {
                 this.setState({feedsForUser: feedsWithInfo[1]})
             })
             .catch((reason: any) => console.error(reason))
+            .finally(() => this.setState({isLoading: false}))
     }
 
     showNotification(message: string) {
@@ -120,16 +126,17 @@ class ManageSubscriptions extends React.Component<ManageSubscriptionsProps, Mang
                     Welcome {this.userProfile.givenName} {this.userProfile.familyName}!
                 </Typography>
                 <Typography variant="subtitle1" gutterBottom>
-                    Subscribe here to news sources. News sources are rss feeds, custom news sources and plugins.
+                    Subscribe here to news sources. News sources are rss feeds, custom news sources or plugins.
                 </Typography>
-                <NewRssFeed subscribe_callback={feedResponse => this.subscribeTo(feedResponse)}
-                            unsubscribe_callback={feedResponse => this.unsubscribeFrom(feedResponse)}/>
+                <NewRssFeed subscribe_callback={(feedResponse: GetFeedsResponse) => this.subscribeTo(feedResponse)}
+                            unsubscribe_callback={(feedResponse: GetFeedsResponse) => this.unsubscribeFrom(feedResponse)}/>
 
                 <div className={classes.subscriptionsTable}>
 
                     <Typography variant="body2" gutterBottom>
                         Or manage your subscriptions:
                     </Typography>
+                    {this.state.isLoading &&  <LinearProgress />}
                     <Grid container spacing={3}>
                         <Grid item xs={12}>
                             <TableContainer component={Paper}>

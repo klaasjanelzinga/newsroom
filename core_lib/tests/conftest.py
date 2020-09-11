@@ -1,7 +1,7 @@
 import pytest
 from faker import Faker
 
-from core_lib.user import User
+from core_lib.repositories import User
 
 
 @pytest.fixture

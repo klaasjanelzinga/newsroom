@@ -2,17 +2,21 @@ import * as React from 'react'
 import {withSnackbar, WithSnackbarProps} from "notistack";
 import {Api} from "../../Api";
 import {RouteComponentProps, withRouter} from "react-router-dom";
-import {Button, createStyles, Theme, WithStyles, withStyles} from "@material-ui/core";
+import {Button, createStyles, Typography, Theme, WithStyles} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import {InsertLink} from "@material-ui/icons";
 import {GetFeedsResponse} from "../model";
 import ImageAndTitle from "./feed_image_and_title"
 import SubscribeUnsubscribeButton from "./subscribe_unsubscribe_button";
+import withStyles from "@material-ui/core/styles/withStyles";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 interface NewRssFeedState {
     newURL: string;
     foundFeed: GetFeedsResponse | null;
+    possibleError: string | null;
+    isLoading: boolean
 }
 
 interface NewRssFeedProps extends RouteComponentProps, WithSnackbarProps, WithStyles<typeof styles> {
@@ -30,6 +34,10 @@ const styles = (theme: Theme) => createStyles({
         padding: "10px",
         backgroundColor: "lightgray",
     },
+    errorPanel: {
+        padding: "10px",
+        backgroundColor: "lightpink",
+    },
     foundPanelItem: {
         padding: "3px",
     },
@@ -45,6 +53,8 @@ class NewRssFeed extends React.Component<NewRssFeedProps, NewRssFeedState> {
     state: NewRssFeedState = {
         newURL: "",
         foundFeed: null,
+        possibleError: null,
+        isLoading: false,
     }
 
     constructor(props: NewRssFeedProps) {
@@ -54,11 +64,17 @@ class NewRssFeed extends React.Component<NewRssFeedProps, NewRssFeedState> {
     }
 
     checkNewRssURL = (event: unknown): void => {
+        this.setState({isLoading: true, possibleError: null})
+        setInterval(() => {
+            if (this.state.isLoading)
+                this.setState({possibleError: "Be patient, some feeds take a long time to load ..."})
+        }, 5000)
         this.api.post<GetFeedsResponse>(`/feeds/for_url?url=${this.state.newURL}`)
             .then(for_url_response => {
-                this.setState({foundFeed: for_url_response[1]})
+                this.setState({foundFeed: for_url_response[1], possibleError: null})
             })
-            .catch(reason => console.error(reason))
+            .catch((reason:Error) => this.setState({possibleError: reason?.message}))
+            .finally(() => this.setState({isLoading:false}))
     }
 
     isValidURL(url: string): boolean {
@@ -92,7 +108,6 @@ class NewRssFeed extends React.Component<NewRssFeedProps, NewRssFeedState> {
         }
     }
 
-
     render() {
         const {classes} = this.props
         return <Grid container>
@@ -108,7 +123,8 @@ class NewRssFeed extends React.Component<NewRssFeedProps, NewRssFeedState> {
                         autoComplete="fname"
                     />
                 </Grid>
-                <Grid item xs={2}>
+                {this.state.isLoading && <CircularProgress />}
+                {!this.state.isLoading && <Grid item xs={2}>
                     <Button variant="contained"
                             size="small"
                             disabled={this.isValidURL(this.state.newURL) !== true}
@@ -117,8 +133,17 @@ class NewRssFeed extends React.Component<NewRssFeedProps, NewRssFeedState> {
                         <InsertLink/>
                         Check url
                     </Button>
-                </Grid>
+                </Grid>}
             </Grid>
+
+            {this.state.possibleError && <Grid container className={classes.errorPanel}>
+                <Grid item xs={8}>
+                    <Typography variant="subtitle1">Something went wrong with checking {this.state.newURL}.
+                    </Typography>
+                    <Typography variant="subtitle2">{this.state.possibleError}</Typography>
+                </Grid>
+            </Grid> }
+
             {this.state.foundFeed && <Grid container className={classes.foundPanel}>
 
                 <Grid item xs={2} className={classes.foundPanelItem}>URL</Grid>

@@ -21,9 +21,7 @@ def aiohttp_client_session_for_file(file_names: List[str]) -> MagicMock:
             return response
 
     client_session = AsyncMock(ClientSession)
-    client_session.get.side_effect = [
-        _response_for_file(file_name) for file_name in file_names
-    ]
+    client_session.get.side_effect = [_response_for_file(file_name) for file_name in file_names]
     return client_session
 
 

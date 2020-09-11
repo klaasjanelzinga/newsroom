@@ -2,6 +2,7 @@ import UserProfile from "./user/UserProfile";
 import config from './Config'
 import {RouteComponentProps} from "react-router-dom";
 import {WithSnackbarProps} from "notistack";
+import {ErrorResponse} from "./user/model";
 
 interface ApiProps extends WithSnackbarProps, RouteComponentProps {
 }
@@ -43,6 +44,9 @@ export class Api {
         } else if (response.status === 200 || response.status === 201) {
             return await response.json() as T
         }
+        const bodyReason = await response.json() as ErrorResponse
+        if (bodyReason?.detail)
+            throw new Error(bodyReason.detail)
         throw new Error("Something in the request is wrong.")
     }
 

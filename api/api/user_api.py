@@ -9,7 +9,7 @@ from api.api_application_data import security
 from api.api_utils import ErrorMessage
 from api.security import TokenVerifier
 from core_lib.application_data import user_repository
-from core_lib.user import User
+from core_lib.repositories import User
 
 user_router = APIRouter()
 logger = logging.getLogger(__name__)
@@ -24,13 +24,14 @@ logger = logging.getLogger(__name__)
             "model": User,
             "description": "The user is created and logged in.",
         },
-        status.HTTP_200_OK: {"model": User, "description": "The user is logged in.",},
+        status.HTTP_200_OK: {
+            "model": User,
+            "description": "The user is logged in.",
+        },
         status.HTTP_401_UNAUTHORIZED: {"model": ErrorMessage},
     },
 )
-async def signup(
-    response: Response, authorization: Optional[str] = Header(None)
-) -> User:
+async def signup(response: Response, authorization: Optional[str] = Header(None)) -> User:
     """
     Either login or sign the user up (create)  for this service.
 
@@ -41,7 +42,7 @@ async def signup(
     user_from_token = await TokenVerifier.verify(authorization)
     user = user_repository.fetch_user_by_email(email=user_from_token.email)
     if user is None:
-        user = user_repository.upsert(user_from_token)
+        user = user_repository.upsert_many(user_from_token)
         response.status_code = status.HTTP_201_CREATED
         return user
     response.status_code = status.HTTP_200_OK
@@ -93,5 +94,5 @@ async def update_user_profile(
     user = await security.get_approved_user(authorization)
     user.given_name = updated_user_request.given_name
     user.family_name = updated_user_request.family_name
-    user_repository.upsert(user)
+    user_repository.upsert_many(user)
     return user

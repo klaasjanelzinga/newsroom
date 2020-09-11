@@ -7,7 +7,7 @@ from fastapi import HTTPException
 from google.auth import jwt
 from starlette.status import HTTP_403_FORBIDDEN
 
-from core_lib.user import User, UserRepository
+from core_lib.repositories import User, UserRepository
 
 
 class TokenVerificationException(Exception):
@@ -22,9 +22,7 @@ class TokenVerifier:
     async def _fetch_certs() -> Dict:
         timeout = aiohttp.ClientTimeout(total=10)
         async with aiohttp.ClientSession(timeout=timeout) as task_session:
-            async with task_session.get(
-                "https://www.googleapis.com/oauth2/v1/certs"
-            ) as response:
+            async with task_session.get("https://www.googleapis.com/oauth2/v1/certs") as response:
                 return await response.json()
 
     @staticmethod
@@ -78,7 +76,5 @@ class Security:
         user_from_token = await TokenVerifier.verify(authorization_header)
         user_from_repo = self.user_repository.fetch_user_by_email(user_from_token.email)
         if not user_from_repo.is_approved:
-            raise HTTPException(
-                status_code=HTTP_403_FORBIDDEN, detail="User is not yet approved"
-            )
+            raise HTTPException(status_code=HTTP_403_FORBIDDEN, detail="User is not yet approved")
         return user_from_repo

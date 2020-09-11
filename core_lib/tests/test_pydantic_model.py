@@ -1,6 +1,6 @@
 import pytest
 
-from core_lib.user import User
+from core_lib.repositories import User
 
 
 def test_to_dict_and_parse_obj(mock_user: User):

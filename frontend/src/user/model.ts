@@ -21,3 +21,7 @@ export interface UserProfileResponse {
     avatar_url: string;
     id_token: string;
 }
+
+export interface ErrorResponse {
+    detail: string;
+}
