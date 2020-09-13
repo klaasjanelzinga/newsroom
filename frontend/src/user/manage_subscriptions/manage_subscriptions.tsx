@@ -71,7 +71,7 @@ class ManageSubscriptions extends React.Component<ManageSubscriptionsProps, Mang
             .then(feedsWithInfo => {
                 this.setState({feedsForUser: feedsWithInfo[1]})
             })
-            .catch((reason: any) => console.error(reason))
+            .catch((reason: Error) => console.error(reason))
             .finally(() => this.setState({isLoading: false}))
     }
 
@@ -83,7 +83,7 @@ class ManageSubscriptions extends React.Component<ManageSubscriptionsProps, Mang
 
     subscribeTo(feedForUser: GetFeedsResponse) {
         this.api.post<SubscribeResponse>(`/feeds/${feedForUser.feed.feed_id}/subscribe`)
-            .then(_ => {
+            .then(() => {
                 this.showNotification('Subscribed')
                 this.setState({
                     feedsForUser: this.state.feedsForUser.map(feed => {
@@ -94,12 +94,12 @@ class ManageSubscriptions extends React.Component<ManageSubscriptionsProps, Mang
                     })
                 })
             })
-            .catch(reason => console.error(reason))
+            .catch((reason:Error) => console.error(reason))
     }
 
     unsubscribeFrom(feedForUser: GetFeedsResponse) {
         this.api.post<SubscribeResponse>(`/feeds/${feedForUser.feed.feed_id}/unsubscribe`)
-            .then(_ => {
+            .then(() => {
                 this.showNotification('Unsubscribed')
                 this.setState({
                     feedsForUser: this.state.feedsForUser.map(feed => {

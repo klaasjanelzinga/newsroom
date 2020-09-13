@@ -1,4 +1,4 @@
-import {Button, createStyles, Theme, WithStyles, withStyles} from '@material-ui/core';
+import {Button, createStyles, WithStyles, withStyles} from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
@@ -13,7 +13,7 @@ import {Api} from "../Api";
 import Header from "./header";
 import {UserProfileResponse} from "./model";
 
-const styles = (theme: Theme) => createStyles({
+const styles = createStyles({
     saveButton: {
         marginRight: '10px',
         marginLeft: '8px',

@@ -51,8 +51,8 @@ class GoogleCard extends React.Component<GoogleCardProps> {
         }
     }
 
-    handleFailure = (response: any):void => {
-        this.props.enqueueSnackbar(`An error occured while signing in`, {
+    handleFailure = () => {
+        this.props.enqueueSnackbar(`An error occured while signing in. Please try again.`, {
             variant: 'error',
             autoHideDuration: 6000,
         });

@@ -1,5 +1,5 @@
 from typing import List
-from unittest.mock import MagicMock, Mock, AsyncMock
+from unittest.mock import MagicMock, Mock, AsyncMock, patch
 
 import pytest
 from aiohttp import ClientSession, ClientResponse

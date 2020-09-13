@@ -42,7 +42,7 @@ async def signup(response: Response, authorization: Optional[str] = Header(None)
     user_from_token = await TokenVerifier.verify(authorization)
     user = user_repository.fetch_user_by_email(email=user_from_token.email)
     if user is None:
-        user = user_repository.upsert_many(user_from_token)
+        user = user_repository.upsert(user_from_token)
         response.status_code = status.HTTP_201_CREATED
         return user
     response.status_code = status.HTTP_200_OK
@@ -94,5 +94,5 @@ async def update_user_profile(
     user = await security.get_approved_user(authorization)
     user.given_name = updated_user_request.given_name
     user.family_name = updated_user_request.family_name
-    user_repository.upsert_many(user)
+    user_repository.upsert(user)
     return user

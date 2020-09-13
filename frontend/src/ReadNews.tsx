@@ -17,7 +17,7 @@ interface AppState {
     userProfile: UserProfile | null
 }
 
-class App extends React.Component<AppProps, AppState> {
+class ReadNews extends React.Component<AppProps, AppState> {
 
     state: AppState = {
         userProfile: null
@@ -44,9 +44,9 @@ class App extends React.Component<AppProps, AppState> {
                 <LinearProgress/>
             </div>
         } else {
-            return <News userProfile={this.state.userProfile} variant={NewsVariant.NEWS}/>
+            return <News userProfile={this.state.userProfile} variant={NewsVariant.READ_NEWS}/>
         }
     }
 }
 
-export default withStyles(styles)(withRouter(withSnackbar(App)))
+export default withStyles(styles)(withRouter(withSnackbar(ReadNews)))

@@ -4,6 +4,7 @@ from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
 from api.feed_api import feed_router
+from api.news_item_api import news_router
 from api.user_api import user_router
 
 logging.root.setLevel(logging.DEBUG)
@@ -28,3 +29,4 @@ app.add_middleware(
 
 app.include_router(user_router)
 app.include_router(feed_router)
+app.include_router(news_router)

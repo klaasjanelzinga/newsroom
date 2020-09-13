@@ -61,7 +61,7 @@ class TokenVerifier:
                 is_approved=False,
             )
         except ValueError as error:
-            raise HTTPException(status_code=401, detail=error.__str__())
+            raise HTTPException(status_code=401, detail=error.__str__()) from error
 
 
 class Security:

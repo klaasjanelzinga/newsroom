@@ -1,5 +1,4 @@
 import logging
-from functools import wraps
 from typing import List, Optional
 
 from fastapi import APIRouter, Header, Response, HTTPException
@@ -26,20 +25,6 @@ class FeedWithSubscriptionInformationResponse(BaseModel):
     user_is_subscribed: bool
 
 
-# def api_call(func):
-#     @wraps(func)
-#     async def wrapper(*args, **kwargs):
-#         logger.info(f"Running api_call {func}")
-#         try:
-#             result = await func(*args, **kwargs)
-#         except Exception as ex:
-#             logger.exception(ex)
-#             raise
-#         return result
-#
-#     return wrapper
-#
-#
 @feed_router.post(
     "/feeds/for_url",
     tags=["feed"],
@@ -76,8 +61,10 @@ async def fetch_feed_information_for_url(
             raise HTTPException(status_code=HTTP_404_NOT_FOUND, detail=f"No feed with url {url} found")
         response.status_code = HTTP_201_CREATED
         return FeedWithSubscriptionInformationResponse(feed=feed, user_is_subscribed=feed.feed_id in user.subscribed_to)
-    except NetworkingException as ne:
-        raise HTTPException(status_code=HTTP_400_BAD_REQUEST, detail=ne.__str__())
+    except NetworkingException as networking_exception:
+        raise HTTPException(
+            status_code=HTTP_400_BAD_REQUEST, detail=networking_exception.__str__()
+        ) from networking_exception
 
 
 @feed_router.get("/feeds", tags=["feed"])

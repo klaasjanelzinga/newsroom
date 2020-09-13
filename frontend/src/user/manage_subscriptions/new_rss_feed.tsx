@@ -2,7 +2,7 @@ import * as React from 'react'
 import {withSnackbar, WithSnackbarProps} from "notistack";
 import {Api} from "../../Api";
 import {RouteComponentProps, withRouter} from "react-router-dom";
-import {Button, createStyles, Typography, Theme, WithStyles} from "@material-ui/core";
+import {Button, createStyles, Typography, WithStyles} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import {InsertLink} from "@material-ui/icons";
@@ -24,7 +24,7 @@ interface NewRssFeedProps extends RouteComponentProps, WithSnackbarProps, WithSt
     unsubscribe_callback: (feed: GetFeedsResponse) => void
 }
 
-const styles = (theme: Theme) => createStyles({
+const styles = createStyles({
     button: {
         marginRight: '10px',
         marginLeft: '8px',
@@ -63,7 +63,7 @@ class NewRssFeed extends React.Component<NewRssFeedProps, NewRssFeedState> {
         this.api = new Api(props)
     }
 
-    checkNewRssURL = (event: unknown): void => {
+    checkNewRssURL = () => {
         this.setState({isLoading: true, possibleError: null})
         setInterval(() => {
             if (this.state.isLoading)

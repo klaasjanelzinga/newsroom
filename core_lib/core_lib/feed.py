@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Optional
 from xml.etree.ElementTree import Element
 
@@ -64,7 +65,7 @@ async def fetch_feed_information_for(
                     return _process_rss_document(url, rss_document)
         return None
     except ClientConnectorError as cce:
-        raise NetworkingException(f"Url {url} not reachable. Details: {cce.__str__()}")
+        raise NetworkingException(f"Url {url} not reachable. Details: {cce.__str__()}") from cce
 
 
 def subscribe_user_to_feed(
@@ -74,14 +75,19 @@ def subscribe_user_to_feed(
     with DATASTORE_CLIENT.transaction():
         if feed.feed_id not in user.subscribed_to:
             user.subscribed_to.append(feed.feed_id)
-            subscription = Subscription(feed_id=feed.feed_id, user_id=user.email)
+            subscription = Subscription(feed_id=feed.feed_id, user_id=user.user_id)
             feed.number_of_subscriptions = feed.number_of_subscriptions + 1
             feed_items = feed_item_repository.fetch_all_for_feed(feed)
             news_items = [
                 NewsItem(
                     feed_id=feed.feed_id,
-                    user_id=user.email,
+                    user_id=user.user_id,
                     feed_item_id=feed_item.feed_item_id,
+                    feed_title=feed.title,
+                    title=feed_item.title,
+                    description=feed_item.description,
+                    link=feed_item.link,
+                    published=feed_item.published or datetime.utcnow(),
                 )
                 for feed_item in feed_items
             ]

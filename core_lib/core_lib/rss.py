@@ -5,6 +5,9 @@ from datetime import datetime
 from typing import Generator, Optional, List
 from xml.etree.ElementTree import Element
 
+import dateparser
+import pytz
+
 from core_lib.repositories import Feed, FeedItem
 
 
@@ -44,12 +47,12 @@ def setlocale(name: str) -> Generator:
             locale.setlocale(locale.LC_ALL, saved)
 
 
-def _parse_optional_rss_datetime(dt: Optional[str]) -> Optional[datetime]:
+def _parse_optional_rss_datetime(freely_formatted_datetime: Optional[str]) -> Optional[datetime]:
     """ Sun, 19 May 2002 15:21:36 GMT parsing to datetime. """
-    if dt is None:
+    if freely_formatted_datetime is None:
         return None
-    with setlocale("en_US.utf8"):
-        return datetime.strptime(dt, "%a, %d %b %Y %H:%M:%S %Z")
+    in_this_tz: datetime = dateparser.parse(freely_formatted_datetime, languages=["en"])
+    return in_this_tz.astimezone(tz=pytz.UTC)
 
 
 def rss_document_to_feed_items(feed: Feed, tree: Element) -> List[FeedItem]:
@@ -61,7 +64,7 @@ def rss_document_to_feed_items(feed: Feed, tree: Element) -> List[FeedItem]:
             link=item_element.findtext("link"),
             description=item_element.findtext("description"),
             published=_parse_optional_rss_datetime(item_element.findtext("pubDate")),
-            created_on=datetime.now(),
+            created_on=datetime.utcnow(),
         )
         for item_element in item_elements
     ]
