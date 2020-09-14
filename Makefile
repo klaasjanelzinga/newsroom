@@ -29,7 +29,7 @@ flakes-check: black-check mypy outdated flake8
 flake8:
 	flake8 core_lib/core_lib
 tests:
-	(cd core_lib && pytest --cov core_lib --cov-report=html tests)
+	(cd core_lib && export unit_tests=1 && pytest --cov core_lib --cov-report=html tests)
 
 dev-requirements:
 	pip install -r requirements.txt

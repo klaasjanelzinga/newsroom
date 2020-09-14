@@ -1,9 +1,10 @@
 from typing import List
-from unittest.mock import MagicMock, Mock, AsyncMock, patch
+from unittest.mock import MagicMock, Mock, AsyncMock
 
 import pytest
 from aiohttp import ClientSession, ClientResponse
 from defusedxml.ElementTree import parse
+from google.cloud.datastore import Client
 
 from core_lib.feed import fetch_feed_information_for
 
@@ -26,7 +27,8 @@ def aiohttp_client_session_for_file(file_names: List[str]) -> MagicMock:
 
 
 @pytest.mark.asyncio
-async def test_fetch_information_for():
+async def test_fetch_information_for(feed_repository: MagicMock, feed_item_repository: MagicMock):
+
     xml_files = [
         "tests/sample_rss_feeds/venues.xml",
         "tests/sample_rss_feeds/ars_technica.xml",
@@ -38,7 +40,7 @@ async def test_fetch_information_for():
         feed = await fetch_feed_information_for(client_session, url)
         xml_element = parse(xml_file)
         assert feed is not None
-        assert feed.id is not None
+        assert feed.feed_id is not None
         assert feed.description == xml_element.find("channel/description").text
         assert feed.title == xml_element.find("channel/title").text
         assert feed.link == xml_element.find("channel/link").text
@@ -48,18 +50,21 @@ async def test_fetch_information_for():
             assert feed.image_link == xml_element.find("channel/image/link").text
             assert feed.image_title == xml_element.find("channel/image/title").text
 
+    feed_repository.upsert.assert_called()
+    feed_item_repository.upsert_many.assert_called()
+
 
 @pytest.mark.asyncio
 async def test_fetch_information_for_with_html():
     html_file = "tests/sample_rss_feeds/pitchfork_best.html"
     xml_file = "tests/sample_rss_feeds/pitchfork_best.xml"
-    url = "https://venues.n-kj.nl/events.xml"
+    url = "https://pitchfork.com/rss/reviews/best/albums/"
     client_session = aiohttp_client_session_for_file([html_file, xml_file])
     feed = await fetch_feed_information_for(client_session, url)
     xml_element = parse(xml_file)
     assert feed is not None
     # Url used from the link in the html file.
-    assert feed.url == "https://pitchfork.com/rss/reviews/best/albums/"
+    assert feed.url == "https://pitchfork.com/rss/reviews/best/albums"
     assert feed.description == xml_element.find("channel/description").text
     assert feed.title == xml_element.find("channel/title").text
     assert feed.link == xml_element.find("channel/link").text
