@@ -5,8 +5,14 @@ from faker import Faker
 from google.cloud.datastore import Client
 
 from core_lib import application_data
-from core_lib.repositories import User, Feed, NewsItemRepository, SubscriptionRepository, FeedRepository, \
-    FeedItemRepository
+from core_lib.repositories import (
+    User,
+    Feed,
+    NewsItemRepository,
+    SubscriptionRepository,
+    FeedRepository,
+    FeedItemRepository,
+)
 
 
 def mirror_side_effect(arg):
