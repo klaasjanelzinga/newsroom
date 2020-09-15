@@ -1,5 +1,3 @@
-from typing import Tuple
-
 import pytest
 from faker import Faker
 
@@ -47,13 +45,6 @@ def repositories():
     repositories.mock_user_repository().upsert.side_effect = mirror_side_effect
     repositories.mock_feed_repository().upsert.side_effect = mirror_side_effect
     return application_data.repositories
-
-
-@pytest.fixture
-def subscribed_user(user: User, feed: Feed) -> Tuple[User, Feed]:
-    user.subscribed_to = [feed.feed_id]
-    feed.number_of_subscriptions = 1
-    return user, feed
 
 
 def mirror_side_effect(arg):

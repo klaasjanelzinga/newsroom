@@ -6,7 +6,7 @@ from pydantic.main import BaseModel
 from starlette.status import HTTP_200_OK
 
 from api.api_application_data import security
-from core_lib.application_data import news_item_repository
+from core_lib.application_data import repositories
 from core_lib.repositories import NewsItem
 
 news_router = APIRouter()
@@ -28,7 +28,7 @@ async def news_items(fetch_offset: str = None, authorization: Optional[str] = He
     """ Fetch the next set of news items. """
     user = await security.get_approved_user(authorization)
     cursor = bytes(fetch_offset, "utf-8") if fetch_offset is not None else None
-    token, result = news_item_repository.fetch_items(user=user, cursor=cursor, limit=30)
+    token, result = repositories.news_item_repository.fetch_items(user=user, cursor=cursor, limit=30)
 
     return NewsItemListResponse(token=token, news_items=result)
 
@@ -45,7 +45,7 @@ async def read_news_items(
     """ Fetch the next set of news items. """
     user = await security.get_approved_user(authorization)
     cursor = bytes(fetch_offset, "utf-8") if fetch_offset is not None else None
-    token, result = news_item_repository.fetch_read_items(user=user, cursor=cursor, limit=30)
+    token, result = repositories.news_item_repository.fetch_read_items(user=user, cursor=cursor, limit=30)
 
     return NewsItemListResponse(token=token, news_items=result)
 
@@ -57,4 +57,4 @@ class MarkAsReadRequest(BaseModel):
 @news_router.post("/news-items/mark-as-read", tags=["news-items"])
 async def mark_as_read(mark_as_read_request: MarkAsReadRequest, authorization: Optional[str] = Header(None)) -> None:
     user = await security.get_approved_user(authorization)
-    news_item_repository.mark_items_as_read(user=user, news_item_ids=mark_as_read_request.news_item_ids)
+    repositories.news_item_repository.mark_items_as_read(user=user, news_item_ids=mark_as_read_request.news_item_ids)

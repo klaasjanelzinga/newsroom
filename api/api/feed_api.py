@@ -5,9 +5,9 @@ from fastapi import APIRouter, Header, Response, HTTPException
 from pydantic.main import BaseModel
 from starlette.status import HTTP_200_OK, HTTP_201_CREATED, HTTP_404_NOT_FOUND, HTTP_400_BAD_REQUEST
 
-from api.api_application_data import security, client_session
+from api.api_application_data import security
 from api.api_utils import ErrorMessage
-from core_lib.application_data import feed_repository
+from core_lib.application_data import repositories
 from core_lib.feed import (
     fetch_feed_information_for,
     subscribe_user_to_feed,
@@ -49,14 +49,14 @@ async def fetch_feed_information_for_url(
     and create a new Feed Entity. Return this entity.
     """
     user = await security.get_approved_user(authorization)
-    feed = feed_repository.find_by_url(url)
+    feed = repositories.feed_repository.find_by_url(url)
     if feed is not None:
         response.status_code = HTTP_200_OK
         return FeedWithSubscriptionInformationResponse(feed=feed, user_is_subscribed=feed.feed_id in user.subscribed_to)
 
     # find location, and store information.
     try:
-        feed = await fetch_feed_information_for(session=client_session, url=url)
+        feed = await fetch_feed_information_for(session=repositories.client_session, url=url)
         if feed is None:
             raise HTTPException(status_code=HTTP_404_NOT_FOUND, detail=f"No feed with url {url} found")
         response.status_code = HTTP_201_CREATED
@@ -73,7 +73,7 @@ async def get_all_feeds(
 ) -> List[FeedWithSubscriptionInformationResponse]:
     user = await security.get_approved_user(authorization)
     subscribed_feed_ids = user.subscribed_to
-    feeds = feed_repository.all_feeds()
+    feeds = repositories.feed_repository.all_feeds()
     return [
         FeedWithSubscriptionInformationResponse(feed=feed, user_is_subscribed=feed.feed_id in subscribed_feed_ids)
         for feed in feeds
@@ -89,7 +89,7 @@ async def subscribe_to_feed(feed_id: str, authorization: Optional[str] = Header(
     :param authorization: Token of the user.
     """
     user = await security.get_approved_user(authorization)
-    feed = feed_repository.get(feed_id)
+    feed = repositories.feed_repository.get(feed_id)
     user = subscribe_user_to_feed(user=user, feed=feed)
     return user
 
@@ -103,6 +103,6 @@ async def unsubscribe_from_feed(feed_id: str, authorization: Optional[str] = Hea
     :param authorization: Token of the user.
     """
     user = await security.get_approved_user(authorization)
-    feed = feed_repository.get(feed_id)
+    feed = repositories.feed_repository.get(feed_id)
     user = unsubscribe_user_from_feed(user=user, feed=feed)
     return user

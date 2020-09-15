@@ -6,14 +6,7 @@ from aiohttp import ClientSession, ClientConnectorError
 from bs4 import BeautifulSoup
 from defusedxml.ElementTree import fromstring
 
-from core_lib.application_data import (
-    feed_item_repository,
-    feed_repository,
-    DATASTORE_CLIENT,
-    subscription_repository,
-    user_repository,
-    news_item_repository,
-)
+from core_lib.application_data import repositories
 from core_lib.repositories import Feed, Subscription, NewsItem, User
 from core_lib.rss import rss_document_to_feed, rss_document_to_feed_items
 
@@ -25,8 +18,8 @@ def _process_rss_document(
     feed = rss_document_to_feed(url, rss_document)
     feed_items = rss_document_to_feed_items(feed, rss_document)
     feed.number_of_items = len(feed_items)
-    feed = feed_repository.upsert(feed)
-    feed_item_repository.upsert_many(feed_items)
+    feed = repositories.feed_repository.upsert(feed)
+    repositories.feed_item_repository.upsert_many(feed_items)
     return feed
 
 
@@ -50,7 +43,7 @@ async def fetch_feed_information_for(
     """
     try:
         async with session.get(url) as response:
-            with DATASTORE_CLIENT.transaction():
+            with repositories.client.transaction():
                 text = await response.text()
                 if text.find("<!DOCTYPE html>") != -1 or text.find("<html") != -1:
                     soup = BeautifulSoup(text, "html.parser")
@@ -72,12 +65,12 @@ def subscribe_user_to_feed(
     user: User,
     feed: Feed,
 ) -> User:
-    with DATASTORE_CLIENT.transaction():
+    with repositories.client.transaction():
         if feed.feed_id not in user.subscribed_to:
             user.subscribed_to.append(feed.feed_id)
             subscription = Subscription(feed_id=feed.feed_id, user_id=user.user_id)
             feed.number_of_subscriptions = feed.number_of_subscriptions + 1
-            feed_items = feed_item_repository.fetch_all_for_feed(feed)
+            feed_items = repositories.feed_item_repository.fetch_all_for_feed(feed)
             news_items = [
                 NewsItem(
                     feed_id=feed.feed_id,
@@ -92,22 +85,22 @@ def subscribe_user_to_feed(
                 for feed_item in feed_items
             ]
 
-            subscription_repository.upsert(subscription)
-            user_repository.upsert(user)
-            feed_repository.upsert(feed)
-            news_item_repository.upsert_many(news_items=news_items)
+            repositories.subscription_repository.upsert(subscription)
+            repositories.user_repository.upsert(user)
+            repositories.feed_repository.upsert(feed)
+            repositories.news_item_repository.upsert_many(news_items=news_items)
     return user
 
 
 def unsubscribe_user_from_feed(user: User, feed: Feed) -> User:
-    with DATASTORE_CLIENT.transaction():
+    with repositories.client.transaction():
         if feed.feed_id in user.subscribed_to:
             user.subscribed_to.remove(feed.feed_id)
 
-            news_item_repository.delete_user_feed(user=user, feed=feed)
-            subscription_repository.delete_user_feed(user=user, feed=feed)
+            repositories.news_item_repository.delete_user_feed(user=user, feed=feed)
+            repositories.subscription_repository.delete_user_feed(user=user, feed=feed)
             feed.number_of_subscriptions = feed.number_of_subscriptions - 1
 
-            feed_repository.upsert(feed)
-            user_repository.upsert(user)
+            repositories.feed_repository.upsert(feed)
+            repositories.user_repository.upsert(user)
     return user

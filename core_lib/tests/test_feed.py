@@ -4,8 +4,8 @@ from unittest.mock import MagicMock, Mock, AsyncMock
 import pytest
 from aiohttp import ClientSession, ClientResponse
 from defusedxml.ElementTree import parse
-from google.cloud.datastore import Client
 
+from core_lib.application_data import Repositories
 from core_lib.feed import fetch_feed_information_for
 
 
@@ -27,7 +27,7 @@ def aiohttp_client_session_for_file(file_names: List[str]) -> MagicMock:
 
 
 @pytest.mark.asyncio
-async def test_fetch_information_for(feed_repository: MagicMock, feed_item_repository: MagicMock):
+async def test_fetch_information_for(repositories: Repositories):
 
     xml_files = [
         "tests/sample_rss_feeds/venues.xml",
@@ -50,8 +50,8 @@ async def test_fetch_information_for(feed_repository: MagicMock, feed_item_repos
             assert feed.image_link == xml_element.find("channel/image/link").text
             assert feed.image_title == xml_element.find("channel/image/title").text
 
-    feed_repository.upsert.assert_called()
-    feed_item_repository.upsert_many.assert_called()
+    repositories.mock_feed_repository().upsert.assert_called()
+    repositories.mock_feed_item_repository().upsert_many.assert_called()
 
 
 @pytest.mark.asyncio

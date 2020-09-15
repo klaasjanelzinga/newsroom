@@ -1,7 +1,4 @@
-from aiohttp import ClientSession
-
 from api.security import Security
-from core_lib.application_data import user_repository
+from core_lib.application_data import repositories
 
-security = Security(user_repository)
-client_session = ClientSession()
+security = Security(user_repository=repositories.user_repository)
