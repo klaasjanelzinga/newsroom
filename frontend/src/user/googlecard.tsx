@@ -1,13 +1,11 @@
-import { Card, CardContent, Typography, withStyles } from '@material-ui/core';
-import { withSnackbar } from 'notistack';
-import PropTypes from 'prop-types';
-import React from 'react';
-import GoogleLogin from 'react-google-login';
-import { withRouter } from 'react-router-dom';
-import UserProfile from './UserProfile';
+import * as React from 'react';
+import {Card, CardContent, createStyles, Typography, WithStyles, withStyles} from '@material-ui/core';
+import {withSnackbar, WithSnackbarProps} from 'notistack';
+import GoogleLogin, {GoogleLoginResponse, GoogleLoginResponseOffline} from 'react-google-login';
+import {RouteComponentProps, withRouter} from 'react-router-dom';
 
 
-const styles = {
+const styles = createStyles({
     card: {
         display: 'flex',
         margin: '10px',
@@ -26,32 +24,38 @@ const styles = {
         backgroundColor: 'lightgrey',
         padding: '2px',
     }
-};
+});
 
-class GoogleCard extends React.Component {
+interface GoogleCardProps extends RouteComponentProps, WithSnackbarProps, WithStyles<typeof styles>{
+    validateSignInWithServer: (bearerToken: string) => void
+}
 
-    constructor(props) {
+class GoogleCard extends React.Component<GoogleCardProps> {
+
+    constructor(props: GoogleCardProps) {
         super(props);
 
         this.responseGoogle = this.responseGoogle.bind(this);
         this.handleFailure = this.handleFailure.bind(this);
     }
 
-    responseGoogle(response) {
-        let userProfile = new UserProfile(
-            response.profileObj.givenName,
-            response.profileObj.familyName,
-            response.profileObj.email,
-            response.profileObj.imageUrl,
-
-            response.accessToken,
-            response.tokenId,
-        );
-        this.props.validateSignInWithServer(userProfile);        
+    responseGoogle = (response: GoogleLoginResponse | GoogleLoginResponseOffline): void => {
+        const loginResponse = response as GoogleLoginResponse
+        if (loginResponse.profileObj) {
+            this.props.validateSignInWithServer(loginResponse.tokenId);
+        } else {
+            this.props.enqueueSnackbar("Cannot login, we appear to be offline!", {
+                variant: 'error',
+                autoHideDuration: 6000,
+            })
+        }
     }
 
-    handleFailure(response) {
-        this.props.notifyError(`Failed fetching data. ${response}`);
+    handleFailure = () => {
+        this.props.enqueueSnackbar(`An error occured while signing in. Please try again.`, {
+            variant: 'error',
+            autoHideDuration: 6000,
+        });
     }
 
     render() {
@@ -98,10 +102,6 @@ class GoogleCard extends React.Component {
         </Card>
     }
 }
-
-GoogleCard.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
 
 export default withStyles(styles)(withRouter(withSnackbar(GoogleCard)));
 

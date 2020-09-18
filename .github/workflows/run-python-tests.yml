@@ -14,7 +14,7 @@ jobs:
         run: scripts/decrypt-google-appengine-credentials.sh
         env:
           GOOGLE_APP_ENGINE_KEY: ${{ secrets.GOOGLE_APP_ENGINE_KEY }}
-      - name: Decrypt the secret for google-app-engine
+      - name: Decrypt the secret for google-app-engine deployer
         run: scripts/decrypt-deployer-key.sh
         env:
           DEPLOYER_KEY: ${{ secrets.DEPLOYER_KEY }}

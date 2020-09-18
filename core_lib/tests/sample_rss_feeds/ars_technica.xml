@@ -1,0 +1,462 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" media="screen" href="/~d/styles/rss2full.xsl"?><?xml-stylesheet type="text/css" media="screen" href="http://feeds.arstechnica.com/~d/styles/itemcontent.css"?>
+<rss xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+     xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"
+     xmlns:sy="http://purl.org/rss/1.0/modules/syndication/" xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+     version="2.0">
+
+    <channel>
+        <title>Biz &amp; IT – Ars Technica</title>
+
+        <link>https://arstechnica.com</link>
+        <description>Serving the Technologist for more than a decade. IT news, reviews, and analysis.</description>
+        <lastBuildDate>Fri, 21 Aug 2020 13:13:20 +0000</lastBuildDate>
+        <language>en-US</language>
+        <sy:updatePeriod>hourly</sy:updatePeriod>
+        <sy:updateFrequency>1</sy:updateFrequency>
+        <generator>https://wordpress.org/?v=4.9.15</generator>
+
+        <image>
+            <url>https://cdn.arstechnica.net/wp-content/uploads/2016/10/cropped-ars-logo-512_480-32x32.png</url>
+            <title>Biz &amp; IT – Ars Technica</title>
+            <link>https://arstechnica.com</link>
+            <width>32</width>
+            <height>32</height>
+        </image>
+        <atom10:link xmlns:atom10="http://www.w3.org/2005/Atom" rel="self" type="application/rss+xml"
+                     href="http://feeds.arstechnica.com/arstechnica/technology-lab"/>
+        <feedburner:info xmlns:feedburner="http://rssnamespace.org/feedburner/ext/1.0"
+                         uri="arstechnica/technology-lab"/>
+        <atom10:link xmlns:atom10="http://www.w3.org/2005/Atom" rel="hub" href="http://pubsubhubbub.appspot.com/"/>
+        <item>
+            <title>Respawn point: The inevitable reincarnation of the corporate office</title>
+            <link>https://arstechnica.com/?p=1700173</link>
+            <pubDate>Fri, 21 Aug 2020 13:00:04 +0000</pubDate>
+            <dc:creator><![CDATA[Sean Gallagher]]></dc:creator>
+            <category><![CDATA[Biz & IT]]></category>
+            <category><![CDATA[Features]]></category>
+            <category><![CDATA[back to work]]></category>
+            <category><![CDATA[feature]]></category>
+            <category><![CDATA[feature report]]></category>
+            <category><![CDATA[the future of business]]></category>
+            <category><![CDATA[work from home]]></category>
+
+            <guid isPermaLink="false">https://arstechnica.com/?p=1700173</guid>
+            <description>
+                <![CDATA[Forget the utopian visions—nothing ever happens neatly, or without struggle.]]></description>
+            <content:encoded><![CDATA[<div id="rss-wrap">
+<figure class="intro-image intro-left"><img src="https://cdn.arstechnica.net/wp-content/uploads/2020/08/pandemic-office-cubicles-800x450.jpg" alt="If you're back in the office, &lt;a href=https://www.youtube.com/watch?v=qyUnSuYYs18&gt;this helpful song&lt;/a&gt; will help you remember the cardinal rule of social distancing."><p class="caption" style="font-size:0.8em"><a href="https://cdn.arstechnica.net/wp-content/uploads/2020/08/pandemic-office-cubicles.jpg" class="enlarge-link" data-height="563" data-width="1000">Enlarge</a> <span class="sep">/</span> If you're back in the office, <a href="https://www.youtube.com/watch?v=qyUnSuYYs18">this helpful song</a> will help you remember the cardinal rule of social distancing. (credit: Aurich Lawson / Getty Images)</p>  </figure><div><a name="page-1"></a></div>
+<p>If you told any executive at a major corporation in mid-2019 that close to half of the US workforce would be working from home within the next year, they would have at least raised a skeptical eyebrow (and then probably called security to have you removed). Yet, here we are.</p>
+<p>Major technology companies, including Microsoft, Facebook, and Google, have closed their physical offices until well into 2021. <a href="https://blog.twitter.com/en_us/topics/company/2020/keeping-our-employees-and-partners-safe-during-coronavirus.html">Twitter has told many employees</a> that they can work from home permanently. And now that we have nearly six months of involuntary widespread work-from-home behind us, many other organizations are also reconsidering the value of office space.</p>
+<p>In April, a Gallup poll showed <a href="https://news.gallup.com/poll/306695/workers-discovering-affinity-remote-work.aspx">62 percent of the workforce</a> working from home, and 59 percent hoping they could continue to do so as much as possible once the pandemic is under control. While the numbers have since dropped to some degree—Stanford Institute for Economic Research figures in June showed only <a href="https://news.stanford.edu/2020/06/29/snapshot-new-working-home-economy/">42 percent of the US workforce</a> working from home full-time—the fact remains that people's relationship with their workplace has been dramatically restructured, perhaps permanently.</p></div><p><a href="https://arstechnica.com/?p=1700173#p3">Read 25 remaining paragraphs</a> | <a href="https://arstechnica.com/?p=1700173&comments=1">Comments</a></p>]]></content:encoded>
+        </item>
+        <item>
+            <title>US government built secret iPod with Apple’s help, former engineer says</title>
+            <link>https://arstechnica.com/?p=1700318</link>
+            <pubDate>Thu, 20 Aug 2020 20:07:59 +0000</pubDate>
+            <dc:creator><![CDATA[Dan Goodin]]></dc:creator>
+            <category><![CDATA[Biz & IT]]></category>
+            <category><![CDATA[Policy]]></category>
+            <category><![CDATA[Tech]]></category>
+            <category><![CDATA[apple]]></category>
+            <category><![CDATA[iPod]]></category>
+            <category><![CDATA[US government]]></category>
+
+            <guid isPermaLink="false">https://arstechnica.com/?p=1700318</guid>
+            <description><![CDATA[iPod engineer says only four people inside Apple knew of project.]]></description>
+            <content:encoded><![CDATA[<div id="rss-wrap">
+<figure class="intro-image full-width"><img src="https://cdn.arstechnica.net/wp-content/uploads/2020/08/ShrinkTHISFUCKER.jpg" alt="US government built secret iPod with Apple’s help, former engineer says"></figure><div><a name="page-1"></a></div>
+<p>An Apple engineer who helped launch the iPod said he helped the US government build a secret version of the device that could covertly collect data.</p>
+<p>David Shayer, the second software engineer hired for the iPod project in 2001, said he first learned of the project in 2005, when he received an office visit from his boss’s boss.</p>
+<p>“He cut to the chase,” Shayer recounts in a <a href="https://tidbits.com/2020/08/17/the-case-of-the-top-secret-ipod/">post published on Monday</a> by <a href="https://tidbits.com/about/">TidBITS</a>, an online newsletter covering all things Apple. “‘I have a special assignment for you. Your boss doesn’t know about it. You’ll help two engineers from the US Department of Energy build a special iPod. Report only to me.’”</p></div><p><a href="https://arstechnica.com/?p=1700318#p3">Read 13 remaining paragraphs</a> | <a href="https://arstechnica.com/?p=1700318&comments=1">Comments</a></p>]]></content:encoded>
+        </item>
+        <item>
+            <title>AT&amp;T, T-Mobile fight speed tests that could prove their coverage maps wrong</title>
+            <link>https://arstechnica.com/?p=1700218</link>
+            <pubDate>Thu, 20 Aug 2020 17:53:19 +0000</pubDate>
+            <dc:creator><![CDATA[Jon Brodkin]]></dc:creator>
+            <category><![CDATA[Biz & IT]]></category>
+            <category><![CDATA[Policy]]></category>
+            <category><![CDATA[AT&T]]></category>
+            <category><![CDATA[broadband maps]]></category>
+            <category><![CDATA[FCC]]></category>
+            <category><![CDATA[t-mobile]]></category>
+            <category><![CDATA[verizon]]></category>
+
+            <guid isPermaLink="false">https://arstechnica.com/?p=1700218</guid>
+            <description>
+                <![CDATA[Carriers oppose FCC drive-test mandate despite history of exaggerating coverage.]]></description>
+            <content:encoded><![CDATA[<div id="rss-wrap">
+<figure class="intro-image intro-left"><img src="https://cdn.arstechnica.net/wp-content/uploads/2020/08/getty-phone-car-800x533.jpg" alt="A man's hand tapping a smartphone in a car."><p class="caption" style="font-size:0.8em"><a href="https://cdn.arstechnica.net/wp-content/uploads/2020/08/getty-phone-car.jpg" class="enlarge-link" data-height="1414" data-width="2121">Enlarge</a> (credit: Getty Images | Cris Cantón)</p>  </figure><div><a name="page-1"></a></div>
+<p>AT&amp;T and T-Mobile are fighting a Federal Communications Commission plan to require drive tests that would verify whether the mobile carriers' coverage claims are accurate.</p>
+<p>The carriers' objections came in response to the FCC <a href="https://ecfsapi.fcc.gov/file/07172692426514/FCC-20-94A1.pdf">seeking comment on a plan</a> to improve the nation's <a href="https://arstechnica.com/tech-policy/2019/08/the-fccs-horrible-broadband-mapping-system-is-finally-getting-an-upgrade/">inadequate broadband maps</a>. Besides submitting more accurate coverage maps, the FCC plan would require carriers to do a statistically significant amount of drive testing.</p>
+<p>"In order to help verify the accuracy of mobile providers' submitted coverage maps, we propose that carriers submit evidence of network performance based on a sample of on-the-ground tests that is statistically appropriate for the area tested," the FCC proposal issued in July 2020 said.</p></div><p><a href="https://arstechnica.com/?p=1700218#p3">Read 14 remaining paragraphs</a> | <a href="https://arstechnica.com/?p=1700218&comments=1">Comments</a></p>]]></content:encoded>
+        </item>
+        <item>
+            <title>Want Verizon or AT&amp;T 5G? You’ll have to buy an expensive unlimited plan</title>
+            <link>https://arstechnica.com/?p=1700042</link>
+            <pubDate>Wed, 19 Aug 2020 19:40:42 +0000</pubDate>
+            <dc:creator><![CDATA[Jon Brodkin]]></dc:creator>
+            <category><![CDATA[Biz & IT]]></category>
+            <category><![CDATA[5G]]></category>
+            <category><![CDATA[AT&T]]></category>
+            <category><![CDATA[t-mobile]]></category>
+            <category><![CDATA[verizon]]></category>
+
+            <guid isPermaLink="false">https://arstechnica.com/?p=1700042</guid>
+            <description>
+                <![CDATA[5G technically doesn't cost extra, but it's only in the pricier unlimited plans.]]></description>
+            <content:encoded><![CDATA[<div id="rss-wrap">
+<figure class="intro-image intro-left"><img src="https://cdn.arstechnica.net/wp-content/uploads/2019/03/verizon-5g-sign-800x450.jpg" alt="A giant Verizon 5G logo in an expo hall."><p class="caption" style="font-size:0.8em"><a href="https://cdn.arstechnica.net/wp-content/uploads/2019/03/verizon-5g-sign.jpg" class="enlarge-link" data-height="720" data-width="1280">Enlarge</a> <span class="sep">/</span> A Verizon booth at Mobile World Congress Americas in Los Angeles in September 2018. (credit: <a rel="nofollow" class="caption-link" href="https://www.verizon.com/about/news/speed-september-12-2018">Verizon</a>)</p>  </figure><div><a name="page-1"></a></div>
+<p>Verizon is adding some perks to its wireless plans this week, but some things aren't changing: Verizon still restricts 5G service to its most expensive unlimited-data plans. If you want to save money by getting a limited-data plan, you'll have to make do with 4G only—which, admittedly, is not a big problem for most people given how <a href="https://arstechnica.com/tech-policy/2020/07/verizon-admits-big-limits-in-5g-network-agrees-to-pull-misleading-ads/">sparse Verizon's 5G network is</a>.</p>
+<p>AT&amp;T still enforces a similar restriction, including 5G only in its unlimited-data plans while selling limited-data plans without 5G. T-Mobile is taking a different approach, <a href="https://www.t-mobile.com/coverage/coverage-map">saying on its website</a> that "5G access is included in all our plans, at no additional cost."</p>
+<p>Verizon's <a href="https://www.verizon.com/about/news/verizon-unlocks-more-value-customers-disney-hulu-and-espn-included">announcement on Monday</a> added features to the company's existing unlimited plans without changing the prices. One perk played up in the announcement is the Disney Bundle that includes Disney+, Hulu, and ESPN+. That's a little better than Verizon's current unlimited plan that includes one year of Disney+ but no Hulu and ESPN+. Verizon said the new versions of the plans will be available on Thursday this week.</p></div><p><a href="https://arstechnica.com/?p=1700042#p3">Read 9 remaining paragraphs</a> | <a href="https://arstechnica.com/?p=1700042&comments=1">Comments</a></p>]]></content:encoded>
+        </item>
+        <item>
+            <title>New P2P botnet infects SSH servers all over the world</title>
+            <link>https://arstechnica.com/?p=1699945</link>
+            <pubDate>Wed, 19 Aug 2020 13:00:16 +0000</pubDate>
+            <dc:creator><![CDATA[Dan Goodin]]></dc:creator>
+            <category><![CDATA[Biz & IT]]></category>
+            <category><![CDATA[Tech]]></category>
+            <category><![CDATA[botnets]]></category>
+            <category><![CDATA[peer-to-peer]]></category>
+            <category><![CDATA[secure shell]]></category>
+            <category><![CDATA[SSH]]></category>
+
+            <guid isPermaLink="false">https://arstechnica.com/?p=1699945</guid>
+            <description>
+                <![CDATA[Botnet is hard to detect and with no centralized control server, harder to take down.]]></description>
+            <content:encoded><![CDATA[<div id="rss-wrap">
+<figure class="intro-image intro-left"><img src="https://cdn.arstechnica.net/wp-content/uploads/2019/09/botnet5-800x450.jpg" alt="Cartoon image of a desktop computer under attack from viruses."><p class="caption" style="font-size:0.8em"><a href="https://cdn.arstechnica.net/wp-content/uploads/2019/09/botnet5.jpg" class="enlarge-link" data-height="563" data-width="1000">Enlarge</a> (credit: Aurich Lawson)</p>  </figure><div><a name="page-1"></a></div>
+<p>Researchers have found what they believe is a previously undiscovered botnet that uses unusually advanced measures to covertly target millions of servers around the world.</p>
+<p>The botnet uses proprietary software written from scratch to infect servers and corral them into a peer-to-peer network, researchers from security firm Guardicore Labs <a href="https://www.guardicore.com/2020/08/fritzfrog-p2p-botnet-infects-ssh-servers/">reported on Wednesday</a>. P2P botnets distribute their administration among many infected nodes rather than relying on a control server to send commands and receive pilfered data. With no centralized server, the botnets are generally harder to spot and more difficult to shut down.</p>
+<p>“What was intriguing about this campaign was that, at first sight, there was no apparent command and control (CNC) server being connected to,” Guardicore Labs researcher Ophir Harpaz wrote. “It was shortly after the beginning of the research when we understood no CNC existed in the first place.”</p></div><p><a href="https://arstechnica.com/?p=1699945#p3">Read 9 remaining paragraphs</a> | <a href="https://arstechnica.com/?p=1699945&comments=1">Comments</a></p>]]></content:encoded>
+        </item>
+        <item>
+            <title>The Golden Age of computer user groups</title>
+            <link>https://arstechnica.com/?p=1694837</link>
+            <pubDate>Wed, 19 Aug 2020 11:45:17 +0000</pubDate>
+            <dc:creator><![CDATA[Ars Staff]]></dc:creator>
+            <category><![CDATA[Biz & IT]]></category>
+            <category><![CDATA[Features]]></category>
+
+            <guid isPermaLink="false">https://arstechnica.com/?p=1694837</guid>
+            <description>
+                <![CDATA[Long before subreddits, computer enthusiasts used to get together—in-person! ]]></description>
+            <content:encoded><![CDATA[<div id="rss-wrap">
+<figure class="intro-image intro-left"><img src="https://cdn.arstechnica.net/wp-content/uploads/2020/08/GettyImages-136382295-800x568.jpg" alt="Programmer power, indeed. (Here's a Tufts computer group sometime in the mid to late 1970. Getty caption explicitly states, &quot;Note equipment and 1970s fashions.&quot;)"><p class="caption" style="font-size:0.8em"><a href="https://cdn.arstechnica.net/wp-content/uploads/2020/08/GettyImages-136382295.jpg" class="enlarge-link" data-height="3861" data-width="5441">Enlarge</a> <span class="sep">/</span> Programmer power, indeed. (Here's a Tufts computer group sometime in the mid to late 1970. Getty caption explicitly states, "Note equipment and 1970s fashions.") (credit: Spencer Grant/Getty Images)</p>  </figure><div><a name="page-1"></a></div>
+<p>The <a href="https://www.computerhistory.org/revolution/personal-computers/17/312">Homebrew Computer Club</a> where the Apple I got its start is deservedly famous—but it's far from tech history's only community gathering centered on CPUs. Throughout the 70s and into the 90s, groups around the world helped hapless users figure out their computer systems, learn about technology trends, and discover the latest whiz-bang applications.<span class="Apple-converted-space"> And these groups didn't stick to Slacks, email threads, or forums; the meetings often happened IRL.</span></p>
+<p>But to my dismay, many young technically-inclined whippersnappers are completely unaware of computer user groups’ existence and their importance in the personal computer’s development. That’s a damned shame. Our current reality may largely be isolated to screens, but these organizations helped countless enthusiasts find community <em>because</em> of them. Computer groups celebrated the industry’s fundamental values: a delight in technology’s capabilities, a willingness to share knowledge, and a tacit understanding that we’re all here to help one another.<span class="Apple-converted-space"> </span></p>
+<p>And gosh, they were fun.</p></div><p><a href="https://arstechnica.com/?p=1694837#p3">Read 40 remaining paragraphs</a> | <a href="https://arstechnica.com/?p=1694837&comments=1">Comments</a></p>]]></content:encoded>
+        </item>
+        <item>
+            <title>Booze and cruise providers are the latest to be hit by ransomware scourge</title>
+            <link>https://arstechnica.com/?p=1699855</link>
+            <pubDate>Tue, 18 Aug 2020 20:56:09 +0000</pubDate>
+            <dc:creator><![CDATA[Dan Goodin]]></dc:creator>
+            <category><![CDATA[Biz & IT]]></category>
+            <category><![CDATA[Policy]]></category>
+            <category><![CDATA[Tech]]></category>
+            <category><![CDATA[brown-forman]]></category>
+            <category><![CDATA[carnival]]></category>
+            <category><![CDATA[Cyberattacks]]></category>
+            <category><![CDATA[ransomware]]></category>
+
+            <guid isPermaLink="false">https://arstechnica.com/?p=1699855</guid>
+            <description>
+                <![CDATA[Jack Daniel's distiller and Carnival cruise operator both warn of personal data theft.]]></description>
+            <content:encoded><![CDATA[<div id="rss-wrap">
+<figure class="intro-image intro-left"><img src="https://cdn.arstechnica.net/wp-content/uploads/2016/04/ransom-note700-640x366.jpg" alt="A stylized ransom note asks for bitcoin in exchange for stolen data."><p class="caption" style="font-size:0.8em"><a href="https://cdn.arstechnica.net/wp-content/uploads/2016/04/ransom-note700.jpg" class="enlarge-link" data-height="400" data-width="700">Enlarge</a> (credit: <a rel="nofollow" class="caption-link" href="https://arstechnica.com/author/aurich-lawson/">Aurich Lawson</a>)</p>  </figure><div><a name="page-1"></a></div>
+<p>Ransomware operators are continuing their blitz on corporations with deep pockets, with Jack Daniel’s distiller Brown-Forman and cruise line behemoth Carnival being two of the latest to be hit.</p>
+<p>In a statement, Brown-Forman officials wrote:</p>
+<blockquote><p>Brown-Forman was the victim of a cybersecurity attack. Our quick actions upon discovering the attack prevented our systems from being encrypted. Unfortunately, we believe some information, including employee data, was impacted. We are working closely with law enforcement, as well as world class third-party data security experts, to mitigate and resolve this situation as soon as possible. There are no active negotiations.</p></blockquote>
+<p>The statement came after <a href="https://www.bloomberg.com/news/articles/2020-08-14/brown-forman-was-target-of-apparent-ransomware-attack">Bloomberg News</a> reported that it had received an anonymous tip of a ransomware attack. A Dark Web site that claims to be run by members of the REvil strain of ransomware says it has obtained 1 terabyte of data from Louisville, Kentucky-based Brown-Forman. (In addition to producing Jack Daniel’s, Brown-Forman also owns Finlandia vodka and other spirits.)</p></div><p><a href="https://arstechnica.com/?p=1699855#p3">Read 6 remaining paragraphs</a> | <a href="https://arstechnica.com/?p=1699855&comments=1">Comments</a></p>]]></content:encoded>
+        </item>
+        <item>
+            <title>FCC asks for more public input on whether to let Charter impose data caps</title>
+            <link>https://arstechnica.com/?p=1699831</link>
+            <pubDate>Tue, 18 Aug 2020 19:39:20 +0000</pubDate>
+            <dc:creator><![CDATA[Jon Brodkin]]></dc:creator>
+            <category><![CDATA[Biz & IT]]></category>
+            <category><![CDATA[Policy]]></category>
+            <category><![CDATA[Charter]]></category>
+            <category><![CDATA[data caps]]></category>
+            <category><![CDATA[FCC]]></category>
+
+            <guid isPermaLink="false">https://arstechnica.com/?p=1699831</guid>
+            <description>
+                <![CDATA[FCC reopens docket after court ruled Charter can charge for network connections.]]></description>
+            <content:encoded><![CDATA[<div id="rss-wrap">
+<figure class="intro-image intro-left"><img src="https://cdn.arstechnica.net/wp-content/uploads/2018/08/data-cash-Aurich-Lawson-Getty-800x450.jpg" alt="Illustration of $100-dollar bills being sucked into a broadband network."><p class="caption" style="font-size:0.8em"><a href="https://cdn.arstechnica.net/wp-content/uploads/2018/08/data-cash-Aurich-Lawson-Getty.jpg" class="enlarge-link" data-height="720" data-width="1280">Enlarge</a> (credit: <a rel="nofollow" class="caption-link" href="https://arstechnica.com/author/aurich-lawson/">Getty Images | Aurich Lawson</a>)</p>  </figure><div><a name="page-1"></a></div>
+<p>The Federal Communications Commission is taking another round of public comments on Charter's petition seeking permission to impose data caps on broadband users and charge network-interconnection fees to online-video providers, following a court ruling that may complicate the FCC's decision.</p>
+<p>The deadline for comments on Charter's petition passed on August 6. But in a <a href="https://ecfsapi.fcc.gov/file/081868179509/DA-20-893A1.pdf">public notice issued today</a>, the FCC said it is opening an additional comment period that will last until September 2, giving people time to weigh in on the impact of the court ruling.</p>
+<p>"To ensure that the [Wireline Competition] Bureau has a full record upon which to evaluate the effects of the conditions, we initiate this additional comment period," the FCC notice said, while also inviting commenters to "address the effect" of the new court ruling on the FCC's consideration of Charter's petition. As before, comments can be submitted on the <a href="https://www.fcc.gov/ecfs/search/filings?proceedings_name=16-197&amp;sort=date_disseminated,DESC">docket</a> by clicking "New Filing" or "Express." There are more than 1,500 filings, mostly from consumers who object to data caps.</p></div><p><a href="https://arstechnica.com/?p=1699831#p3">Read 6 remaining paragraphs</a> | <a href="https://arstechnica.com/?p=1699831&comments=1">Comments</a></p>]]></content:encoded>
+        </item>
+        <item>
+            <title>Apple threatens to boot Epic and Unreal Engine off Mac and iOS [Updated]</title>
+            <link>https://arstechnica.com/?p=1699562</link>
+            <pubDate>Mon, 17 Aug 2020 21:38:56 +0000</pubDate>
+            <dc:creator><![CDATA[Kate Cox]]></dc:creator>
+            <category><![CDATA[Biz & IT]]></category>
+            <category><![CDATA[Gaming & Culture]]></category>
+            <category><![CDATA[Policy]]></category>
+            <category><![CDATA[antitrust]]></category>
+            <category><![CDATA[apple]]></category>
+            <category><![CDATA[epic]]></category>
+            <category><![CDATA[epic cames]]></category>
+            <category><![CDATA[iOS]]></category>
+
+            <guid isPermaLink="false">https://arstechnica.com/?p=1699562</guid>
+            <description><![CDATA[<em>Fortnite</em> is just one game; Unreal Engine powers dozens more.]]></description>
+            <content:encoded><![CDATA[<div id="rss-wrap">
+<figure class="intro-image intro-left"><img src="https://cdn.arstechnica.net/wp-content/uploads/2020/08/GettyImages-957063506-800x533.jpg" alt="A &lt;em&gt;Fortnite&lt;/em&gt; loading screen displayed on an iPhone in 2018, when Apple and Epic &lt;em&gt;weren't&lt;/em&gt; at each other's legal throats."><p class="caption" style="font-size:0.8em"><a href="https://cdn.arstechnica.net/wp-content/uploads/2020/08/GettyImages-957063506.jpg" class="enlarge-link" data-height="2666" data-width="4000">Enlarge</a> <span class="sep">/</span> A <em>Fortnite</em> loading screen displayed on an iPhone in 2018, when Apple and Epic <em>weren't</em> at each other's legal throats. (credit: <a rel="nofollow" class="caption-link" href="https://www.gettyimages.com/detail/news-photo/the-epic-games-inc-fortnite-battle-royale-video-game-is-news-photo/957063506">Andrew Harrer | Bloomberg | Getty Images</a>)</p>  </figure><div><a name="page-1"></a></div>
+<p><strong>Update, August 18:</strong> Apple responded to Epic late Monday night, effectively telling the developer that all its problems can go away if it removes the rule-breaking alternative payment system from <em>Fortnite</em>.</p>
+<p>"The problem Epic has created for itself is one that can easily be remedied if they submit an update of their app that reverts it to comply with the guidelines they agreed to and which apply to all developers," Apple said. "We very much want to keep the company as part of the Apple Developer Program and their apps on the Store ... We won’t make an exception for Epic because we don’t think it’s right to put their business interests ahead of the guidelines that protect our customers."</p>
+<p><strong>Original story:</strong><br>
+The new legal battle between game developer Epic and iPhone-maker Apple continues to heat up, as Epic says Apple will be cutting it off from the developer platform for Mac and iOS before the end of this month. </p></div><p><a href="https://arstechnica.com/?p=1699562#p3">Read 7 remaining paragraphs</a> | <a href="https://arstechnica.com/?p=1699562&comments=1">Comments</a></p>]]></content:encoded>
+        </item>
+        <item>
+            <title>SpaceX Starlink speeds revealed as beta users get downloads of 11 to 60Mbps</title>
+            <link>https://arstechnica.com/?p=1699063</link>
+            <pubDate>Fri, 14 Aug 2020 17:00:58 +0000</pubDate>
+            <dc:creator><![CDATA[Jon Brodkin]]></dc:creator>
+            <category><![CDATA[Biz & IT]]></category>
+            <category><![CDATA[spacex]]></category>
+            <category><![CDATA[starlink]]></category>
+
+            <guid isPermaLink="false">https://arstechnica.com/?p=1699063</guid>
+            <description>
+                <![CDATA[Ookla tests aren't showing the gigabit speeds SpaceX teased, but it's early.]]></description>
+            <content:encoded><![CDATA[<div id="rss-wrap">
+<figure class="intro-image intro-left"><img src="https://cdn.arstechnica.net/wp-content/uploads/2020/07/starlink-dish-800x337.jpg" alt="A SpaceX Starlink user terminal, also known as a satellite dish, seen against a city's skyline."><p class="caption" style="font-size:0.8em"><a href="https://cdn.arstechnica.net/wp-content/uploads/2020/07/starlink-dish.jpg" class="enlarge-link" data-height="359" data-width="853">Enlarge</a> <span class="sep">/</span> A SpaceX Starlink user terminal/satellite dish. (credit: SpaceX)</p>  </figure><div><a name="page-1"></a></div>
+<p>Beta users of SpaceX's Starlink satellite-broadband service are getting download speeds ranging from <a href="https://www.speedtest.net/result/9879632530">11Mbps</a> to <a href="https://www.speedtest.net/result/9879937592">60Mbps</a>, according to tests conducted using Ookla's <a href="https://www.speedtest.net/">speedtest.net</a> tool. Speed tests showed upload speeds ranging from <a href="https://www.speedtest.net/result/9842319776">5Mbps</a> to <a href="https://www.speedtest.net/result/9847281396">18Mbps</a>.</p>
+<p>The same tests, conducted over the past two weeks, showed latencies or ping rates ranging from 31ms to 94ms. This isn't a comprehensive study of Starlink speeds and latency, so it's not clear whether this is what Internet users should expect once Starlink satellites are fully deployed and the service reaches commercial availability. We asked SpaceX several questions about the speed-test results yesterday and will update this article if we get answers.</p>
+<p>Links to 11 anonymized speed tests by Starlink users were <a href="https://www.reddit.com/r/Starlink/comments/i84klo/speedtest_21_ms_46_mbps_down_10_mbps_up/g17v5r6/">posted by a Reddit user yesterday</a>. Another Reddit user <a href="https://www.reddit.com/r/Starlink/comments/i8n1s5/here_is_a_summary_of_the_recently_found_starlink/">compiled some of the tests</a> to make this graphic:</p></div><p><a href="https://arstechnica.com/?p=1699063#p3">Read 9 remaining paragraphs</a> | <a href="https://arstechnica.com/?p=1699063&comments=1">Comments</a></p>]]></content:encoded>
+        </item>
+        <item>
+            <title>Spooky action at a distance: The future magic of remote collaboration</title>
+            <link>https://arstechnica.com/?p=1698606</link>
+            <pubDate>Fri, 14 Aug 2020 13:00:47 +0000</pubDate>
+            <dc:creator><![CDATA[Sean Gallagher]]></dc:creator>
+            <category><![CDATA[Biz & IT]]></category>
+            <category><![CDATA[Features]]></category>
+            <category><![CDATA[collaboration]]></category>
+            <category><![CDATA[feature]]></category>
+            <category><![CDATA[feature report]]></category>
+            <category><![CDATA[the future of business]]></category>
+            <category><![CDATA[work from home]]></category>
+
+            <guid isPermaLink="false">https://arstechnica.com/?p=1698606</guid>
+            <description><![CDATA[In a world where you have to social distance, how do you scrum?]]></description>
+            <content:encoded><![CDATA[<div id="rss-wrap">
+<figure class="intro-image intro-left"><img src="https://cdn.arstechnica.net/wp-content/uploads/2020/08/remote-collaboration-feature-800x450.jpg" alt="Spooky action at a distance: The future magic of remote collaboration"><p class="caption" style="font-size:0.8em"><a href="https://cdn.arstechnica.net/wp-content/uploads/2020/08/remote-collaboration-feature.jpg" class="enlarge-link" data-height="563" data-width="1000">Enlarge</a> </p>  </figure><div><a name="page-1"></a></div>
+<p>The global pandemic and the corporate office shutdowns resulting from it have wrought changes to how work works. While essential people in certain industries have continued their jobs in ways that are relatively familiar under layers upon layers of personal protective equipment, many companies have had to find ways to continue other work at a “social” distance. And in those situations, employees must find ways to continue collaborating as they did when they were packed into cubicles, open floor plans, and all the other various patterns of modern office spaces.</p>
+<p>Workplace changes due to COVID-19 won’t go away anytime soon. Tech companies like Google, Facebook, and Microsoft have pushed back the return of employees to offices until well into 2021, and Twitter has declared that employees need never return to the corporate office. Companies in other industries are making the same sorts of calculations, while employees are rethinking not just how they work but even where they live.</p>
+<p>All of this hinges on the evolution of tools that make this remote way of work possible. For some of us—well, like <a href="https://arstechnica.com/information-technology/2020/01/no-office-no-problem-how-ars-technicas-remote-workers-work/">everyone who’s worked for Ars</a>, for instance—that isn’t anything new. As I’ve noted previously, I’ve been working primarily from home for over 25 years, and being an early adopter of every technology that could reduce the remoteness of being remote means I’ve lived through the teething pains of collaboration software and distributed teams.</p></div><p><a href="https://arstechnica.com/?p=1698606#p3">Read 23 remaining paragraphs</a> | <a href="https://arstechnica.com/?p=1698606&comments=1">Comments</a></p>]]></content:encoded>
+        </item>
+        <item>
+            <title>NSA and FBI warn that new Linux malware threatens national security</title>
+            <link>https://arstechnica.com/?p=1698939</link>
+            <pubDate>Thu, 13 Aug 2020 23:59:07 +0000</pubDate>
+            <dc:creator><![CDATA[Dan Goodin]]></dc:creator>
+            <category><![CDATA[Biz & IT]]></category>
+            <category><![CDATA[Policy]]></category>
+            <category><![CDATA[Tech]]></category>
+            <category><![CDATA[apt 28]]></category>
+            <category><![CDATA[Fancy Bear]]></category>
+            <category><![CDATA[fbi]]></category>
+            <category><![CDATA[Federal Bureau of Investigation]]></category>
+            <category><![CDATA[Linux]]></category>
+            <category><![CDATA[malware]]></category>
+            <category><![CDATA[National Security Agency]]></category>
+            <category><![CDATA[NSA]]></category>
+            <category><![CDATA[russia]]></category>
+
+            <guid isPermaLink="false">https://arstechnica.com/?p=1698939</guid>
+            <description>
+                <![CDATA[Previously unknown Drovorub is being used by advanced hacking group APT 28.]]></description>
+            <content:encoded><![CDATA[<div id="rss-wrap">
+<figure class="intro-image intro-left"><img src="https://cdn.arstechnica.net/wp-content/uploads/2020/08/linux-servers-800x443.jpg" alt="NSA and FBI warn that new Linux malware threatens national security"><p class="caption" style="font-size:0.8em"><a href="https://cdn.arstechnica.net/wp-content/uploads/2020/08/linux-servers.jpg" class="enlarge-link" data-height="554" data-width="1000">Enlarge</a> (credit: <a rel="nofollow" class="caption-link" href="https://www.suse.com/communities/blog/files/2016/10/Untitled.png">Suse</a>)</p>  </figure><div><a name="page-1"></a></div>
+<p>The FBI and NSA have issued a joint report warning that Russian state hackers are using a previously unknown piece of Linux malware to stealthily infiltrate sensitive networks, steal confidential information, and execute malicious commands.</p>
+<p>In a <a href="https://media.defense.gov/2020/Aug/13/2002476465/-1/-1/0/CSA_DROVORUB_RUSSIAN_GRU_MALWARE_AUG_2020.PDF">report</a> that’s unusual for the depth of technical detail from a government agency, officials said the Drovorub malware is a full-featured tool kit that has gone undetected until recently. The malware connects to command and control servers operated by a hacking group that works for the GRU, Russia’s military intelligence agency that has been tied to more than a decade of brazen and advanced campaigns, many of which have inflicted serious damage to national security.</p>
+<p>“Information in this Cybersecurity Advisory is being disclosed publicly to assist National Security System owners and the public to counter the capabilities of the GRU, an organization which continues to threaten the United States and U.S. allies as part of its rogue behavior, including their interference in the 2016 US Presidential Election as described in the 2017 Intelligence Community <em>Assessment, Assessing Russian Activities and Intentions in Recent US Elections</em> (Office of the Director of National Intelligence, 2017),” officials from the agencies wrote.</p></div><p><a href="https://arstechnica.com/?p=1698939#p3">Read 13 remaining paragraphs</a> | <a href="https://arstechnica.com/?p=1698939&comments=1">Comments</a></p>]]></content:encoded>
+        </item>
+        <item>
+            <title>Epic files suit against Apple after Fortnite pulled from iOS App Store [Updated]</title>
+            <link>https://arstechnica.com/?p=1698645</link>
+            <pubDate>Thu, 13 Aug 2020 19:56:16 +0000</pubDate>
+            <dc:creator><![CDATA[Kate Cox]]></dc:creator>
+            <category><![CDATA[Biz & IT]]></category>
+            <category><![CDATA[Gaming & Culture]]></category>
+            <category><![CDATA[Policy]]></category>
+            <category><![CDATA[android]]></category>
+            <category><![CDATA[antitrust]]></category>
+            <category><![CDATA[App Store]]></category>
+            <category><![CDATA[apple]]></category>
+            <category><![CDATA[competition]]></category>
+            <category><![CDATA[epic]]></category>
+            <category><![CDATA[Epic Games]]></category>
+            <category><![CDATA[fortnite]]></category>
+            <category><![CDATA[google]]></category>
+            <category><![CDATA[google play]]></category>
+            <category><![CDATA[in app purchases]]></category>
+            <category><![CDATA[iOS]]></category>
+
+            <guid isPermaLink="false">https://arstechnica.com/?p=1698645</guid>
+            <description>
+                <![CDATA[Google Play pulls the game too following attempt to skirt in-app purchase rules.]]></description>
+            <content:encoded><![CDATA[<div id="rss-wrap">
+<figure class="intro-image intro-left"><img src="https://cdn.arstechnica.net/wp-content/uploads/2020/08/GettyImages-957063528-800x533.jpg" alt="&lt;em&gt;Fortnite&lt;/em&gt; seen in the App Store on an iPhone on May 10, 2018. "><p class="caption" style="font-size:0.8em"><a href="https://cdn.arstechnica.net/wp-content/uploads/2020/08/GettyImages-957063528.jpg" class="enlarge-link" data-height="2666" data-width="4000">Enlarge</a> <span class="sep">/</span> <em>Fortnite</em> seen in the App Store on an iPhone on May 10, 2018.  (credit: <a rel="nofollow" class="caption-link" href="https://www.gettyimages.com/detail/news-photo/the-epic-games-inc-fortnite-battle-royale-video-game-is-news-photo/957063528">Andrew Harrer | Bloomberg | Getty Images</a>)</p>  </figure><div><a name="page-1"></a></div>
+<p><strong>Update 7:05pm EST:</strong> Google has now followed Apple's lead, <a href="https://www.theverge.com/2020/8/13/21368079/fortnite-epic-android-banned-google-play-app-store-rule-violation">removing <em>Fortnite</em> from the Google Play store</a> (that link goes to the former Play store page for the game). You can still download <em><a href="https://arstechnica.com/tag/fortnite/">Fortnite</a></em> on Android <a href="https://www.epicgames.com/fortnite/en-US/mobile/android/get-started">directly from Epic</a>.</p>
+<p>"The open Android ecosystem lets developers distribute apps through multiple app stores," Google said in a statement. "For game developers who choose to use the Play Store, we have consistent policies that are fair to developers and keep the store safe for users. While <em>Fortnite</em> remains available on Android, we can no longer make it available on Play because it violates our policies. However, we welcome the opportunity to continue our discussions with Epic and bring <em>Fortnite</em> back to Google Play."</p>
+<p>Two years ago, Epic <a href="https://arstechnica.com/gaming/2018/08/fortnite-on-android-may-drive-its-battle-bus-past-googles-30-cut/">voluntarily pulled <em>Fortnite</em> from the Google Play store</a> in an attempt to get around the platform's 30 percent revenue cut. Though Epic <a href="https://arstechnica.com/gaming/2018/09/fortnite-reaches-15-million-android-downloads-without-google-play/">drew millions of direct downloads</a> without a Google Play listing, Epic <a href="https://arstechnica.com/gaming/2020/04/google-wins-victory-royale-over-epic-games-snags-fortnite-for-google-play/">reversed course and brought the game back to Google Play</a> this April.</p></div><p><a href="https://arstechnica.com/?p=1698645#p3">Read 22 remaining paragraphs</a> | <a href="https://arstechnica.com/?p=1698645&comments=1">Comments</a></p>]]></content:encoded>
+        </item>
+        <item>
+            <title>FCC beats cities in court, helping carriers avoid $2 billion in local 5G fees</title>
+            <link>https://arstechnica.com/?p=1698769</link>
+            <pubDate>Thu, 13 Aug 2020 18:45:53 +0000</pubDate>
+            <dc:creator><![CDATA[Jon Brodkin]]></dc:creator>
+            <category><![CDATA[Biz & IT]]></category>
+            <category><![CDATA[Policy]]></category>
+            <category><![CDATA[5G]]></category>
+            <category><![CDATA[cities]]></category>
+            <category><![CDATA[FCC]]></category>
+            <category><![CDATA[small cells]]></category>
+
+            <guid isPermaLink="false">https://arstechnica.com/?p=1698769</guid>
+            <description>
+                <![CDATA[Judges uphold FCC preemption of city rules, including limits on small-cell fees.]]></description>
+            <content:encoded><![CDATA[<div id="rss-wrap">
+<figure class="intro-image intro-left"><img src="https://cdn.arstechnica.net/wp-content/uploads/2020/08/getty-money-800x533.jpg" alt="A close-up shot of $100 bills."><p class="caption" style="font-size:0.8em"><a href="https://cdn.arstechnica.net/wp-content/uploads/2020/08/getty-money.jpg" class="enlarge-link" data-height="1414" data-width="2121">Enlarge</a> (credit: <a rel="nofollow" class="caption-link" href="https://www.gettyimages.com/photos/eyeem-collection?mediatype=photography&amp;phrase=eyeem%20collection&amp;sort=best">Getty Images | Viktoryia Vinnikava | EyeEm</a>)</p>  </figure><div><a name="page-1"></a></div>
+<p>The Federal Communications Commission has defeated dozens of cities in court, with judges ruling that the FCC can preempt local fees and regulations imposed on wireless carriers deploying 5G networks. The ruling is good news for AT&amp;T, Verizon, and T-Mobile.</p>
+<p>The FCC voted to preempt cities and towns <a href="https://arstechnica.com/tech-policy/2018/09/ajit-pai-slams-cities-and-towns-as-fcc-erases-2-billion-in-local-fees/">in September 2018</a>, saying the move would prevent local governments from charging wireless carriers about <a href="https://ecfsapi.fcc.gov/file/10905352013311/Corning_September_5__2018_Ex_Parte_Letter.pdf">$2 billion worth of fees over five years</a> related to deployment of wireless equipment such as small cells. That's less than 1 percent of the estimated $275 billion that the FCC said carriers would have to spend to deploy 5G small cells throughout the United States.</p>
+<p>Cities <a href="https://arstechnica.com/tech-policy/2018/10/cities-will-sue-fcc-to-stop-2-billion-giveaway-to-wireless-carriers/">promptly sued the FCC</a>, but a <a href="https://cdn.ca9.uscourts.gov/datastore/opinions/2020/08/12/18-72689.pdf">ruling issued yesterday</a> by the US Court of Appeals for the 9th Circuit went mostly in the FCC's favor. It wasn't a complete victory for the FCC, though, as judges overturned a portion of the FCC ruling that limited the kinds of aesthetic requirements cities and towns can impose on carrier deployments.</p></div><p><a href="https://arstechnica.com/?p=1698769#p3">Read 15 remaining paragraphs</a> | <a href="https://arstechnica.com/?p=1698769&comments=1">Comments</a></p>]]></content:encoded>
+        </item>
+        <item>
+            <title>Hackers can eavesdrop on mobile calls with $7,000 worth of equipment</title>
+            <link>https://arstechnica.com/?p=1698597</link>
+            <pubDate>Thu, 13 Aug 2020 11:55:56 +0000</pubDate>
+            <dc:creator><![CDATA[Dan Goodin]]></dc:creator>
+            <category><![CDATA[Biz & IT]]></category>
+            <category><![CDATA[Tech]]></category>
+
+            <guid isPermaLink="false">https://arstechnica.com/?p=1698597</guid>
+            <description>
+                <![CDATA[VoLTE calls were supposed to be more secure. A fatal flaw can unravel that promise.]]></description>
+            <content:encoded><![CDATA[<div id="rss-wrap">
+<figure class="intro-image intro-left"><img src="https://cdn.arstechnica.net/wp-content/uploads/2020/08/revolte-800x340.jpg" alt="Hackers can eavesdrop on mobile calls with $7,000 worth of equipment"><p class="caption" style="font-size:0.8em"><a href="https://cdn.arstechnica.net/wp-content/uploads/2020/08/revolte.jpg" class="enlarge-link" data-height="583" data-width="1373">Enlarge</a> (credit: <a rel="nofollow" class="caption-link" href="https://revolte-attack.net">Rupprecht et al.</a>)</p>  </figure><div><a name="page-1"></a></div>
+<p>The emergence of mobile voice calls over the standard known as Long Term Evolution (LTE) has been a boon for millions of cell phone users around the world. VoLTE, short for Voice over LTE, provides up to three times the capacity of the earlier 3G standard, resulting in high-definition sound quality that’s a huge improvement over earlier generations. VoLTE also uses the same IP standard used to send data over the Internet, so it has the ability to work with a wider range of devices. VoLTE does all of this while also providing a layer of security not available in predecessor cellular technologies.</p>
+<p>Now, researchers have demonstrated a weakness that allows attackers with modest resources to eavesdrop on calls. Their technique, dubbed ReVoLTE, uses a software-defined radio to pull the signal a carrier’s base station transmits to a phone of an attacker’s choosing, as long as the attacker is connected to the same cell tower (typically within a few hundred meters to few kilometers) and knows the phone number. Because of an error in the way many carriers implement VoLTE, the attack converts cryptographically scrambled data into unencrypted sound. The result is a threat to the privacy of a growing segment of cell phone users. The cost: about $7,000.</p>
+<h2>So much for more secure</h2>
+<p>“Data confidentiality is one of the central LTE security aims and a fundamental requirement for trust in our communication infrastructure,” the researchers, from Ruhr University Bochum and New York University, wrote in a <a href="https://revolte-attack.net/media/revolte_camera_ready.pdf">paper</a> presented Wednesday at the <a href="https://www.usenix.org/conference/usenixsecurity20">29th USENIX Security Symposium</a>. “We introduced the ReVoLTE attack, which enables an adversary to eavesdrop and recover encrypted VoLTE calls based on an implementation flaw of the LTE protocol.”</p></div><p><a href="https://arstechnica.com/?p=1698597#p3">Read 23 remaining paragraphs</a> | <a href="https://arstechnica.com/?p=1698597&comments=1">Comments</a></p>]]></content:encoded>
+        </item>
+        <item>
+            <title>Ousted COO sues Pinterest, alleges rampant gender discrimination</title>
+            <link>https://arstechnica.com/?p=1698370</link>
+            <pubDate>Wed, 12 Aug 2020 19:51:50 +0000</pubDate>
+            <dc:creator><![CDATA[Kate Cox]]></dc:creator>
+            <category><![CDATA[Biz & IT]]></category>
+            <category><![CDATA[Policy]]></category>
+            <category><![CDATA[discrimination]]></category>
+            <category><![CDATA[gender discrimination]]></category>
+            <category><![CDATA[lawsuits]]></category>
+            <category><![CDATA[oracle]]></category>
+            <category><![CDATA[Pinterest]]></category>
+            <category><![CDATA[Racism]]></category>
+            <category><![CDATA[sex discrimination]]></category>
+            <category><![CDATA[sexism]]></category>
+            <category><![CDATA[soulcycle]]></category>
+
+            <guid isPermaLink="false">https://arstechnica.com/?p=1698370</guid>
+            <description>
+                <![CDATA[Suit claims woman-focused social platform discriminates against female employees.]]></description>
+            <content:encoded><![CDATA[<div id="rss-wrap">
+<figure class="intro-image intro-left"><img src="https://cdn.arstechnica.net/wp-content/uploads/2020/08/GettyImages-1208999476-800x532.jpg" alt="A smartphone against a colorful but blurry background."><p class="caption" style="font-size:0.8em"><a href="https://cdn.arstechnica.net/wp-content/uploads/2020/08/GettyImages-1208999476.jpg" class="enlarge-link" data-height="2129" data-width="3200">Enlarge</a> <span class="sep">/</span> A Pinterest logo seen displayed on a smartphone. (credit: <a rel="nofollow" class="caption-link" href="https://www.gettyimages.com/detail/news-photo/in-this-photo-illustration-a-pinterest-logo-seen-displayed-news-photo/1208999476">Mateusz Slodkowski | SOPA Images | LightRocket | Getty Images</a>)</p>  </figure><div><a name="page-1"></a></div>
+<p>The former chief operating officer of Pinterest is suing her ex-employer, claiming that the platform's woman-friendly public face is not matched internally and instead "reflects a pattern of discrimination and exclusion."</p>
+<p>Pinterest hired Francoise Brougher as chief operating officer in March 2018, then fired her in April of this year. In a lawsuit (<a href="https://cdn.arstechnica.net/wp-content/uploads/2020/08/472186571-BROUGHER-VS-PINTEREST-pdf.pdf">PDF</a>) Tuesday in California, Brougher claims that her dismissal was unrelated to her performance and was instead in retaliation for complaining about sexism.</p>
+<p>Brougher learned in 2019, while reviewing filings that Pinterest was required to make as part of its IPO, that she had been deliberately misled about executive compensation. She was therefore being paid less well than other C-suite executives, the suit alleges. After she brought the discrepancy to the attention of Chief Executive Officer Ben Silbermann, she began being squeezed out of executive and board meetings, Brougher alleged, which prevented her from being able to do her job.</p></div><p><a href="https://arstechnica.com/?p=1698370#p3">Read 10 remaining paragraphs</a> | <a href="https://arstechnica.com/?p=1698370&comments=1">Comments</a></p>]]></content:encoded>
+        </item>
+        <item>
+            <title>Mozilla cuts 250 jobs, says Firefox development will be affected</title>
+            <link>https://arstechnica.com/?p=1698421</link>
+            <pubDate>Wed, 12 Aug 2020 17:32:59 +0000</pubDate>
+            <dc:creator><![CDATA[Jon Brodkin]]></dc:creator>
+            <category><![CDATA[Biz & IT]]></category>
+            <category><![CDATA[firefox]]></category>
+            <category><![CDATA[Mozilla]]></category>
+
+            <guid isPermaLink="false">https://arstechnica.com/?p=1698421</guid>
+            <description>
+                <![CDATA[Mozilla reduces investment in developer tools and platform feature development.]]></description>
+            <content:encoded><![CDATA[<div id="rss-wrap">
+<figure class="intro-image intro-left"><img src="https://cdn.arstechnica.net/wp-content/uploads/2020/02/getty-firefox-logo-800x534.jpg" alt="The Firefox logo."><p class="caption" style="font-size:0.8em"><a href="https://cdn.arstechnica.net/wp-content/uploads/2020/02/getty-firefox-logo.jpg" class="enlarge-link" data-height="683" data-width="1024">Enlarge</a> (credit: <a rel="nofollow" class="caption-link" href="https://www.gettyimages.com/photos/anadolu-agency?family=editorial&amp;sort=best&amp;phrase=anadolu%20agency">Getty Images | Anadolu Agency</a>)</p>  </figure><div><a name="page-1"></a></div>
+<p>Mozilla Corporation is laying off 250 people, about a quarter of its workforce, explaining that the COVID-19 pandemic has significantly lowered revenue. Mozilla previously had about 1,000 employees.</p>
+<p>The Firefox maker's CEO, Mitchell Baker, <a href="https://blog.mozilla.org/blog/2020/08/11/changing-world-changing-mozilla/">announced the job cuts yesterday</a>, writing that "economic conditions resulting from the global pandemic have significantly impacted our revenue. As a result, our pre-COVID plan was no longer workable."</p>
+<p>In a <a href="https://blog.mozilla.org/wp-content/uploads/2020/08/Message-to-Employees-Change-in-Difficult-Times.pdf">memo sent to employees</a>, Baker said the 250 job cuts include "closing our current operations in Taipei, Taiwan." The layoffs will reduce Mozilla's workforce in the United States, Canada, Europe, Australia, and New Zealand. Another 60 people will be reassigned to different teams.</p></div><p><a href="https://arstechnica.com/?p=1698421#p3">Read 10 remaining paragraphs</a> | <a href="https://arstechnica.com/?p=1698421&comments=1">Comments</a></p>]]></content:encoded>
+        </item>
+        <item>
+            <title>0-days, a failed patch, and a backdoor threat. Update Tuesday highlights</title>
+            <link>https://arstechnica.com/?p=1698322</link>
+            <pubDate>Wed, 12 Aug 2020 11:55:34 +0000</pubDate>
+            <dc:creator><![CDATA[Dan Goodin]]></dc:creator>
+            <category><![CDATA[Biz & IT]]></category>
+            <category><![CDATA[Tech]]></category>
+
+            <guid isPermaLink="false">https://arstechnica.com/?p=1698322</guid>
+            <description>
+                <![CDATA[A few of the more notable updates in this month's patch batch from Microsoft.]]></description>
+            <content:encoded><![CDATA[<div id="rss-wrap">
+<figure class="intro-image intro-left"><img src="https://cdn.arstechnica.net/wp-content/uploads/2020/08/windows-update1-800x552.jpg" alt="0-days, a failed patch, and a backdoor threat. Update Tuesday highlights"><p class="caption" style="font-size:0.8em"><a href="https://cdn.arstechnica.net/wp-content/uploads/2020/08/windows-update1.jpg" class="enlarge-link" data-height="690" data-width="1000">Enlarge</a> </p>  </figure><div><a name="page-1"></a></div>
+<p>Microsoft on Tuesday patched 120 vulnerabilities, two that are notable because they’re under active attack and a third because it fixes a previous patch for a security flaw that allowed attackers to gain a backdoor that persisted even after a machine was updated.</p>
+<p>Zero-day vulnerabilities get their name because an affected developer has zero days to release a patch before the security flaw is under attack. Zero-day exploits can be among the most effective because they usually go undetected by antivirus programs, intrusion prevention systems, and other security protections. These types of attacks usually indicate a threat actor of above-average means because of the work and skill required to identify the unknown vulnerability and develop a reliable exploit. Adding to the difficulty: the exploits must bypass defenses developers have spent considerable resources implementing.</p>
+<h2>A hacker’s dream: Bypassing code-signing checks</h2>
+<p>The first zero-day is present in all supported versions of Windows, including Windows 10 and Server 2019, which security professionals consider two of the world’s most secure operating systems. <a href="https://portal.msrc.microsoft.com/en-US/security-guidance/advisory/CVE-2020-1464">CVE-2020-1464</a> is what Microsoft is calling a Windows Authenticode Signature Spoofing Vulnerability. Hackers who exploit it can sneak their malware onto targeted systems by bypassing a malware defense that uses digital signatures to certify that software is trustworthy.</p></div><p><a href="https://arstechnica.com/?p=1698322#p3">Read 16 remaining paragraphs</a> | <a href="https://arstechnica.com/?p=1698322&comments=1">Comments</a></p>]]></content:encoded>
+        </item>
+        <item>
+            <title>Charter tries to convince FCC that broadband customers want data caps</title>
+            <link>https://arstechnica.com/?p=1698198</link>
+            <pubDate>Tue, 11 Aug 2020 18:55:02 +0000</pubDate>
+            <dc:creator><![CDATA[Jon Brodkin]]></dc:creator>
+            <category><![CDATA[Biz & IT]]></category>
+            <category><![CDATA[Policy]]></category>
+            <category><![CDATA[Charter]]></category>
+            <category><![CDATA[data caps]]></category>
+            <category><![CDATA[FCC]]></category>
+            <category><![CDATA[spectrum internet service]]></category>
+
+            <guid isPermaLink="false">https://arstechnica.com/?p=1698198</guid>
+            <description>
+                <![CDATA[Charter petitioned FCC to eliminate merger condition that forbids data caps.]]></description>
+            <content:encoded><![CDATA[<div id="rss-wrap">
+<figure class="intro-image intro-left"><img src="https://cdn.arstechnica.net/wp-content/uploads/2020/03/data-trickle-800x450.jpg" alt="Illustration of a water hose with Internet data trickling out of it, represented by 1s and 0s."><p class="caption" style="font-size:0.8em"><a href="https://cdn.arstechnica.net/wp-content/uploads/2020/03/data-trickle.jpg" class="enlarge-link" data-height="563" data-width="1000">Enlarge</a> (credit: <a rel="nofollow" class="caption-link" href="https://arstechnica.com/author/aurich-lawson/">Aurich Lawson / Getty Images</a>)</p>  </figure><div><a name="page-1"></a></div>
+<p>Charter Communications has claimed to the Federal Communications Commission that broadband users enjoy having Internet plans with data caps, in a filing arguing that Charter should be allowed to impose caps on its Spectrum Internet service starting next year.</p>
+<p>Charter isn't currently allowed to impose data caps because of conditions the FCC placed on its 2016 <a href="https://arstechnica.com/information-technology/2016/05/charter-completes-acquisition-of-time-warner-cable-and-bright-house/">purchase</a> of Time Warner Cable. The data-cap condition is scheduled to expire on May 18, 2023, but Charter in June <a href="https://arstechnica.com/tech-policy/2020/06/charter-seeks-fcc-ok-to-impose-data-caps-and-charge-fees-to-video-services/">petitioned the FCC</a> to let the condition expire two years early, in May 2021.</p>
+<p>With consumer-advocacy groups and Internet users opposing the petition, <a href="https://ecfsapi.fcc.gov/file/10806999321971/Charter%20Merger%20Conditions%20Sunset%20Petition%20Reply%20(8-6-20).pdf">Charter filed a response with the FCC</a> last week, saying that plans with data caps are "popular."</p></div><p><a href="https://arstechnica.com/?p=1698198#p3">Read 14 remaining paragraphs</a> | <a href="https://arstechnica.com/?p=1698198&comments=1">Comments</a></p>]]></content:encoded>
+        </item>
+        <item>
+            <title>Why movie theaters are in trouble after DOJ nixes 70-year-old case</title>
+            <link>https://arstechnica.com/?p=1697598</link>
+            <pubDate>Tue, 11 Aug 2020 10:30:01 +0000</pubDate>
+            <dc:creator><![CDATA[Kate Cox]]></dc:creator>
+            <category><![CDATA[Biz & IT]]></category>
+            <category><![CDATA[Gaming & Culture]]></category>
+            <category><![CDATA[Policy]]></category>
+            <category><![CDATA[antitrust]]></category>
+            <category><![CDATA[competition]]></category>
+            <category><![CDATA[department of justice]]></category>
+            <category><![CDATA[Disney]]></category>
+            <category><![CDATA[Justice Department]]></category>
+            <category><![CDATA[paramount]]></category>
+
+            <guid isPermaLink="false">https://arstechnica.com/?p=1697598</guid>
+            <description>
+                <![CDATA[The end of <em>Paramount</em> could eventually make your local theater a Disneyplex.]]></description>
+            <content:encoded><![CDATA[<div id="rss-wrap">
+<figure class="intro-image intro-left"><img src="https://cdn.arstechnica.net/wp-content/uploads/2020/08/disney-theater-popcorn-800x450.jpg" alt="Disney logo adorns a container of movie theater popcorn."><p class="caption" style="font-size:0.8em"><a href="https://cdn.arstechnica.net/wp-content/uploads/2020/08/disney-theater-popcorn.jpg" class="enlarge-link" data-height="563" data-width="1000">Enlarge</a> <span class="sep">/</span> The House of Mouse is the shadow lurking in the future of movie theaters. (credit: <a rel="nofollow" class="caption-link" href="https://arstechnica.com/author/aurich-lawson/">Aurich Lawson / Getty Images</a>)</p>  </figure><div><a name="page-1"></a></div>
+<p>If you went to the movies in 2019, you probably saw a Disney movie. Seven of the top 10 highest-grossing films released in the United States last year were distributed by the House of Mouse, and hundreds of millions of people went to see them on thousands of screens. Some weeks it felt like the entire film industry <em>was</em> Disney: <em><a href="https://arstechnica.com/gaming/2019/03/captain-marvel-review-the-hero-we-and-marvel-studios-need-right-now/">Captain Marvel</a></em> and the rest of the Avengers (<em><a href="https://arstechnica.com/gaming/2019/04/avengers-endgame-is-three-of-marvels-best-films-rolled-into-one/">Endgame</a></em>) competed for your attention for a while, as <em>Aladdin</em>, <em><a href="https://arstechnica.com/gaming/2019/07/lion-king-remake-review-roaring-visuals-but-the-execution-is-a-hairball/">The Lion King</a></em>, and <em>Toy Story 4</em> kept up a steady drumbeat of animation until Elsa dropped back onto hapless households in <em><a href="https://arstechnica.com/gaming/2019/11/review-frozen-ii-is-fun-family-fare-with-stunning-visuals-and-so-so-soundtrack/">Frozen II</a></em>. In amongst that morass, though, there were still other movies shown, many of them popular with audiences and critics alike.</p>
+<p>But now, the rule that prevented a studio from buying up a major theater chain is gone—opening up the possibility that your local cinema could go whole hog and become a true Disneyplex before you know it.</p>
+<p>On Friday, a federal judge agreed to the Department of Justice's petition to vacate the Paramount Consent Decrees, a landmark 1948 ruling that forbade vertical integration in the film sector and ended the Hollywood <a href="https://www.britannica.com/art/history-of-the-motion-picture/The-Hollywood-studio-system">studio system</a>. In isolation, the decision could raise some concerns. In a world where theaters are decimated thanks to a pandemic and consolidation among media firms is already rampant, the future for independent theaters looks grim.</p></div><p><a href="https://arstechnica.com/?p=1697598#p3">Read 39 remaining paragraphs</a> | <a href="https://arstechnica.com/?p=1697598&comments=1">Comments</a></p>]]></content:encoded>
+        </item>
+    </channel>
+</rss>

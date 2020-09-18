@@ -16,17 +16,20 @@ mypy:
 	(cd api && mypy --config-file ../mypy.ini -p api)
 	# (cd cron && mypy --config-file ../mypy.ini  -p cron)
 
+tslint:
+	docker-compose run frontend npm run lint
+
 outdated:
 	pip list --outdated
 
-flakes: black flake8 mypy
+flakes: black flake8 mypy pylint tslint
 
 flakes-check: black-check mypy outdated flake8
 
 flake8:
 	flake8 core_lib/core_lib
 tests:
-	(cd core_lib && pytest --cov core_lib --cov-report=html tests)
+	(cd core_lib && export unit_tests=1 && pytest --cov core_lib --cov-report=html ../api/tests)
 
 dev-requirements:
 	pip install -r requirements.txt

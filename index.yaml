@@ -1,0 +1,9 @@
+indexes:
+
+- kind: NewsItem
+  properties:
+  - name: user_id
+  - name: is_read
+  - name: published
+    direction: desc
+

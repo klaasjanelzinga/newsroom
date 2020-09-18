@@ -1,0 +1,836 @@
+<rss version="2.0">
+    <channel>
+        <title>Events from all venues</title>
+        <link>https://venues.n-kj.nl</link>
+        <description>Aggregation of several venues</description>
+        <webMaster>klaasjanelzinga@gmail.com</webMaster>
+        <managingEditor>klaasjanelzinga@gmail.com</managingEditor>
+        <generator>Python3</generator>
+        <category>Entertainment</category>
+        <image>
+            <url>https://venues.n-kj.nl/channel-image.png</url>
+            <title>Events from all venues</title>
+            <link>https://venues.n-kj.nl</link>
+        </image>
+        <item>
+            <title>Torus [Melkweg NL-AMS]</title>
+            <link>https://www.melkweg.nl/nl/agenda/torus-10-09-2020</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;Dit is een 24:24&#160;multimediawerk van dj en producer Joeri Woudstra aka Torus, waarin zijn
+                muziek live wordt uitgevoerd met beeldend werk van hemzelf en artiest Mark Prendergast.These Cars Do Not
+                Exist bevat nieuw solomateriaal, loops en sketches waar Torus aan heeft gewerkt sinds The Flash, zijn
+                laatste plaats met DJ Lostboi, die afgelopen januari uitkwam en die hij afgelopen februari nog in de
+                Waalse Kerk uitvoerde. Dit audioproject wordt gereleased op 4 september via Bandcamp.&#160;&#8222;While
+                I was working on the music in quarantine, I found myself stuck in my house, left with aimless creative
+                exercises like filming a whole bunch of things I would see from my rooftop. After a little while I found
+                some patterns in the footage and I reached out toartist Mark Prendergast, who I shot and directed the
+                video with, to discuss some of the footage. He told me he had also been recording birds for the last
+                couple of weeks and we assembled our material and looked for a narrative. These Cars Do Not Exist starts
+                from a POV human perspective with a shot I took at 5:30AM at sunrise in The Hague during one of the
+                wildest seas of this year. It then slowly shifts to a more passive voyeurist perspective in which the
+                nature that remains untouched by current affairs becomes the active subjects in the video.&#8221;&lt;/p&gt;
+                &lt;img
+                src="https://s3-eu-west-1.amazonaws.com/static.melkweg.nl/uploads/images/scaled/agenda_thumbnail/27561"
+                alt="image for event" width=300 height=160/&gt;
+                &lt;p&gt;When: 2020-09-10 19:30 -
+                Where: &lt;a href="https://www.melkweg.nl"&gt;Melkweg Amsterdam (Amsterdam, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.melkweg.nl/nl/agenda/torus-10-09-2020</guid>
+            <source>https://www.melkweg.nl/agenda</source>
+            <author>https://www.melkweg.nl/agenda</author>
+        </item>
+        <item>
+            <title>Elias Mazian (live) [Melkweg NL-AMS]</title>
+            <link>https://www.melkweg.nl/nl/agenda/elias-mazian-live-17-09-2020</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;Als kind gaf muziek dj Elias Mazian al het gevoel dat hij in een tijdscapsule zat, waar niets
+                anders ertoe deed. In zijn eigen muziek probeert hij dit over te brengen; gepassioneerd, emotioneel en
+                gevoelig. Zo put hij inspiratie uit muziek waar hij mee opgroeide, zoals Michael Jackson, Prince, Stevie
+                Wonder, maar ook namen van nu zoals Omar-S, Zip en Beautiful Swimmers. Muziek als zeer emotionele
+                uitlaatklep, een manier om jezelf uit te drukken, dat is de waarde voor Elias Mazian. Onlangs bracht hij
+                als zanger zijn debuutplaat Vrij van Dromen uit. Een romantische Neder-synthpopplaat waarop weer
+                datzelfde gevoel spreekt, waar hij op zoek gaat naar toenadering, maar ook pijn durft te omarmen. Dat
+                gaan we horen tijdens deze sessie!&lt;/p&gt;
+                &lt;img
+                src="https://s3-eu-west-1.amazonaws.com/static.melkweg.nl/uploads/images/scaled/agenda_thumbnail/27553"
+                alt="image for event" width=300 height=160/&gt;
+                &lt;p&gt;When: 2020-09-17 22:00 -
+                Where: &lt;a href="https://www.melkweg.nl"&gt;Melkweg Amsterdam (Amsterdam, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.melkweg.nl/nl/agenda/elias-mazian-live-17-09-2020</guid>
+            <source>https://www.melkweg.nl/agenda</source>
+            <author>https://www.melkweg.nl/agenda</author>
+        </item>
+        <item>
+            <title>NBE back on stage [Paradiso NL-AMS]</title>
+            <link>https://www.paradiso.nl/en/program/nbe-back-on-stage/79549/</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;Het Nederlands Blazers Ensemble trapt het nieuwe seizoen af in Paradiso&lt;/p&gt;
+                &lt;img src="https://api.paradiso.nl/img/events//Nederlands-Blazers-Ensemble_foto-Peter-Lodder.jpeg"
+                alt="image for event" width=300 height=160/&gt;
+                &lt;p&gt;When: 2020-09-17 20:00 -
+                Where: &lt;a href="https://www.paradiso.nl"&gt;Paradiso Amsterdam (Amsterdam, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.paradiso.nl/en/program/nbe-back-on-stage/79549/</guid>
+            <source>https://www.paradiso.nl/</source>
+            <author>https://www.paradiso.nl/</author>
+        </item>
+        <item>
+            <title>GERRITS TUIN: MICAH &amp; JULIA / ROBIN SCHERPEN / HANS VAN DER WERF [Hedon NL-ZWO]</title>
+            <link>
+                https://www.hedon-zwolle.nl/voorstelling/30688/gerrits-tuin:-micah-en-julia--robin-scherpen--hans-van-der-werf-
+            </link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;GERRITS TUIN: MICAH &amp; JULIA / ROBIN SCHERPEN / HANS VAN DER WERF &lt;/p&gt;
+                &lt;img src="https://www.hedon-zwolle.nl/media/uploads/WEBSITE SQUARE TALENTMIDDAG.jpg?width=400&amp;height=400&amp;rmode=crop"
+                alt="image for event" width=300 height=160/&gt;
+                &lt;p&gt;When: 2020-08-29 11:30 -
+                Where: &lt;a href="https://www.hedon-zwolle.nl"&gt;Hedon (Zwolle, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>
+                https://www.hedon-zwolle.nl/voorstelling/30688/gerrits-tuin:-micah-en-julia--robin-scherpen--hans-van-der-werf-
+            </guid>
+            <source>https://www.hedon-zwolle.nl/#programma</source>
+            <author>https://www.hedon-zwolle.nl/#programma</author>
+        </item>
+        <item>
+            <title>GERRITS TUIN: BACH VOOR BABY'S [Hedon NL-ZWO]</title>
+            <link>https://www.hedon-zwolle.nl/voorstelling/30686/gerrits-tuin:-bach-voor-baby's</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;GERRITS TUIN: BACH VOOR BABY'S&lt;/p&gt;
+                &lt;img src="https://www.hedon-zwolle.nl/media/uploads/WEBSITE SQUARE BACH VOOR BABYS.jpg?width=400&amp;height=400&amp;rmode=crop"
+                alt="image for event" width=300 height=160/&gt;
+                &lt;p&gt;When: 2020-08-30 08:00 -
+                Where: &lt;a href="https://www.hedon-zwolle.nl"&gt;Hedon (Zwolle, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.hedon-zwolle.nl/voorstelling/30686/gerrits-tuin:-bach-voor-baby's</guid>
+            <source>https://www.hedon-zwolle.nl/#programma</source>
+            <author>https://www.hedon-zwolle.nl/#programma</author>
+        </item>
+        <item>
+            <title>GERRITS TUIN: STICKS [Hedon NL-ZWO]</title>
+            <link>https://www.hedon-zwolle.nl/voorstelling/30690/gerrits-tuin:-sticks</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;GERRITS TUIN: STICKS&lt;/p&gt;
+                &lt;img src="https://www.hedon-zwolle.nl/media/uploads/DATUM SQUARE STICKS EXTRA SHOW.jpg?width=400&amp;height=400&amp;rmode=crop"
+                alt="image for event" width=300 height=160/&gt;
+                &lt;p&gt;When: 2020-09-05 14:00 -
+                Where: &lt;a href="https://www.hedon-zwolle.nl"&gt;Hedon (Zwolle, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.hedon-zwolle.nl/voorstelling/30690/gerrits-tuin:-sticks</guid>
+            <source>https://www.hedon-zwolle.nl/#programma</source>
+            <author>https://www.hedon-zwolle.nl/#programma</author>
+        </item>
+        <item>
+            <title>GERRITS TUIN: FRESKU [Hedon NL-ZWO]</title>
+            <link>https://www.hedon-zwolle.nl/voorstelling/30676/gerrits-tuin:-fresku</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;GERRITS TUIN: FRESKU&lt;/p&gt;
+                &lt;img src="https://www.hedon-zwolle.nl/media/uploads/FRSKU WEBSITE.jpg?width=400&amp;height=400&amp;rmode=crop"
+                alt="image for event" width=300 height=160/&gt;
+                &lt;p&gt;When: 2020-09-09 17:00 -
+                Where: &lt;a href="https://www.hedon-zwolle.nl"&gt;Hedon (Zwolle, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.hedon-zwolle.nl/voorstelling/30676/gerrits-tuin:-fresku</guid>
+            <source>https://www.hedon-zwolle.nl/#programma</source>
+            <author>https://www.hedon-zwolle.nl/#programma</author>
+        </item>
+        <item>
+            <title>GERRITS TUIN: SON MIEUX [Hedon NL-ZWO]</title>
+            <link>https://www.hedon-zwolle.nl/voorstelling/30683/gerrits-tuin:-son-mieux</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;GERRITS TUIN: SON MIEUX&lt;/p&gt;
+                &lt;img src="https://www.hedon-zwolle.nl/media/uploads/SQAURE WEBSITE SON MIEUX.jpg?width=600&amp;height=600&amp;rmode=crop"
+                alt="image for event" width=300 height=160/&gt;
+                &lt;p&gt;When: 2020-09-11 17:00 -
+                Where: &lt;a href="https://www.hedon-zwolle.nl"&gt;Hedon (Zwolle, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.hedon-zwolle.nl/voorstelling/30683/gerrits-tuin:-son-mieux</guid>
+            <source>https://www.hedon-zwolle.nl/#programma</source>
+            <author>https://www.hedon-zwolle.nl/#programma</author>
+        </item>
+        <item>
+            <title>BLUESWORLD CAFE [Hedon NL-ZWO]</title>
+            <link>https://www.hedon-zwolle.nl/voorstelling/30691/bluesworld-cafe</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;BLUESWORLD CAFE&lt;/p&gt;
+
+                &lt;p&gt;When: 2020-09-08 18:00 -
+                Where: &lt;a href="https://www.hedon-zwolle.nl"&gt;Hedon (Zwolle, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.hedon-zwolle.nl/voorstelling/30691/bluesworld-cafe</guid>
+            <source>https://www.hedon-zwolle.nl/#programma</source>
+            <author>https://www.hedon-zwolle.nl/#programma</author>
+        </item>
+        <item>
+            <title>BLUESWORLD CAFE [Hedon NL-ZWO]</title>
+            <link>https://www.hedon-zwolle.nl/voorstelling/30692/bluesworld-cafe</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;BLUESWORLD CAFE&lt;/p&gt;
+
+                &lt;p&gt;When: 2020-11-03 19:00 -
+                Where: &lt;a href="https://www.hedon-zwolle.nl"&gt;Hedon (Zwolle, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.hedon-zwolle.nl/voorstelling/30692/bluesworld-cafe</guid>
+            <source>https://www.hedon-zwolle.nl/#programma</source>
+            <author>https://www.hedon-zwolle.nl/#programma</author>
+        </item>
+        <item>
+            <title>Nederlands Blazers Ensemble &amp; Bart Moeyaert: De Schepping - 18.00 uur [Paradiso NL-AMS]</title>
+            <link>
+                https://www.paradiso.nl/en/program/nederlands-blazers-ensemble-bart-moeyaert-de-schepping-18-00-uur/79541/
+            </link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;Muziektheater bewerking van oratorium van Haydn&lt;/p&gt;
+                &lt;img src="https://api.paradiso.nl/img/events//NBE-seizoensbeelden-4x-v03schepping.jpg" alt="image for
+                event" width=300 height=160/&gt;
+                &lt;p&gt;When: 2020-10-11 18:00 -
+                Where: &lt;a href="https://www.paradiso.nl"&gt;Paradiso Amsterdam (Amsterdam, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>
+                https://www.paradiso.nl/en/program/nederlands-blazers-ensemble-bart-moeyaert-de-schepping-18-00-uur/79541/
+            </guid>
+            <source>https://www.paradiso.nl/</source>
+            <author>https://www.paradiso.nl/</author>
+        </item>
+        <item>
+            <title>Nederlands Blazers Ensemble &amp; Bart Moeyaert: De Schepping - 20.45 uur [Paradiso NL-AMS]</title>
+            <link>
+                https://www.paradiso.nl/en/program/nederlands-blazers-ensemble-bart-moeyaert-de-schepping-20-45-uur/79543/
+            </link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;Muziektheater bewerking van oratorium van Haydn&lt;/p&gt;
+                &lt;img src="https://api.paradiso.nl/img/events//NBE-seizoensbeelden-4x-v03schepping.jpg" alt="image for
+                event" width=300 height=160/&gt;
+                &lt;p&gt;When: 2020-10-11 20:45 -
+                Where: &lt;a href="https://www.paradiso.nl"&gt;Paradiso Amsterdam (Amsterdam, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>
+                https://www.paradiso.nl/en/program/nederlands-blazers-ensemble-bart-moeyaert-de-schepping-20-45-uur/79543/
+            </guid>
+            <source>https://www.paradiso.nl/</source>
+            <author>https://www.paradiso.nl/</author>
+        </item>
+        <item>
+            <title>Nubya Garcia [Paradiso NL-AMS]</title>
+            <link>https://www.paradiso.nl/en/program/nubya-garcia/79559/</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;Toonaangevende jazz-saxophonist uit Londen &lt;/p&gt;
+                &lt;img src="https://api.paradiso.nl/img/events//NubyaGarcia_website.jpg" alt="image for event"
+                width=300 height=160/&gt;
+                &lt;p&gt;When: 2021-02-10 20:30 -
+                Where: &lt;a href="https://www.paradiso.nl"&gt;Paradiso Amsterdam (Amsterdam, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.paradiso.nl/en/program/nubya-garcia/79559/</guid>
+            <source>https://www.paradiso.nl/</source>
+            <author>https://www.paradiso.nl/</author>
+        </item>
+        <item>
+            <title>Fantastic Negrito [Paradiso NL-AMS]</title>
+            <link>https://www.paradiso.nl/en/program/fantastic-negrito/79529/</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;Amerikaanse blues, R&amp;B en roots singer-songwriter met bijzonder levensverhaal&lt;/p&gt;
+                &lt;img src="https://api.paradiso.nl/img/events//FantasticNegrito-LR.jpg" alt="image for event"
+                width=300 height=160/&gt;
+                &lt;p&gt;When: 2021-03-24 20:30 -
+                Where: &lt;a href="https://www.paradiso.nl"&gt;Paradiso Amsterdam (Amsterdam, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.paradiso.nl/en/program/fantastic-negrito/79529/</guid>
+            <source>https://www.paradiso.nl/</source>
+            <author>https://www.paradiso.nl/</author>
+        </item>
+        <item>
+            <title>Weer Bie Mekoar [Spot NL-GRN]</title>
+            <link>https://www.spotgroningen.nl/programma/weer-bie-mekoar/</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;Swinder, Jan Veldman, Wat Aans en meer op &#233;&#233;n avond!&lt;/p&gt;
+                &lt;img src="https://www.spotgroningen.nl/wp-content/uploads/2020/07/IMG_4439-150x150.jpg" alt="image
+                for event" width=300 height=160/&gt;
+                &lt;p&gt;When: 2020-11-21 21:00 -
+                Where: &lt;a href="https://www.spotgroningen.nl"&gt;SPOT (Groningen, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.spotgroningen.nl/programma/weer-bie-mekoar/</guid>
+            <source>https://www.spotgroningen.nl/programma</source>
+            <author>https://www.spotgroningen.nl/programma</author>
+        </item>
+        <item>
+            <title>Chefu0027Special [013 NL-TIL]</title>
+            <link>https://www.013.nl/programma/6145/chefspecial</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;AMIGO! LETu0027S GO!&lt;/p&gt;
+                &lt;img src="https://www.013.nl/uploads/cache/event_main_mobile/5dcabb11b015d.jpg?version=1573567340"
+                alt="image for event" width=300 height=160/&gt;
+                &lt;p&gt;When: 2021-03-19 20:00 -
+                Where: &lt;a href="https://www.013.nl"&gt;013 Tilburg (Tilburg, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.013.nl/programma/6145/chefspecial</guid>
+            <source>https://www.013.nl/programma</source>
+            <author>https://www.013.nl/programma</author>
+        </item>
+        <item>
+            <title>Je bent al mooi [Tivoli NL-UTR]</title>
+            <link>https://www.tivolivredenburg.nl/agenda/je-bent-al-mooi-07-09-2020/</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;Van wie is het vrouwenlichaam? #2&lt;/p&gt;
+                &lt;img src="https://www.tivolivredenburg.nl/wp-content/uploads/2019/12/je-bent-al-mooi-2-195x130.jpg"
+                alt="image for event" width=300 height=160/&gt;
+                &lt;p&gt;When: 2020-09-07 00:00 -
+                Where: &lt;a href="https://www.tivolivredenburg.nl"&gt;Tivoli Vredenburg (Utrecht, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.tivolivredenburg.nl/agenda/je-bent-al-mooi-07-09-2020/</guid>
+            <source>https://www.tivolivredenburg.nl/agenda/</source>
+            <author>https://www.tivolivredenburg.nl/agenda/</author>
+        </item>
+        <item>
+            <title>Nederlands Kamerkoor [Tivoli NL-UTR]</title>
+            <link>https://www.tivolivredenburg.nl/agenda/nederlands-kamerkoor-19-09-2020/</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;Lux in tenebris&lt;/p&gt;
+                &lt;img
+                src="https://www.tivolivredenburg.nl/wp-content/uploads/2020/02/campagnebeeld-Lux-in-tenebris-NKK-195x130.jpg"
+                alt="image for event" width=300 height=160/&gt;
+                &lt;p&gt;When: 2020-09-19 00:00 -
+                Where: &lt;a href="https://www.tivolivredenburg.nl"&gt;Tivoli Vredenburg (Utrecht, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.tivolivredenburg.nl/agenda/nederlands-kamerkoor-19-09-2020/</guid>
+            <source>https://www.tivolivredenburg.nl/agenda/</source>
+            <author>https://www.tivolivredenburg.nl/agenda/</author>
+        </item>
+        <item>
+            <title>Science Caf&#233; Utrecht | Het weer [Tivoli NL-UTR]</title>
+            <link>https://www.tivolivredenburg.nl/agenda/science-cafe-utrecht-het-weer-28-09-2020/</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;Talkshow met &#233;chte experts&lt;/p&gt;
+                &lt;img
+                src="https://www.tivolivredenburg.nl/wp-content/uploads/2020/08/noaa-Led9c1SSNFo-unsplash-195x130.jpg"
+                alt="image for event" width=300 height=160/&gt;
+                &lt;p&gt;When: 2020-09-28 00:00 -
+                Where: &lt;a href="https://www.tivolivredenburg.nl"&gt;Tivoli Vredenburg (Utrecht, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.tivolivredenburg.nl/agenda/science-cafe-utrecht-het-weer-28-09-2020/</guid>
+            <source>https://www.tivolivredenburg.nl/agenda/</source>
+            <author>https://www.tivolivredenburg.nl/agenda/</author>
+        </item>
+        <item>
+            <title>Bemoei je met je eigen seks [Tivoli NL-UTR]</title>
+            <link>https://www.tivolivredenburg.nl/agenda/bemoei-je-met-je-eigen-seks-12-10-2020/</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;Van wie is het vrouwenlichaam? #3&lt;/p&gt;
+                &lt;img src="https://www.tivolivredenburg.nl/wp-content/uploads/2019/12/Its-a-mens-world-195x130.jpg"
+                alt="image for event" width=300 height=160/&gt;
+                &lt;p&gt;When: 2020-10-12 00:00 -
+                Where: &lt;a href="https://www.tivolivredenburg.nl"&gt;Tivoli Vredenburg (Utrecht, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.tivolivredenburg.nl/agenda/bemoei-je-met-je-eigen-seks-12-10-2020/</guid>
+            <source>https://www.tivolivredenburg.nl/agenda/</source>
+            <author>https://www.tivolivredenburg.nl/agenda/</author>
+        </item>
+        <item>
+            <title>Science Caf&#233; Utrecht | De witte medische blik [Tivoli NL-UTR]</title>
+            <link>https://www.tivolivredenburg.nl/agenda/science-cafe-utrecht-de-witte-medische-blik-26-10-2020/</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;Talkshow met &#233;chte experts&lt;/p&gt;
+                &lt;img
+                src="https://www.tivolivredenburg.nl/wp-content/uploads/2020/08/FB_SCU_de-witte-medische-blik-195x130.png"
+                alt="image for event" width=300 height=160/&gt;
+                &lt;p&gt;When: 2020-10-26 00:00 -
+                Where: &lt;a href="https://www.tivolivredenburg.nl"&gt;Tivoli Vredenburg (Utrecht, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.tivolivredenburg.nl/agenda/science-cafe-utrecht-de-witte-medische-blik-26-10-2020/</guid>
+            <source>https://www.tivolivredenburg.nl/agenda/</source>
+            <author>https://www.tivolivredenburg.nl/agenda/</author>
+        </item>
+        <item>
+            <title>De tranen van Petrus [Tivoli NL-UTR]</title>
+            <link>https://www.tivolivredenburg.nl/agenda/tranen-van-petrus-31-10-2020/</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;Nederlands Kamerkoor&lt;/p&gt;
+                &lt;img
+                src="https://www.tivolivredenburg.nl/wp-content/uploads/2020/02/Website_Melle_NKK_80jr-14_MelleVeivogel_web-1-195x130.jpg"
+                alt="image for event" width=300 height=160/&gt;
+                &lt;p&gt;When: 2020-10-31 00:00 -
+                Where: &lt;a href="https://www.tivolivredenburg.nl"&gt;Tivoli Vredenburg (Utrecht, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.tivolivredenburg.nl/agenda/tranen-van-petrus-31-10-2020/</guid>
+            <source>https://www.tivolivredenburg.nl/agenda/</source>
+            <author>https://www.tivolivredenburg.nl/agenda/</author>
+        </item>
+        <item>
+            <title>Reinier Baas ensemble met Yurdal Tokcan [Tivoli NL-UTR]</title>
+            <link>https://www.tivolivredenburg.nl/agenda/reinier-baas-ensemble-met-yurdal-tokcan-21-11-2020/</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;Ud Festival&lt;/p&gt;
+                &lt;img
+                src="https://www.tivolivredenburg.nl/wp-content/uploads/2020/03/Reinier-baas-deze-gebruiken-195x130.jpeg"
+                alt="image for event" width=300 height=160/&gt;
+                &lt;p&gt;When: 2020-11-21 00:00 -
+                Where: &lt;a href="https://www.tivolivredenburg.nl"&gt;Tivoli Vredenburg (Utrecht, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.tivolivredenburg.nl/agenda/reinier-baas-ensemble-met-yurdal-tokcan-21-11-2020/</guid>
+            <source>https://www.tivolivredenburg.nl/agenda/</source>
+            <author>https://www.tivolivredenburg.nl/agenda/</author>
+        </item>
+        <item>
+            <title>Science Caf&#233; Utrecht | Het heelal [Tivoli NL-UTR]</title>
+            <link>https://www.tivolivredenburg.nl/agenda/science-cafe-utrecht-het-heelal-23-11-2020/</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;Talkshow met &#233;chte experts&lt;/p&gt;
+                &lt;img
+                src="https://www.tivolivredenburg.nl/wp-content/uploads/2019/12/Schermafbeelding-2019-12-24-om-15.19.01-195x130.png"
+                alt="image for event" width=300 height=160/&gt;
+                &lt;p&gt;When: 2020-11-23 00:00 -
+                Where: &lt;a href="https://www.tivolivredenburg.nl"&gt;Tivoli Vredenburg (Utrecht, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.tivolivredenburg.nl/agenda/science-cafe-utrecht-het-heelal-23-11-2020/</guid>
+            <source>https://www.tivolivredenburg.nl/agenda/</source>
+            <author>https://www.tivolivredenburg.nl/agenda/</author>
+        </item>
+        <item>
+            <title>Noord Nederlands Toneel - Openbare repetitie Oom Wanja [Spot NL-GRN]</title>
+            <link>https://www.spotgroningen.nl/programma/noord-nederlands-toneel-63/</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;Kijkje achter de schermen bij Oom Wanja&lt;/p&gt;
+                &lt;img
+                src="https://www.spotgroningen.nl/wp-content/uploads/2020/05/Noord-20Nederlands-20Toneel-20-20Oom-20Wanja-20Halie-20300-20dpi-20RGB-scaled-e1590425372374-150x150.jpg"
+                alt="image for event" width=300 height=160/&gt;
+                &lt;p&gt;When: 2020-09-07 22:15 -
+                Where: &lt;a href="https://www.spotgroningen.nl"&gt;SPOT (Groningen, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.spotgroningen.nl/programma/noord-nederlands-toneel-63/</guid>
+            <source>https://www.spotgroningen.nl/programma</source>
+            <author>https://www.spotgroningen.nl/programma</author>
+        </item>
+        <item>
+            <title>Noord Nederlands Toneel - Oom Wanja (Try-out) [Spot NL-GRN]</title>
+            <link>https://www.spotgroningen.nl/programma/noord-nederlands-toneel-64/</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;Tsjechov op zijn best&lt;/p&gt;
+                &lt;img
+                src="https://www.spotgroningen.nl/wp-content/uploads/2020/05/Noord-20Nederlands-20Toneel-20-20Oom-20Wanja-20Halie-20300-20dpi-20RGB-scaled-e1590425372374-150x150.jpg"
+                alt="image for event" width=300 height=160/&gt;
+                &lt;p&gt;When: 2020-10-01 22:15 -
+                Where: &lt;a href="https://www.spotgroningen.nl"&gt;SPOT (Groningen, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.spotgroningen.nl/programma/noord-nederlands-toneel-64/</guid>
+            <source>https://www.spotgroningen.nl/programma</source>
+            <author>https://www.spotgroningen.nl/programma</author>
+        </item>
+        <item>
+            <title>Noord Nederlands Toneel - Oom Wanja (Try-out) [Spot NL-GRN]</title>
+            <link>https://www.spotgroningen.nl/programma/noord-nederlands-toneel-65/</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;Tsjechov op zijn best&lt;/p&gt;
+                &lt;img
+                src="https://www.spotgroningen.nl/wp-content/uploads/2020/05/Noord-20Nederlands-20Toneel-20-20Oom-20Wanja-20Halie-20300-20dpi-20RGB-scaled-e1590425372374-150x150.jpg"
+                alt="image for event" width=300 height=160/&gt;
+                &lt;p&gt;When: 2020-10-02 22:15 -
+                Where: &lt;a href="https://www.spotgroningen.nl"&gt;SPOT (Groningen, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.spotgroningen.nl/programma/noord-nederlands-toneel-65/</guid>
+            <source>https://www.spotgroningen.nl/programma</source>
+            <author>https://www.spotgroningen.nl/programma</author>
+        </item>
+        <item>
+            <title>Noord Nederlands Toneel - Oom Wanja (Premiere) [Spot NL-GRN]</title>
+            <link>https://www.spotgroningen.nl/programma/noord-nederlands-toneel-66/</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;Tsjechov op zijn best&lt;/p&gt;
+                &lt;img
+                src="https://www.spotgroningen.nl/wp-content/uploads/2020/05/Noord-20Nederlands-20Toneel-20-20Oom-20Wanja-20Halie-20300-20dpi-20RGB-scaled-e1590425372374-150x150.jpg"
+                alt="image for event" width=300 height=160/&gt;
+                &lt;p&gt;When: 2020-10-03 22:15 -
+                Where: &lt;a href="https://www.spotgroningen.nl"&gt;SPOT (Groningen, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.spotgroningen.nl/programma/noord-nederlands-toneel-66/</guid>
+            <source>https://www.spotgroningen.nl/programma</source>
+            <author>https://www.spotgroningen.nl/programma</author>
+        </item>
+        <item>
+            <title>Noord Nederlands Toneel - Oom Wanja [Spot NL-GRN]</title>
+            <link>https://www.spotgroningen.nl/programma/noord-nederlands-toneel-67/</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;Tsjechov op zijn best&lt;/p&gt;
+                &lt;img
+                src="https://www.spotgroningen.nl/wp-content/uploads/2020/05/Noord-20Nederlands-20Toneel-20-20Oom-20Wanja-20Halie-20300-20dpi-20RGB-scaled-e1590425372374-150x150.jpg"
+                alt="image for event" width=300 height=160/&gt;
+                &lt;p&gt;When: 2020-10-07 22:15 -
+                Where: &lt;a href="https://www.spotgroningen.nl"&gt;SPOT (Groningen, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.spotgroningen.nl/programma/noord-nederlands-toneel-67/</guid>
+            <source>https://www.spotgroningen.nl/programma</source>
+            <author>https://www.spotgroningen.nl/programma</author>
+        </item>
+        <item>
+            <title>Noord Nederlands Toneel - Oom Wanja [Spot NL-GRN]</title>
+            <link>https://www.spotgroningen.nl/programma/noord-nederlands-toneel-70/</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;Tsjechov op zijn best&lt;/p&gt;
+                &lt;img
+                src="https://www.spotgroningen.nl/wp-content/uploads/2020/05/Noord-20Nederlands-20Toneel-20-20Oom-20Wanja-20Halie-20300-20dpi-20RGB-scaled-e1590425372374-150x150.jpg"
+                alt="image for event" width=300 height=160/&gt;
+                &lt;p&gt;When: 2020-10-08 22:15 -
+                Where: &lt;a href="https://www.spotgroningen.nl"&gt;SPOT (Groningen, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.spotgroningen.nl/programma/noord-nederlands-toneel-70/</guid>
+            <source>https://www.spotgroningen.nl/programma</source>
+            <author>https://www.spotgroningen.nl/programma</author>
+        </item>
+        <item>
+            <title>Noord Nederlands Toneel - Oom Wanja [Spot NL-GRN]</title>
+            <link>https://www.spotgroningen.nl/programma/noord-nederlands-toneel-69/</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;Tsjechov op zijn best&lt;/p&gt;
+                &lt;img
+                src="https://www.spotgroningen.nl/wp-content/uploads/2020/05/Noord-20Nederlands-20Toneel-20-20Oom-20Wanja-20Halie-20300-20dpi-20RGB-scaled-e1590425372374-150x150.jpg"
+                alt="image for event" width=300 height=160/&gt;
+                &lt;p&gt;When: 2020-10-09 22:15 -
+                Where: &lt;a href="https://www.spotgroningen.nl"&gt;SPOT (Groningen, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.spotgroningen.nl/programma/noord-nederlands-toneel-69/</guid>
+            <source>https://www.spotgroningen.nl/programma</source>
+            <author>https://www.spotgroningen.nl/programma</author>
+        </item>
+        <item>
+            <title>Noord Nederlands Toneel - Oom Wanja [Spot NL-GRN]</title>
+            <link>https://www.spotgroningen.nl/programma/noord-nederlands-toneel-68/</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;Tsjechov op zijn best&lt;/p&gt;
+                &lt;img
+                src="https://www.spotgroningen.nl/wp-content/uploads/2020/05/Noord-20Nederlands-20Toneel-20-20Oom-20Wanja-20Halie-20300-20dpi-20RGB-scaled-e1590425372374-150x150.jpg"
+                alt="image for event" width=300 height=160/&gt;
+                &lt;p&gt;When: 2020-10-10 22:15 -
+                Where: &lt;a href="https://www.spotgroningen.nl"&gt;SPOT (Groningen, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.spotgroningen.nl/programma/noord-nederlands-toneel-68/</guid>
+            <source>https://www.spotgroningen.nl/programma</source>
+            <author>https://www.spotgroningen.nl/programma</author>
+        </item>
+        <item>
+            <title>George &amp; Eran Producties - George &amp; Eran worden racisten [Spot NL-GRN]</title>
+            <link>https://www.spotgroningen.nl/programma/george-eran-producties-2/</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;De (on)mogelijkheid het goed te doen&lt;/p&gt;
+                &lt;img
+                src="https://www.spotgroningen.nl/wp-content/uploads/2020/05/George-20-20Eran-20Producties-20-20George-20-20Eran-20worden-20racisten-20Yalper-20Productions-20300-20dpi-20RGB-150x150.jpg"
+                alt="image for event" width=300 height=160/&gt;
+                &lt;p&gt;When: 2020-10-16 21:00 -
+                Where: &lt;a href="https://www.spotgroningen.nl"&gt;SPOT (Groningen, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.spotgroningen.nl/programma/george-eran-producties-2/</guid>
+            <source>https://www.spotgroningen.nl/programma</source>
+            <author>https://www.spotgroningen.nl/programma</author>
+        </item>
+        <item>
+            <title>George &amp; Eran Producties - George &amp; Eran worden racisten [Spot NL-GRN]</title>
+            <link>https://www.spotgroningen.nl/programma/george-eran-producties-3/</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;De (on)mogelijkheid het goed te doen&lt;/p&gt;
+                &lt;img
+                src="https://www.spotgroningen.nl/wp-content/uploads/2020/05/George-20-20Eran-20Producties-20-20George-20-20Eran-20worden-20racisten-20Yalper-20Productions-20300-20dpi-20RGB-150x150.jpg"
+                alt="image for event" width=300 height=160/&gt;
+                &lt;p&gt;When: 2020-10-16 23:30 -
+                Where: &lt;a href="https://www.spotgroningen.nl"&gt;SPOT (Groningen, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.spotgroningen.nl/programma/george-eran-producties-3/</guid>
+            <source>https://www.spotgroningen.nl/programma</source>
+            <author>https://www.spotgroningen.nl/programma</author>
+        </item>
+        <item>
+            <title>Noord Nederlands Toneel - Oom Wanja [Spot NL-GRN]</title>
+            <link>https://www.spotgroningen.nl/programma/noord-nederlands-toneel-73/</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;Tsjechov op zijn best&lt;/p&gt;
+                &lt;img
+                src="https://www.spotgroningen.nl/wp-content/uploads/2020/05/Noord-20Nederlands-20Toneel-20-20Oom-20Wanja-20Halie-20300-20dpi-20RGB-scaled-e1590425372374-150x150.jpg"
+                alt="image for event" width=300 height=160/&gt;
+                &lt;p&gt;When: 2020-12-09 21:15 -
+                Where: &lt;a href="https://www.spotgroningen.nl"&gt;SPOT (Groningen, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.spotgroningen.nl/programma/noord-nederlands-toneel-73/</guid>
+            <source>https://www.spotgroningen.nl/programma</source>
+            <author>https://www.spotgroningen.nl/programma</author>
+        </item>
+        <item>
+            <title>Noord Nederlands Toneel - Oom Wanja [Spot NL-GRN]</title>
+            <link>https://www.spotgroningen.nl/programma/noord-nederlands-toneel-72/</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;Tsjechov op zijn best&lt;/p&gt;
+                &lt;img
+                src="https://www.spotgroningen.nl/wp-content/uploads/2020/05/Noord-20Nederlands-20Toneel-20-20Oom-20Wanja-20Halie-20300-20dpi-20RGB-scaled-e1590425372374-150x150.jpg"
+                alt="image for event" width=300 height=160/&gt;
+                &lt;p&gt;When: 2020-12-10 21:15 -
+                Where: &lt;a href="https://www.spotgroningen.nl"&gt;SPOT (Groningen, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.spotgroningen.nl/programma/noord-nederlands-toneel-72/</guid>
+            <source>https://www.spotgroningen.nl/programma</source>
+            <author>https://www.spotgroningen.nl/programma</author>
+        </item>
+        <item>
+            <title>Noord Nederlands Toneel - Oom Wanja [Spot NL-GRN]</title>
+            <link>https://www.spotgroningen.nl/programma/noord-nederlands-toneel-71/</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;Tsjechov op zijn best&lt;/p&gt;
+                &lt;img
+                src="https://www.spotgroningen.nl/wp-content/uploads/2020/05/Noord-20Nederlands-20Toneel-20-20Oom-20Wanja-20Halie-20300-20dpi-20RGB-scaled-e1590425372374-150x150.jpg"
+                alt="image for event" width=300 height=160/&gt;
+                &lt;p&gt;When: 2020-12-11 21:15 -
+                Where: &lt;a href="https://www.spotgroningen.nl"&gt;SPOT (Groningen, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.spotgroningen.nl/programma/noord-nederlands-toneel-71/</guid>
+            <source>https://www.spotgroningen.nl/programma</source>
+            <author>https://www.spotgroningen.nl/programma</author>
+        </item>
+        <item>
+            <title>Noord Nederlands Toneel - Oom Wanja [Spot NL-GRN]</title>
+            <link>https://www.spotgroningen.nl/programma/noord-nederlands-toneel-62/</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;Tsjechov op zijn best&lt;/p&gt;
+                &lt;img
+                src="https://www.spotgroningen.nl/wp-content/uploads/2020/05/Noord-20Nederlands-20Toneel-20-20Oom-20Wanja-20Halie-20300-20dpi-20RGB-scaled-e1590425372374-150x150.jpg"
+                alt="image for event" width=300 height=160/&gt;
+                &lt;p&gt;When: 2020-12-12 21:15 -
+                Where: &lt;a href="https://www.spotgroningen.nl"&gt;SPOT (Groningen, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.spotgroningen.nl/programma/noord-nederlands-toneel-62/</guid>
+            <source>https://www.spotgroningen.nl/programma</source>
+            <author>https://www.spotgroningen.nl/programma</author>
+        </item>
+        <item>
+            <title>Yowsah! Caf&#233; [Simplon NL-GRN]</title>
+            <link>http://simplon.nl/?post_type=events&amp;p=21373</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;Ingo the Gringo + Coco Coquelicot&lt;/p&gt;
+                &lt;img src="" alt="image for event" width=300 height=160/&gt;
+                &lt;p&gt;When: 2020-08-22 21:00 -
+                Where: &lt;a href="https://www.simplon.nl"&gt;Simplon Groningen (Groningen, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>http://simplon.nl/?post_type=events&amp;p=21373</guid>
+            <source>https://www.simplon.nl</source>
+            <author>https://www.simplon.nl</author>
+        </item>
+        <item>
+            <title>Er even tussenuit met Jairzinho [Melkweg NL-AMS]</title>
+            <link>https://www.melkweg.nl/nl/agenda/jairzinho-26-09-2020</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;Jairzinho staat bekend mede-oprichter van platenlabel Rotterdam Airlines en scoorde als artiest
+                een groot aantal hits zoals&#160;Gass (met Sevn Alias,&#160;Jason Futuristic en&#160;BKO),&#160;Tempo
+                (met Boef), en&#160;Zegen&#160;(met Snelle). In september staat hij met een gloednieuw project in de Max
+                waarmee hij het over een andere boeg gooit.&#160;In de huidige muziekwereld krijgen vrouwelijke
+                artiesten niet de aandacht die zij verdienen. Jairzinho ziet dit ook en neemt het heft in eigen handen
+                en presenteert: &#8220;Een project met en voor vrouwen&#8221;.&#160; Daarbij zal hij nieuw werk van zijn
+                gloednieuwe album laten horen. Met het project wil&#160;Jairzinho aan de rest van de wereld laten zien
+                dat er veel talent, kracht en diversiteit ligt bij de vrouw: "Los van de muziek willen we de boodschap
+                doorzetten door de samenwerking met krachtige vrouwen aan te gaan en hiermee de doelgroep, de vrouw, te
+                inspireren."&lt;/p&gt;
+                &lt;img
+                src="https://s3-eu-west-1.amazonaws.com/static.melkweg.nl/uploads/images/scaled/agenda_thumbnail/27564"
+                alt="image for event" width=300 height=160/&gt;
+                &lt;p&gt;When: 2020-09-26 20:00 -
+                Where: &lt;a href="https://www.melkweg.nl"&gt;Melkweg Amsterdam (Amsterdam, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.melkweg.nl/nl/agenda/jairzinho-26-09-2020</guid>
+            <source>https://www.melkweg.nl/agenda</source>
+            <author>https://www.melkweg.nl/agenda</author>
+        </item>
+        <item>
+            <title>Melanie C [Melkweg NL-AMS]</title>
+            <link>https://www.melkweg.nl/nl/agenda/melanie-c-19-05-2021</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;Melanie C komt naar Nederland! De Britse Melanie Chisholm aka&#160;Mel C /&#160;Sporty Spice&#160;genoot
+                in de jaren '90 wereldfaam in de razendpopulaire meidengroep&#160;Spice Girls. Daarna ging het ook solo
+                hard met grote hits als 'Never Be The Same Again' en 'I Turn To You'. Inmiddels heeft de Britse meer dan
+                100 miljoen platen verkocht en verschillende awards op haar naam staan.Op haar allernieuwste album die
+                deze oktober uit zal komen, komt haar liefde voor disco, elektronische muziek en anthems op een
+                verfrissende wijze samen. Volgens&#160;The Guardian&#160;haar "beste werk in 20 jaar dat een beetje
+                classic Robyn &#233;n de onbevangen vrolijkheid&#160;van Carly Rae Jepsen uitstraalt". Een gloednieuw
+                hoofdstuk van Girlpower is aangebroken, don't miss out!&lt;/p&gt;
+                &lt;img
+                src="https://s3-eu-west-1.amazonaws.com/static.melkweg.nl/uploads/images/scaled/agenda_thumbnail/27562"
+                alt="image for event" width=300 height=160/&gt;
+                &lt;p&gt;When: 2021-05-19 19:30 -
+                Where: &lt;a href="https://www.melkweg.nl"&gt;Melkweg Amsterdam (Amsterdam, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.melkweg.nl/nl/agenda/melanie-c-19-05-2021</guid>
+            <source>https://www.melkweg.nl/agenda</source>
+            <author>https://www.melkweg.nl/agenda</author>
+        </item>
+        <item>
+            <title>blackwave. [Paradiso NL-AMS]</title>
+            <link>https://www.paradiso.nl/en/program/blackwave/79592/</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;Antwerps hiphopduo met nineties sound&lt;/p&gt;
+                &lt;img src="https://api.paradiso.nl/img/events//BBAL-high-res-16.jpg" alt="image for event" width=300
+                height=160/&gt;
+                &lt;p&gt;When: 2020-10-16 19:00 -
+                Where: &lt;a href="https://www.paradiso.nl"&gt;Paradiso Amsterdam (Amsterdam, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.paradiso.nl/en/program/blackwave/79592/</guid>
+            <source>https://www.paradiso.nl/</source>
+            <author>https://www.paradiso.nl/</author>
+        </item>
+        <item>
+            <title>L'Imp&#233;ratrice [Paradiso NL-AMS]</title>
+            <link>https://www.paradiso.nl/en/program/l-imperatrice/79489/</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;Franse discopopbelofte verovert de wereld&lt;/p&gt;
+                &lt;img src="https://api.paradiso.nl/img/events//5.-L_Imp&#233;ratrice-_-2020-_-&#169;-Gabrielle-Riouah-_-sRVB-web.jpg"
+                alt="image for event" width=300 height=160/&gt;
+                &lt;p&gt;When: 2021-02-10 20:30 -
+                Where: &lt;a href="https://www.paradiso.nl"&gt;Paradiso Amsterdam (Amsterdam, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.paradiso.nl/en/program/l-imperatrice/79489/</guid>
+            <source>https://www.paradiso.nl/</source>
+            <author>https://www.paradiso.nl/</author>
+        </item>
+        <item>
+            <title>Bebel Gilberto [Paradiso NL-AMS]</title>
+            <link>https://www.paradiso.nl/en/program/bebel-gilberto/79611/</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;Bossanova in een modern jasje&lt;/p&gt;
+                &lt;img src="https://api.paradiso.nl/img/events//Bebel-Gilberto-persfoto.jpg" alt="image for event"
+                width=300 height=160/&gt;
+                &lt;p&gt;When: 2021-05-15 20:30 -
+                Where: &lt;a href="https://www.paradiso.nl"&gt;Paradiso Amsterdam (Amsterdam, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.paradiso.nl/en/program/bebel-gilberto/79611/</guid>
+            <source>https://www.paradiso.nl/</source>
+            <author>https://www.paradiso.nl/</author>
+        </item>
+        <item>
+            <title>Rudy Lentze (CLUBKAARTSHOW) [Vera NL-GRN]</title>
+            <link>http://www.vera-groningen.nl/?post_type=events&amp;p=107032&amp;lang=nl</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;Rudy Lentze with support slaat zich door de Coronacrisis&lt;/p&gt;
+                &lt;img src="https://www.vera-groningen.nl/content/uploads/2020/08/header-01-360x250.jpg" alt="image for
+                event" width=300 height=160/&gt;
+                &lt;p&gt;When: 2020-09-03 21:30 -
+                Where: &lt;a href="https://www.vera-groningen.nl"&gt;VERA-Groningen (Groningen, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>http://www.vera-groningen.nl/?post_type=events&amp;p=107032&amp;lang=nl</guid>
+            <source>https://www.vera-groningen.nl/programma/</source>
+            <author>https://www.vera-groningen.nl/programma/</author>
+        </item>
+        <item>
+            <title>Lost Highway [Vera NL-GRN]</title>
+            <link>http://www.vera-groningen.nl/?post_type=events&amp;p=107041&amp;lang=nl</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;Lost Highway&lt;/p&gt;
+                &lt;img
+                src="https://www.vera-groningen.nl/content/uploads/2020/08/Lost-Highway_st_1_jpg_sd-low-1746x981-c-center-360x250.jpg"
+                alt="image for event" width=300 height=160/&gt;
+                &lt;p&gt;When: 2020-09-15 20:30 -
+                Where: &lt;a href="https://www.vera-groningen.nl"&gt;VERA-Groningen (Groningen, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>http://www.vera-groningen.nl/?post_type=events&amp;p=107041&amp;lang=nl</guid>
+            <source>https://www.vera-groningen.nl/programma/</source>
+            <author>https://www.vera-groningen.nl/programma/</author>
+        </item>
+        <item>
+            <title>Club Bavarois (CLUBKAARTSHOW) [Vera NL-GRN]</title>
+            <link>http://www.vera-groningen.nl/?post_type=events&amp;p=107002&amp;lang=nl</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;Club Bavarois with support Live: Eva Waterbolk&lt;/p&gt;
+                &lt;img src="https://www.vera-groningen.nl/content/uploads/2020/08/header-01-site-360x250.jpg"
+                alt="image for event" width=300 height=160/&gt;
+                &lt;p&gt;When: 2020-09-24 21:30 -
+                Where: &lt;a href="https://www.vera-groningen.nl"&gt;VERA-Groningen (Groningen, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>http://www.vera-groningen.nl/?post_type=events&amp;p=107002&amp;lang=nl</guid>
+            <source>https://www.vera-groningen.nl/programma/</source>
+            <author>https://www.vera-groningen.nl/programma/</author>
+        </item>
+        <item>
+            <title>Rashomon [Vera NL-GRN]</title>
+            <link>http://www.vera-groningen.nl/?post_type=events&amp;p=107043&amp;lang=nl</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;Rashomon&lt;/p&gt;
+                &lt;img src="https://www.vera-groningen.nl/content/uploads/2020/08/rashomon-movie-360x250.jpg"
+                alt="image for event" width=300 height=160/&gt;
+                &lt;p&gt;When: 2020-09-29 20:30 -
+                Where: &lt;a href="https://www.vera-groningen.nl"&gt;VERA-Groningen (Groningen, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>http://www.vera-groningen.nl/?post_type=events&amp;p=107043&amp;lang=nl</guid>
+            <source>https://www.vera-groningen.nl/programma/</source>
+            <author>https://www.vera-groningen.nl/programma/</author>
+        </item>
+        <item>
+            <title>Cameretten Festival 2019 - Finalistentournee [Spot NL-GRN]</title>
+            <link>https://www.spotgroningen.nl/programma/cameretten-festival-2019-2/</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;Keihard lachen om de topcabaretiers van morgen!&lt;/p&gt;
+                &lt;img src="https://www.spotgroningen.nl/wp-content/uploads/2019/10/logo-png-150x150.png" alt="image
+                for event" width=300 height=160/&gt;
+                &lt;p&gt;When: 2020-09-20 23:30 -
+                Where: &lt;a href="https://www.spotgroningen.nl"&gt;SPOT (Groningen, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.spotgroningen.nl/programma/cameretten-festival-2019-2/</guid>
+            <source>https://www.spotgroningen.nl/programma</source>
+            <author>https://www.spotgroningen.nl/programma</author>
+        </item>
+        <item>
+            <title>Marlijn Zingt [Tivoli NL-UTR]</title>
+            <link>https://www.tivolivredenburg.nl/agenda/marlijn-zingt-13-11-2020/</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;Theatershow van Marlijn Weerdenburg&lt;/p&gt;
+                &lt;img
+                src="https://www.tivolivredenburg.nl/wp-content/uploads/2020/08/Marlijn-Zingt-Fotografie-Hannah-Lipowsky-1-195x130.jpg"
+                alt="image for event" width=300 height=160/&gt;
+                &lt;p&gt;When: 2020-11-13 00:00 -
+                Where: &lt;a href="https://www.tivolivredenburg.nl"&gt;Tivoli Vredenburg (Utrecht, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.tivolivredenburg.nl/agenda/marlijn-zingt-13-11-2020/</guid>
+            <source>https://www.tivolivredenburg.nl/agenda/</source>
+            <author>https://www.tivolivredenburg.nl/agenda/</author>
+        </item>
+    </channel>
+</rss>
