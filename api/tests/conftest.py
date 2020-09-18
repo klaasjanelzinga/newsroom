@@ -1,3 +1,7 @@
+from contextlib import contextmanager
+from typing import Tuple
+from unittest.mock import Mock, AsyncMock
+
 import pytest
 from faker import Faker
 
@@ -49,3 +53,20 @@ def repositories():
 
 def mirror_side_effect(arg):
     return arg
+
+
+@pytest.fixture
+def subscribed_user(user: User, feed: Feed) -> Tuple[User, Feed]:
+    user.subscribed_to = [feed.feed_id]
+    feed.number_of_subscriptions = 1
+    return user, feed
+
+
+@contextmanager
+def authorization_for(security_mock: Mock, user: User):
+    security_mock.get_approved_user = AsyncMock()
+    security_mock.get_approved_user.return_value = user
+
+    yield
+
+    security_mock.get_approved_user.assert_called_once()

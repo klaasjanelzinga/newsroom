@@ -52,7 +52,7 @@ async def fetch_feed_information_for(
                         rss_url = rss_links[0].get("href")
                         async with session.get(rss_url) as xml_response:
                             rss_document = fromstring(await xml_response.text())
-                            return _process_rss_document(url, rss_document)
+                            return _process_rss_document(rss_url, rss_document)
                 elif text.find("<rss") != -1:
                     rss_document = fromstring(text)
                     return _process_rss_document(url, rss_document)

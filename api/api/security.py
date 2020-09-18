@@ -47,7 +47,6 @@ class TokenVerifier:
                 token_certs.cancel()
                 raise HTTPException(status_code=401, detail="Unauthorized")
             token = bearer_token[7:]
-            log.info("Verifying token")
             result = jwt.decode(
                 token=token,
                 certs=await token_certs,

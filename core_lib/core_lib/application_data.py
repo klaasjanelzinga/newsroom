@@ -1,8 +1,9 @@
 import logging
 import os
-from unittest.mock import MagicMock
+from typing import List
+from unittest.mock import MagicMock, Mock, AsyncMock  # type: ignore
 
-from aiohttp import ClientSession
+from aiohttp import ClientSession, ClientResponse
 from google.cloud import datastore
 from google.cloud.datastore import Client
 
@@ -40,6 +41,23 @@ class Repositories:
             self.feed_repository = MagicMock(FeedRepository)  # type: ignore
             self.subscription_repository = MagicMock(SubscriptionRepository)  # type: ignore
             self.client_session = MagicMock(ClientSession)  # type: ignore
+
+    def mock_client_session_for_files(self, file_names: List[str]) -> ClientSession:
+        def _response_for_file(file_name: str) -> AsyncMock:
+            with open(file_name) as file:
+                read_in_file = file.read()
+                text_response = AsyncMock(ClientResponse)
+                text_response.text.return_value = read_in_file
+
+                response = Mock()
+                response.__aenter__ = AsyncMock(return_value=text_response)
+                response.__aexit__ = AsyncMock(return_value=None)
+                return response
+
+        client_session = AsyncMock(ClientSession)
+        client_session.get.side_effect = [_response_for_file(file_name) for file_name in file_names]
+        self.client_session = client_session
+        return client_session
 
     def mock_user_repository(self) -> MagicMock:
         return self.user_repository  # type: ignore
