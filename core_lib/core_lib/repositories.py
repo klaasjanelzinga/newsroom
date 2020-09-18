@@ -127,6 +127,15 @@ class FeedRepository:
             raise Exception(f"Feed with id {feed_id} not found.")
         return Feed.parse_obj(data)
 
+    def get_active_feeds(self) -> List[Feed]:
+        """ Find the Feed entities that are activily used. """
+        query = self.client.query(kind="Feed")
+        query.add_filter("number_of_subscriptions", ">", 0)
+        result = list(query.fetch())
+        if not result:
+            return []
+        return [Feed.parse_obj(entity) for entity in result]
+
 
 class SubscriptionRepository:
     def __init__(self, client: Client):
@@ -239,3 +248,10 @@ class UserRepository:
         entity.update(user_profile.dict())
         self.client.put(entity)
         return User.parse_obj(entity)
+
+    def fetch_subscribed_to(self, feed: Feed) -> List[User]:
+        query = self.client.query(kind="User")
+        result = list(query.fetch())
+        if not result:
+            return []
+        return [User.parse_obj(entity) for entity in result if feed.feed_id in entity["subscribed_to"]]

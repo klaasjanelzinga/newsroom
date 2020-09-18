@@ -56,6 +56,7 @@ def _parse_optional_rss_datetime(freely_formatted_datetime: Optional[str]) -> Op
 
 
 def rss_document_to_feed_items(feed: Feed, tree: Element) -> List[FeedItem]:
+    """ Creates a list of FeedItem objects from a xml tree for the feed. """
     item_elements = tree.findall("channel/item")
     return [
         FeedItem(

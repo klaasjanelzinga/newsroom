@@ -2,16 +2,16 @@ FROM newsrooom/python-base:latest
 
 EXPOSE 8080
 
-COPY api/requirements.txt api/requirements.txt
+COPY cron/requirements.txt cron/requirements.txt
 
 RUN pip install --upgrade pip
 
-COPY api /usr/src/app/api
+COPY cron /usr/src/app/cron
 COPY core_lib /usr/src/app/core_lib
 
 RUN cd core_lib && pip install -r requirements.txt
-RUN cd api && pip install -r requirements.txt
+RUN cd cron && pip install -r requirements.txt
 
 VOLUME [ "/usr/src/app" ]
 
-CMD ["api/entrypoint.sh"]
+CMD ["cron/entrypoint.sh"]

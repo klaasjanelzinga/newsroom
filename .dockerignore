@@ -9,7 +9,6 @@ deploy-settings-frontend.env
 deploy-settings-proxy.env
 deploy.sh
 docker-compose.yml
-.flake8
 .gcloudignore
 .git
 .github
@@ -18,11 +17,7 @@ docker-compose.yml
 index.yaml
 integration
 integration-test-dc.yml
-.isort.cfg
 .mypy_cache
-mypy.ini
-pylintrc
-pyproject.toml
 .pytest_cache
 README.md
 run-before-commit.sh

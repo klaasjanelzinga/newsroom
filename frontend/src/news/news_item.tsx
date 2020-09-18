@@ -123,7 +123,7 @@ class NewsItemNode extends React.Component<NewsItemProps> implements NewsItemCon
                   className={this.state.isRead ? classes.cardRead : classes.card}
                   ref={(t) => this.element = t}>
                 <Grid item xs={12} className={classes.cardTitle}>
-                    <a href={newsItem.link} className={classes.titleLink}>{newsItem.title}</a>
+                    <a href={newsItem.link} className={classes.titleLink} target="_blank" rel="noopener noreferrer">{newsItem.title}</a>
                 </Grid>
                 <Grid item xs={12} className={classes.cardDescription}>
                     <div dangerouslySetInnerHTML={{__html: newsItem.description}}/>

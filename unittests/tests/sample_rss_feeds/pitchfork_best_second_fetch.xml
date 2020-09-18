@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:media="http://search.yahoo.com/mrss/" version="2.0">
+    <channel>
+        <title>Best New Albums - Pitchfork</title>
+        <description>The best new releases from Pitchfork, the most trusted voice in music.</description>
+        <link>https://pitchfork.com/reviews/best/albums/</link>
+        <atom:link href="https://pitchfork.com/rss/reviews/best/albums/" rel="self" type="application/rss+xml"/>
+        <copyright>© Condé Nast 2020</copyright>
+        <language>en-us</language>
+        <lastBuildDate>Tue, 18 Aug 2020 05:00:00 GMT</lastBuildDate>
+        <ttl>300</ttl>
+        <item>
+            <title>Dehd: Flower of Devotion</title>
+            <link>https://pitchfork.com/reviews/albums/dehd-flower-of-devotion/</link>
+            <description>&lt;p&gt;Recording in a studio, the Chicago DIY trio sound newly airy and lush, but no less
+                direct and sincere. Their confidence in their concision is the best part.&lt;/p&gt;
+            </description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Steven Arroyo</dc:creator>
+            <pubDate>Tue, 21 Jul 2020 05:00:00 GMT</pubDate>
+            <guid>https://pitchfork.com/reviews/albums/dehd-flower-of-devotion/</guid>
+        </item>
+        <item>
+            <title>Julianna Barwick: Healing Is a Miracle</title>
+            <link>https://pitchfork.com/reviews/albums/julianna-barwick-healing-is-a-miracle/</link>
+            <description>&lt;p&gt;The vocalist and producer Juliana Barwick’s revelatory new album asks us to picture
+                healing at a moment when the task feels impossible. &lt;/p&gt;
+            </description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Will Gottsegen</dc:creator>
+            <pubDate>Wed, 15 Jul 2020 05:00:00 GMT</pubDate>
+            <guid>https://pitchfork.com/reviews/albums/julianna-barwick-healing-is-a-miracle/</guid>
+        </item>
+        <item>
+            <title>Special Interest: The Passion Of</title>
+            <link>https://pitchfork.com/reviews/albums/special-interest-the-passion-of/</link>
+            <description>&lt;p&gt;Mixing art-punk, industrial, and techno, the outstanding New Orleans four-piece emerge
+                with a blistering vision of punk as possibility.&lt;/p&gt;
+            </description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Jenn Pelly</dc:creator>
+            <pubDate>Fri, 03 Jul 2020 05:00:00 GMT</pubDate>
+            <guid>https://pitchfork.com/reviews/albums/special-interest-the-passion-of/</guid>
+        </item>
+    </channel>
+</rss>

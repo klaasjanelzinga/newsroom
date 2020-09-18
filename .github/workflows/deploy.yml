@@ -25,6 +25,6 @@ jobs:
       - name: Build the python docker image
         run: scripts/build-docker-images.sh --version $GITHUB_SHA
       - name: Verify the build
-        run: docker run --env ENVIRONMENT=LOCALHOST -v `pwd`:/usr/src/app newsrooom/api:latest make dev-requirements flakes-check tests
+        run: docker run --env ENVIRONMENT=LOCALHOST -v `pwd`:/usr/src/app newsrooom/unittests:latest
       - name: Deploy the app
-        run: scripts/deploy.sh --version $GITHUB_SHA api frontend
+        run: scripts/deploy.sh --version $GITHUB_SHA api frontend cron

@@ -77,6 +77,18 @@ class Repositories:
     def mock_client_session(self) -> MagicMock:
         return self.client_session  # type: ignore
 
+    def feed(self) -> FeedRepository:
+        return self.feed_repository
+
+    def feed_item(self) -> FeedItemRepository:
+        return self.feed_item_repository
+
+    def news_item(self) -> NewsItemRepository:
+        return self.news_item_repository
+
+    def user(self) -> UserRepository:
+        return self.user_repository
+
     def reset_mocks(self) -> None:
         self.client.reset_mock()
         self.mock_user_repository().reset_mock()

@@ -35,7 +35,6 @@ export interface NewsProps extends RouteComponentProps, WithSnackbarProps, WithS
 }
 
 interface NewsState {
-    token: string | null
     isLoading: boolean
     isLoadingMoreItems: boolean
     newsItems: NewsItem[]
@@ -46,7 +45,6 @@ interface NewsState {
 class News extends React.Component<NewsProps, NewsState> {
 
     state: NewsState = {
-        token: null,
         isLoading: false,
         isLoadingMoreItems: false,
         newsItems: [],
@@ -54,6 +52,7 @@ class News extends React.Component<NewsProps, NewsState> {
         noMoreItems: false
     }
     api: Api
+    token: string | null = null
 
     constructor(props: NewsProps) {
         super(props);
@@ -67,15 +66,14 @@ class News extends React.Component<NewsProps, NewsState> {
 
     fetchNewsItems() {
         const endpoint = this.props.variant === NewsVariant.READ_NEWS ? "/news-items/read" : "/news-items"
-        const endpoint_with_token = this.state.token ? `${endpoint}?fetch_offset=${this.state.token}` : endpoint
+        const endpoint_with_token = this.token ? `${endpoint}?fetch_offset=${this.token}` : endpoint
         this.api.get<GetNewsItemsResponse>(endpoint_with_token)
             .then(newsItems => {
                 const token = newsItems[1].token
                 const noMoreItems = atob(token) === 'DONE'
-
+                this.token = newsItems[1].token
                 this.setState({
                     newsItems: this.state.newsItems.concat(newsItems[1].news_items),
-                    token: newsItems[1].token,
                     noMoreItems: noMoreItems,
                 })
             })
@@ -95,6 +93,7 @@ class News extends React.Component<NewsProps, NewsState> {
 
     refreshItems = () => {
         if (!this.state.isLoading && !this.state.isLoadingMoreItems) {
+            this.token = null
             this.setState({isLoading: true, newsItems: [], error: null})
             this.fetchNewsItems()
         }

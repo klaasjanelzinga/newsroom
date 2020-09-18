@@ -62,6 +62,10 @@ class ManageSubscriptions extends React.Component<ManageSubscriptionsProps, Mang
 
         this.api = new Api(props)
         this.userProfile = UserProfile.get()
+    }
+
+
+    componentDidMount() {
         this.fetchAvailableFeeds()
     }
 

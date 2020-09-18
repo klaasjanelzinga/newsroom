@@ -5,6 +5,7 @@ WORKDIR /usr/src/app
 COPY frontend/src /usr/src/app/src
 COPY frontend/public /usr/src/app/public
 COPY frontend/package.json /usr/src/app
+COPY frontend/tsconfig.json /usr/src/app
 COPY frontend/package-lock.json /usr/src/app
 
 EXPOSE 3000
