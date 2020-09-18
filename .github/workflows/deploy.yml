@@ -27,4 +27,4 @@ jobs:
       - name: Verify the build
         run: docker run --env ENVIRONMENT=LOCALHOST -v `pwd`:/usr/src/app newsrooom/api:latest make dev-requirements flakes-check tests
       - name: Deploy the app
-        run: scripts/deploy.sh --version $GITHUB_SHA api frontend
+        run: scripts/deploy.sh --version $GITHUB_SHA api frontend cron

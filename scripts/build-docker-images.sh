@@ -23,9 +23,11 @@ script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 application=newsrooom
 
 echo "Building app containers"
-for service in api frontend
+for service in cron api frontend
 do
+  set +e
   docker pull gcr.io/newsroom-v1/${service}:latest
+  set -e
   (cd $script_dir/.. && docker build --cache-from gcr.io/newsroom-v1/${service}:latest -t ${application}/${service}:$VERSION -f ${service}/Dockerfile .)
   docker tag ${application}/${service}:$VERSION ${application}/${service}:latest
 done

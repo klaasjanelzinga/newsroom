@@ -15,20 +15,20 @@ services:
       - .:/usr/src/app
     command: api/entrypoint-dev.sh
 
-#  cron:
-#    build:
-#      context: .
-#      dockerfile: cron/Dockerfile
-#    environment:
-#      PORT: 8080
-#      ENVIRONMENT: LOCALHOST
-#      GOOGLE_APPLICATION_CREDENTIALS: /usr/src/app/secrets/google-appengine-credentials.json
-#    ports:
-#      - 8090:8080
-#    volumes:
-#      - .:/usr/src/app
-#    command: cron/entrypoint-dev.sh
-#
+  cron:
+    build:
+      context: .
+      dockerfile: cron/Dockerfile
+    environment:
+      PORT: 8080
+      ENVIRONMENT: LOCALHOST
+      GOOGLE_APPLICATION_CREDENTIALS: /usr/src/app/secrets/google-appengine-credentials.json
+    ports:
+      - 9090:8080
+    volumes:
+      - .:/usr/src/app
+    command: cron/entrypoint-dev.sh
+
   frontend:
     build:
       dockerfile: frontend/Dockerfile

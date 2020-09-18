@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:media="http://search.yahoo.com/mrss/" version="2.0">
+    <channel>
+        <title>Best New Albums - Pitchfork</title>
+        <description>The best new releases from Pitchfork, the most trusted voice in music.</description>
+        <link>https://pitchfork.com/reviews/best/albums/</link>
+        <atom:link href="https://pitchfork.com/rss/reviews/best/albums/" rel="self" type="application/rss+xml"/>
+        <copyright>© Condé Nast 2020</copyright>
+        <language>en-us</language>
+        <lastBuildDate>Tue, 18 Aug 2020 05:00:00 GMT</lastBuildDate>
+        <ttl>300</ttl>
+        <item>
+            <title>Popcaan: FIXTAPE</title>
+            <link>https://pitchfork.com/reviews/albums/popcaan-fixtape/</link>
+            <description>&lt;p&gt;The dancehall superstar’s latest mixtape is the best of every facet of his work, from
+                slow-wine ballads to summery head-bangers. It’s a testament to his place at the forefront of the genre.&lt;/p&gt;
+            </description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Lawrence Burney</dc:creator>
+            <pubDate>Tue, 18 Aug 2020 05:00:00 GMT</pubDate>
+            <guid>https://pitchfork.com/reviews/albums/popcaan-fixtape/</guid>
+        </item>
+    </channel>
+</rss>

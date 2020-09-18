@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:media="http://search.yahoo.com/mrss/" version="2.0">
+    <channel>
+        <title>Best New Albums - Pitchfork</title>
+        <description>The best new releases from Pitchfork, the most trusted voice in music.</description>
+        <link>https://pitchfork.com/reviews/best/albums/</link>
+        <atom:link href="https://pitchfork.com/rss/reviews/best/albums/" rel="self" type="application/rss+xml"/>
+        <copyright>© Condé Nast 2020</copyright>
+        <language>en-us</language>
+        <lastBuildDate>Tue, 18 Aug 2020 05:00:00 GMT</lastBuildDate>
+        <ttl>300</ttl>
+        <item>
+            <title>Popcaan: FIXTAPE</title>
+            <link>https://pitchfork.com/reviews/albums/popcaan-fixtape/</link>
+            <description>&lt;p&gt;The dancehall superstar’s latest mixtape is the best of every facet of his work, from
+                slow-wine ballads to summery head-bangers. It’s a testament to his place at the forefront of the genre.&lt;/p&gt;
+            </description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Lawrence Burney</dc:creator>
+            <pubDate>Tue, 18 Aug 2020 05:00:00 GMT</pubDate>
+            <guid>https://pitchfork.com/reviews/albums/popcaan-fixtape/</guid>
+        </item>
+        <item>
+            <title>The Microphones: Microphones in 2020</title>
+            <link>https://pitchfork.com/reviews/albums/the-microphones-microphones-in-2020/</link>
+            <description>&lt;p&gt;Phil Elverum resurrects his beloved Microphones alias for a 45-minute song about
+                art-making, self-mythologizing, and the endless search for meaning. &lt;/p&gt;
+            </description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Quinn Moreland</dc:creator>
+            <pubDate>Fri, 07 Aug 2020 05:00:00 GMT</pubDate>
+            <guid>https://pitchfork.com/reviews/albums/the-microphones-microphones-in-2020/</guid>
+        </item>
+        <item>
+            <title>Dehd: Flower of Devotion</title>
+            <link>https://pitchfork.com/reviews/albums/dehd-flower-of-devotion/</link>
+            <description>&lt;p&gt;Recording in a studio, the Chicago DIY trio sound newly airy and lush, but no less
+                direct and sincere. Their confidence in their concision is the best part.&lt;/p&gt;
+            </description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Steven Arroyo</dc:creator>
+            <pubDate>Tue, 21 Jul 2020 05:00:00 GMT</pubDate>
+            <guid>https://pitchfork.com/reviews/albums/dehd-flower-of-devotion/</guid>
+        </item>
+        <item>
+            <title>Julianna Barwick: Healing Is a Miracle</title>
+            <link>https://pitchfork.com/reviews/albums/julianna-barwick-healing-is-a-miracle/</link>
+            <description>&lt;p&gt;The vocalist and producer Juliana Barwick’s revelatory new album asks us to picture
+                healing at a moment when the task feels impossible. &lt;/p&gt;
+            </description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Will Gottsegen</dc:creator>
+            <pubDate>Wed, 15 Jul 2020 05:00:00 GMT</pubDate>
+            <guid>https://pitchfork.com/reviews/albums/julianna-barwick-healing-is-a-miracle/</guid>
+        </item>
+        <item>
+            <title>Special Interest: The Passion Of</title>
+            <link>https://pitchfork.com/reviews/albums/special-interest-the-passion-of/</link>
+            <description>&lt;p&gt;Mixing art-punk, industrial, and techno, the outstanding New Orleans four-piece emerge
+                with a blistering vision of punk as possibility.&lt;/p&gt;
+            </description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Jenn Pelly</dc:creator>
+            <pubDate>Fri, 03 Jul 2020 05:00:00 GMT</pubDate>
+            <guid>https://pitchfork.com/reviews/albums/special-interest-the-passion-of/</guid>
+        </item>
+        <item>
+            <title>Jessie Ware: What’s Your Pleasure?</title>
+            <link>https://pitchfork.com/reviews/albums/jessie-ware-whats-your-pleasure/</link>
+            <description>&lt;p&gt;On her disco-inspired new album, Ware sounds bolder, looser — and frankly, more fun —
+                than she has in a near-decade.&lt;/p&gt;
+            </description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Owen Myers</dc:creator>
+            <pubDate>Mon, 29 Jun 2020 05:00:00 GMT</pubDate>
+            <guid>https://pitchfork.com/reviews/albums/jessie-ware-whats-your-pleasure/</guid>
+        </item>
+        <item>
+            <title>Haim: Women in Music Pt. III</title>
+            <link>https://pitchfork.com/reviews/albums/haim-women-in-music-pt-iii/</link>
+            <description>&lt;p&gt;The third album from the trio is far and away their best. Intimate, multidimensional,
+                and wide-ranging, the songwriting shines with personality and a great curiosity for melody and style.  &lt;/p&gt;
+            </description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Aimee Cliff</dc:creator>
+            <pubDate>Thu, 25 Jun 2020 05:00:00 GMT</pubDate>
+            <guid>https://pitchfork.com/reviews/albums/haim-women-in-music-pt-iii/</guid>
+        </item>
+        <item>
+            <title>Phoebe Bridgers: Punisher</title>
+            <link>https://pitchfork.com/reviews/albums/phoebe-bridgers-punisher/</link>
+            <description>&lt;p&gt;On her marvelous second album, Phoebe Bridgers defines her songwriting: candid,
+                multi-dimensional, slyly psychedelic, and full of heart. Her music has become a world unto itself.&lt;/p&gt;
+            </description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sam Sodomsky</dc:creator>
+            <pubDate>Mon, 22 Jun 2020 05:00:00 GMT</pubDate>
+            <guid>https://pitchfork.com/reviews/albums/phoebe-bridgers-punisher/</guid>
+        </item>
+        <item>
+            <title>Bob Dylan: Rough and Rowdy Ways</title>
+            <link>https://pitchfork.com/reviews/albums/bob-dylan-rough-and-rowdy-ways/</link>
+            <description>&lt;p&gt;Six decades into his career, Bob Dylan delivers a gorgeous and meticulous record. It
+                is the rare Dylan album that asks to be understood and comes down to meet its audience.&lt;/p&gt;
+            </description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sam Sodomsky</dc:creator>
+            <pubDate>Thu, 18 Jun 2020 05:00:00 GMT</pubDate>
+            <guid>https://pitchfork.com/reviews/albums/bob-dylan-rough-and-rowdy-ways/</guid>
+        </item>
+        <item>
+            <title>Drakeo the Ruler: Thank You For Using GTL</title>
+            <link>https://pitchfork.com/reviews/albums/drakeo-the-ruler-thank-you-for-using-gtl/</link>
+            <description>&lt;p&gt;Recorded in jail over a crackly phone line, Drakeo’s mesmerizing album is a remarkable
+                feat: a stark rebuke of the justice system and an unparalleled achievement for a rapper and his
+                producer.&lt;/p&gt;
+            </description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Matthew Ismael Ruiz</dc:creator>
+            <pubDate>Wed, 10 Jun 2020 05:00:00 GMT</pubDate>
+            <guid>https://pitchfork.com/reviews/albums/drakeo-the-ruler-thank-you-for-using-gtl/</guid>
+        </item>
+        <item>
+            <title>Run the Jewels: RTJ4</title>
+            <link>https://pitchfork.com/reviews/albums/run-the-jewels-rtj4/</link>
+            <description>&lt;p&gt;On their fourth installment, Killer Mike and El-P are back to tune up the ruling class
+                and the racist police state, this time streamlining the process and settling into their most natural
+                rhythm.&lt;/p&gt;
+            </description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheldon Pearce</dc:creator>
+            <pubDate>Fri, 05 Jun 2020 05:00:00 GMT</pubDate>
+            <guid>https://pitchfork.com/reviews/albums/run-the-jewels-rtj4/</guid>
+        </item>
+        <item>
+            <title>Medhane: Cold Water</title>
+            <link>https://pitchfork.com/reviews/albums/medhane-cold-water/</link>
+            <description>&lt;p&gt;On his latest project, the Brooklyn rapper realizes his vision. His forceful and
+                focused bars are just one aspect of the highly skilled emcee’s community-focused and spiritually
+                rewarding music. &lt;/p&gt;
+            </description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheldon Pearce</dc:creator>
+            <pubDate>Thu, 28 May 2020 05:00:00 GMT</pubDate>
+            <guid>https://pitchfork.com/reviews/albums/medhane-cold-water/</guid>
+        </item>
+        <item>
+            <title>Perfume Genius: Set My Heart on Fire Immediately</title>
+            <link>https://pitchfork.com/reviews/albums/perfume-genius-set-my-heart-on-fire-immediately/</link>
+            <description>&lt;p&gt;Mike Hadreas’ fifth album glides between sublime melodies and grimy, guttural
+                dissonance, embracing the joys and burdens of the human body and its innumerable, intangible yearnings.&lt;/p&gt;
+            </description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Madison Bloom</dc:creator>
+            <pubDate>Mon, 18 May 2020 05:00:00 GMT</pubDate>
+            <guid>https://pitchfork.com/reviews/albums/perfume-genius-set-my-heart-on-fire-immediately/</guid>
+        </item>
+        <item>
+            <title>Moses Sumney: græ</title>
+            <link>https://pitchfork.com/reviews/albums/moses-sumney-grae/</link>
+            <description>&lt;p&gt;The sprawling second album from the crystal-voiced singer-songwriter is a riot of
+                moods. Moses Sumney widens the scope of his work and takes full account of his self, warts and all. &lt;/p&gt;
+            </description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Jayson Greene</dc:creator>
+            <pubDate>Fri, 15 May 2020 05:00:00 GMT</pubDate>
+            <guid>https://pitchfork.com/reviews/albums/moses-sumney-grae/</guid>
+        </item>
+        <item>
+            <title>Blake Mills: Mutable Set</title>
+            <link>https://pitchfork.com/reviews/albums/blake-mills-mutable-set/</link>
+            <description>&lt;p&gt;On his fourth album, the expert producer comes into his own as a solo artist with a
+                hushed, finely tuned album that showcases his unassuming voice and impeccable songcraft.&lt;/p&gt;
+            </description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Ryan Dombal</dc:creator>
+            <pubDate>Fri, 08 May 2020 05:00:00 GMT</pubDate>
+            <guid>https://pitchfork.com/reviews/albums/blake-mills-mutable-set/</guid>
+        </item>
+        <item>
+            <title>The Soft Pink Truth: Shall We Go On Sinning So That Grace May Increase?</title>
+            <link>
+                https://pitchfork.com/reviews/albums/the-soft-pink-truth-shall-we-go-on-sinning-so-that-grace-may-increase/
+            </link>
+            <description>&lt;p&gt;Matmos member Drew Daniel has put together a gorgeous album that carries itself with
+                the strength of a soft prayer, masterfully fusing jazz, deep house, and minimalism into an enormous,
+                featherlight shield.&lt;/p&gt;
+            </description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Miles Bowe</dc:creator>
+            <pubDate>Mon, 04 May 2020 05:00:00 GMT</pubDate>
+            <guid>
+                https://pitchfork.com/reviews/albums/the-soft-pink-truth-shall-we-go-on-sinning-so-that-grace-may-increase/
+            </guid>
+        </item>
+        <item>
+            <title>KeiyaA: Forever, Ya Girl</title>
+            <link>https://pitchfork.com/reviews/albums/keiyaa-forever-ya-girl/</link>
+            <description>&lt;p&gt;The Chicago-bred singer and producer’s homegrown R&amp;amp;B meditates on hurt,
+                longing, and self-protection, embracing the kind of resolute realness that can only happen outside the
+                major label gaze.&lt;/p&gt;
+            </description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Claire Lobenfeld</dc:creator>
+            <pubDate>Wed, 22 Apr 2020 05:00:00 GMT</pubDate>
+            <guid>https://pitchfork.com/reviews/albums/keiyaa-forever-ya-girl/</guid>
+        </item>
+        <item>
+            <title>Fiona Apple: Fetch the Bolt Cutters</title>
+            <link>https://pitchfork.com/reviews/albums/fiona-apple-fetch-the-bolt-cutters/</link>
+            <description>&lt;p&gt;Fiona Apple’s fifth record is unbound, a wild symphony of the everyday, an unyielding
+                masterpiece. No music has ever sounded quite like it. &lt;/p&gt;
+            </description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Jenn Pelly</dc:creator>
+            <pubDate>Fri, 17 Apr 2020 05:00:00 GMT</pubDate>
+            <guid>https://pitchfork.com/reviews/albums/fiona-apple-fetch-the-bolt-cutters/</guid>
+        </item>
+        <item>
+            <title>Yves Tumor: Heaven to a Tortured Mind</title>
+            <link>https://pitchfork.com/reviews/albums/yves-tumor-heaven-to-a-tortured-mind/</link>
+            <description>&lt;p&gt;The iconoclastic artist moves to a plush and magisterial kind of rock music for a
+                gratifying and intense record, one whose pleasures are viscerally immediate. &lt;/p&gt;
+            </description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Kevin Lozano</dc:creator>
+            <pubDate>Fri, 03 Apr 2020 05:00:00 GMT</pubDate>
+            <guid>https://pitchfork.com/reviews/albums/yves-tumor-heaven-to-a-tortured-mind/</guid>
+        </item>
+        <item>
+            <title>Waxahatchee: Saint Cloud</title>
+            <link>https://pitchfork.com/reviews/albums/waxahatchee-saint-cloud/</link>
+            <description>&lt;p&gt;With a shift in tone and tempo, Katie Crutchfield creates a vivid modern classic of
+                folk and Americana. It’s the sound of a cherished songwriter thawing out under the sun.&lt;/p&gt;
+            </description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Jeremy D. Larson</dc:creator>
+            <pubDate>Fri, 27 Mar 2020 05:00:00 GMT</pubDate>
+            <guid>https://pitchfork.com/reviews/albums/waxahatchee-saint-cloud/</guid>
+        </item>
+        <item>
+            <title>Lyra Pramuk: Fountain</title>
+            <link>https://pitchfork.com/reviews/albums/lyra-pramuk-fountain/</link>
+            <description>&lt;p&gt;On her debut album, the American musician works entirely with recordings of her own
+                voice, processing and layering largely non-verbal sounds to explore the very fiber of her being.&lt;/p&gt;
+            </description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Ruth Saxelby</dc:creator>
+            <pubDate>Wed, 25 Mar 2020 05:00:00 GMT</pubDate>
+            <guid>https://pitchfork.com/reviews/albums/lyra-pramuk-fountain/</guid>
+        </item>
+        <item>
+            <title>Jay Electronica: A Written Testimony</title>
+            <link>https://pitchfork.com/reviews/albums/jay-electronica-a-written-testimony/</link>
+            <description>&lt;p&gt;After years of waiting and mounting hype, Jay Electronica’s fantastic debut is a
+                mystical, distinctive work that nearly lives up to all the lore surrounding the rapper.&lt;/p&gt;
+            </description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Sheldon Pearce</dc:creator>
+            <pubDate>Tue, 17 Mar 2020 05:00:00 GMT</pubDate>
+            <guid>https://pitchfork.com/reviews/albums/jay-electronica-a-written-testimony/</guid>
+        </item>
+        <item>
+            <title>Dogleg: Melee</title>
+            <link>https://pitchfork.com/reviews/albums/dogleg-melee/</link>
+            <description>&lt;p&gt;The thrilling debut from the Detroit rock band burns hot and bright. It’s a record
+                that’s as melodic as it is physical, where pent-up aggression turns into physical liberation.&lt;/p&gt;
+            </description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Ian Cohen</dc:creator>
+            <pubDate>Mon, 16 Mar 2020 05:00:00 GMT</pubDate>
+            <guid>https://pitchfork.com/reviews/albums/dogleg-melee/</guid>
+        </item>
+        <item>
+            <title>Porridge Radio: Every Bad</title>
+            <link>https://pitchfork.com/reviews/albums/porridge-radio-every-bad/</link>
+            <description>&lt;p&gt;The second album from the Brighton four-piece is the sound of a band mercilessly
+                digging into itself with a stunning, dynamic performance from singer-songwriter Dana Margolin.&lt;/p&gt;
+            </description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Jenn Pelly</dc:creator>
+            <pubDate>Fri, 13 Mar 2020 05:00:00 GMT</pubDate>
+            <guid>https://pitchfork.com/reviews/albums/porridge-radio-every-bad/</guid>
+        </item>
+        <item>
+            <title>Lil Uzi Vert: Eternal Atake</title>
+            <link>https://pitchfork.com/reviews/albums/lil-uzi-vert-eternal-atake/</link>
+            <description>&lt;p&gt;The Philly rapper has evolved into an untouchable pop artist in sound and style. With
+                deliriously good rapping and immaculate production, Uzi makes an event album live up to its name.&lt;/p&gt;
+            </description>
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Alphonse Pierre</dc:creator>
+            <pubDate>Tue, 10 Mar 2020 05:00:00 GMT</pubDate>
+            <guid>https://pitchfork.com/reviews/albums/lil-uzi-vert-eternal-atake/</guid>
+        </item>
+    </channel>
+</rss>

@@ -1,20 +1,16 @@
 black:
-	black core_lib/tests core_lib/core_lib 
-	black api/api api/tests 
-	# black cron/cron cron/tests
+	black core_lib/core_lib api/api cron/cron unittests/tests
 
 black-check:
-	black --check core_lib/tests core_lib/core_lib 
-	black --check api/api api/tests 
-	# black --check cron/cron cron/tests
+	black --check core_lib/core_lib api/api cron/cron unittests/tests
 
 pylint:
-	pylint core_lib/core_lib api/api
+	pylint core_lib/core_lib api/api cron/cron
 
 mypy:
 	(cd core_lib && mypy --config-file ../mypy.ini -p core_lib)
 	(cd api && mypy --config-file ../mypy.ini -p api)
-	# (cd cron && mypy --config-file ../mypy.ini  -p cron)
+	(cd cron && mypy --config-file ../mypy.ini  -p cron)
 
 tslint:
 	docker-compose run frontend npm run lint
@@ -28,8 +24,9 @@ flakes-check: black-check mypy outdated flake8
 
 flake8:
 	flake8 core_lib/core_lib
+
 tests:
-	(cd core_lib && export unit_tests=1 && pytest --cov core_lib --cov-report=html ../api/tests)
+	(cd unittests && export unit_tests=1 && pytest --cov core_lib --cov api --cov cron --cov-report=html tests)
 
 dev-requirements:
 	pip install -r requirements.txt
@@ -53,3 +50,6 @@ up:
 	docker-compose up --build
 
 before-commit: flakes tests build-docker-images integration-tests
+
+cron-refresh-rss-feeds:
+	curl localhost:9090/maintenance/refresh-rss-feeds
