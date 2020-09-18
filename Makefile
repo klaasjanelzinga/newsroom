@@ -34,6 +34,7 @@ dev-requirements:
 requirements: dev-requirements
 	(cd api && pip install --upgrade -r requirements.txt)
 	(cd core_lib && pip install --upgrade -r requirements.txt)
+	(cd unittests && pip install --upgrade -r requirements.txt)
 
 
 build-docker-images:

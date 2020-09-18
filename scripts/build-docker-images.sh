@@ -23,7 +23,7 @@ script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 application=newsrooom
 
 echo "Building app containers"
-for service in cron api frontend
+for service in unittests cron api frontend
 do
   set +e
   docker pull gcr.io/newsroom-v1/${service}:latest
