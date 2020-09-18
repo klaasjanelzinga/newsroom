@@ -22,6 +22,9 @@ done
 script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 application=newsrooom
 
+echo "Build python base-image"
+(cd $script_dir/../images/python-base && docker build -t ${application}/python-base:latest .)
+
 echo "Building app containers"
 for service in unittests cron api frontend
 do

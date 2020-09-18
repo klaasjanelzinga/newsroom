@@ -1,18 +1,13 @@
-FROM python:3.8-slim
+FROM newsrooom/python-base:latest
 
-RUN apt-get update && apt-get install -y gcc locales procps make
-RUN echo "nl_NL.UTF-8 UTF-8" >> /etc/locale.gen
-RUN locale-gen
-
-EXPOSE 8080
-
-ENV ENVIRONMENT=PRODUCTION
-ENV PYTHONDONTWRITEBYTECODE 3
-
-WORKDIR /usr/src/app
 COPY requirements.txt ./requirements.txt
 COPY Makefile ./Makefile
 COPY pyproject.toml ./pyproject.toml
+COPY mypy.ini ./mypy.ini
+COPY pylintrc ./pylintrc
+COPY .isort.cfg ./.isort.cfg
+COPY .flake8 ./.flake8
+
 
 COPY cron /usr/src/app/cron
 COPY core_lib /usr/src/app/core_lib
