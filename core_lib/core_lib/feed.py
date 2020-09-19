@@ -1,6 +1,6 @@
 import asyncio
 import logging
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Optional, List
 from xml.etree.ElementTree import Element
 
@@ -117,34 +117,40 @@ def unsubscribe_user_from_feed(user: User, feed: Feed) -> User:
 
 
 async def refresh_rss_feed(session: ClientSession, feed: Feed) -> Feed:
-    log.info("Loading feed %s", feed)
+    log.info("Refreshing feed %s", feed)
     async with session.get(feed.url) as xml_response:
-        rss_document = fromstring(await xml_response.text())
-        feed_from_rss = rss_document_to_feed(feed.url, rss_document)
-        feed_items_from_rss = rss_document_to_feed_items(feed, rss_document)
+        with repositories.client.transaction():
+            rss_document = fromstring(await xml_response.text())
+            feed_from_rss = rss_document_to_feed(feed.url, rss_document)
+            feed_items_from_rss = rss_document_to_feed_items(feed, rss_document)
 
-        # Upload new feed_items
-        current_feed_items = repositories.feed_item_repository.fetch_all_for_feed(feed)
-        new_feed_items = []
-        for new_item in feed_items_from_rss:
-            current_item = [item for item in current_feed_items if item.link == new_item.link]
-            if len(current_item) == 0:
-                new_feed_items.append(new_item)
-        repositories.feed_item_repository.upsert_many(new_feed_items)
+            # Upload new feed_items
+            current_feed_items = repositories.feed_item_repository.fetch_all_for_feed(feed)
+            new_feed_items = []
+            updated_feed_items = []
+            for new_item in feed_items_from_rss:
+                current_item = [item for item in current_feed_items if item.link == new_item.link]
+                if len(current_item) == 0:
+                    new_feed_items.append(new_item)
+                elif len(current_item) == 1:
+                    current_item[0].last_seen = datetime.utcnow()
+                    updated_feed_items.append(current_item[0])
+            repositories.feed_item_repository.upsert_many(new_feed_items)
+            repositories.feed_item_repository.upsert_many(updated_feed_items)
 
-        # splice to subscribed users
-        users = repositories.user_repository.fetch_subscribed_to(feed)
-        for user in users:
-            repositories.news_item_repository.upsert_many(news_items_from_feed_items(new_feed_items, feed, user))
+            # splice to subscribed users
+            users = repositories.user_repository.fetch_subscribed_to(feed)
+            for user in users:
+                repositories.news_item_repository.upsert_many(news_items_from_feed_items(new_feed_items, feed, user))
 
-        # Update information in feed item with latest information from the url.
-        feed.last_fetched = datetime.utcnow()
-        feed.description = feed_from_rss.description
-        feed.title = feed_from_rss.title
-        feed.number_of_items = feed.number_of_items + len(new_feed_items)
+            # Update information in feed item with latest information from the url.
+            feed.last_fetched = datetime.utcnow()
+            feed.description = feed_from_rss.description
+            feed.title = feed_from_rss.title
+            feed.number_of_items = feed.number_of_items + len(new_feed_items)
 
-        repositories.feed_repository.upsert(feed)
-        return feed
+            repositories.feed_repository.upsert(feed)
+            return feed
 
 
 async def refresh_rss_feeds() -> int:
@@ -154,3 +160,14 @@ async def refresh_rss_feeds() -> int:
     tasks = [refresh_rss_feed(client_session, feed) for feed in feeds]
     await asyncio.gather(*tasks)
     return len(feeds)
+
+
+async def delete_read_items() -> int:
+    with repositories.client.transaction():
+        feed_item_keys = repositories.feed_item_repository.fetch_all_last_seen_before(
+            datetime.utcnow() - timedelta(days=3)
+        )
+        feed_item_keys = repositories.news_item_repository.filter_feed_item_keys_that_are_read(feed_item_keys)
+        repositories.feed_item_repository.delete_keys(feed_item_keys)
+        repositories.news_item_repository.delete_with_feed_item_keys(feed_item_keys)
+    return len(feed_item_keys)

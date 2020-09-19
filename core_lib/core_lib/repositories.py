@@ -5,7 +5,7 @@ from typing import Optional, List, Iterator, Tuple, Any
 from uuid import uuid4
 
 from google.cloud import datastore
-from google.cloud.datastore import Client, Query
+from google.cloud.datastore import Client, Query, Key
 from pydantic.main import BaseModel
 from pydantic import Field
 
@@ -76,6 +76,7 @@ class FeedItem(BaseModel):  # pylint: disable=too-few-public-methods
     title: str
     link: str
     description: str
+    last_seen: datetime
     published: Optional[datetime]
     created_on: datetime
 
@@ -174,6 +175,15 @@ class FeedItemRepository:
         self.client.put_multi(entities)
         return [FeedItem.parse_obj(entity) for entity in entities]
 
+    def fetch_all_last_seen_before(self, before: datetime) -> List[str]:
+        query = self.client.query(kind="FeedItem")
+        query.add_filter("last_seen", "<", before)
+        query.keys_only()
+        return [entity.key for entity in query.fetch()]
+
+    def delete_keys(self, keys: List[Key]) -> None:
+        self.client.delete_multi(keys)
+
 
 class NewsItemRepository:
     def __init__(self, client: Client):
@@ -229,6 +239,25 @@ class NewsItemRepository:
             if entity["user_id"] == user.user_id:
                 entity["is_read"] = True
         self.client.put_multi(entities)
+
+    def filter_feed_item_keys_that_are_read(self, feed_item_keys: List[Key]) -> List[Key]:
+        result = []
+        for feed_item_key in feed_item_keys:
+            query = self.client.query(kind="NewsItem")
+            query.add_filter("feed_item_id", "=", feed_item_key.name)
+            query.add_filter("is_read", "=", False)
+            query.keys_only()
+            number_hits = len(list(query.fetch()))
+            if number_hits == 0:
+                result.append(feed_item_key)
+        return result
+
+    def delete_with_feed_item_keys(self, feed_item_keys: List[Key]) -> None:
+        for feed_item_id in feed_item_keys:
+            query = self.client.query(kind="NewsItem")
+            query.add_filter("feed_item_id", "=", feed_item_id.name)
+            query.keys_only()
+            self.client.delete_multi([entity.key for entity in query.fetch()])
 
 
 class UserRepository:

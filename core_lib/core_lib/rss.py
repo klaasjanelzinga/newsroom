@@ -64,6 +64,7 @@ def rss_document_to_feed_items(feed: Feed, tree: Element) -> List[FeedItem]:
             title=item_element.findtext("title"),
             link=item_element.findtext("link"),
             description=item_element.findtext("description"),
+            last_seen=datetime.utcnow(),
             published=_parse_optional_rss_datetime(item_element.findtext("pubDate")),
             created_on=datetime.utcnow(),
         )

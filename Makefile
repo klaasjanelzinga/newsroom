@@ -55,3 +55,6 @@ before-commit: flakes tests build-docker-images integration-tests
 
 cron-refresh-rss-feeds:
 	curl localhost:9090/maintenance/refresh-rss-feeds
+
+cron-delete-read-items:
+	curl localhost:9090/maintenance/delete-read-items

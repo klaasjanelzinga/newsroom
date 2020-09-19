@@ -57,6 +57,7 @@ def feed_items(faker: Faker, feed: Feed) -> List[FeedItem]:
             description=faker.paragraph(),
             published=faker.date_time_between("-30d", "now"),
             created_on=faker.date_time_between("-20d", "now"),
+            last_seen=faker.date_time_between("-4d", "now"),
         )
         for i in range(0, number_of_items)
     ]
