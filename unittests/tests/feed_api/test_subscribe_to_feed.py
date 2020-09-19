@@ -1,26 +1,29 @@
+from typing import List
 from unittest.mock import patch, Mock
 
 import pytest
 
 from api.feed_api import subscribe_to_feed
-from core_lib.application_data import Repositories
-from core_lib.repositories import User, Feed
+from core_lib.repositories import User, Feed, FeedItem
 from tests.conftest import authorization_for
+from tests.mock_repositories import MockRepositories
 
 
 @pytest.mark.asyncio
 @patch("api.feed_api.security")
-async def test_subscribe(security_mock: Mock, user: User, feed: Feed, repositories: Repositories):
-    with authorization_for(security_mock, user):
+async def test_subscribe(
+    security_mock: Mock, user: User, feed: Feed, feed_items: List[FeedItem], repositories: MockRepositories
+):
+    with authorization_for(security_mock, user, repositories):
 
         assert feed.feed_id not in user.subscribed_to
-        repositories.mock_feed_repository().get.return_value = feed
+        repositories.feed_repository.upsert(feed)
+        repositories.feed_item_repository.upsert_many(feed_items)
+        number_of_subscriptions = feed.number_of_subscriptions
         response = await subscribe_to_feed(feed_id=feed.feed_id, authorization="dummy")
 
-        repositories.mock_subscription_repository().upsert.assert_called_once()
-        repositories.mock_user_repository().upsert.assert_called_once()
-        repositories.mock_feed_repository().upsert.assert_called_once()
+        assert feed.feed_id in repositories.user_repository.fetch_user_by_email(user.email).subscribed_to
+        assert repositories.news_item_repository.count() == repositories.feed_item_repository.count()
 
-        repositories.mock_news_item_repository().upsert_many.assert_called_once()
-
+        assert repositories.feed_repository.get(feed.feed_id).number_of_subscriptions == number_of_subscriptions + 1
         assert feed.feed_id in response.subscribed_to

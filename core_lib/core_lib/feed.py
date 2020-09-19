@@ -1,7 +1,7 @@
 import asyncio
 import logging
 from datetime import datetime
-from typing import Optional
+from typing import Optional, List
 from xml.etree.ElementTree import Element
 
 from aiohttp import ClientSession, ClientConnectorError
@@ -66,7 +66,7 @@ async def fetch_feed_information_for(
         raise NetworkingException(f"Url {url} not reachable. Details: {cce.__str__()}") from cce
 
 
-def _news_item_from_feed_item(feed_item: FeedItem, feed: Feed, user: User) -> NewsItem:
+def news_item_from_feed_item(feed_item: FeedItem, feed: Feed, user: User) -> NewsItem:
     return NewsItem(
         feed_id=feed_item.feed_id,
         user_id=user.user_id,
@@ -79,6 +79,10 @@ def _news_item_from_feed_item(feed_item: FeedItem, feed: Feed, user: User) -> Ne
     )
 
 
+def news_items_from_feed_items(feed_items: List[FeedItem], feed: Feed, user: User) -> List[NewsItem]:
+    return [news_item_from_feed_item(feed_item, feed, user) for feed_item in feed_items]
+
+
 def subscribe_user_to_feed(
     user: User,
     feed: Feed,
@@ -89,7 +93,7 @@ def subscribe_user_to_feed(
             subscription = Subscription(feed_id=feed.feed_id, user_id=user.user_id)
             feed.number_of_subscriptions = feed.number_of_subscriptions + 1
             feed_items = repositories.feed_item_repository.fetch_all_for_feed(feed)
-            news_items = [_news_item_from_feed_item(feed_item, feed, user) for feed_item in feed_items]
+            news_items = news_items_from_feed_items(feed_items, feed, user)
 
             repositories.subscription_repository.upsert(subscription)
             repositories.user_repository.upsert(user)
@@ -120,20 +124,18 @@ async def refresh_rss_feed(session: ClientSession, feed: Feed) -> Feed:
         feed_items_from_rss = rss_document_to_feed_items(feed, rss_document)
 
         # Upload new feed_items
-        current_feed_items = repositories.feed_item().fetch_all_for_feed(feed)
+        current_feed_items = repositories.feed_item_repository.fetch_all_for_feed(feed)
         new_feed_items = []
         for new_item in feed_items_from_rss:
             current_item = [item for item in current_feed_items if item.link == new_item.link]
             if len(current_item) == 0:
                 new_feed_items.append(new_item)
-        repositories.feed_item().upsert_many(new_feed_items)
+        repositories.feed_item_repository.upsert_many(new_feed_items)
 
         # splice to subscribed users
-        users = repositories.user().fetch_subscribed_to(feed)
+        users = repositories.user_repository.fetch_subscribed_to(feed)
         for user in users:
-            repositories.news_item().upsert_many(
-                [_news_item_from_feed_item(feed_item, feed, user) for feed_item in new_feed_items]
-            )
+            repositories.news_item_repository.upsert_many(news_items_from_feed_items(new_feed_items, feed, user))
 
         # Update information in feed item with latest information from the url.
         feed.last_fetched = datetime.utcnow()
@@ -141,14 +143,14 @@ async def refresh_rss_feed(session: ClientSession, feed: Feed) -> Feed:
         feed.title = feed_from_rss.title
         feed.number_of_items = feed.number_of_items + len(new_feed_items)
 
-        repositories.feed().upsert(feed)
+        repositories.feed_repository.upsert(feed)
         return feed
 
 
 async def refresh_rss_feeds() -> int:
     """ Refreshes all active feeds and returns the number of refreshed feeds. """
     client_session = repositories.client_session
-    feeds = repositories.feed().get_active_feeds()
+    feeds = repositories.feed_repository.get_active_feeds()
     tasks = [refresh_rss_feed(client_session, feed) for feed in feeds]
     await asyncio.gather(*tasks)
     return len(feeds)

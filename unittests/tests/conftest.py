@@ -1,5 +1,5 @@
 from contextlib import contextmanager
-from typing import Tuple
+from typing import Tuple, List
 from unittest.mock import Mock, AsyncMock
 
 import pytest
@@ -9,7 +9,12 @@ from core_lib import application_data
 from core_lib.repositories import (
     User,
     Feed,
+    FeedItem,
+    Subscription,
 )
+from tests.mock_repositories import MockRepositories
+
+application_data.repositories = MockRepositories()
 
 
 @pytest.fixture
@@ -42,12 +47,30 @@ def feed(faker: Faker) -> Feed:
 
 
 @pytest.fixture
+def feed_items(faker: Faker, feed: Feed) -> List[FeedItem]:
+    number_of_items = faker.pyint(min_value=10, max_value=20)
+    return [
+        FeedItem(
+            feed_id=feed.feed_id,
+            title=faker.sentence(),
+            link=faker.url(),
+            description=faker.paragraph(),
+            published=faker.date_time_between("-30d", "now"),
+            created_on=faker.date_time_between("-20d", "now"),
+        )
+        for i in range(0, number_of_items)
+    ]
+
+
+@pytest.fixture
+def subscription(user: User, feed: Feed) -> Subscription:
+    return Subscription(user_id=user.user_id, feed_id=feed.feed_id)
+
+
+@pytest.fixture
 def repositories():
     repositories = application_data.repositories
-    repositories.reset_mocks()
-    repositories.mock_subscription_repository().upsert.side_effect = mirror_side_effect
-    repositories.mock_user_repository().upsert.side_effect = mirror_side_effect
-    repositories.mock_feed_repository().upsert.side_effect = mirror_side_effect
+    repositories.reset()
     return application_data.repositories
 
 
@@ -63,9 +86,10 @@ def subscribed_user(user: User, feed: Feed) -> Tuple[User, Feed]:
 
 
 @contextmanager
-def authorization_for(security_mock: Mock, user: User):
+def authorization_for(security_mock: Mock, user: User, repositories: MockRepositories):
     security_mock.get_approved_user = AsyncMock()
     security_mock.get_approved_user.return_value = user
+    repositories.user_repository.upsert(user)
 
     yield
 
