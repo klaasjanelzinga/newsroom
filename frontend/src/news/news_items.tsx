@@ -33,6 +33,7 @@ interface NewsItemsProps extends RouteComponentProps, WithSnackbarProps, WithSty
     newsItems: NewsItem[]
     monitorScroll: boolean
     needMoreItems: () => void
+    refreshRequested: () => void
 }
 
 class NewsItemsNode extends React.Component<NewsItemsProps> {
@@ -97,9 +98,12 @@ class NewsItemsNode extends React.Component<NewsItemsProps> {
                 this.element?.scrollIntoView()
             }
         }
-        if (event.key === "k") {
+        else if (event.key === "k") {
             const element = this.scrollEventClients.slice().reverse().find(client=> client.reportYPosition() < 2)
             element?.scrollToTop()
+        }
+        else if (event.key === "r") {
+            this.props.refreshRequested()
         }
 
     }

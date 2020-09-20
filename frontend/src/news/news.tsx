@@ -111,6 +111,7 @@ class News extends React.Component<NewsProps, NewsState> {
                     <NewsItems
                         newsItems={this.state.newsItems}
                         needMoreItems={this.needMoreItems}
+                        refreshRequested={this.refreshItems}
                         monitorScroll={this.props.variant === NewsVariant.NEWS}/>
                     }
                 </div>
