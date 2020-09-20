@@ -38,7 +38,6 @@ const styles = createStyles({
 });
 
 interface SigninProps extends WithStyles<typeof styles>, RouteComponentProps, WithSnackbarProps {
-
 }
 
 class SignIn extends React.Component<SigninProps> {
@@ -79,7 +78,7 @@ class SignIn extends React.Component<SigninProps> {
             <HeaderBar />
 
             <div className={classes.cards}>
-                <GoogleCard 
+                <GoogleCard
                     validateSignInWithServer={this.validateSignInWithServer}
                     >
                 </GoogleCard>

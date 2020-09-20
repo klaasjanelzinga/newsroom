@@ -3,6 +3,9 @@ import {Card, CardContent, createStyles, Typography, WithStyles, withStyles} fro
 import {withSnackbar, WithSnackbarProps} from 'notistack';
 import GoogleLogin, {GoogleLoginResponse, GoogleLoginResponseOffline} from 'react-google-login';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+import Grid from "@material-ui/core/Grid";
 
 
 const styles = createStyles({
@@ -23,6 +26,9 @@ const styles = createStyles({
     googleButton: {
         backgroundColor: 'lightgrey',
         padding: '2px',
+    },
+    staySignedIn: {
+        marginLeft: '10px',
     }
 });
 
@@ -30,7 +36,16 @@ interface GoogleCardProps extends RouteComponentProps, WithSnackbarProps, WithSt
     validateSignInWithServer: (bearerToken: string) => void
 }
 
-class GoogleCard extends React.Component<GoogleCardProps> {
+interface GoogleCardState {
+    staySignedIn: boolean
+}
+
+
+class GoogleCard extends React.Component<GoogleCardProps, GoogleCardState> {
+
+    state: GoogleCardState = {
+        staySignedIn: false
+    }
 
     constructor(props: GoogleCardProps) {
         super(props);
@@ -86,17 +101,30 @@ class GoogleCard extends React.Component<GoogleCardProps> {
                         The data is only used on this site and will not be shared. By clicking on the login
                         button you acknowledge this.
                     </Typography>
-
                 </div>
                 <div className={classes.googleButton}>
                     <GoogleLogin
                         clientId="662875567592-9do93u1nppl2ks4geufjtm7n5hfo23m3.apps.googleusercontent.com"
                         buttonText="Login"
+                        isSignedIn={this.state.staySignedIn}
                         onSuccess={this.responseGoogle}
                         onFailure={this.handleFailure}
                         className={classes.googleButton}
                         cookiePolicy={'single_host_origin'}
                     />
+                    <FormControlLabel
+                        control={
+                            <Checkbox
+                                checked={this.state.staySignedIn}
+                                className={classes.staySignedIn}
+                                onChange={() => this.setState({staySignedIn: !this.state.staySignedIn})}
+                                name="stay_signed_in"
+                                color="primary"
+                            />
+                        }
+                        label="Stay signed in"
+                    />
+
                 </div>
             </div>
         </Card>
