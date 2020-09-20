@@ -9,6 +9,7 @@ import {withSnackbar, WithSnackbarProps} from "notistack";
 import {RouteComponentProps} from "react-router";
 import {withRouter} from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
+import {DOMElement} from "react";
 
 const styles = createStyles({
     news_items: {
@@ -40,11 +41,20 @@ class NewsItemsNode extends React.Component<NewsItemsProps> {
     scrollEventClients: NewsItemControl[] = []
     dynamicFetchClients: NewsItemDynamicFetchControl[] = []
     api: Api
+    element: Element | null = null
 
     constructor(props: NewsItemsProps) {
         super(props);
         this.api = new Api(props)
         this.onScrollDebounced = debounce(this.onScroll, 100);
+    }
+
+    componentDidMount() {
+        document.addEventListener("keypress", this.keypress)
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener("keypress", this.keypress)
     }
 
     onScroll = () => {
@@ -79,6 +89,21 @@ class NewsItemsNode extends React.Component<NewsItemsProps> {
         this.dynamicFetchClients.push(client)
     }
 
+    keypress = (event: KeyboardEvent) => {
+        if (event.key === "j") {
+            const element = this.scrollEventClients.find(client=> client.reportYPosition() > 170)
+            element?.scrollToTop()
+            if (!element) {
+                this.element?.scrollIntoView()
+            }
+        }
+        if (event.key === "k") {
+            const element = this.scrollEventClients.slice().reverse().find(client=> client.reportYPosition() < 2)
+            element?.scrollToTop()
+        }
+
+    }
+
     render() {
         const {classes} = this.props
         return <div className={classes.news_items} onScroll={this.onScrollDebounced}>
@@ -94,7 +119,7 @@ class NewsItemsNode extends React.Component<NewsItemsProps> {
                               newsItem={newsItem}/>
             )}
             {this.props.newsItems.length > 0 && <div className={classes.scrollFiller}>
-                <DoneAllIcon className={classes.scrollFillerIcon}/>
+                <DoneAllIcon ref={(t) => this.element = t} className={classes.scrollFillerIcon}/>
             </div>}
         </div>
     }

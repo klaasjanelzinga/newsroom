@@ -41,6 +41,8 @@ export interface NewsItemControl {
     isReadStateIsSent: () => boolean
     setIsReadStateIsSent: (newValue: boolean) => void
     newsItemId: () => string
+    scrollToTop: () => void
+    reportYPosition: () => number
 }
 
 export interface NewsItemDynamicFetchControl {
@@ -88,6 +90,17 @@ class NewsItemNode extends React.Component<NewsItemProps> implements NewsItemCon
         return this.state.isRead
     }
 
+    scrollToTop() {
+        this.element?.scrollIntoView()
+    }
+
+    reportYPosition() {
+        if (this.element) {
+            return this.element.getBoundingClientRect().y
+        }
+        return -1
+    }
+
     newsItemId() {
         return this.props.newsItem.news_item_id
     }
@@ -101,6 +114,7 @@ class NewsItemNode extends React.Component<NewsItemProps> implements NewsItemCon
     }
 
     scrollEvent = () => {
+        console.log("Scrollevent")
         if (this.element) {
             const rect = this.element.getBoundingClientRect()
             if (rect.y < -10) {
