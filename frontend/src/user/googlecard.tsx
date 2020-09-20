@@ -5,7 +5,6 @@ import GoogleLogin, {GoogleLoginResponse, GoogleLoginResponseOffline} from 'reac
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import Grid from "@material-ui/core/Grid";
 
 
 const styles = createStyles({
