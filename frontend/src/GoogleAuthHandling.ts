@@ -48,7 +48,7 @@ export class GoogleAuthHandling {
         return this.currentUser?.getAuthResponse()
     }
 
-    scriptLoaded() {
+    scriptLoaded() : void {
         gapi.load('auth2', this.gapi_loaded)
     }
 
@@ -60,7 +60,7 @@ export class GoogleAuthHandling {
         this.currentUser = currentUser
     }
 
-    gapi_loaded = () => {
+    gapi_loaded = () : void => {
         gapi.auth2.init({
             client_id: '662875567592-9do93u1nppl2ks4geufjtm7n5hfo23m3.apps.googleusercontent.com',
             scope: 'openid profile email'

@@ -114,10 +114,9 @@ class NewsItemNode extends React.Component<NewsItemProps> implements NewsItemCon
     }
 
     scrollEvent = () => {
-        console.log("Scrollevent")
         if (this.element) {
             const rect = this.element.getBoundingClientRect()
-            if (rect.y < -10) {
+            if (rect.y < 2) {
                 this.markAsRead()
             }
         }

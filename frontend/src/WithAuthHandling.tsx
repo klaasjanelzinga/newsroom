@@ -9,7 +9,7 @@ export interface WithAuthHandling {
 
 
 export const withAuthHandling = <P extends WithAuthHandling>(Component: React.ComponentType<P>) =>
-    class MakeCounter extends React.Component<Subtract<P, WithAuthHandling>> {
+    class WithGoogleAuthHandler extends React.Component<Subtract<P, WithAuthHandling>> {
 
         render() {
             return <AuthHandling.Consumer>
@@ -23,4 +23,3 @@ export const withAuthHandling = <P extends WithAuthHandling>(Component: React.Co
 
         }
     }
-

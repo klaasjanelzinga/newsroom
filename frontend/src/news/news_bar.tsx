@@ -1,6 +1,7 @@
 import * as React from "react";
 import {Button, createStyles, WithStyles, withStyles} from "@material-ui/core";
 import RefreshIcon from "@material-ui/icons/Refresh";
+import {ArrowDownward, ArrowUpward} from "@material-ui/icons";
 
 const styles = createStyles({
     newsbar: {
@@ -12,6 +13,8 @@ const styles = createStyles({
 
 interface NewsBarProps extends WithStyles<typeof styles> {
     refresh: () => void
+    next: () => void
+    previous: () => void
 }
 
 const NewsBar: React.FunctionComponent<NewsBarProps> = (props: NewsBarProps) => {
@@ -22,6 +25,18 @@ const NewsBar: React.FunctionComponent<NewsBarProps> = (props: NewsBarProps) => 
                 onClick={props.refresh}
                 className={classes.button}>
             <RefreshIcon />
+        </Button>
+        <Button size="small"
+                variant="outlined"
+                onClick={props.previous}
+                className={classes.button}>
+            <ArrowUpward />
+        </Button>
+        <Button size="small"
+                variant="outlined"
+                onClick={props.next}
+                className={classes.button}>
+            <ArrowDownward />
         </Button>
     </div>
 

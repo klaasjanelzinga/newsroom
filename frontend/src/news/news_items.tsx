@@ -34,9 +34,16 @@ interface NewsItemsProps extends WithAuthHandling, RouteComponentProps, WithSnac
     monitorScroll: boolean
     needMoreItems: () => void
     refreshRequested: () => void
+
+    registerNewsItemsControl: (newsItemsCtrl: NewsItemsControl) => void
 }
 
-class NewsItemsNode extends React.Component<NewsItemsProps> {
+export interface NewsItemsControl {
+    goToNextItem: () => void
+    goToPreviousItem: () => void
+}
+
+class NewsItemsNode extends React.Component<NewsItemsProps> implements NewsItemsControl {
 
     onScrollDebounced: () => void
     scrollEventClients: NewsItemControl[] = []
@@ -48,6 +55,8 @@ class NewsItemsNode extends React.Component<NewsItemsProps> {
         super(props);
         this.api = new Api(props)
         this.onScrollDebounced = debounce(this.onScroll, 100);
+
+        this.props.registerNewsItemsControl(this)
     }
 
     componentDidMount() {
@@ -92,20 +101,25 @@ class NewsItemsNode extends React.Component<NewsItemsProps> {
 
     keypress = (event: KeyboardEvent) => {
         if (event.key === "j") {
-            const element = this.scrollEventClients.find(client=> client.reportYPosition() > 170)
-            element?.scrollToTop()
-            if (!element) {
-                this.element?.scrollIntoView()
-            }
-        }
-        else if (event.key === "k") {
-            const element = this.scrollEventClients.slice().reverse().find(client=> client.reportYPosition() < 2)
-            element?.scrollToTop()
-        }
-        else if (event.key === "r") {
+            this.goToNextItem()
+        } else if (event.key === "k") {
+            this.goToPreviousItem()
+        } else if (event.key === "r") {
             this.props.refreshRequested()
         }
+    }
 
+    goToNextItem() {
+        const element = this.scrollEventClients.find(client => client.reportYPosition() > 170)
+        element?.scrollToTop()
+        if (!element) {
+            this.element?.scrollIntoView()
+        }
+    }
+
+    goToPreviousItem() {
+        const element = this.scrollEventClients.slice().reverse().find(client => client.reportYPosition() < 40)
+        element?.scrollToTop()
     }
 
     render() {

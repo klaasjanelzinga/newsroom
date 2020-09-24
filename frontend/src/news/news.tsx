@@ -8,7 +8,7 @@ import Header from "../user/header";
 import {withSnackbar, WithSnackbarProps} from "notistack";
 import {GetNewsItemsResponse, NewsItem} from "../user/model";
 import {Api} from "../Api";
-import NewsItems from "./news_items"
+import NewsItems, {NewsItemsControl} from "./news_items"
 import NewsBar from "./news_bar";
 import LinearProgress from '@material-ui/core/LinearProgress';
 import {WithAuthHandling, withAuthHandling} from "../WithAuthHandling";
@@ -54,15 +54,21 @@ class News extends React.Component<NewsProps, NewsState> {
     }
     api: Api
     token: string | null = null
+    newsItemsCtrl: NewsItemsControl | null
 
     constructor(props: NewsProps) {
         super(props);
         this.api = new Api(props)
+        this.newsItemsCtrl = null
     }
 
     componentDidMount() {
         this.setState({isLoading: true})
         this.fetchNewsItems()
+    }
+
+    registerNewsItemsControl = (newsItemCtrl: NewsItemsControl) => {
+        this.newsItemsCtrl = newsItemCtrl
     }
 
     fetchNewsItems() {
@@ -105,7 +111,11 @@ class News extends React.Component<NewsProps, NewsState> {
         return <div className={classes.newsRoot}>
             <HeaderBar />
             <Header title={'News'} />
-            <NewsBar refresh={this.refreshItems} />
+            <NewsBar
+                refresh={this.refreshItems}
+                next={() => this.newsItemsCtrl?.goToNextItem()}
+                previous={() => this.newsItemsCtrl?.goToPreviousItem()}
+            />
             {this.state.isLoading && <LinearProgress />}
                 <div className={classes.newsItems}>
                     {!this.state.isLoading && !this.state.error &&
@@ -113,6 +123,7 @@ class News extends React.Component<NewsProps, NewsState> {
                         newsItems={this.state.newsItems}
                         needMoreItems={this.needMoreItems}
                         refreshRequested={this.refreshItems}
+                        registerNewsItemsControl={this.registerNewsItemsControl}
                         monitorScroll={this.props.variant === NewsVariant.NEWS}/>
                     }
                 </div>
