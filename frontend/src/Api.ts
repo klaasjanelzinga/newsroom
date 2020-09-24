@@ -3,23 +3,26 @@ import config from './Config'
 import {RouteComponentProps} from "react-router-dom";
 import {WithSnackbarProps} from "notistack";
 import {ErrorResponse} from "./user/model";
+import {WithAuthHandling} from "./WithAuthHandling";
+import {GoogleAuthHandling} from "./GoogleAuthHandling";
 
-interface ApiProps extends WithSnackbarProps, RouteComponentProps {
+interface ApiProps extends WithSnackbarProps, RouteComponentProps, WithAuthHandling {
 }
 
 export class Api {
     props: ApiProps
     userProfile: UserProfile | null
+    authHandling: GoogleAuthHandling
 
     constructor(props: ApiProps) {
         this.props = props
         this.userProfile = UserProfile.load()
+        this.authHandling = props.authHandling
     }
 
     static createBearerTokenFrom(id_token: string): string {
         return `Bearer ${id_token}`
     }
-
 
     _headers_from(id_token: string| null): Headers {
         const headers: HeadersInit = new Headers()
@@ -51,30 +54,21 @@ export class Api {
     }
 
     async get<T>(endpoint: string): Promise<[number, T]> {
-
-        if (!this.userProfile) {
-            throw new Error("Unauthorized for authorized call")
-        }
+        const authReponse = await this.authHandling.authResponse()
         const url = `${config.apihost}${endpoint}`
-
         const request = new Request(url, {
             method: 'GET',
-            headers: this._headers_from(this.userProfile.id_token)
+            headers: this._headers_from(authReponse.id_token)
         });
         const response = await fetch(request)
         return [response.status, await this._parseResponse(response)]
     }
 
-    async post<T>(endpoint: string, body: string| null = null, withToken: string | null = null): Promise<[number, T]> {
-        if (!withToken && !this.userProfile) {
-            throw new Error("Authorized call without authorization")
-        }
-        if (!withToken && this.userProfile) {
-            withToken = this.userProfile.id_token
-        }
+    async post<T>(endpoint: string, body: string| null = null): Promise<[number, T]> {
+        const authReponse = await this.authHandling.authResponse()
         const url = `${config.apihost}${endpoint}`
         const response = await fetch(url, {
-            headers: this._headers_from(withToken),
+            headers: this._headers_from(authReponse.id_token),
             method: "POST",
             body: body,
         })

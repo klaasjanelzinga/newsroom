@@ -22,6 +22,7 @@ class TokenVerifier:
     async def _fetch_certs() -> Dict:
         timeout = aiohttp.ClientTimeout(total=10)
         async with aiohttp.ClientSession(timeout=timeout) as task_session:
+            log.info("Getting certs")
             async with task_session.get("https://www.googleapis.com/oauth2/v1/certs") as response:
                 return await response.json()
 
@@ -50,6 +51,7 @@ class TokenVerifier:
             result = jwt.decode(
                 token=token,
                 certs=await token_certs,
+                verify=True,
                 audience="662875567592-9do93u1nppl2ks4geufjtm7n5hfo23m3.apps.googleusercontent.com",
             )
             return User(

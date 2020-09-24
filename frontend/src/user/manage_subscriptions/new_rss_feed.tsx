@@ -11,6 +11,7 @@ import ImageAndTitle from "./feed_image_and_title"
 import SubscribeUnsubscribeButton from "./subscribe_unsubscribe_button";
 import withStyles from "@material-ui/core/styles/withStyles";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import {withAuthHandling, WithAuthHandling} from "../../WithAuthHandling";
 
 interface NewRssFeedState {
     newURL: string;
@@ -19,7 +20,7 @@ interface NewRssFeedState {
     isLoading: boolean
 }
 
-interface NewRssFeedProps extends RouteComponentProps, WithSnackbarProps, WithStyles<typeof styles> {
+interface NewRssFeedProps extends WithAuthHandling, RouteComponentProps, WithSnackbarProps, WithStyles<typeof styles> {
     subscribe_callback: (feed: GetFeedsResponse) => void
     unsubscribe_callback: (feed: GetFeedsResponse) => void
 }
@@ -164,4 +165,4 @@ class NewRssFeed extends React.Component<NewRssFeedProps, NewRssFeedState> {
     }
 }
 
-export default withStyles(styles)(withRouter(withSnackbar(NewRssFeed)));
+export default withStyles(styles)(withRouter(withSnackbar(withAuthHandling(NewRssFeed))))

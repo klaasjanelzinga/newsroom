@@ -24,6 +24,7 @@ import ImageAndTitle from "./feed_image_and_title";
 import {GetFeedsResponse} from "../model";
 import SubscribeUnsubscribeButton from "./subscribe_unsubscribe_button";
 import LinearProgress from "@material-ui/core/LinearProgress";
+import {withAuthHandling, WithAuthHandling} from "../../WithAuthHandling";
 
 
 const styles = createStyles({
@@ -36,7 +37,7 @@ const styles = createStyles({
     }
 });
 
-interface ManageSubscriptionsProps extends WithSnackbarProps, RouteComponentProps, WithStyles<typeof styles> {
+interface ManageSubscriptionsProps extends WithAuthHandling, WithSnackbarProps, RouteComponentProps, WithStyles<typeof styles> {
 }
 
 interface SubscribeResponse {
@@ -180,4 +181,4 @@ class ManageSubscriptions extends React.Component<ManageSubscriptionsProps, Mang
     }
 }
 
-export default withStyles(styles)(withRouter(withSnackbar(ManageSubscriptions)));
+export default withStyles(styles)(withRouter(withSnackbar(withAuthHandling(ManageSubscriptions))))

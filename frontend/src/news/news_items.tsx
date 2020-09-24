@@ -9,7 +9,7 @@ import {withSnackbar, WithSnackbarProps} from "notistack";
 import {RouteComponentProps} from "react-router";
 import {withRouter} from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
-import {DOMElement} from "react";
+import {WithAuthHandling, withAuthHandling} from "../WithAuthHandling";
 
 const styles = createStyles({
     news_items: {
@@ -29,7 +29,7 @@ const styles = createStyles({
     },
 })
 
-interface NewsItemsProps extends RouteComponentProps, WithSnackbarProps, WithStyles<typeof styles> {
+interface NewsItemsProps extends WithAuthHandling, RouteComponentProps, WithSnackbarProps, WithStyles<typeof styles> {
     newsItems: NewsItem[]
     monitorScroll: boolean
     needMoreItems: () => void
@@ -129,4 +129,4 @@ class NewsItemsNode extends React.Component<NewsItemsProps> {
     }
 }
 
-export default withStyles(styles)(withRouter(withSnackbar(NewsItemsNode)))
+export default withStyles(styles)(withRouter(withSnackbar(withAuthHandling(NewsItemsNode))))

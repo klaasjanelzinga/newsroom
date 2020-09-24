@@ -12,6 +12,7 @@ import UserProfile from './UserProfile';
 import {Api} from "../Api";
 import Header from "./header";
 import {UserProfileResponse} from "./model";
+import {withAuthHandling, WithAuthHandling} from "../WithAuthHandling";
 
 const styles = createStyles({
     saveButton: {
@@ -34,7 +35,7 @@ const styles = createStyles({
     }
 });
 
-interface ProfileProps extends WithSnackbarProps, WithStyles<typeof styles>, RouteComponentProps {
+interface ProfileProps extends WithAuthHandling, WithSnackbarProps, WithStyles<typeof styles>, RouteComponentProps {
 }
 
 interface ProfileState {
@@ -170,5 +171,4 @@ class Profile extends React.Component<ProfileProps, ProfileState> {
     }
 }
 
-//
-export default withStyles(styles)(withRouter(withSnackbar(Profile)));
+export default withStyles(styles)(withRouter(withSnackbar(withAuthHandling(Profile))))

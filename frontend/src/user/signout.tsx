@@ -3,9 +3,9 @@ import {withSnackbar, WithSnackbarProps} from 'notistack';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import HeaderBar from '../headerbar/HeaderBar';
 import UserProfile from './UserProfile';
-import {GoogleLogout} from "react-google-login";
 import {createStyles, Typography, WithStyles} from "@material-ui/core";
 import withStyles from "@material-ui/core/styles/withStyles";
+import {withAuthHandling, WithAuthHandling} from "../WithAuthHandling";
 
 const styles = createStyles({
     googleButton: {
@@ -16,18 +16,18 @@ const styles = createStyles({
     }
 })
 
-interface SignoutProps extends RouteComponentProps, WithSnackbarProps, WithStyles<typeof styles> {
+interface SignoutProps extends RouteComponentProps, WithSnackbarProps, WithAuthHandling, WithStyles<typeof styles> {
 }
 
 class SignOut extends React.Component<SignoutProps> {
 
-    logout = () => {
+    async logout() {
         UserProfile.delete();
-
+        await this.props.authHandling.signout()
         this.props.enqueueSnackbar('You were signed out.', {
             variant: 'info',
         });
-        this.props.history.push('/');
+        this.props.history.push('/user/signin');
     }
 
     render() {
@@ -39,19 +39,13 @@ class SignOut extends React.Component<SignoutProps> {
                     Logout with google for the newsroom site.
                 </Typography>
                 <Typography variant="subtitle1" color="textSecondary">
-                    <GoogleLogout
-                        clientId="662875567592-9do93u1nppl2ks4geufjtm7n5hfo23m3.apps.googleusercontent.com"
-                        buttonText="Logout"
-                        className={classes.googleButton}
-                        onLogoutSuccess={this.logout}
-                    />
-                    Click here to logout.
+                        <button onClick={() => this.logout()}>Sign out from google</button>
                 </Typography>
             </div>
         </div>
     }
 }
 
-export default withStyles(styles)(withRouter(withSnackbar(SignOut)));
+export default withStyles(styles)(withRouter(withSnackbar(withAuthHandling(SignOut))));
   
   

@@ -7,10 +7,11 @@ import {RouteComponentProps} from "react-router";
 import UserProfile from "./user/UserProfile";
 import News, {NewsVariant} from "./news/news";
 import {withRouter} from "react-router-dom";
+import {withAuthHandling, WithAuthHandling} from "./WithAuthHandling";
 
 const styles = createStyles({})
 
-interface AppProps extends RouteComponentProps, WithSnackbarProps, WithStyles<typeof styles> {
+interface AppProps extends WithAuthHandling, RouteComponentProps, WithSnackbarProps, WithStyles<typeof styles> {
 }
 
 interface AppState {
@@ -49,4 +50,4 @@ class ReadNews extends React.Component<AppProps, AppState> {
     }
 }
 
-export default withStyles(styles)(withRouter(withSnackbar(ReadNews)))
+export default withStyles(styles)(withRouter(withSnackbar(withAuthHandling(ReadNews))))

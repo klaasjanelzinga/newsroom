@@ -4,10 +4,11 @@ import {AccountCircle} from '@material-ui/icons';
 import React from 'react';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import UserProfile from '../user/UserProfile';
+import {withAuthHandling, WithAuthHandling} from "../WithAuthHandling";
 
 const styles = createStyles({});
 
-interface HeaderMenuProps extends RouteComponentProps, WithStyles<typeof styles> {
+interface HeaderMenuProps extends RouteComponentProps, WithAuthHandling, WithStyles<typeof styles> {
 }
 
 type HeaderMenuState = {
@@ -83,13 +84,13 @@ class HeaderMenu extends React.Component<HeaderMenuProps, HeaderMenuState> {
                     keepMounted
                     open={this.state.menuOpen}
                     onClose={this.handleClose}>
-                    <MenuItem disabled={this.state.userProfile != null} onClick={this.handleSignIn}>Sign in</MenuItem>
-                    <MenuItem disabled={this.state.userProfile == null} onClick={this.handleMyProfile}>Profile</MenuItem>
-                    <MenuItem disabled={this.state.userProfile == null} onClick={this.handleSignOut}>Sign out</MenuItem>
+                    <MenuItem disabled={this.props.authHandling.isSignedIn} onClick={this.handleSignIn}>Sign in</MenuItem>
+                    <MenuItem disabled={!this.props.authHandling.isSignedIn} onClick={this.handleMyProfile}>Profile</MenuItem>
+                    <MenuItem disabled={!this.props.authHandling.isSignedIn} onClick={this.handleSignOut}>Sign out</MenuItem>
                 </Menu>
             </div>
         );
     }
 }
 
-export default withStyles(styles)(withRouter(HeaderMenu));
+export default withStyles(styles)(withRouter(withAuthHandling(HeaderMenu)));

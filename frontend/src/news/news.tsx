@@ -11,6 +11,7 @@ import {Api} from "../Api";
 import NewsItems from "./news_items"
 import NewsBar from "./news_bar";
 import LinearProgress from '@material-ui/core/LinearProgress';
+import {WithAuthHandling, withAuthHandling} from "../WithAuthHandling";
 
 const styles = createStyles({
     newsRoot: {
@@ -29,7 +30,7 @@ export enum NewsVariant {
     READ_NEWS
 }
 
-export interface NewsProps extends RouteComponentProps, WithSnackbarProps, WithStyles<typeof styles> {
+export interface NewsProps extends RouteComponentProps, WithAuthHandling, WithSnackbarProps, WithStyles<typeof styles> {
     userProfile: UserProfile
     variant: NewsVariant
 }
@@ -120,4 +121,4 @@ class News extends React.Component<NewsProps, NewsState> {
     }
 }
 
-export default withStyles(styles)(withRouter(withSnackbar(News)));
+export default withStyles(styles)(withRouter(withSnackbar(withAuthHandling(News))));
