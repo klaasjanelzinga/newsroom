@@ -19,6 +19,7 @@ const styles = createStyles({
     },
     newsItems: {
         height: "99%",
+        width: "100%",
         position: "fixed",
     },
     footer: {

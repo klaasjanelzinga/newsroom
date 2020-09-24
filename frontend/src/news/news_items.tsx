@@ -12,7 +12,7 @@ import Typography from "@material-ui/core/Typography";
 import {WithAuthHandling, withAuthHandling} from "../WithAuthHandling";
 
 const styles = createStyles({
-    news_items: {
+    newsItems: {
         overflow: "auto",
         height: "100%",
     },
@@ -124,7 +124,7 @@ class NewsItemsNode extends React.Component<NewsItemsProps> implements NewsItems
 
     render() {
         const {classes} = this.props
-        return <div className={classes.news_items} onScroll={this.onScrollDebounced}>
+        return <div className={classes.newsItems} onScroll={this.onScrollDebounced}>
             {this.props.newsItems.length === 0 && <div className={classes.noNews}>
                 <Typography variant="h6">
                     No news found !
