@@ -1,5 +1,5 @@
 import * as React from "react";
-import {createStyles, Typography, WithStyles, withStyles} from "@material-ui/core";
+import {createStyles, Link, Typography, WithStyles, withStyles} from "@material-ui/core";
 import {NewsItem} from "../user/model";
 import Grid from "@material-ui/core/Grid";
 import Checkbox from "@material-ui/core/Checkbox";
@@ -30,6 +30,10 @@ const styles = createStyles({
         paddingBNottom: "4px",
     },
     titleLink: {
+        '&:visited': {
+            color: "#c39ea4",
+            fontSize: "smaller",
+        },
         fontSize: "large",
     },
     itemControlBar: {},
@@ -136,7 +140,9 @@ class NewsItemNode extends React.Component<NewsItemProps> implements NewsItemCon
                   className={this.state.isRead ? classes.cardRead : classes.card}
                   ref={(t) => this.element = t}>
                 <Grid item xs={12} className={classes.cardTitle}>
-                    <a href={newsItem.link} className={classes.titleLink} target="_blank" rel="noopener noreferrer">{newsItem.title}</a>
+                    <Link href={newsItem.link}
+                          className={classes.titleLink}
+                          target="_blank" rel="noopener">{newsItem.title}</Link>
                 </Grid>
                 <Grid item xs={12} className={classes.cardDescription}>
                     <div dangerouslySetInnerHTML={{__html: newsItem.description}}/>
