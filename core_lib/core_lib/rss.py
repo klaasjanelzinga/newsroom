@@ -14,7 +14,7 @@ from core_lib.repositories import Feed, FeedItem
 def rss_document_to_feed(rss_url: str, tree: Element) -> Feed:
     # required rss channel items
     title = tree.findtext("channel/title")
-    description = tree.findtext("channel/description")
+    description = _parse_description(tree.findtext("channel/description"))
     link = tree.findtext("channel/link")
     # optional rss channel items
     category = tree.find("channel/category")
@@ -55,6 +55,12 @@ def _parse_optional_rss_datetime(freely_formatted_datetime: Optional[str]) -> Op
     return in_this_tz.astimezone(tz=pytz.UTC)
 
 
+def _parse_description(description: str) -> str:
+    if len(description) > 1400:
+        description = description[0:1400]
+    return description
+
+
 def rss_document_to_feed_items(feed: Feed, tree: Element) -> List[FeedItem]:
     """ Creates a list of FeedItem objects from a xml tree for the feed. """
     item_elements = tree.findall("channel/item")
@@ -63,7 +69,7 @@ def rss_document_to_feed_items(feed: Feed, tree: Element) -> List[FeedItem]:
             feed_id=feed.feed_id,
             title=item_element.findtext("title"),
             link=item_element.findtext("link"),
-            description=item_element.findtext("description"),
+            description=_parse_description(item_element.findtext("description")),
             last_seen=datetime.utcnow(),
             published=_parse_optional_rss_datetime(item_element.findtext("pubDate")),
             created_on=datetime.utcnow(),
