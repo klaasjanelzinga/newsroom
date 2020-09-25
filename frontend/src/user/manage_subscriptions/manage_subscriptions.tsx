@@ -34,6 +34,9 @@ const styles = createStyles({
     },
     subscriptionsTable: {
         marginTop: "30px",
+    },
+    manageSubscriptions: {
+        overflow: "hidden",
     }
 });
 
@@ -122,7 +125,7 @@ class ManageSubscriptions extends React.Component<ManageSubscriptionsProps, Mang
         const {classes} = this.props
 
 
-        return <div>
+        return <div className={classes.manageSubscriptions}>
             <HeaderBar/>
             <Header title={"Manage subscriptions"}/>
 
@@ -148,25 +151,25 @@ class ManageSubscriptions extends React.Component<ManageSubscriptionsProps, Mang
                                 <Table size="small" aria-label="a dense table">
                                     <TableHead>
                                         <TableRow>
-                                            <TableCell size="small">Title</TableCell>
-                                            <TableCell>URL</TableCell>
+                                            <TableCell>Subscribe / Unsubscribe</TableCell>
+                                            <TableCell>Title</TableCell>
                                             <TableCell>Description</TableCell>
-                                            <TableCell size="small" align="right">Subscribe / Unsubscribe</TableCell>
+                                            <TableCell>URL</TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
                                         {this.state.feedsForUser.map((feedForUser) => (
                                             <TableRow key={feedForUser.feed.feed_id}>
-                                                <TableCell component="th" scope="row">
-                                                    <ImageAndTitle feed={feedForUser.feed}/>
-                                                </TableCell>
-                                                <TableCell>{feedForUser.feed.url}</TableCell>
-                                                <TableCell>{feedForUser.feed.description}</TableCell>
-                                                <TableCell align="right">
+                                                <TableCell>
                                                     <SubscribeUnsubscribeButton feedResponse={feedForUser}
                                                                                 subscribe_callback={feedResponse => this.subscribeTo(feedResponse)}
                                                                                 unsubscribe_callback={feedResponse => this.unsubscribeFrom(feedResponse)}/>
                                                 </TableCell>
+                                                <TableCell component="th" scope="row">
+                                                    <ImageAndTitle feed={feedForUser.feed}/>
+                                                </TableCell>
+                                                <TableCell>{feedForUser.feed.description}</TableCell>
+                                                <TableCell>{feedForUser.feed.url}</TableCell>
                                             </TableRow>
                                         ))}
                                     </TableBody>

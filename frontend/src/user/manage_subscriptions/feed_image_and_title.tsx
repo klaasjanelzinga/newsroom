@@ -12,9 +12,9 @@ const styles = createStyles({
         width: "25px",
         textAlign: "center",
         verticalAlign: "middle",
+        paddingRight: "8px",
     },
     text: {
-        paddingLeft: "5px",
     },
 });
 

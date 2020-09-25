@@ -27,9 +27,8 @@ interface NewRssFeedProps extends WithAuthHandling, RouteComponentProps, WithSna
 
 const styles = createStyles({
     button: {
-        marginRight: '10px',
-        marginLeft: '8px',
-        fontSize: 13,
+        marginTop: "10px",
+        fontSize: "13",
     },
     foundPanel: {
         padding: "10px",
@@ -113,12 +112,12 @@ class NewRssFeed extends React.Component<NewRssFeedProps, NewRssFeedState> {
         const {classes} = this.props
         return <Grid container>
             <Grid container>
-                <Grid item xs={10}>
+                <Grid item xs={9}>
                     <TextField
                         required
                         id="url"
                         name="url"
-                        label="Add new RSS-Feed url here and click CHECK URL"
+                        label="Add new RSS-Feed url"
                         fullWidth
                         onChange={(event) => this.setState({newURL: event.currentTarget.value})}
                         autoComplete="fname"
@@ -132,29 +131,24 @@ class NewRssFeed extends React.Component<NewRssFeedProps, NewRssFeedState> {
                             className={classes.button}
                             onClick={this.checkNewRssURL}>
                         <InsertLink/>
-                        Check url
+                        Check
                     </Button>
                 </Grid>}
             </Grid>
 
             {this.state.possibleError && <Grid container className={classes.errorPanel}>
                 <Grid item xs={8}>
-                    <Typography variant="subtitle1">Something went wrong with checking {this.state.newURL}.
-                    </Typography>
+                    <Typography variant="subtitle1">Something went wrong with {this.state.newURL}.</Typography>
                     <Typography variant="subtitle2">{this.state.possibleError}</Typography>
                 </Grid>
             </Grid> }
 
             {this.state.foundFeed && <Grid container className={classes.foundPanel}>
 
-                <Grid item xs={2} className={classes.foundPanelItem}>URL</Grid>
-                <Grid item xs={10} className={classes.foundPanelItem}>{this.state.foundFeed.feed.url}</Grid>
-                <Grid item xs={2} className={classes.foundPanelItem}>Title</Grid>
-                <Grid item xs={10} className={classes.foundPanelItem}>
+                <Grid item xs={12} className={classes.foundPanelItem}>
                     <ImageAndTitle feed={this.state.foundFeed.feed} />
                 </Grid>
-                <Grid item xs={2} className={classes.foundPanelItem}>Description</Grid>
-                <Grid item xs={10} className={classes.foundPanelItem}>{this.state.foundFeed.feed.description}</Grid>
+                <Grid item xs={12} className={classes.foundPanelItem}>{this.state.foundFeed.feed.description}</Grid>
                 <Grid item xs={2} className={classes.foundPanelItem}>
                     <SubscribeUnsubscribeButton feedResponse={this.state.foundFeed}
                                                 subscribe_callback={feedResponse => this.subscribeTo(feedResponse)}
