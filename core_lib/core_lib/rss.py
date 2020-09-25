@@ -14,7 +14,7 @@ from core_lib.repositories import Feed, FeedItem
 def rss_document_to_feed(rss_url: str, tree: Element) -> Feed:
     # required rss channel items
     title = tree.findtext("channel/title")
-    description = _parse_description(tree.findtext("channel/description"))
+    description = _parse_description(tree.findtext("channel/description") or "")
     link = tree.findtext("channel/link")
     # optional rss channel items
     category = tree.find("channel/category")
@@ -69,7 +69,7 @@ def rss_document_to_feed_items(feed: Feed, tree: Element) -> List[FeedItem]:
             feed_id=feed.feed_id,
             title=item_element.findtext("title"),
             link=item_element.findtext("link"),
-            description=_parse_description(item_element.findtext("description")),
+            description=_parse_description(item_element.findtext("description") or ""),
             last_seen=datetime.utcnow(),
             published=_parse_optional_rss_datetime(item_element.findtext("pubDate")),
             created_on=datetime.utcnow(),
