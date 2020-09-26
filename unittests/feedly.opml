@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<opml version="1.0">
+    <head>
+        <title>KlaasJan subscriptions in feedly Cloud</title>
+    </head>
+    <body>
+        <outline text="dvl" title="dvl">
+            <outline type="rss" text="Kubernetes – Production-Grade Container Orchestration" title="Kubernetes – Production-Grade Container Orchestration" xmlUrl="http://kubernetesio.blogspot.com/feeds/posts/default" htmlUrl="https://kubernetes.io/"/>
+            <outline type="rss" text="Linux Journal - The Original Magazine of the Linux Community" title="Linux Journal - The Original Magazine of the Linux Community" xmlUrl="http://www.linuxjournal.com/node/feed" htmlUrl="https://www.linuxjournal.com/node/feed"/>
+            <outline type="rss" text="Unity Technologies Blog" title="Unity Technologies Blog" xmlUrl="http://blogs.unity3d.com/feed/" htmlUrl="https://blogs.unity3d.com"/>
+            <outline type="rss" text="PyCharm: the Python IDE for Professional Developers – PyCharm Blog | JetBrains" title="PyCharm: the Python IDE for Professional Developers – PyCharm Blog | JetBrains" xmlUrl="http://blog.jetbrains.com/pycharm/feed/" htmlUrl="https://blog.jetbrains.com"/>
+            <outline type="rss" text="IntelliJ IDEA: The Java IDE for Professional Developers – IntelliJ IDEA Blog | JetBrains" title="IntelliJ IDEA: The Java IDE for Professional Developers – IntelliJ IDEA Blog | JetBrains" xmlUrl="http://blogs.jetbrains.com/idea/feed/" htmlUrl="https://blog.jetbrains.com"/>
+            <outline type="rss" text="The Gradle Blog" title="The Gradle Blog" xmlUrl="https://gradle.org/feed/" htmlUrl="https://blog.gradle.org"/>
+            <outline type="rss" text="Kotlin Programming Language" title="Kotlin Programming Language" xmlUrl="http://kotlin.link/rss.xml" htmlUrl="https://kotlin.link/"/>
+            <outline type="rss" text="Python" title="Python" xmlUrl="https://blogs.msdn.microsoft.com/pythonengineering/feed/" htmlUrl="https://devblogs.microsoft.com/python"/>
+            <outline type="rss" text="Newest Python PEPs" title="Newest Python PEPs" xmlUrl="http://www.python.org/dev/peps/peps.rss" htmlUrl="http://www.python.org/dev/peps"/>
+            <outline type="rss" text="Kotlin Programming Language by JetBrains – Kotlin Blog | JetBrains" title="Kotlin Programming Language by JetBrains – Kotlin Blog | JetBrains" xmlUrl="http://blog.jetbrains.com/kotlin/feed/" htmlUrl="https://blog.jetbrains.com"/>
+        </outline>
+        <outline text="Tech" title="Tech">
+            <outline type="rss" text="VICE US - TECH" title="VICE US - TECH" xmlUrl="http://motherboard.vice.com/rss" htmlUrl="https://www.vice.com/en_us/topic/tech"/>
+        </outline>
+        <outline text="mmisc" title="mmisc">
+            <outline type="rss" text="Yanko Design" title="Yanko Design" xmlUrl="http://www.yankodesign.com/feed/" htmlUrl="https://www.yankodesign.com"/>
+            <outline type="rss" text="Design Milk" title="Design Milk" xmlUrl="http://feeds.feedburner.com/design-milk" htmlUrl="https://design-milk.com"/>
+            <outline type="rss" text="Super Punch" title="Super Punch" xmlUrl="http://feeds.feedburner.com/SuperPunch" htmlUrl="http://www.superpunch.net/"/>
+        </outline>
+        <outline text="News" title="News">
+            <outline type="rss" text="De Correspondent" title="De Correspondent" xmlUrl="https://decorrespondent.nl/feed/v1/publications" htmlUrl="https://decorrespondent.nl?pk_campaign=rss-feed&amp;pk_medium=rss&amp;pk_source=publication&amp;pk_kwd=all&amp;pk_cid=eccbc87e4b5ce2fe28308fd9f2a7baf3"/>
+        </outline>
+        <outline text="music" title="music">
+            <outline type="rss" text="Best New Albums - Pitchfork" title="Best New Albums - Pitchfork" xmlUrl="http://pitchfork.com/rss/reviews/best/albums/" htmlUrl="https://pitchfork.com/reviews/best/albums/"/>
+            <outline type="rss" text="The Quietus" title="The Quietus" xmlUrl="http://thequietus.com/feed" htmlUrl="https://thequietus.com"/>
+            <outline type="rss" text="Album Reviews - Pitchfork" title="Album Reviews - Pitchfork" xmlUrl="http://pitchfork.com/rss/reviews/albums/" htmlUrl="https://pitchfork.com/feed-album-reviews"/>
+            <outline type="rss" text="Latest entries for ableton.com" title="Latest entries for ableton.com" xmlUrl="http://www.ableton.com/blog/feeds/latest/" htmlUrl="https://www.ableton.com/en/blog/"/>
+        </outline>
+    </body>
+</opml>

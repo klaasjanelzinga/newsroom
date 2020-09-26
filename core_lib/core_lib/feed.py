@@ -57,9 +57,9 @@ async def fetch_feed_information_for(
     :return: A feed object or None if no feed found.
     """
     try:
-        async with session.get(url) as response:
+        async with session.get(url, headers={"accept-encoding": "gzip"}) as response:
             with repositories.client.transaction():
-                text = await response.text()
+                text = await response.text(encoding="utf-8")
                 if text.find("<!DOCTYPE html>") != -1 or text.find("<html") != -1:
                     soup = BeautifulSoup(text, "html.parser")
                     rss_links = soup.find_all("link", type="application/rss+xml")

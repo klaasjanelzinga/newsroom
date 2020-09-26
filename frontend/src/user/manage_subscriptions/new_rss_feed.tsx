@@ -64,7 +64,7 @@ class NewRssFeed extends React.Component<NewRssFeedProps, NewRssFeedState> {
     }
 
     checkNewRssURL = () => {
-        this.setState({isLoading: true, possibleError: null})
+        this.setState({isLoading: true, foundFeed: null, possibleError: null})
         setInterval(() => {
             if (this.state.isLoading)
                 this.setState({possibleError: "Be patient, some feeds take a long time to load ..."})
