@@ -9,6 +9,7 @@ from bs4 import BeautifulSoup
 from defusedxml.ElementTree import fromstring
 
 from core_lib.application_data import repositories
+from core_lib.atom import is_atom_file, atom_document_to_feed_items, atom_document_to_feed
 from core_lib.repositories import Feed, Subscription, NewsItem, User, FeedItem
 from core_lib.rss import rss_document_to_feed, rss_document_to_feed_items
 
@@ -22,6 +23,15 @@ def _process_rss_document(
 ) -> Feed:
     feed = rss_document_to_feed(url, rss_document)
     feed_items = rss_document_to_feed_items(feed, rss_document)
+    feed.number_of_items = len(feed_items)
+    feed = repositories.feed_repository.upsert(feed)
+    repositories.feed_item_repository.upsert_many(feed_items)
+    return feed
+
+
+def _process_atom_document(url: str, atom_document: Element) -> Feed:
+    feed = atom_document_to_feed(url, atom_document)
+    feed_items = atom_document_to_feed_items(feed, atom_document)
     feed.number_of_items = len(feed_items)
     feed = repositories.feed_repository.upsert(feed)
     repositories.feed_item_repository.upsert_many(feed_items)
@@ -61,6 +71,9 @@ async def fetch_feed_information_for(
                 elif text.find("<rss") != -1:
                     rss_document = fromstring(text)
                     return _process_rss_document(url, rss_document)
+                elif is_atom_file(text):
+                    atom_document = fromstring(text)
+                    return _process_atom_document(url=url, atom_document=atom_document)
         return None
     except ClientConnectorError as cce:
         raise NetworkingException(f"Url {url} not reachable. Details: {cce.__str__()}") from cce
