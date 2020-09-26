@@ -1,7 +1,7 @@
 import logging
 import os
 
-from aiohttp import ClientSession, ClientTimeout
+from aiohttp import ClientSession
 from google.cloud import datastore
 
 from core_lib.repositories import (

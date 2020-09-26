@@ -163,7 +163,7 @@ async def test_atom_feed(security_mock: Mock, faker: Faker, repositories: MockRe
         assert response is not None
 
         assert response.feed.feed_id is not None
-        assert response.feed.description == ""
+        assert response.feed.description is None
         assert response.feed.title == "The Quietus | All Articles"
 
         xml_element = parse(xml_test_files[0])
@@ -185,3 +185,25 @@ async def test_atom_feed(security_mock: Mock, faker: Faker, repositories: MockRe
             assert item.published is not None
         assert item.created_on is not None
         assert item.description == xml_item[0].findtext("{http://www.w3.org/2005/Atom}content")
+
+
+@pytest.mark.asyncio
+@patch("api.feed_api.security")
+async def test_parse_sample_feed_items(security_mock: Mock, faker: Faker, repositories: MockRepositories, user: User):
+    response_mock = MagicMock()
+
+    xml_test_files = [
+        "tests/sample_rss_feeds/edge_case.xml",
+    ]
+    repositories.mock_client_session_for_files(xml_test_files)
+    test_url = faker.url()
+
+    with authorization_for(security_mock, user, repositories):
+        response = await fetch_feed_information_for_url(response=response_mock, url=test_url, authorization="test")
+        assert response_mock.status_code == 201
+        assert response is not None
+
+        assert response.feed.description is None
+        assert repositories.feed_item_repository.count() == 1
+        item: FeedItem = repositories.feed_item_repository.fetch_all_for_feed(response.feed)[0]
+        assert item.description is None

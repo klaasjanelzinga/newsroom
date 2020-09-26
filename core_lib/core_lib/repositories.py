@@ -50,10 +50,10 @@ class Feed(BaseModel):  # pylint: disable=too-few-public-methods
     url: str
     title: str
     link: str
-    description: str
     number_of_subscriptions: int = 0
     number_of_items: int = 0
 
+    description: Optional[str]
     category: Optional[str]
     image_url: Optional[str]
     image_title: Optional[str]
@@ -75,7 +75,7 @@ class FeedItem(BaseModel):  # pylint: disable=too-few-public-methods
 
     title: str
     link: str
-    description: str
+    description: Optional[str]
     last_seen: datetime
     published: Optional[datetime]
     created_on: datetime

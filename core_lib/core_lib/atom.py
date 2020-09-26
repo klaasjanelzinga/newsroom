@@ -15,7 +15,7 @@ def is_atom_file(text: str) -> bool:
 def atom_document_to_feed(atom_url: str, tree: Element) -> Feed:
     title = tree.findtext("{http://www.w3.org/2005/Atom}title")
 
-    description = tree.findtext("{http://www.w3.org/2005/Atom}subtitle") or ""
+    description = tree.findtext("{http://www.w3.org/2005/Atom}subtitle")
     category = tree.findtext("{http://www.w3.org/2005/Atom}category")
     link = tree.findtext("{http://www.w3.org/2005/Atom}link") or atom_url
 
