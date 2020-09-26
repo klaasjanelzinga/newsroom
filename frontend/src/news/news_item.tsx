@@ -120,7 +120,7 @@ class NewsItemNode extends React.Component<NewsItemProps> implements NewsItemCon
     scrollEvent = () => {
         if (this.element) {
             const rect = this.element.getBoundingClientRect()
-            if (rect.y < 2) {
+            if (rect.bottom < 100) {
                 this.markAsRead()
             }
         }
@@ -135,10 +135,9 @@ class NewsItemNode extends React.Component<NewsItemProps> implements NewsItemCon
     render() {
         const {classes} = this.props
         const newsItem = this.props.newsItem
-        return <div>
-            <Grid container
-                  className={this.state.isRead ? classes.cardRead : classes.card}
-                  ref={(t) => this.element = t}>
+        return <Grid container
+                     className={this.state.isRead ? classes.cardRead : classes.card}
+                     ref={(t) => this.element = t}>
                 <Grid item xs={12} className={classes.cardTitle}>
                     <Link href={newsItem.link}
                           className={classes.titleLink}
@@ -149,7 +148,7 @@ class NewsItemNode extends React.Component<NewsItemProps> implements NewsItemCon
                 </Grid>
                 <Grid item xs={12}>
                     <Typography variant="subtitle2">
-                        - {newsItem.feed_title} / {newsItem.published}
+                        {newsItem.feed_title} / {newsItem.published}
                     </Typography>
                 </Grid>
                 <Grid item xs={12} className={classes.itemControlBar}>
@@ -165,8 +164,8 @@ class NewsItemNode extends React.Component<NewsItemProps> implements NewsItemCon
                         label="Keep unread"
                     />
                 </Grid>
+                <div  />
             </Grid>
-        </div>
     }
 
 
