@@ -189,7 +189,7 @@ async def test_atom_feed(security_mock: Mock, faker: Faker, repositories: MockRe
 
 @pytest.mark.asyncio
 @patch("api.feed_api.security")
-async def test_parse_sample_feed_items(security_mock: Mock, faker: Faker, repositories: MockRepositories, user: User):
+async def test_parse_edge_cases(security_mock: Mock, faker: Faker, repositories: MockRepositories, user: User):
     response_mock = MagicMock()
 
     xml_test_files = [
