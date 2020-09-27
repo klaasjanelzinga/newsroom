@@ -1,4 +1,5 @@
 import base64
+import enum
 from dataclasses import dataclass
 from datetime import datetime
 from typing import Optional, List, Iterator, Tuple, Any
@@ -45,11 +46,18 @@ class User(BaseModel):  # pylint: disable=too-few-public-methods
     subscribed_to: List[str] = []
 
 
+class FeedSourceType(enum.Enum):
+    ATOM = 0
+    RSS = 1
+    HTML = 2
+
+
 class Feed(BaseModel):  # pylint: disable=too-few-public-methods
     feed_id: str = Field(default_factory=uuid4_str)
     url: str
     title: str
     link: str
+    feed_source_type: str = FeedSourceType.RSS.name
     number_of_subscriptions: int = 0
     number_of_items: int = 0
 

@@ -1,11 +1,18 @@
+import asyncio
+import logging
 from datetime import datetime
 from typing import List, Optional
-from xml.etree.ElementTree import Element
+from xml.etree.ElementTree import Element, fromstring
 
 import dateparser
 import pytz
+from aiohttp import ClientSession
 
-from core_lib.repositories import Feed, FeedItem
+from core_lib.application_data import repositories
+from core_lib.feed_utils import upsert_new_items_for_feed
+from core_lib.repositories import Feed, FeedItem, FeedSourceType
+
+log = logging.getLogger(__file__)
 
 
 def is_atom_file(text: str) -> bool:
@@ -19,7 +26,14 @@ def atom_document_to_feed(atom_url: str, tree: Element) -> Feed:
     category = tree.findtext("{http://www.w3.org/2005/Atom}category")
     link = tree.findtext("{http://www.w3.org/2005/Atom}link") or atom_url
 
-    return Feed(url=atom_url, title=title, link=link, description=description, category=category)
+    return Feed(
+        url=atom_url,
+        title=title,
+        link=link,
+        description=description,
+        category=category,
+        feed_source_type=FeedSourceType.ATOM.name,
+    )
 
 
 def _parse_optional_datetime(freely_formatted_datetime: Optional[str]) -> Optional[datetime]:
@@ -49,3 +63,25 @@ def atom_document_to_feed_items(feed: Feed, tree: Element) -> List[FeedItem]:
         )
         for item_element in item_elements
     ]
+
+
+async def refresh_atom_feed(session: ClientSession, feed: Feed) -> Feed:
+    log.info("Refreshing feed %s", feed)
+    async with session.get(feed.url) as xml_response:
+        with repositories.client.transaction():
+            atom_document = fromstring(await xml_response.text(encoding="utf-8"))
+            feed_from_rss = atom_document_to_feed(feed.url, atom_document)
+            feed_items_from_rss = atom_document_to_feed_items(feed, atom_document)
+
+            return upsert_new_items_for_feed(feed, feed_from_rss, feed_items_from_rss)
+
+
+async def refresh_atom_feeds() -> int:
+    """ Refreshes all active feeds and returns the number of refreshed feeds. """
+    client_session = repositories.client_session
+    feeds = repositories.feed_repository.get_active_feeds()
+    tasks = [
+        refresh_atom_feed(client_session, feed) for feed in feeds if feed.feed_source_type == FeedSourceType.ATOM.name
+    ]
+    await asyncio.gather(*tasks)
+    return len(tasks)

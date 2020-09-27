@@ -5,7 +5,7 @@ import pytest
 from faker import Faker
 
 from api.feed_api import unsubscribe_from_feed
-from core_lib.feed import news_item_from_feed_item, news_items_from_feed_items
+from core_lib.feed_utils import news_items_from_feed_items, news_item_from_feed_item
 from core_lib.repositories import User, Feed, FeedItem, Subscription
 from tests.conftest import authorization_for
 from tests.mock_repositories import MockRepositories

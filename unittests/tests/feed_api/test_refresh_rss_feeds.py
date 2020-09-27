@@ -1,13 +1,14 @@
 import pytest
 from faker import Faker
 
-from core_lib.feed import refresh_rss_feeds, fetch_feed_information_for, subscribe_user_to_feed
+from core_lib.feed import fetch_feed_information_for, subscribe_user_to_feed
+from core_lib.rss_feed import refresh_rss_feeds
 from core_lib.repositories import User
 from tests.mock_repositories import MockRepositories
 
 
 @pytest.mark.asyncio
-async def test_parse_sample_feeds(faker: Faker, repositories: MockRepositories, user: User):
+async def test_refresh_rss_feed(faker: Faker, repositories: MockRepositories, user: User):
 
     test_url = faker.url()
 

@@ -4,6 +4,7 @@ import os
 from aiohttp import ClientSession
 from google.cloud import datastore
 
+from core_lib.gemeente_groningen import feed_gemeente_groningen, gemeente_groningen_parser
 from core_lib.repositories import (
     FeedRepository,
     SubscriptionRepository,
@@ -33,3 +34,7 @@ class Repositories:
 
 
 repositories: Repositories = Repositories() if Repositories.not_in_unit_tests() else None  # type: ignore
+html_feeds = [feed_gemeente_groningen]
+html_feed_parsers = {
+    feed_gemeente_groningen.feed_id: gemeente_groningen_parser,
+}

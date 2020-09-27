@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xml:lang="en-US" xmlns="http://www.w3.org/2005/Atom">
+  <id>tag:thequietus.com,2005:/feed</id>
+  <link rel="alternate" type="text/html" href="https://thequietus.com"/>
+  <link rel="self" type="application/atom+xml" href="https://thequietus.com/feed"/>
+  <title>The Quietus | All Articles</title>
+  <updated>2020-09-25T14:24:33Z</updated>
+  <entry>
+    <id>tag:thequietus.com,2005:Article/28985</id>
+    <published>2020-09-25T14:24:33Z</published>
+    <updated>2020-09-26T08:34:12Z</updated>
+    <link rel="alternate" type="text/html" href="https://thequietus.com/articles/28985-john-stezaker-at-the-edge-of-pictures-yuval-etgar-extract-2"/>
+    <title>Behind The Mask: John Stezaker's Surreal Assemblages</title>
+    <content type="html">In an exclusive extract from his new book, *John Stezaker: At the Edge of Pictures*, Yuval Etgar examines the development of the collage artist's technique, ahead of a major show of Stezaker's early work opening at Luxembourg &amp; Co., London, at the end of the week</content>
+    <author>
+      <name>The Quietus</name>
+    </author>
+  </entry>
+  <entry>
+    <id>tag:thequietus.com,2005:Article/28974</id>
+    <published>2020-09-23T17:16:30Z</published>
+    <updated>2020-09-26T08:34:06Z</updated>
+    <link rel="alternate" type="text/html" href="https://thequietus.com/articles/28974-dhanveer-singh-brar-beefys-tune-dean-blunt-edit-babyfather-review"/>
+    <title>The Realness: Dhanveer Singh Brar On Dean Blunt&#8217;s Black Avant-Garde</title>
+    <content type="html">In a new book for recently launched London-based small publisher The 87 Press,  Goldsmiths lecturer Dhanveer Singh Brar analyses Babyfather&#8217;s album *&#8220;BBF&#8221; Hosted by DJ Escrow*</content>
+    <author>
+      <name>Nicholas Burman</name>
+    </author>
+  </entry>
+</feed>
