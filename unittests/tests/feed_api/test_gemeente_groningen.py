@@ -22,7 +22,7 @@ async def test_refresh_gemeente_groningen(faker: Faker, repositories: MockReposi
     assert response is not None
 
     assert response.feed_id == feed.feed_id
-    assert response.feed_source_type == FeedSourceType.HTML
+    assert response.feed_source_type == FeedSourceType.HTML.name
     assert repositories.feed_item_repository.count() == 10
     item: FeedItem = repositories.feed_item_repository.fetch_all_for_feed(feed)[0]
     assert item.title == "Glasvezel in gebied Ten Boer"
