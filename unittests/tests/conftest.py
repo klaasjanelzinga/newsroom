@@ -17,6 +17,17 @@ from tests.mock_repositories import MockRepositories
 application_data.repositories = MockRepositories()
 
 
+def feed_factory(faker: Faker) -> Feed:
+    return Feed(
+        url=faker.url(),
+        title=faker.sentence(),
+        link=faker.url(),
+        description=faker.sentence(),
+        number_of_subscriptions=faker.pyint(),
+        number_of_items=faker.pyint(),
+    )
+
+
 @pytest.fixture
 def faker() -> Faker:
     return Faker()
@@ -36,14 +47,7 @@ def user(faker: Faker) -> User:
 
 @pytest.fixture
 def feed(faker: Faker) -> Feed:
-    return Feed(
-        url=faker.url(),
-        title=faker.sentence(),
-        link=faker.url(),
-        description=faker.sentence(),
-        number_of_subscriptions=faker.pyint(),
-        number_of_items=faker.pyint(),
-    )
+    return feed_factory(faker)
 
 
 @pytest.fixture
@@ -73,10 +77,6 @@ def repositories():
     repositories = application_data.repositories
     repositories.reset()
     return application_data.repositories
-
-
-def mirror_side_effect(arg):
-    return arg
 
 
 @pytest.fixture

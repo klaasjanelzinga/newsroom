@@ -5,7 +5,7 @@ from faker import Faker
 
 from api.feed_api import subscribe_to_feed
 from core_lib.gemeente_groningen import feed_gemeente_groningen
-from core_lib.html_feed import refresh_html_feed
+from core_lib.html_feed import refresh_html_feed, refresh_html_feeds
 from core_lib.repositories import User, FeedItem, FeedSourceType
 from tests.conftest import authorization_for
 from tests.mock_repositories import MockRepositories
@@ -43,7 +43,7 @@ async def test_subscribe_to_gemeente_groningen(
 
     repositories.mock_client_session_for_files([html_gemeente_groningen])
 
-    response = await refresh_html_feed(feed=feed, session=repositories.client_session)
+    response = await refresh_html_feeds()
     assert response is not None
 
     # 2. Subscribe

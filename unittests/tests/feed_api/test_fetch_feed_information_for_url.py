@@ -141,7 +141,7 @@ async def test_parse_sample_feed_items(security_mock: Mock, faker: Faker, reposi
             else:
                 assert item.published is not None
             assert item.created_on is not None
-            assert item.description == xml_item[0].findtext("description")
+            assert item.description == xml_item[0].findtext("description")[:1400]
 
 
 @pytest.mark.asyncio

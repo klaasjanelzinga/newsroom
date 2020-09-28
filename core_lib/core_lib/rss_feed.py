@@ -1,10 +1,8 @@
 import asyncio
-import locale
 import logging
 import threading
-from contextlib import contextmanager
 from datetime import datetime
-from typing import Generator, Optional, List
+from typing import Optional, List
 from xml.etree.ElementTree import Element
 
 import dateparser
@@ -14,9 +12,8 @@ from bs4 import BeautifulSoup
 from defusedxml.ElementTree import fromstring
 
 from core_lib.application_data import repositories
-
-from core_lib.repositories import Feed, FeedItem, FeedSourceType
 from core_lib.feed_utils import upsert_new_items_for_feed
+from core_lib.repositories import Feed, FeedItem, FeedSourceType
 
 log = logging.getLogger(__file__)
 
@@ -61,16 +58,6 @@ def rss_document_to_feed(rss_url: str, tree: Element) -> Feed:
 LOCALE_LOCK = threading.Lock()
 
 
-@contextmanager
-def setlocale(name: str) -> Generator:
-    with LOCALE_LOCK:
-        saved = locale.setlocale(locale.LC_ALL)
-        try:
-            yield locale.setlocale(locale.LC_ALL, name)
-        finally:
-            locale.setlocale(locale.LC_ALL, saved)
-
-
 def _parse_optional_rss_datetime(freely_formatted_datetime: Optional[str]) -> Optional[datetime]:
     """ Sun, 19 May 2002 15:21:36 GMT parsing to datetime. """
     if freely_formatted_datetime is None:
@@ -107,7 +94,8 @@ def rss_document_to_feed_items(feed: Feed, tree: Element) -> List[FeedItem]:
 async def refresh_rss_feed(session: ClientSession, feed: Feed) -> Feed:
     log.info("Refreshing feed %s", feed)
     async with session.get(feed.url) as xml_response:
-        with repositories.client.transaction():
+        with repositories.client.transaction() as transation:
+            transation.begin()
             rss_document = fromstring(await xml_response.text(encoding="utf-8"))
             feed_from_rss = rss_document_to_feed(feed.url, rss_document)
             feed_items_from_rss = rss_document_to_feed_items(feed, rss_document)
