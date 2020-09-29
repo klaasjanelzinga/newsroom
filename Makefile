@@ -18,7 +18,7 @@ tslint:
 outdated:
 	pip list --outdated
 
-flakes: black flake8 mypy pylint tslint
+flakes: black flake8 outdated mypy pylint tslint
 
 flakes-check: black-check mypy outdated flake8
 

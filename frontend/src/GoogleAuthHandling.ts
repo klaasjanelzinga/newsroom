@@ -13,13 +13,13 @@ export class GoogleAuthHandling {
         document.body.appendChild(script);
     }
 
-    _sleep(ms: number) {
+    _sleep(ms: number) : Promise<void> {
         return new Promise(
             resolve => setTimeout(resolve, ms)
         )
     }
 
-    async wait_for_ready() {
+    async wait_for_ready() : Promise<void> {
         while (!this.is_ready) {
             await this._sleep(100)
         }

@@ -49,7 +49,7 @@ class NewsItemsNode extends React.Component<NewsItemsProps> implements NewsItems
     scrollEventClients: NewsItemControl[] = []
     dynamicFetchClients: NewsItemDynamicFetchControl[] = []
     api: Api
-    element: Element | null = null
+    allDoneElement: Element | null = null
 
     constructor(props: NewsItemsProps) {
         super(props);
@@ -106,14 +106,27 @@ class NewsItemsNode extends React.Component<NewsItemsProps> implements NewsItems
             this.goToPreviousItem()
         } else if (event.key === "r") {
             this.props.refreshRequested()
+        } else if (event.key === "o") {
+            this.openCurrentItem()
         }
+    }
+
+    openCurrentItem() {
+        const element = this.scrollEventClients.slice().find(client => client.reportYPosition() > 100)
+        element?.openLink()
+    }
+
+    markAllAsRead() {
+        this.scrollEventClients.forEach(client => client.markAsRead())
+        this.onScroll()
     }
 
     goToNextItem() {
         const element = this.scrollEventClients.find(client => client.reportYPosition() > 170)
         element?.scrollToTop()
         if (!element) {
-            this.element?.scrollIntoView()
+            this.markAllAsRead()
+            this.allDoneElement?.scrollIntoView()
         }
     }
 
@@ -137,7 +150,7 @@ class NewsItemsNode extends React.Component<NewsItemsProps> implements NewsItems
                               newsItem={newsItem}/>
             )}
             {this.props.newsItems.length > 0 && <div className={classes.scrollFiller}>
-                <DoneAllIcon ref={(t) => this.element = t} className={classes.scrollFillerIcon}/>
+                <DoneAllIcon ref={(t) => this.allDoneElement = t} className={classes.scrollFillerIcon}/>
             </div>}
         </div>
     }

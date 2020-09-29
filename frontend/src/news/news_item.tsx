@@ -41,6 +41,8 @@ const styles = createStyles({
 
 export interface NewsItemControl {
     scrollEvent: () => void
+    openLink: () => void
+    markAsRead: () => void
     isRead: () => boolean
     isReadStateIsSent: () => boolean
     setIsReadStateIsSent: (newValue: boolean) => void
@@ -130,6 +132,10 @@ class NewsItemNode extends React.Component<NewsItemProps> implements NewsItemCon
         if (!this.state.keepUnread) {
             this.setState({isRead: true})
         }
+    }
+
+    openLink() {
+        document.open(this.props.newsItem.link, "_blank", "noopener")
     }
 
     render() {

@@ -61,14 +61,11 @@ async def fetch_feed_information_for(
                 rss_ref = is_html_with_rss_ref(text)
                 if rss_ref is not None:
                     async with session.get(rss_ref) as xml_response:
-                        rss_document = fromstring(await xml_response.text())
-                        return _process_rss_document(rss_ref, rss_document)
+                        return _process_rss_document(rss_ref, fromstring(await xml_response.text()))
                 elif is_rss_document(text):
-                    rss_document = fromstring(text)
-                    return _process_rss_document(url, rss_document)
+                    return _process_rss_document(url, fromstring(text))
                 elif is_atom_file(text):
-                    atom_document = fromstring(text)
-                    return _process_atom_document(url=url, atom_document=atom_document)
+                    return _process_atom_document(url=url, atom_document=fromstring(text))
         return None
     except ClientConnectorError as cce:
         raise NetworkingException(f"Url {url} not reachable. Details: {cce.__str__()}") from cce
@@ -107,7 +104,7 @@ def unsubscribe_user_from_feed(user: User, feed: Feed) -> User:
     return user
 
 
-async def delete_read_items() -> int:
+def delete_read_items() -> int:
     with repositories.client.transaction():
         feed_item_keys = repositories.feed_item_repository.fetch_all_last_seen_before(
             datetime.utcnow() - timedelta(days=3)
@@ -116,3 +113,9 @@ async def delete_read_items() -> int:
         repositories.feed_item_repository.delete_keys(feed_item_keys)
         repositories.news_item_repository.delete_with_feed_item_keys(feed_item_keys)
     return len(feed_item_keys)
+
+
+def update_number_items_in_feeds() -> None:
+    for feed in repositories.feed_repository.all_feeds():
+        feed.number_of_items = repositories.feed_item_repository.count_all_for_feed(feed)
+        repositories.feed_repository.upsert(feed)

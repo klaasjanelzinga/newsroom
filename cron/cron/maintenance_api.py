@@ -2,7 +2,7 @@ from fastapi import APIRouter
 from pydantic.main import BaseModel
 
 from core_lib.atom_feed import refresh_atom_feeds
-from core_lib.feed import delete_read_items
+from core_lib.feed import delete_read_items, update_number_items_in_feeds
 from core_lib.html_feed import refresh_html_feeds
 from core_lib.rss_feed import refresh_rss_feeds
 
@@ -24,8 +24,9 @@ async def refresh_all_rss_feeds() -> RefreshAllFeedsResponse:
 
 
 @maintenance_router.get("/maintenance/delete-read-items", tags=["maintenance"])
-async def delete_read_feed_items() -> DeleteReadResponse:
-    number_of_deleted_items = await delete_read_items()
+def delete_read_feed_items() -> DeleteReadResponse:
+    number_of_deleted_items = delete_read_items()
+    update_number_items_in_feeds()
     return DeleteReadResponse(number_of_items_deleted=number_of_deleted_items)
 
 
