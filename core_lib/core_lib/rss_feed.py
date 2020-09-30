@@ -94,8 +94,7 @@ def rss_document_to_feed_items(feed: Feed, tree: Element) -> List[FeedItem]:
 async def refresh_rss_feed(session: ClientSession, feed: Feed) -> Feed:
     log.info("Refreshing feed %s", feed)
     async with session.get(feed.url) as xml_response:
-        with repositories.client.transaction() as transation:
-            transation.begin()
+        with repositories.client.transaction():
             rss_document = fromstring(await xml_response.text(encoding="utf-8"))
             feed_from_rss = rss_document_to_feed(feed.url, rss_document)
             feed_items_from_rss = rss_document_to_feed_items(feed, rss_document)

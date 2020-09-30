@@ -176,7 +176,7 @@ class FeedItemRepository:
     def count_all_for_feed(self, feed: Feed) -> int:
         query = self.client.query(kind="FeedItem")
         query.add_filter("feed_id", "=", feed.feed_id)
-        return len(query.fetch())
+        return sum(1 for _ in query.fetch())
 
     def upsert_many(self, feed_items: List[FeedItem]) -> List[FeedItem]:
         entities = []
