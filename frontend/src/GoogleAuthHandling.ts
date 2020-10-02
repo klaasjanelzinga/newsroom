@@ -36,7 +36,7 @@ export class GoogleAuthHandling {
             throw new Error("Google authentication not found.")
         }
         const options = new gapi.auth2.SigninOptionsBuilder()
-        options.setPrompt('select_account')
+        options.setPrompt('consent')
         return this.googleAuth.signIn(options)
     }
 
