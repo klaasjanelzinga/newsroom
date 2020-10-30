@@ -25,12 +25,12 @@ export class GoogleAuthHandling {
         }
     }
 
-    async signout() : Promise<void> {
+    async sign_out() : Promise<void> {
         await this.wait_for_ready()
         this.googleAuth?.signOut()
     }
 
-    async signin() : Promise<gapi.auth2.GoogleUser> {
+    async sign_in() : Promise<gapi.auth2.GoogleUser> {
         await this.wait_for_ready()
         if (!this.googleAuth) {
             throw new Error("Google authentication not found.")

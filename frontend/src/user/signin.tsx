@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Card, CardContent, createStyles, Typography, WithStyles, withStyles} from '@material-ui/core';
+import {Button, Card, CardContent, createStyles, Typography, WithStyles, withStyles} from '@material-ui/core';
 import {withSnackbar, WithSnackbarProps} from 'notistack';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import HeaderBar from '../headerbar/HeaderBar';
@@ -32,10 +32,13 @@ const styles = createStyles({
     disclosure: {
         padding: '10px',
     },
-    googleButton: {
+    googleButtonBar: {
         backgroundColor: 'lightgrey',
-        padding: '2px',
-    }
+        padding: '10px',
+    },
+    googleButton: {
+        marginRight: '10px',
+    },
 });
 
 interface SigninProps extends WithAuthHandling, WithStyles<typeof styles>, RouteComponentProps, WithSnackbarProps {
@@ -57,11 +60,11 @@ class SignIn extends React.Component<SigninProps> {
         }
     }
 
-    async signin() {
+    async sign_in() {
         try {
-            const googleUser = await this.authHandling.signin()
+            const googleUser = await this.authHandling.sign_in()
             if (!googleUser) {
-                this.props.enqueueSnackbar('Cannot signin with google', {
+                this.props.enqueueSnackbar('Cannot sign in with google', {
                     variant: 'warning',
                     autoHideDuration: 3000,
                 });
@@ -93,7 +96,18 @@ class SignIn extends React.Component<SigninProps> {
                     <div className={classes.details}>
                         <CardContent className={classes.content}>
                             <Typography component="h5" variant="h5">
-                                Login using google - You can sign in to the newsroom using your google account.
+                                Sign in
+                            </Typography>
+                            <div className={classes.googleButtonBar}>
+                                <Typography component="h5" variant="h5">
+                                    <span className={classes.googleButton}>
+                                        <Button variant="contained" color="primary" onClick={() => this.sign_in()}>Sign in</Button>
+                                    </span>
+                                    login using google
+                                </Typography>
+                            </div>
+                            <Typography component="h6" variant="h6">
+                                You can sign in to the newsroom using your google account.
                             </Typography>
                             <Typography variant="subtitle1" color="textSecondary">
                                 If your account has already been approved you will be taken to the newsroom site.
@@ -117,9 +131,6 @@ class SignIn extends React.Component<SigninProps> {
                                 The data is only used on this site and will not be shared. By clicking on the login
                                 button you acknowledge this.
                             </Typography>
-                        </div>
-                        <div className={classes.googleButton}>
-                            <button onClick={() => this.signin()}>Sign in</button>
                         </div>
                     </div>
                 </Card>

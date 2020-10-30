@@ -23,7 +23,7 @@ class SignOut extends React.Component<SignoutProps> {
 
     async logout() {
         UserProfile.delete();
-        await this.props.authHandling.signout()
+        await this.props.authHandling.sign_out()
         this.props.enqueueSnackbar('You were signed out.', {
             variant: 'info',
         });
