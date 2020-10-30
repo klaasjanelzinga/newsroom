@@ -39,7 +39,9 @@ def atom_document_to_feed(atom_url: str, tree: Element) -> Feed:
 def _parse_optional_datetime(freely_formatted_datetime: Optional[str]) -> Optional[datetime]:
     if freely_formatted_datetime is None:
         return None
-    in_this_tz: datetime = dateparser.parse(freely_formatted_datetime, languages=["en"])
+    in_this_tz = dateparser.parse(freely_formatted_datetime, languages=["en"])
+    if in_this_tz is None:
+        return None
     return in_this_tz.astimezone(tz=pytz.UTC)
 
 

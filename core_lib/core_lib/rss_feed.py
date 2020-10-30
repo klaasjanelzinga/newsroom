@@ -62,7 +62,9 @@ def _parse_optional_rss_datetime(freely_formatted_datetime: Optional[str]) -> Op
     """ Sun, 19 May 2002 15:21:36 GMT parsing to datetime. """
     if freely_formatted_datetime is None:
         return None
-    in_this_tz: datetime = dateparser.parse(freely_formatted_datetime, languages=["en"])
+    in_this_tz = dateparser.parse(freely_formatted_datetime, languages=["en"])
+    if in_this_tz is None:
+        return None
     return in_this_tz.astimezone(tz=pytz.UTC)
 
 
