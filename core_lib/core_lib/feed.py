@@ -97,7 +97,7 @@ def unsubscribe_user_from_feed(user: User, feed: Feed) -> User:
 
             repositories.news_item_repository.delete_user_feed(user=user, feed=feed)
             repositories.subscription_repository.delete_user_feed(user=user, feed=feed)
-            feed.number_of_subscriptions = feed.number_of_subscriptions - 1
+            feed.number_of_subscriptions = max(0, feed.number_of_subscriptions - 1)
 
             repositories.feed_repository.upsert(feed)
             repositories.user_repository.upsert(user)

@@ -1,13 +1,13 @@
-google-api-core==1.22.2
-google-auth==1.22.0
-google-cloud-core==1.4.1
-google-cloud-datastore==1.15.1
-grpcio==1.32.0
+google-api-core==1.23.0
+google-auth==1.23.0
+google-cloud-core==1.4.3
+google-cloud-datastore==1.15.3
+grpcio==1.33.2
 
-pydantic==1.6.1
+pydantic==1.7.1
 defusedxml==0.6.0
-beautifulsoup4==4.9.2
-dateparser==0.7.6
+beautifulsoup4==4.9.3
+dateparser==1.0.0
 
-setuptools==50.3.0
+setuptools==50.3.2
 wheel==0.35.1
