@@ -13,7 +13,7 @@ async def test_refresh_atom_feed(faker: Faker, repositories: MockRepositories, u
     test_url = faker.url()
 
     # Find the unknown feed. Should fetch 1 feed item.
-    repositories.mock_client_session_for_files(["tests/atom/fetch_1.xml"])
+    repositories.mock_client_session_for_files(["sample-files/atom/fetch_1.xml"])
     feed = await fetch_feed_information_for(repositories.client_session, test_url)
     assert repositories.feed_item_repository.count() == 1
     assert feed is not None
@@ -22,9 +22,11 @@ async def test_refresh_atom_feed(faker: Faker, repositories: MockRepositories, u
     user = subscribe_user_to_feed(user, feed)
     assert feed.feed_id in user.subscribed_to
     assert repositories.news_item_repository.count() == 1
+    assert user.number_of_unread_items == 1
 
     # refresh the feed, with one new item.
-    repositories.mock_client_session_for_files(["tests/atom/fetch_2.xml"])
+    repositories.mock_client_session_for_files(["sample-files/atom/fetch_2.xml"])
     await refresh_atom_feeds()
     assert repositories.feed_item_repository.count() == 2
     assert repositories.news_item_repository.count() == 2
+    assert user.number_of_unread_items == 2

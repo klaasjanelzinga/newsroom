@@ -7,6 +7,7 @@ import pytest
 from faker import Faker
 
 from api.feed_api import fetch_feed_information_for_url
+from core_lib.feed import subscribe_user_to_feed
 from core_lib.repositories import Feed, User, FeedItem
 from tests.conftest import authorization_for
 from tests.mock_repositories import MockRepositories
@@ -16,7 +17,6 @@ from tests.mock_repositories import MockRepositories
 @patch("api.feed_api.security")
 async def test_unsubscribed(security_mock: Mock, faker: Faker, repositories: MockRepositories, user: User, feed: Feed):
     response_mock = MagicMock()
-    repositories.feed_repository.upsert(feed)
 
     with authorization_for(security_mock, user, repositories):
         response = await fetch_feed_information_for_url(
@@ -30,15 +30,13 @@ async def test_unsubscribed(security_mock: Mock, faker: Faker, repositories: Moc
 
 @pytest.mark.asyncio
 @patch("api.feed_api.security")
-async def test_subscribed(
-    security_mock: Mock, faker: Faker, repositories: MockRepositories, subscribed_user: Tuple[User, Feed]
-):
+async def test_subscribed(security_mock: Mock, faker: Faker, repositories: MockRepositories, user: User, feed: Feed):
     response_mock = MagicMock()
-    repositories.feed_repository.upsert(subscribed_user[1])
+    subscribe_user_to_feed(user, feed)
 
-    with authorization_for(security_mock, subscribed_user[0], repositories):
+    with authorization_for(security_mock, user, repositories):
         response = await fetch_feed_information_for_url(
-            response=response_mock, url=subscribed_user[1].url, authorization=faker.sentence()
+            response=response_mock, url=feed.url, authorization=faker.sentence()
         )
         assert response.user_is_subscribed
         assert response_mock.status_code == 200
@@ -50,9 +48,9 @@ async def test_parse_sample_feeds(security_mock: Mock, faker: Faker, repositorie
     response_mock = MagicMock()
 
     xml_test_files = [
-        "tests/sample_rss_feeds/venues.xml",
-        "tests/sample_rss_feeds/ars_technica.xml",
-        "tests/sample_rss_feeds/pitchfork_best.xml",
+        "sample-files/rss_feeds/venues.xml",
+        "sample-files/rss_feeds/ars_technica.xml",
+        "sample-files/rss_feeds/pitchfork_best.xml",
     ]
     repositories.mock_client_session_for_files(xml_test_files)
     test_url = faker.url()
@@ -83,8 +81,8 @@ async def test_parse_sample_feeds(security_mock: Mock, faker: Faker, repositorie
 @patch("api.feed_api.security")
 async def test_unknown_feed_with_html(security_mock: Mock, faker: Faker, user: User, repositories: MockRepositories):
 
-    html_file = "tests/sample_rss_feeds/pitchfork_best.html"
-    xml_file = "tests/sample_rss_feeds/pitchfork_best.xml"
+    html_file = "sample-files/rss_feeds/pitchfork_best.html"
+    xml_file = "sample-files/rss_feeds/pitchfork_best.xml"
     repositories.mock_client_session_for_files([html_file, xml_file])
     response_mock = MagicMock()
     url = faker.url()
@@ -112,9 +110,9 @@ async def test_parse_sample_feed_items(security_mock: Mock, faker: Faker, reposi
     response_mock = MagicMock()
 
     xml_test_files = [
-        "tests/sample_rss_feeds/venues.xml",
-        "tests/sample_rss_feeds/ars_technica.xml",
-        "tests/sample_rss_feeds/pitchfork_best.xml",
+        "sample-files/rss_feeds/venues.xml",
+        "sample-files/rss_feeds/ars_technica.xml",
+        "sample-files/rss_feeds/pitchfork_best.xml",
     ]
     repositories.mock_client_session_for_files(xml_test_files)
     test_url = faker.url()
@@ -150,7 +148,7 @@ async def test_atom_feed(security_mock: Mock, faker: Faker, repositories: MockRe
     response_mock = MagicMock()
 
     xml_test_files = [
-        "tests/atom/thequietus.xml",
+        "sample-files/atom/thequietus.xml",
     ]
     repositories.mock_client_session_for_files(xml_test_files)
     test_url = faker.url()
@@ -193,7 +191,7 @@ async def test_parse_edge_cases(security_mock: Mock, faker: Faker, repositories:
     response_mock = MagicMock()
 
     xml_test_files = [
-        "tests/sample_rss_feeds/edge_case.xml",
+        "sample-files/rss_feeds/edge_case.xml",
     ]
     repositories.mock_client_session_for_files(xml_test_files)
     test_url = faker.url()

@@ -15,11 +15,14 @@ interface NewsBarProps extends WithStyles<typeof styles> {
     refresh: () => void
     next: () => void
     previous: () => void
+    numberOfUnread?: () => number
 }
 
 const NewsBar: React.FunctionComponent<NewsBarProps> = (props: NewsBarProps) => {
     const {classes} = props
     return <div className={classes.newsbar}>
+        {props.numberOfUnread && props.numberOfUnread() > 0 && <span>{props.numberOfUnread()}</span>}
+        {props.numberOfUnread && props.numberOfUnread() == 0 && <span>All Done</span>}
         <Button size="small"
                 variant="outlined"
                 onClick={props.refresh}

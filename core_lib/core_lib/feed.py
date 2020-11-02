@@ -82,6 +82,7 @@ def subscribe_user_to_feed(
             feed.number_of_subscriptions = feed.number_of_subscriptions + 1
             feed_items = repositories.feed_item_repository.fetch_all_for_feed(feed)
             news_items = news_items_from_feed_items(feed_items, feed, user)
+            user.number_of_unread_items += len(news_items)
 
             repositories.subscription_repository.upsert(subscription)
             repositories.user_repository.upsert(user)
@@ -95,9 +96,10 @@ def unsubscribe_user_from_feed(user: User, feed: Feed) -> User:
         if feed.feed_id in user.subscribed_to:
             user.subscribed_to.remove(feed.feed_id)
 
-            repositories.news_item_repository.delete_user_feed(user=user, feed=feed)
+            news_items_deleted = repositories.news_item_repository.delete_user_feed(user=user, feed=feed)
             repositories.subscription_repository.delete_user_feed(user=user, feed=feed)
             feed.number_of_subscriptions = max(0, feed.number_of_subscriptions - 1)
+            user.number_of_unread_items = max(0, user.number_of_unread_items - news_items_deleted)
 
             repositories.feed_repository.upsert(feed)
             repositories.user_repository.upsert(user)

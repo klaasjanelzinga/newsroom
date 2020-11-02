@@ -5,6 +5,7 @@ from datetime import datetime
 from typing import Optional, List, Iterator, Tuple, Any
 from uuid import uuid4
 
+import pydantic
 from google.cloud import datastore
 from google.cloud.datastore import Client, Query, Key
 from pydantic.main import BaseModel
@@ -44,6 +45,7 @@ class User(BaseModel):  # pylint: disable=too-few-public-methods
     avatar_url: str
     is_approved: bool
     subscribed_to: List[str] = []
+    number_of_unread_items: int = 0
 
 
 class FeedSourceType(enum.Enum):
@@ -212,12 +214,14 @@ class NewsItemRepository:
         self.client.put_multi(entities)
         return [NewsItem.parse_obj(entity) for entity in entities]
 
-    def delete_user_feed(self, user: User, feed: Feed) -> None:
+    def delete_user_feed(self, user: User, feed: Feed) -> int:
         query = self.client.query(kind="NewsItem")
         query.add_filter("user_id", "=", user.user_id)
         query.add_filter("feed_id", "=", feed.feed_id)
         query.keys_only()
-        self.client.delete_multi([entity.key for entity in query.fetch()])
+        entities = [entity.key for entity in query.fetch()]
+        self.client.delete_multi(entities)
+        return len(entities)
 
     def fetch_items(self, user: User, cursor: Optional[bytes], limit: Optional[int] = 15) -> Tuple[str, List[NewsItem]]:
         google_cursor = create_cursor(earlier_cursor=cursor)
@@ -285,11 +289,21 @@ class UserRepository:
             return None
         return User.parse_obj(result[0])
 
-    def upsert(self, user_profile: User) -> User:
-        entity = datastore.Entity(self.client.key("User", user_profile.email))
-        entity.update(user_profile.dict())
+    def upsert(self, user: User) -> User:
+        entity = datastore.Entity(self.client.key("User", user.email))
+        entity.update(user.dict())
         self.client.put(entity)
         return User.parse_obj(entity)
+
+    def upsert_many(self, users: List[User]) -> List[User]:
+        entities = []
+        for user in users:
+            entity = datastore.Entity(self.client.key("User", user.email))
+            entity.update(user.dict())
+            entities.append(entity)
+
+        self.client.put_multi(entities)
+        return [User.parse_obj(entity) for entity in entities]
 
     def fetch_subscribed_to(self, feed: Feed) -> List[User]:
         query = self.client.query(kind="User")
@@ -297,3 +311,8 @@ class UserRepository:
         if not result:
             return []
         return [User.parse_obj(entity) for entity in result if feed.feed_id in entity["subscribed_to"]]
+
+
+class RefreshResult(pydantic.main.BaseModel):
+    feed: Feed
+    number_of_items: int

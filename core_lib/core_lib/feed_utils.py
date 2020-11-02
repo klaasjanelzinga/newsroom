@@ -2,10 +2,10 @@ from datetime import datetime
 from typing import List
 
 from core_lib.application_data import repositories
-from core_lib.repositories import Feed, FeedItem, User, NewsItem
+from core_lib.repositories import Feed, FeedItem, User, NewsItem, RefreshResult
 
 
-def upsert_new_items_for_feed(feed: Feed, updated_feed: Feed, feed_items_from_rss: List[FeedItem]) -> Feed:
+def upsert_new_items_for_feed(feed: Feed, updated_feed: Feed, feed_items_from_rss: List[FeedItem]) -> int:
     """
     Upload new items as feed item and news item for users.
 
@@ -13,6 +13,8 @@ def upsert_new_items_for_feed(feed: Feed, updated_feed: Feed, feed_items_from_rs
     - If feed-item exists, tick the last_seen timestamp.
     - For all subscribed users, make news items and upsert new feed items.
     - Set number_of_items, last_fetched and mutable details for the feed itself.
+
+    returns: Number of items updated for the feed.
     """
     current_feed_items = repositories.feed_item_repository.fetch_all_for_feed(feed)
     new_feed_items = []
@@ -35,7 +37,16 @@ def upsert_new_items_for_feed(feed: Feed, updated_feed: Feed, feed_items_from_rs
     feed.description = updated_feed.description
     feed.title = updated_feed.title
     feed.number_of_items = feed.number_of_items + len(new_feed_items)
-    return repositories.feed_repository.upsert(feed)
+    repositories.feed_repository.upsert(feed)
+    return len(new_feed_items)
+
+
+def update_users_unread_count_with_refresh_results(refresh_results: List[RefreshResult]) -> None:
+    for refresh_result in refresh_results:
+        subscribed_users = repositories.user_repository.fetch_subscribed_to(refresh_result.feed)
+        for user in subscribed_users:
+            user.number_of_unread_items += refresh_result.number_of_items
+        repositories.user_repository.upsert_many(subscribed_users)
 
 
 def news_items_from_feed_items(feed_items: List[FeedItem], feed: Feed, user: User) -> List[NewsItem]:

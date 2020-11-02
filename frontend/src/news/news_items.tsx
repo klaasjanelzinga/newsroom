@@ -36,6 +36,8 @@ interface NewsItemsProps extends WithAuthHandling, RouteComponentProps, WithSnac
     refreshRequested: () => void
 
     registerNewsItemsControl: (newsItemsCtrl: NewsItemsControl) => void
+    markAsRead: (count: number) => void
+    markAllAsRead: () => void
 }
 
 export interface NewsItemsControl {
@@ -79,6 +81,7 @@ class NewsItemsNode extends React.Component<NewsItemsProps> implements NewsItems
                 return client.newsItemId()
             })
         if (newsItemIds.length > 0) {
+            this.props.markAsRead(newsItemIds.length)
             this.api.post("/news-items/mark-as-read", JSON.stringify({news_item_ids: newsItemIds}))
                 .catch(reason => console.error(reason))
         }
@@ -119,6 +122,7 @@ class NewsItemsNode extends React.Component<NewsItemsProps> implements NewsItems
     markAllAsRead() {
         this.scrollEventClients.forEach(client => client.markAsRead())
         this.onScroll()
+        this.props.markAllAsRead()
     }
 
     goToNextItem() {

@@ -23,8 +23,6 @@ async def test_subscribe(
     with authorization_for(security_mock, user, repositories):
 
         assert feed.feed_id not in user.subscribed_to
-        repositories.feed_repository.upsert(feed)
-        repositories.feed_item_repository.upsert_many(feed_items)
         number_of_subscriptions = feed.number_of_subscriptions
         response = await subscribe_to_feed(feed_id=feed.feed_id, authorization=faker.word())
 

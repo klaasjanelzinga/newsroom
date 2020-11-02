@@ -5,12 +5,14 @@ from faker import Faker
 
 from api.user_api import signup
 from core_lib.repositories import User
+from tests.conftest import user_factory
 from tests.mock_repositories import MockRepositories
 
 
 @pytest.mark.asyncio
 @patch("api.user_api.TokenVerifier")
-async def test_signup_new_user(security_mock: Mock, faker: Faker, user: User, repositories: MockRepositories):
+async def test_signup_new_user(security_mock: Mock, faker: Faker, repositories: MockRepositories):
+    user = user_factory(faker)
     user.is_approved = False
     security_mock.verify = AsyncMock()
     security_mock.verify.return_value = user

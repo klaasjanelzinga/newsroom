@@ -5,6 +5,7 @@ uvicorn==0.12.2
 
 aiohttp==3.7.2
 aiofiles==0.6.0
+pydantic==1.7.1
 
 setuptools==50.3.2
 wheel==0.35.1

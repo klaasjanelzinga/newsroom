@@ -6,7 +6,7 @@ import UserProfile from "../user/UserProfile";
 import HeaderBar from "../headerbar/HeaderBar";
 import Header from "../user/header";
 import {withSnackbar, WithSnackbarProps} from "notistack";
-import {GetNewsItemsResponse, NewsItem} from "../user/model";
+import {GetNewsItemsResponse, GetReadNewsItemsResponse, NewsItem} from "../user/model";
 import {Api} from "../Api";
 import NewsItems, {NewsItemsControl} from "./news_items"
 import NewsBar from "./news_bar";
@@ -42,6 +42,7 @@ interface NewsState {
     newsItems: NewsItem[]
     error: string | null
     noMoreItems: boolean
+    numberOfUnread: number | null
 }
 
 class News extends React.Component<NewsProps, NewsState> {
@@ -51,7 +52,8 @@ class News extends React.Component<NewsProps, NewsState> {
         isLoadingMoreItems: false,
         newsItems: [],
         error: null,
-        noMoreItems: false
+        noMoreItems: false,
+        numberOfUnread: null
     }
     api: Api
     token: string | null = null
@@ -73,9 +75,38 @@ class News extends React.Component<NewsProps, NewsState> {
     }
 
     fetchNewsItems() {
-        const endpoint = this.props.variant === NewsVariant.READ_NEWS ? "/news-items/read" : "/news-items"
+        if (this.props.variant === NewsVariant.NEWS) {
+            this.fetchUnreadNewsItems()
+        } else {
+            this.fetchReadNewsItems()
+        }
+    }
+
+    fetchUnreadNewsItems() {
+        const endpoint = "/news-items"
         const endpoint_with_token = this.token ? `${endpoint}?fetch_offset=${this.token}` : endpoint
         this.api.get<GetNewsItemsResponse>(endpoint_with_token)
+            .then(newsItems => {
+                const token = newsItems[1].token
+                const noMoreItems = atob(token) === 'DONE'
+                this.token = newsItems[1].token
+                this.setState({
+                    newsItems: this.state.newsItems.concat(newsItems[1].news_items),
+                    noMoreItems: noMoreItems,
+                    numberOfUnread: newsItems[1].number_of_unread_items,
+                })
+            })
+            .catch((reason: Error) => this.setState({error: reason.message}))
+            .finally(() => {
+                this.setState({isLoading: false, isLoadingMoreItems: false});
+            })
+    }
+
+
+    fetchReadNewsItems() {
+        const endpoint = "/news-items/read"
+        const endpoint_with_token = this.token ? `${endpoint}?fetch_offset=${this.token}` : endpoint
+        this.api.get<GetReadNewsItemsResponse>(endpoint_with_token)
             .then(newsItems => {
                 const token = newsItems[1].token
                 const noMoreItems = atob(token) === 'DONE'
@@ -90,6 +121,7 @@ class News extends React.Component<NewsProps, NewsState> {
                 this.setState({isLoading: false, isLoadingMoreItems: false});
             })
     }
+
 
     needMoreItems = () => {
         const canLoad = !this.state.isLoading && !this.state.isLoadingMoreItems && !this.state.noMoreItems
@@ -107,12 +139,31 @@ class News extends React.Component<NewsProps, NewsState> {
         }
     }
 
+    numberOfUnread = () => {
+        return this.state.numberOfUnread ? this.state.numberOfUnread : 0
+    }
+
+    markAsRead = (count: number) => {
+        if (this.state.numberOfUnread) {
+            this.setState({
+                numberOfUnread: this.state.numberOfUnread - count
+            })
+        }
+    }
+
+    markAllAsRead = () => {
+        this.setState({
+            numberOfUnread: 0
+        })
+    }
+
     render() {
         const {classes} = this.props
         return <div className={classes.newsRoot}>
             <HeaderBar />
             <Header title={'News'} />
             <NewsBar
+                numberOfUnread={this.numberOfUnread}
                 refresh={this.refreshItems}
                 next={() => this.newsItemsCtrl?.goToNextItem()}
                 previous={() => this.newsItemsCtrl?.goToPreviousItem()}
@@ -125,6 +176,8 @@ class News extends React.Component<NewsProps, NewsState> {
                         needMoreItems={this.needMoreItems}
                         refreshRequested={this.refreshItems}
                         registerNewsItemsControl={this.registerNewsItemsControl}
+                        markAsRead={this.markAsRead}
+                        markAllAsRead={this.markAllAsRead}
                         monitorScroll={this.props.variant === NewsVariant.NEWS}/>
                     }
                 </div>

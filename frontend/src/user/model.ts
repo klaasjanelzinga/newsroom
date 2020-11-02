@@ -43,4 +43,11 @@ export interface NewsItem {
 export interface GetNewsItemsResponse {
     token: string;
     news_items: NewsItem[]
+    number_of_unread_items: number
+}
+
+export interface GetReadNewsItemsResponse {
+    token: string;
+    news_items: NewsItem[]
+    number_of_unread_items: number
 }

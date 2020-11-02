@@ -9,8 +9,8 @@ import pytz
 from aiohttp import ClientSession
 
 from core_lib.application_data import repositories
-from core_lib.feed_utils import upsert_new_items_for_feed
-from core_lib.repositories import Feed, FeedItem, FeedSourceType
+from core_lib.feed_utils import upsert_new_items_for_feed, update_users_unread_count_with_refresh_results
+from core_lib.repositories import Feed, FeedItem, FeedSourceType, RefreshResult
 
 log = logging.getLogger(__file__)
 
@@ -67,7 +67,7 @@ def atom_document_to_feed_items(feed: Feed, tree: Element) -> List[FeedItem]:
     ]
 
 
-async def refresh_atom_feed(session: ClientSession, feed: Feed) -> Feed:
+async def refresh_atom_feed(session: ClientSession, feed: Feed) -> RefreshResult:
     log.info("Refreshing feed %s", feed)
     async with session.get(feed.url) as xml_response:
         with repositories.client.transaction():
@@ -75,7 +75,9 @@ async def refresh_atom_feed(session: ClientSession, feed: Feed) -> Feed:
             feed_from_rss = atom_document_to_feed(feed.url, atom_document)
             feed_items_from_rss = atom_document_to_feed_items(feed, atom_document)
 
-            return upsert_new_items_for_feed(feed, feed_from_rss, feed_items_from_rss)
+            return RefreshResult(
+                feed=feed, number_of_items=upsert_new_items_for_feed(feed, feed_from_rss, feed_items_from_rss)
+            )
 
 
 async def refresh_atom_feeds() -> int:
@@ -85,5 +87,6 @@ async def refresh_atom_feeds() -> int:
     tasks = [
         refresh_atom_feed(client_session, feed) for feed in feeds if feed.feed_source_type == FeedSourceType.ATOM.name
     ]
-    await asyncio.gather(*tasks)
+    refresh_results: List[RefreshResult] = await asyncio.gather(*tasks)
+    update_users_unread_count_with_refresh_results(refresh_results)
     return len(tasks)

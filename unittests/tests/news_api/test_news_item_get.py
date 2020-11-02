@@ -22,7 +22,7 @@ async def test_get_news_items(
     test_url = faker.url()
 
     # Find the unknown feed. Should fetch 1 feed item.
-    repositories.mock_client_session_for_files(["tests/sample_rss_feeds/pitchfork_best.xml"])
+    repositories.mock_client_session_for_files(["sample-files/rss_feeds/pitchfork_best.xml"])
     feed = await fetch_feed_information_for(repositories.client_session, test_url)
     assert repositories.feed_item_repository.count() == 25
     assert feed is not None
@@ -36,6 +36,7 @@ async def test_get_news_items(
     just_some_news_item = None
     with authorization_for(security_mock_news_item, user, repositories):
         unread_response = await news_items(fetch_offset=None, authorization=faker.word())
+        assert unread_response.number_of_unread_items == 25
         assert len(unread_response.news_items) == 25
         assert unread_response.token is not None
         just_some_news_item = choice(unread_response.news_items)
@@ -55,4 +56,5 @@ async def test_get_news_items(
 
     with authorization_for(security_mock_news_item, user, repositories):
         unread_response = await news_items(fetch_offset=None, authorization=faker.word())
+        assert unread_response.number_of_unread_items == 24
         assert len(unread_response.news_items) == 24

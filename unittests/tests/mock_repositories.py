@@ -5,6 +5,7 @@ from unittest.mock import MagicMock, AsyncMock, Mock
 from aiohttp import ClientSession, ClientResponse
 from google.cloud.datastore import Client
 
+from core_lib.gemeente_groningen import feed_gemeente_groningen
 from core_lib.repositories import Feed, Subscription, User, FeedItem, NewsItem
 
 
@@ -103,7 +104,7 @@ class NewsItemRepository:
             self.store[news_item.news_item_id] = news_item
         return news_items
 
-    def delete_user_feed(self, user: User, feed: Feed) -> None:
+    def delete_user_feed(self, user: User, feed: Feed) -> int:
         keys = [
             news_item.news_item_id
             for news_item in self.store.values()
@@ -111,6 +112,7 @@ class NewsItemRepository:
         ]
         for key in keys:
             del self.store[key]
+        return len(keys)
 
     def fetch_items(self, user: User, cursor: Optional[bytes], limit: Optional[int] = 15) -> Tuple[str, List[NewsItem]]:
         return "token", [
@@ -151,6 +153,11 @@ class UserRepository:
     def upsert(self, user_profile: User) -> User:
         self.store[user_profile.user_id] = user_profile
         return user_profile
+
+    def upsert_many(self, users: List[User]) -> List[User]:
+        for user in users:
+            self.upsert(user)
+        return users
 
     def fetch_subscribed_to(self, feed: Feed) -> List[User]:
         return [user for user in self.store.values() if feed.feed_id in user.subscribed_to]
@@ -193,3 +200,5 @@ class MockRepositories:
 
         self.client.reset_mock()
         self.client_session.reset_mock()
+        feed_gemeente_groningen.number_of_items = 0
+        feed_gemeente_groningen.number_of_subscriptions = 0

@@ -16,6 +16,12 @@ log = logging.getLogger(__name__)
 class NewsItemListResponse(BaseModel):
     token: str
     news_items: List[NewsItem]
+    number_of_unread_items: int
+
+
+class ReadNewsItemListResponse(BaseModel):
+    token: str
+    news_items: List[NewsItem]
 
 
 @news_router.get(
@@ -30,7 +36,7 @@ async def news_items(fetch_offset: str = None, authorization: Optional[str] = He
     cursor = bytes(fetch_offset, "utf-8") if fetch_offset is not None else None
     token, result = repositories.news_item_repository.fetch_items(user=user, cursor=cursor, limit=30)
 
-    return NewsItemListResponse(token=token, news_items=result)
+    return NewsItemListResponse(token=token, news_items=result, number_of_unread_items=user.number_of_unread_items)
 
 
 @news_router.get(
@@ -41,13 +47,13 @@ async def news_items(fetch_offset: str = None, authorization: Optional[str] = He
 )
 async def read_news_items(
     fetch_offset: str = None, authorization: Optional[str] = Header(None)
-) -> NewsItemListResponse:
+) -> ReadNewsItemListResponse:
     """ Fetch the next set of news items. """
     user = await security.get_approved_user(authorization)
     cursor = bytes(fetch_offset, "utf-8") if fetch_offset is not None else None
     token, result = repositories.news_item_repository.fetch_read_items(user=user, cursor=cursor, limit=30)
 
-    return NewsItemListResponse(token=token, news_items=result)
+    return ReadNewsItemListResponse(token=token, news_items=result)
 
 
 class MarkAsReadRequest(BaseModel):
@@ -58,3 +64,5 @@ class MarkAsReadRequest(BaseModel):
 async def mark_as_read(mark_as_read_request: MarkAsReadRequest, authorization: Optional[str] = Header(None)) -> None:
     user = await security.get_approved_user(authorization)
     repositories.news_item_repository.mark_items_as_read(user=user, news_item_ids=mark_as_read_request.news_item_ids)
+    user.number_of_unread_items = max(0, user.number_of_unread_items - len(mark_as_read_request.news_item_ids))
+    repositories.user_repository.upsert(user)

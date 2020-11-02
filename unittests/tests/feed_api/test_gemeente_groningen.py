@@ -13,7 +13,7 @@ from tests.mock_repositories import MockRepositories
 
 @pytest.mark.asyncio
 async def test_refresh_gemeente_groningen(faker: Faker, repositories: MockRepositories, user: User):
-    html_gemeente_groningen = "tests/html_sources/gemeente_groningen.html"
+    html_gemeente_groningen = "sample-files/html_sources/gemeente_groningen.html"
     feed = feed_gemeente_groningen
 
     repositories.mock_client_session_for_files([html_gemeente_groningen])
@@ -21,8 +21,8 @@ async def test_refresh_gemeente_groningen(faker: Faker, repositories: MockReposi
     response = await refresh_html_feed(feed=feed, session=repositories.client_session)
     assert response is not None
 
-    assert response.feed_id == feed.feed_id
-    assert response.feed_source_type == FeedSourceType.HTML.name
+    assert response.feed.feed_id == feed.feed_id
+    assert response.number_of_items == 10
     assert repositories.feed_item_repository.count() == 10
     item: FeedItem = repositories.feed_item_repository.fetch_all_for_feed(feed)[0]
     assert item.title == "Glasvezel in gebied Ten Boer"
@@ -38,7 +38,7 @@ async def test_subscribe_to_gemeente_groningen(
     security_mock: Mock, faker: Faker, repositories: MockRepositories, user: User
 ):
     # 1. Refresh feed so that it exists
-    html_gemeente_groningen = "tests/html_sources/gemeente_groningen.html"
+    html_gemeente_groningen = "sample-files/html_sources/gemeente_groningen.html"
     feed = feed_gemeente_groningen
 
     repositories.mock_client_session_for_files([html_gemeente_groningen])
@@ -46,10 +46,12 @@ async def test_subscribe_to_gemeente_groningen(
     response = await refresh_html_feeds()
     assert response is not None
 
+    total_before_subscribe = user.number_of_unread_items
     # 2. Subscribe
     with authorization_for(security_mock, user, repositories):
 
         assert feed.feed_id not in user.subscribed_to
-        response = await subscribe_to_feed(feed_id=feed.feed_id, authorization=faker.word())
+        await subscribe_to_feed(feed_id=feed.feed_id, authorization=faker.word())
         assert feed.feed_id in repositories.user_repository.fetch_user_by_email(user.email).subscribed_to
         assert repositories.news_item_repository.count() == repositories.feed_item_repository.count()
+        assert user.number_of_unread_items == feed.number_of_items
