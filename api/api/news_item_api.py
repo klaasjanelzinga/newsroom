@@ -42,8 +42,8 @@ async def news_items(fetch_offset: str = None, authorization: Optional[str] = He
 @news_router.get(
     "/news-items/read",
     tags=["news-items"],
-    response_model=NewsItemListResponse,
-    responses={HTTP_200_OK: {"model": NewsItemListResponse, "description": "List is complete"}},
+    response_model=ReadNewsItemListResponse,
+    responses={HTTP_200_OK: {"model": ReadNewsItemListResponse, "description": "List is complete"}},
 )
 async def read_news_items(
     fetch_offset: str = None, authorization: Optional[str] = Header(None)
