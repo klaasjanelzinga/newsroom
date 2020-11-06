@@ -8,7 +8,10 @@ const styles = createStyles({
         textAlign: "right",
         padding: "5px",
     },
-    button: {}
+    button: {},
+    numberOfUnread: {
+        marginRight: "5px",
+    },
 })
 
 interface NewsBarProps extends WithStyles<typeof styles> {
@@ -21,8 +24,10 @@ interface NewsBarProps extends WithStyles<typeof styles> {
 const NewsBar: React.FunctionComponent<NewsBarProps> = (props: NewsBarProps) => {
     const {classes} = props
     return <div className={classes.newsbar}>
-        {props.numberOfUnread && props.numberOfUnread() > 0 && <span>{props.numberOfUnread()}</span>}
-        {props.numberOfUnread && props.numberOfUnread() == 0 && <span>All Done</span>}
+        <span className={classes.numberOfUnread}>
+            {props.numberOfUnread && props.numberOfUnread() > 0 && <span>{props.numberOfUnread()}</span>}
+            {props.numberOfUnread && props.numberOfUnread() == 0 && <span>All Done</span>}
+        </span>
         <Button size="small"
                 variant="outlined"
                 onClick={props.refresh}
