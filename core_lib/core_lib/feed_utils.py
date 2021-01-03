@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import List
+from typing import List, Optional
 
 from core_lib.application_data import repositories
 from core_lib.repositories import Feed, FeedItem, User, NewsItem, RefreshResult
@@ -41,8 +41,11 @@ def upsert_new_items_for_feed(feed: Feed, updated_feed: Feed, feed_items_from_rs
     return len(new_feed_items)
 
 
-def update_users_unread_count_with_refresh_results(refresh_results: List[RefreshResult]) -> None:
-    for refresh_result in refresh_results:
+def update_users_unread_count_with_refresh_results(refresh_results: List[Optional[RefreshResult]]) -> None:
+    """
+    Update the count of unread items per feed per subscribed user.
+    """
+    for refresh_result in [result for result in refresh_results if result is not None]:
         subscribed_users = repositories.user_repository.fetch_subscribed_to(refresh_result.feed)
         for user in subscribed_users:
             user.number_of_unread_items += refresh_result.number_of_items

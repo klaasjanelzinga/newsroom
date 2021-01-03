@@ -4,6 +4,7 @@ from datetime import datetime
 from typing import List, Optional
 from xml.etree.ElementTree import Element, fromstring
 
+import aiohttp
 import dateparser
 import pytz
 from aiohttp import ClientSession
@@ -67,17 +68,21 @@ def atom_document_to_feed_items(feed: Feed, tree: Element) -> List[FeedItem]:
     ]
 
 
-async def refresh_atom_feed(session: ClientSession, feed: Feed) -> RefreshResult:
+async def refresh_atom_feed(session: ClientSession, feed: Feed) -> Optional[RefreshResult]:
     log.info("Refreshing feed %s", feed)
-    async with session.get(feed.url) as xml_response:
-        with repositories.client.transaction():
-            atom_document = fromstring(await xml_response.text(encoding="utf-8"))
-            feed_from_rss = atom_document_to_feed(feed.url, atom_document)
-            feed_items_from_rss = atom_document_to_feed_items(feed, atom_document)
+    try:
+        async with session.get(feed.url) as xml_response:
+            with repositories.client.transaction():
+                atom_document = fromstring(await xml_response.text(encoding="utf-8"))
+                feed_from_rss = atom_document_to_feed(feed.url, atom_document)
+                feed_items_from_rss = atom_document_to_feed_items(feed, atom_document)
 
-            return RefreshResult(
-                feed=feed, number_of_items=upsert_new_items_for_feed(feed, feed_from_rss, feed_items_from_rss)
-            )
+                return RefreshResult(
+                    feed=feed, number_of_items=upsert_new_items_for_feed(feed, feed_from_rss, feed_items_from_rss)
+                )
+    except (aiohttp.ClientError, TimeoutError):
+        log.error("Timeout occurred on feed %s", feed)
+        return None
 
 
 async def refresh_atom_feeds() -> int:
@@ -87,6 +92,6 @@ async def refresh_atom_feeds() -> int:
     tasks = [
         refresh_atom_feed(client_session, feed) for feed in feeds if feed.feed_source_type == FeedSourceType.ATOM.name
     ]
-    refresh_results: List[RefreshResult] = await asyncio.gather(*tasks)
+    refresh_results: List[Optional[RefreshResult]] = await asyncio.gather(*tasks)
     update_users_unread_count_with_refresh_results(refresh_results)
     return len(tasks)
