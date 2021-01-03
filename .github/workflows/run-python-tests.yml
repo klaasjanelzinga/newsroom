@@ -2,7 +2,7 @@ name: Run tests
 on:
   push:
     branches-ignore:
-      - master
+      - main
 jobs:
   build:
     name: make-docker-image-and-test
