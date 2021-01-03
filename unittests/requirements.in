@@ -1,0 +1,6 @@
+-e file:../core_lib
+-e file:../api
+-e file:../cron
+
+faker
+pytest

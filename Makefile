@@ -28,15 +28,20 @@ flake8:
 tests:
 	(cd unittests && export unit_tests=1 && pytest --cov core_lib --cov api --cov cron --cov-report=html tests)
 
-dev-requirements:
-	pip install -r requirements.txt
+requirements:
+	(pip install -r requirements.txt)
+	(cd api && pip install -r requirements.txt)
+	(cd cron && pip install -r requirements.txt)
+	(cd core_lib && pip install -r requirements.txt)
+	(cd unittests && pip install -r requirements.txt)
 
-requirements: dev-requirements
-	pip install --upgrade pip
-	(cd api && pip install --upgrade -r requirements.txt)
-	(cd cron && pip install --upgrade -r requirements.txt)
-	(cd core_lib && pip install --upgrade -r requirements.txt)
-	(cd unittests && pip install --upgrade -r requirements.txt)
+upgrade-requirements:
+	(pip-compile requirements.in > requirements.txt)
+	(cd api && pip-compile requirements.in > requirements.txt)
+	(cd cron && pip-compile requirements.in > requirements.txt)
+	(cd core_lib && pip-compile requirements.in > requirements.txt)
+	(cd unittests && pip-compile requirements.in > requirements.txt)
+
 
 
 build-docker-images:
@@ -47,7 +52,6 @@ integration-tests:
 
 integration-tests-down:
 	(cd integration && docker-compose down)
-
 
 up: 
 	docker-compose up --build

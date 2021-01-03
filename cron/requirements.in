@@ -1,0 +1,11 @@
+-e file:../core_lib
+
+fastapi
+uvicorn
+
+aiohttp
+aiofiles
+pydantic
+
+setuptools
+wheel

@@ -24,6 +24,11 @@
 - Encrypt the key with `scripts/create-encrypted-file deployer.json`
 - Follow the instructions from the script.
 
+## Upgrade dependencies or install dependencies
 
+- Install dependencies: `make requirements`
+- Upgrade dependencies: `make upgrade-requirements`
+- Rebuild the images: `docker-compose build --parallel`
+- Test, commit.
 
 [console]: https://console.cloud.google.com
