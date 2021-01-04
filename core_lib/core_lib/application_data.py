@@ -1,7 +1,7 @@
 import logging
 import os
 
-from aiohttp import ClientSession
+from aiohttp import ClientSession, ClientTimeout
 from google.cloud import datastore
 
 from core_lib.gemeente_groningen import feed_gemeente_groningen, gemeente_groningen_parser
@@ -30,7 +30,8 @@ class Repositories:
         self.feed_item_repository = FeedItemRepository(self.client)
         self.feed_repository = FeedRepository(self.client)
         self.subscription_repository = SubscriptionRepository(self.client)
-        self.client_session = ClientSession()
+        timeout = ClientTimeout(total=290)
+        self.client_session = ClientSession(timeout=timeout)
 
 
 repositories: Repositories = Repositories() if Repositories.not_in_unit_tests() else None  # type: ignore

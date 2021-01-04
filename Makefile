@@ -36,12 +36,11 @@ requirements:
 	(cd unittests && pip install -r requirements.txt)
 
 upgrade-requirements:
-	(pip-compile requirements.in > requirements.txt)
-	(cd api && pip-compile requirements.in > requirements.txt)
-	(cd cron && pip-compile requirements.in > requirements.txt)
-	(cd core_lib && pip-compile requirements.in > requirements.txt)
-	(cd unittests && pip-compile requirements.in > requirements.txt)
-
+	(pip-compile --upgrade requirements.in > requirements.txt)
+	(cd api && pip-compile --upgrade requirements.in > requirements.txt)
+	(cd cron && pip-compile --upgrade requirements.in > requirements.txt)
+	(cd core_lib && pip-compile --upgrade requirements.in > requirements.txt)
+	(cd unittests && pip-compile --upgrade requirements.in > requirements.txt)
 
 
 build-docker-images:
