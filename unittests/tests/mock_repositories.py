@@ -180,6 +180,7 @@ class MockRepositories:
                 read_in_file = file.read()
                 text_response = AsyncMock(ClientResponse)
                 text_response.text.return_value = read_in_file
+                text_response.read.return_value = bytes(read_in_file, "utf-8")
 
                 response = Mock()
                 response.__aenter__ = AsyncMock(return_value=text_response)

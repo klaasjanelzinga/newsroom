@@ -7,6 +7,6 @@ google-cloud-datastore
 grpcio
 
 pydantic
-defusedxml
+lxml
 beautifulsoup4
 dateparser

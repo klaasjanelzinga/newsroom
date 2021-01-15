@@ -2,12 +2,12 @@ import asyncio
 import logging
 from datetime import datetime
 from typing import List, Optional
-from xml.etree.ElementTree import Element, fromstring
 
 import aiohttp
 import dateparser
 import pytz
 from aiohttp import ClientSession
+from lxml.etree import fromstring, ElementBase
 
 from core_lib.application_data import repositories
 from core_lib.feed_utils import upsert_new_items_for_feed, update_users_unread_count_with_refresh_results
@@ -20,7 +20,7 @@ def is_atom_file(text: str) -> bool:
     return "http://www.w3.org/2005/Atom" in text
 
 
-def atom_document_to_feed(atom_url: str, tree: Element) -> Feed:
+def atom_document_to_feed(atom_url: str, tree: ElementBase) -> Feed:
     title = tree.findtext("{http://www.w3.org/2005/Atom}title")
 
     description = tree.findtext("{http://www.w3.org/2005/Atom}subtitle")
@@ -46,13 +46,13 @@ def _parse_optional_datetime(freely_formatted_datetime: Optional[str]) -> Option
     return in_this_tz.astimezone(tz=pytz.UTC)
 
 
-def _parse_optional_link_for_href(element: Optional[Element]) -> Optional[str]:
+def _parse_optional_link_for_href(element: Optional[ElementBase]) -> Optional[str]:
     if element is None:
         return None
     return element.get("href")
 
 
-def atom_document_to_feed_items(feed: Feed, tree: Element) -> List[FeedItem]:
+def atom_document_to_feed_items(feed: Feed, tree: ElementBase) -> List[FeedItem]:
     item_elements = tree.findall("{http://www.w3.org/2005/Atom}entry")
     return [
         FeedItem(
@@ -73,7 +73,7 @@ async def refresh_atom_feed(session: ClientSession, feed: Feed) -> Optional[Refr
     try:
         async with session.get(feed.url) as xml_response:
             with repositories.client.transaction():
-                atom_document = fromstring(await xml_response.text(encoding="utf-8"))
+                atom_document = fromstring(await xml_response.read())
                 feed_from_rss = atom_document_to_feed(feed.url, atom_document)
                 feed_items_from_rss = atom_document_to_feed_items(feed, atom_document)
 
