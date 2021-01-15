@@ -1,10 +1,9 @@
 import logging
 from datetime import datetime, timedelta
 from typing import Optional
-from xml.etree.ElementTree import Element
 
 from aiohttp import ClientSession, ClientConnectorError
-from defusedxml.ElementTree import fromstring
+from lxml.etree import ElementBase, fromstring
 
 from core_lib.application_data import repositories
 from core_lib.atom_feed import is_atom_file, atom_document_to_feed_items, atom_document_to_feed
@@ -17,7 +16,7 @@ log = logging.getLogger(__file__)
 
 def _process_rss_document(
     url: str,
-    rss_document: Element,
+    rss_document: ElementBase,
 ) -> Feed:
     feed = rss_document_to_feed(url, rss_document)
     feed_items = rss_document_to_feed_items(feed, rss_document)
@@ -27,7 +26,7 @@ def _process_rss_document(
     return feed
 
 
-def _process_atom_document(url: str, atom_document: Element) -> Feed:
+def _process_atom_document(url: str, atom_document: ElementBase) -> Feed:
     feed = atom_document_to_feed(url, atom_document)
     feed_items = atom_document_to_feed_items(feed, atom_document)
     feed.number_of_items = len(feed_items)
@@ -61,11 +60,11 @@ async def fetch_feed_information_for(
                 rss_ref = is_html_with_rss_ref(text)
                 if rss_ref is not None:
                     async with session.get(rss_ref) as xml_response:
-                        return _process_rss_document(rss_ref, fromstring(await xml_response.text()))
+                        return _process_rss_document(rss_ref, fromstring(await xml_response.read()))
                 elif is_rss_document(text):
-                    return _process_rss_document(url, fromstring(text))
+                    return _process_rss_document(url, fromstring(bytes(text, "utf-8")))
                 elif is_atom_file(text):
-                    return _process_atom_document(url=url, atom_document=fromstring(text))
+                    return _process_atom_document(url=url, atom_document=fromstring(bytes(text, "utf-8")))
         return None
     except ClientConnectorError as cce:
         raise NetworkingException(f"Url {url} not reachable. Details: {cce.__str__()}") from cce

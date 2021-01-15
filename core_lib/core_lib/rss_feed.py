@@ -3,13 +3,12 @@ import logging
 import threading
 from datetime import datetime
 from typing import Optional, List
-from xml.etree.ElementTree import Element
 
 import dateparser
 import pytz
 from aiohttp import ClientSession
 from bs4 import BeautifulSoup
-from defusedxml.ElementTree import fromstring
+from lxml.etree import ElementBase, fromstring
 
 from core_lib.application_data import repositories
 from core_lib.feed_utils import upsert_new_items_for_feed, update_users_unread_count_with_refresh_results
@@ -31,7 +30,7 @@ def is_html_with_rss_ref(text: str) -> Optional[str]:
     return None
 
 
-def rss_document_to_feed(rss_url: str, tree: Element) -> Feed:
+def rss_document_to_feed(rss_url: str, tree: ElementBase) -> Feed:
     # required rss channel items
     title = tree.findtext("channel/title")
     description = _parse_description(tree.findtext("channel/description"))
@@ -76,7 +75,7 @@ def _parse_description(description: Optional[str]) -> Optional[str]:
     return description
 
 
-def rss_document_to_feed_items(feed: Feed, tree: Element) -> List[FeedItem]:
+def rss_document_to_feed_items(feed: Feed, tree: ElementBase) -> List[FeedItem]:
     """ Creates a list of FeedItem objects from a xml tree for the feed. """
     item_elements = tree.findall("channel/item")
     return [
@@ -97,7 +96,7 @@ async def refresh_rss_feed(session: ClientSession, feed: Feed) -> RefreshResult:
     log.info("Refreshing feed %s", feed)
     async with session.get(feed.url) as xml_response:
         with repositories.client.transaction():
-            rss_document = fromstring(await xml_response.text(encoding="utf-8"))
+            rss_document = fromstring(await xml_response.read())
             feed_from_rss = rss_document_to_feed(feed.url, rss_document)
             feed_items_from_rss = rss_document_to_feed_items(feed, rss_document)
 

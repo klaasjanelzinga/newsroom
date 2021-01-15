@@ -14,9 +14,7 @@ chardet==4.0.0
     # via requests
 dateparser==1.0.0
     # via -r requirements.in
-defusedxml==0.6.0
-    # via -r requirements.in
-google-api-core[grpc]==1.24.1
+google-api-core[grpc]==1.25.0
     # via
     #   -r requirements.in
     #   google-cloud-core
@@ -33,7 +31,7 @@ google-cloud-datastore==2.1.0
     # via -r requirements.in
 googleapis-common-protos==1.52.0
     # via google-api-core
-grpcio==1.34.0
+grpcio==1.34.1
     # via
     #   -r requirements.in
     #   google-api-core
@@ -41,6 +39,8 @@ idna==2.10
     # via requests
 libcst==0.3.16
     # via google-cloud-datastore
+lxml==4.6.2
+    # via -r requirements.in
 mypy-extensions==0.4.3
     # via typing-inspect
 proto-plus==1.13.0
@@ -71,7 +71,7 @@ regex==2020.11.13
     # via dateparser
 requests==2.25.1
     # via google-api-core
-rsa==4.6
+rsa==4.7
     # via google-auth
 six==1.15.0
     # via

@@ -1,10 +1,9 @@
 from random import choice
-from typing import Tuple
 from unittest.mock import MagicMock, patch, Mock
-from xml.etree.ElementTree import parse
 
 import pytest
 from faker import Faker
+from lxml.etree import parse
 
 from api.feed_api import fetch_feed_information_for_url
 from core_lib.feed import subscribe_user_to_feed
