@@ -138,6 +138,23 @@ class NewsItemNode extends React.Component<NewsItemProps> implements NewsItemCon
         document.open(this.props.newsItem.link, "_blank", "noopener")
     }
 
+    make_alternate_link() {
+        return this.props.newsItem.alternate_links.map((alternate_link, index) => {
+            const url = new URL(alternate_link)
+            const domain = url.hostname
+            return <span key={index}>
+                <div>
+                    <a href={alternate_link}>
+                        <img src={`https://${domain}/favicon.ico`} alt={domain} height={15}/>
+                        <span>
+                            {this.props.newsItem.alternate_title_links[index]}
+                        </span>
+                    </a>
+                </div>
+            </span>
+        })
+    }
+
     render() {
         const {classes} = this.props
         const newsItem = this.props.newsItem
@@ -157,7 +174,7 @@ class NewsItemNode extends React.Component<NewsItemProps> implements NewsItemCon
                         {newsItem.feed_title} / {newsItem.published}
                     </Typography>
                 </Grid>
-                <Grid item xs={12} className={classes.itemControlBar}>
+                <Grid item xs={4} className={classes.itemControlBar}>
                     <FormControlLabel
                         control={
                             <Checkbox
@@ -169,6 +186,9 @@ class NewsItemNode extends React.Component<NewsItemProps> implements NewsItemCon
                         }
                         label="Keep unread"
                     />
+                </Grid>
+                <Grid item xs={8}>
+                    {this.make_alternate_link() }
                 </Grid>
                 <div  />
             </Grid>

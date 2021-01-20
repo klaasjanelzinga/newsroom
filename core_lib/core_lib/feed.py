@@ -7,7 +7,7 @@ from lxml.etree import ElementBase, fromstring
 
 from core_lib.application_data import repositories
 from core_lib.atom_feed import is_atom_file, atom_document_to_feed_items, atom_document_to_feed
-from core_lib.feed_utils import news_items_from_feed_items
+from core_lib.feed_utils import news_items_from_feed_items, upsert_new_items_for_feed
 from core_lib.repositories import Feed, Subscription, User
 from core_lib.rss_feed import rss_document_to_feed, rss_document_to_feed_items, is_rss_document, is_html_with_rss_ref
 
@@ -20,9 +20,7 @@ def _process_rss_document(
 ) -> Feed:
     feed = rss_document_to_feed(url, rss_document)
     feed_items = rss_document_to_feed_items(feed, rss_document)
-    feed.number_of_items = len(feed_items)
-    feed = repositories.feed_repository.upsert(feed)
-    repositories.feed_item_repository.upsert_many(feed_items)
+    feed.number_of_items = upsert_new_items_for_feed(feed, feed, feed_items)
     return feed
 
 

@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<rss version='2.0' xmlns:atom='http://www.w3.org/2005/Atom' xmlns:webfeeds='http://webfeeds.org/rss/1.0'>
+    <channel>
+        <title>Brakdag</title>
+        <link>https://www.brakdag.nl</link>
+        <description>Brakdag verzamelt nieuws uit Stad van allerlei internetbronnen.</description>
+        <language>NL-nl</language>
+        <image>
+            <url>https://www.brakdag.nl/img/brakdag-logo.png</url>
+            <title>Brakdag</title>
+            <link>https://www.brakdag.nl</link>
+        </image>
+        <webfeeds:icon>https://brakdag.nl/img/brakdag-logo-svg.svg</webfeeds:icon>
+        <webfeeds:logo>https://brakdag.nl/img/brakdag-logo-svg.svg</webfeeds:logo>
+        <webfeeds:accentColor>16861a</webfeeds:accentColor>
+        <atom:link href='https://brakdag.nl/rss/' rel='self' type='application/rss+xml'/>
+        <item>
+            <title>“Het was erg schrikken, maar dankzij veel hulp lukte het om de dieren op tijd te verplaatsen”</title>
+            <link>
+                https://www.oogtv.nl/2021/01/het-was-erg-schrikken-maar-dankzij-veel-hulp-lukte-het-om-de-dieren-op-tijd-te-verplaatsen/?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=het-was-erg-schrikken-maar-dankzij-veel-hulp-lukte-het-om-de-dieren-op-tijd-te-verplaatsen
+            </link>
+            <description>De schrik zit er nog goed in bij de vrijwilligers van kinderboerderij De Beestenborg in de wijk
+                Ulgersmaborg. In de nacht van vrijdag op zaterdag brak er brand uit in een naastgelegen boerderij. “Ik
+                denk
+                Het bericht “Het was erg schrikken, maar dankzij veel hulp lukte het om de dieren op tijd te
+                verplaatsen” verscheen eerst op OOG Radio en Televisie.
+            </description>
+            <pubDate>Sat, 16 Jan 21 12:22:11 +0000</pubDate>
+        </item>
+    </channel>
+</rss>
