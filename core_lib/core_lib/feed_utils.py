@@ -1,6 +1,6 @@
 import difflib
 import re
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import List, Optional
 from urllib.parse import urlparse
 
@@ -14,10 +14,16 @@ def now_in_utc() -> datetime:
     return datetime.now(tz=pytz.utc)
 
 
-def are_titles_similar(title_1: str, title_2: str) -> bool:
+def are_titles_similar(new_item: FeedItem, item: FeedItem) -> bool:
+    title_1 = item.title
+    title_2 = new_item.title
     title_1 = re.sub(r"\[.*]", "", title_1)
     title_2 = re.sub(r"\[.*]", "", title_2)
     return len(title_1) > 10 and difflib.SequenceMatcher(None, title_1, title_2).ratio() > 0.516
+
+
+def item_is_still_relevant(item: FeedItem) -> bool:
+    return item.created_on > datetime.now() - timedelta(hours=18)
 
 
 def upsert_new_items_for_feed(feed: Feed, updated_feed: Feed, feed_items_from_rss: List[FeedItem]) -> int:
@@ -37,7 +43,9 @@ def upsert_new_items_for_feed(feed: Feed, updated_feed: Feed, feed_items_from_rs
     updated_feed_items_with_news: List[FeedItem] = []  # updated feed_items that contain relevant information for news.
     for new_item in feed_items_from_rss:
         items_with_similar_titles = [
-            item for item in current_feed_items if are_titles_similar(item.title, new_item.title)
+            item
+            for item in current_feed_items
+            if item_is_still_relevant(item) and are_titles_similar(new_item=new_item, item=item)
         ]
         items_with_same_link = [item for item in current_feed_items if item.link == new_item.link]
 
@@ -46,15 +54,19 @@ def upsert_new_items_for_feed(feed: Feed, updated_feed: Feed, feed_items_from_rs
             items_with_same_link[0].last_seen = now_in_utc()
             updated_feed_items.append(items_with_same_link[0])
 
-        # Items with different link, but similarities in the title. Update last_seen of all and register alternate url.
+        # Items with different link, but similarities in the title. Update last_seen of all and
+        # - make of the first hit item a news item, so it will reappear.
         elif len(items_with_similar_titles) > 0:
+            first_hit = items_with_similar_titles[0]
+            if new_item.link not in first_hit.alternate_links:
+                first_hit.append_alternate(link=new_item.link, title=new_item.title)
+                first_hit.title = (
+                    f"[Updated] {first_hit.title}" if "[Updated]" not in first_hit.title else first_hit.title
+                )
+                if first_hit.feed_item_id not in [n.feed_item_id for n in new_feed_items]:
+                    updated_feed_items_with_news.append(first_hit)
             for item in items_with_similar_titles:
                 item.last_seen = datetime.utcnow()
-                if new_item.link not in item.alternate_links:
-                    item.append_alternate(link=new_item.link, title=new_item.title)
-                    item.title = f"[Updated] {item.title}" if "[Updated]" not in item.title else item.title
-                    if item.feed_item_id not in [n.feed_item_id for n in new_feed_items]:
-                        updated_feed_items_with_news.append(item)
                 updated_feed_items.append(item)
 
         # Or just insert in the store
