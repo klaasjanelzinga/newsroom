@@ -4,6 +4,7 @@ import {NewsItem} from "../user/model";
 import Grid from "@material-ui/core/Grid";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+import AlternateLinks from "./alternate_links";
 
 const styles = createStyles({
     header: {
@@ -36,6 +37,12 @@ const styles = createStyles({
         },
         fontSize: "large",
     },
+    domainIcon: {
+        height: 20,
+        verticalAlign: "middle",
+        paddingLeft: 4,
+    },
+
     itemControlBar: {},
 })
 
@@ -141,13 +148,18 @@ class NewsItemNode extends React.Component<NewsItemProps> implements NewsItemCon
     render() {
         const {classes} = this.props
         const newsItem = this.props.newsItem
+        const url = new URL(newsItem.link)
+        const domain = url.hostname
         return <Grid container
                      className={this.state.isRead ? classes.cardRead : classes.card}
                      ref={(t) => this.element = t}>
                 <Grid item xs={12} className={classes.cardTitle}>
                     <Link href={newsItem.link}
                           className={classes.titleLink}
-                          target="_blank" rel="noopener">{newsItem.title}</Link>
+                          target="_blank" rel="noopener">
+                        {newsItem.title}
+                        <img src={newsItem.favicon}  className={classes.domainIcon} alt={`[${domain}]`}/>
+                    </Link>
                 </Grid>
                 <Grid item xs={12} className={classes.cardDescription}>
                     <div dangerouslySetInnerHTML={{__html: newsItem.description}}/>
@@ -157,7 +169,7 @@ class NewsItemNode extends React.Component<NewsItemProps> implements NewsItemCon
                         {newsItem.feed_title} / {newsItem.published}
                     </Typography>
                 </Grid>
-                <Grid item xs={12} className={classes.itemControlBar}>
+                <Grid item xs={4} className={classes.itemControlBar}>
                     <FormControlLabel
                         control={
                             <Checkbox
@@ -169,6 +181,9 @@ class NewsItemNode extends React.Component<NewsItemProps> implements NewsItemCon
                         }
                         label="Keep unread"
                     />
+                </Grid>
+                <Grid item xs={8}>
+                    <AlternateLinks newsItem={newsItem} />
                 </Grid>
                 <div  />
             </Grid>

@@ -15,12 +15,9 @@ mypy:
 tslint:
 	docker-compose run frontend npm run lint
 
-outdated:
-	pip list --outdated
+flakes: black flake8 mypy pylint tslint
 
-flakes: black flake8 outdated mypy pylint tslint
-
-flakes-check: black-check mypy outdated flake8
+flakes-check: black-check mypy flake8
 
 flake8:
 	flake8 core_lib/core_lib

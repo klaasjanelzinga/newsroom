@@ -17,6 +17,10 @@ from core_lib.repositories import Feed, FeedItem, FeedSourceType, RefreshResult
 log = logging.getLogger(__file__)
 
 
+def _sanitize_link(link: str) -> str:
+    return link.replace("\n", "").strip()
+
+
 def is_rss_document(text: str) -> bool:
     return "<rss" in text
 
@@ -82,7 +86,7 @@ def rss_document_to_feed_items(feed: Feed, tree: ElementBase) -> List[FeedItem]:
         FeedItem(
             feed_id=feed.feed_id,
             title=item_element.findtext("title"),
-            link=item_element.findtext("link"),
+            link=_sanitize_link(item_element.findtext("link")),
             description=_parse_description(item_element.findtext("description")),
             last_seen=datetime.utcnow(),
             published=_parse_optional_rss_datetime(item_element.findtext("pubDate")),
@@ -100,10 +104,9 @@ async def refresh_rss_feed(session: ClientSession, feed: Feed) -> Optional[Refre
                 rss_document = fromstring(await xml_response.read())
                 feed_from_rss = rss_document_to_feed(feed.url, rss_document)
                 feed_items_from_rss = rss_document_to_feed_items(feed, rss_document)
+                number_of_items = upsert_new_items_for_feed(feed, feed_from_rss, feed_items_from_rss)
 
-                return RefreshResult(
-                    feed=feed, number_of_items=upsert_new_items_for_feed(feed, feed_from_rss, feed_items_from_rss)
-                )
+                return RefreshResult(feed=feed, number_of_items=number_of_items)
     except (ClientError, TimeoutError):
         log.error("Timeout occurred on feed %s", feed)
         return None

@@ -26,7 +26,7 @@ const NewsBar: React.FunctionComponent<NewsBarProps> = (props: NewsBarProps) => 
     return <div className={classes.newsbar}>
         <span className={classes.numberOfUnread}>
             {props.numberOfUnread && props.numberOfUnread() > 0 && <span>{props.numberOfUnread()}</span>}
-            {props.numberOfUnread && props.numberOfUnread() == 0 && <span>All Done</span>}
+            {props.numberOfUnread && props.numberOfUnread() === 0 && <span>All Done</span>}
         </span>
         <Button size="small"
                 variant="outlined"

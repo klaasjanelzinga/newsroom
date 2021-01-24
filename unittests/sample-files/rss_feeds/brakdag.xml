@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<rss version='2.0' xmlns:atom='http://www.w3.org/2005/Atom' xmlns:webfeeds='http://webfeeds.org/rss/1.0'>
+    <channel>
+        <title>Brakdag</title>
+        <link>https://www.brakdag.nl</link>
+        <description>Brakdag verzamelt nieuws uit Stad van allerlei internetbronnen.</description>
+        <language>NL-nl</language>
+        <image>
+            <url>https://www.brakdag.nl/img/brakdag-logo.png</url>
+            <title>Brakdag</title>
+            <link>https://www.brakdag.nl</link>
+        </image>
+        <webfeeds:icon>https://brakdag.nl/img/brakdag-logo-svg.svg</webfeeds:icon>
+        <webfeeds:logo>https://brakdag.nl/img/brakdag-logo-svg.svg</webfeeds:logo>
+        <webfeeds:accentColor>16861a</webfeeds:accentColor>
+        <atom:link href='https://brakdag.nl/rss/' rel='self' type='application/rss+xml'/>
+        <item>
+            <title>“Het was erg schrikken, maar dankzij veel hulp lukte het om de dieren op tijd te verplaatsen”</title>
+            <link>
+                https://www.oogtv.nl/2021/01/het-was-erg-schrikken-maar-dankzij-veel-hulp-lukte-het-om-de-dieren-op-tijd-te-verplaatsen/?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=het-was-erg-schrikken-maar-dankzij-veel-hulp-lukte-het-om-de-dieren-op-tijd-te-verplaatsen
+            </link>
+            <description>De schrik zit er nog goed in bij de vrijwilligers van kinderboerderij De Beestenborg in de wijk
+                Ulgersmaborg. In de nacht van vrijdag op zaterdag brak er brand uit in een naastgelegen boerderij. “Ik
+                denk
+                Het bericht “Het was erg schrikken, maar dankzij veel hulp lukte het om de dieren op tijd te
+                verplaatsen” verscheen eerst op OOG Radio en Televisie.
+            </description>
+            <pubDate>Sat, 16 Jan 21 12:22:11 +0000</pubDate>
+        </item>
+        <item>
+            <title>File op A7 door brandende vrachtwagen in Duitsland</title>
+            <link>https://www.rtvnoord.nl/nieuws/780515/File-op-A7-door-brandende-vrachtwagen-in-Duitsland</link>
+            <description>De A7 tussen Bad Nieuweschans en Bunde-West is zaterdagmorgen enkele uren in beide richtingen
+                dicht geweest vanwege een brandende vrachtwagen.
+            </description>
+            <pubDate>Sat, 16 Jan 21 10:18:17 +0000</pubDate>
+        </item>
+        <item>
+            <title>Brand verwoest monumentale boerderij aan Stadsweg in Groningen</title>
+            <link>https://www.gic.nl/nieuws/brand-verwoest-boerderij-aan-stadsweg-in-groningen</link>
+            <description>
+
+                Een felle en uitslaande brand heeft afgelopen nacht een monumentale boerderij aan de Stadsweg in de stad
+                Groningen in de as gelegd. Er vielen geen gewonden.
+
+            </description>
+            <pubDate>Sat, 16 Jan 21 09:46:00 +0000</pubDate>
+        </item>
+        <item>
+            <title>Boerderij gaat verloren bij brand Stadsweg in Stad (update)</title>
+            <link>https://www.rtvnoord.nl/nieuws/780469/Boerderij-gaat-verloren-bij-brand-Stadsweg-in-Stad-update</link>
+            <description>Aan de Stadsweg in stadswijk Ulgersmaborg is in de nacht van vrijdag op zaterdag brand
+                uitgebroken. De vlammen sloegen vlak na tweeën metershoog uit het dak van de schuur.
+            </description>
+            <pubDate>Sat, 16 Jan 21 02:04:40 +0000</pubDate>
+        </item>
+        <item>
+            <title>'Grote brand' in boerderij aan de Stadsweg (update)</title>
+            <link>https://www.rtvnoord.nl/nieuws/780469/Grote-brand-in-boerderij-aan-de-Stadsweg-update</link>
+            <description>Aan de Stadsweg in stadswijk Ulgersmaborg staat een boerderij in brand. De schuur is niet meer
+                te redden. De brandweer richt zich nu op het behoud van het woningdeel.
+            </description>
+            <pubDate>Sat, 16 Jan 21 02:04:40 +0000</pubDate>
+        </item>
+        <item>
+            <title>Metershoge vlammen slaan uit boerderij aan Stadsweg (update)</title>
+            <link>https://www.rtvnoord.nl/nieuws/780469/Metershoge-vlammen-slaan-uit-boerderij-aan-Stadsweg-update
+            </link>
+            <description>Aan de Stadsweg in stadswijk Ulgersmaborg staat een boerderij in brand. De schuur is niet meer
+                te redden.
+            </description>
+            <pubDate>Sat, 16 Jan 21 02:04:40 +0000</pubDate>
+        </item>
+        <item>
+            <title>Metershoge vlammen slaan uit boerderij aan Stadsweg</title>
+            <link>https://www.rtvnoord.nl/nieuws/780469/Metershoge-vlammen-slaan-uit-boerderij-aan-Stadsweg</link>
+            <description>Aan de Stadsweg in stadswijk Ulgersmaborg staat een boerderij in brand. De vlammen slaan
+                metershoog uit het dak.
+            </description>
+            <pubDate>Sat, 16 Jan 21 02:04:40 +0000</pubDate>
+        </item>
+        <item>
+            <title>Uitslaande brand in boerderij in Ulgersmaborg</title>
+            <link>https://www.oogtv.nl/2021/01/uitslaande-brand-in-boerderij-in-ulgersmaborg/?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=uitslaande-brand-in-boerderij-in-ulgersmaborg</link>
+            <description>In een boerderij aan de Akeleiweg in de Groningse wijk Ulgersmaborg is in de nacht van vrijdag
+                op zaterdag brand uitgebroken. De brandweer heeft opgeschaald naar grote brand. De eerste melding van de
+                brand kwam
+                Het bericht Uitslaande brand in boerderij in Ulgersmaborg verscheen eerst op OOG Radio en Televisie.
+            </description>
+            <pubDate>Sat, 16 Jan 21 02:26:37 +0000</pubDate>
+        </item>
+    </channel>
+</rss>
