@@ -110,6 +110,7 @@ class NewsItem(BaseModel):  # pylint: disable=too-few-public-methods
     published: datetime
     alternate_links: List[str] = Field(default_factory=list)
     alternate_title_links: List[str] = Field(default_factory=list)
+    favicon: Optional[str]
 
     is_read: bool = False
 

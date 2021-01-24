@@ -39,6 +39,7 @@ export interface NewsItem {
 
     alternate_links: string[]
     alternate_title_links: string[]
+    favicon: string
 
     is_read: boolean
 }

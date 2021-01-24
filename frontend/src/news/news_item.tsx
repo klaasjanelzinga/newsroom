@@ -4,6 +4,7 @@ import {NewsItem} from "../user/model";
 import Grid from "@material-ui/core/Grid";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+import AlternateLinks from "./alternate_links";
 
 const styles = createStyles({
     header: {
@@ -36,6 +37,12 @@ const styles = createStyles({
         },
         fontSize: "large",
     },
+    domainIcon: {
+        height: 20,
+        verticalAlign: "middle",
+        paddingLeft: 4,
+    },
+
     itemControlBar: {},
 })
 
@@ -138,33 +145,21 @@ class NewsItemNode extends React.Component<NewsItemProps> implements NewsItemCon
         document.open(this.props.newsItem.link, "_blank", "noopener")
     }
 
-    make_alternate_link() {
-        return this.props.newsItem.alternate_links.map((alternate_link, index) => {
-            const url = new URL(alternate_link)
-            const domain = url.hostname
-            return <span key={index}>
-                <div>
-                    <a href={alternate_link}>
-                        <img src={`https://${domain}/favicon.ico`} alt={domain} height={15}/>
-                        <span>
-                            {this.props.newsItem.alternate_title_links[index]}
-                        </span>
-                    </a>
-                </div>
-            </span>
-        })
-    }
-
     render() {
         const {classes} = this.props
         const newsItem = this.props.newsItem
+        const url = new URL(newsItem.link)
+        const domain = url.hostname
         return <Grid container
                      className={this.state.isRead ? classes.cardRead : classes.card}
                      ref={(t) => this.element = t}>
                 <Grid item xs={12} className={classes.cardTitle}>
                     <Link href={newsItem.link}
                           className={classes.titleLink}
-                          target="_blank" rel="noopener">{newsItem.title}</Link>
+                          target="_blank" rel="noopener">
+                        {newsItem.title}
+                        <img src={newsItem.favicon}  className={classes.domainIcon} alt={`[${domain}]`}/>
+                    </Link>
                 </Grid>
                 <Grid item xs={12} className={classes.cardDescription}>
                     <div dangerouslySetInnerHTML={{__html: newsItem.description}}/>
@@ -188,7 +183,7 @@ class NewsItemNode extends React.Component<NewsItemProps> implements NewsItemCon
                     />
                 </Grid>
                 <Grid item xs={8}>
-                    {this.make_alternate_link() }
+                    <AlternateLinks newsItem={newsItem} />
                 </Grid>
                 <div  />
             </Grid>
