@@ -103,12 +103,11 @@ def determine_favicon_link(feed_item: FeedItem, feed: Feed) -> str:
         return feed.image_url or f"https://{feed_domain}/favicon.ico"
     if feed_item_link_domain == "www.sikkom.nl":
         return "https://www.sikkom.nl/wp-content/themes/sikkom-v3/img/favicon.ico"
-    elif feed_item_link_domain == "www.gic.nl":
+    if feed_item_link_domain == "www.gic.nl":
         return "https://www.gic.nl/img/favicon.ico"
-    elif feed_item_link_domain == "www.rtvnoord.nl":
+    if feed_item_link_domain == "www.rtvnoord.nl":
         return "https://www.rtvnoord.nl/Content/Images/noord/favicon.ico"
-    else:
-        return f"https://{feed_item_link_domain}/favicon.ico"
+    return f"https://{feed_item_link_domain}/favicon.ico"
 
 
 def news_item_from_feed_item(feed_item: FeedItem, feed: Feed, user: User) -> NewsItem:
