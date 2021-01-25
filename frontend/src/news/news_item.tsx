@@ -169,7 +169,7 @@ class NewsItemNode extends React.Component<NewsItemProps> implements NewsItemCon
                         {newsItem.feed_title} / {newsItem.published}
                     </Typography>
                 </Grid>
-                <Grid item xs={4} className={classes.itemControlBar}>
+                <Grid item md={4} xs={12} className={classes.itemControlBar}>
                     <FormControlLabel
                         control={
                             <Checkbox
@@ -182,7 +182,7 @@ class NewsItemNode extends React.Component<NewsItemProps> implements NewsItemCon
                         label="Keep unread"
                     />
                 </Grid>
-                <Grid item xs={8}>
+                <Grid item md={8} xs={12}>
                     <AlternateLinks newsItem={newsItem} />
                 </Grid>
                 <div  />

@@ -87,14 +87,16 @@ class FeedItem(BaseModel):  # pylint: disable=too-few-public-methods
     link: str
     alternate_links: List[str] = Field(default_factory=list)
     alternate_title_links: List[str] = Field(default_factory=list)
+    alternate_favicons: List[str] = Field(default_factory=list)
     description: Optional[str]
     last_seen: datetime
     published: Optional[datetime]
     created_on: datetime
 
-    def append_alternate(self, link: str, title: str) -> None:
+    def append_alternate(self, link: str, title: str, icon_link: str) -> None:
         self.alternate_title_links.append(title)
         self.alternate_links.append(link)
+        self.alternate_favicons.append(icon_link)
 
 
 class NewsItem(BaseModel):  # pylint: disable=too-few-public-methods
@@ -110,13 +112,10 @@ class NewsItem(BaseModel):  # pylint: disable=too-few-public-methods
     published: datetime
     alternate_links: List[str] = Field(default_factory=list)
     alternate_title_links: List[str] = Field(default_factory=list)
+    alternate_favicons: List[str] = Field(default_factory=list)
     favicon: Optional[str]
 
     is_read: bool = False
-
-    def append_alternate(self, link: str, title: str) -> None:
-        self.alternate_title_links.append(title)
-        self.alternate_links.append(link)
 
 
 class FeedRepository:

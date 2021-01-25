@@ -35,8 +35,8 @@ class AlternateLinks extends React.Component<AlternateLinksProps> {
             const domain = url.hostname
             return <Grid item xs={12} key={index}>
                 <a href={alternate_link} className={classes.linkText}>
-                    <img src={newsItem.favicon}  className={classes.domainIcon} alt={`[${domain}]`}/>
-                    - {newsItem.alternate_title_links[index]}
+                    <img src={newsItem.alternate_favicons[index]}  className={classes.domainIcon} alt={`[${domain}]`}/>
+                    {newsItem.alternate_title_links[index]}
                 </a>
             </Grid>
         })

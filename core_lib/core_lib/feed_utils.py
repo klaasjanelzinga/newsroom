@@ -59,7 +59,9 @@ def upsert_new_items_for_feed(feed: Feed, updated_feed: Feed, feed_items_from_rs
         elif len(items_with_similar_titles) > 0:
             first_hit = items_with_similar_titles[0]
             if new_item.link not in first_hit.alternate_links:
-                first_hit.append_alternate(link=new_item.link, title=new_item.title)
+                first_hit.append_alternate(
+                    link=new_item.link, title=new_item.title, icon_link=determine_favicon_link(new_item, feed)
+                )
                 first_hit.title = (
                     f"[Updated] {first_hit.title}" if "[Updated]" not in first_hit.title else first_hit.title
                 )
@@ -119,6 +121,8 @@ def determine_favicon_link(feed_item: FeedItem, feed: Feed) -> str:
         return "https://www.gic.nl/img/favicon.ico"
     if feed_item_link_domain == "www.rtvnoord.nl":
         return "https://www.rtvnoord.nl/Content/Images/noord/favicon.ico"
+    if feed_item_link_domain == "www.filtergroningen.nl":
+        return "https://i1.wp.com/www.filtergroningen.nl/wp-content/uploads/2017/03/favicon.png?fit=32%2C32&#038;ssl=1"
     return f"https://{feed_item_link_domain}/favicon.ico"
 
 
@@ -134,5 +138,6 @@ def news_item_from_feed_item(feed_item: FeedItem, feed: Feed, user: User) -> New
         published=feed_item.published or now_in_utc(),
         alternate_links=feed_item.alternate_links,
         alternate_title_links=feed_item.alternate_title_links,
+        alternate_favicons=feed_item.alternate_favicons,
         favicon=determine_favicon_link(feed_item, feed),
     )
