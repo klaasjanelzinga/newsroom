@@ -11,6 +11,7 @@ from lxml.etree import fromstring, ElementBase
 
 from core_lib.application_data import repositories
 from core_lib.feed_utils import upsert_new_items_for_feed, update_users_unread_count_with_refresh_results
+from core_lib.date_utils import now_in_utc
 from core_lib.repositories import Feed, FeedItem, FeedSourceType, RefreshResult
 
 log = logging.getLogger(__file__)
@@ -60,9 +61,9 @@ def atom_document_to_feed_items(feed: Feed, tree: ElementBase) -> List[FeedItem]
             title=item_element.findtext("{http://www.w3.org/2005/Atom}title"),
             link=_parse_optional_link_for_href(item_element.find("{http://www.w3.org/2005/Atom}link")),
             description=item_element.findtext("{http://www.w3.org/2005/Atom}content") or "",
-            last_seen=datetime.utcnow(),
+            last_seen=now_in_utc(),
             published=_parse_optional_datetime(item_element.findtext("{http://www.w3.org/2005/Atom}published")),
-            created_on=datetime.utcnow(),
+            created_on=now_in_utc(),
         )
         for item_element in item_elements
     ]

@@ -7,11 +7,8 @@ from urllib.parse import urlparse
 import pytz
 
 from core_lib.application_data import repositories
+from core_lib.date_utils import now_in_utc
 from core_lib.repositories import Feed, FeedItem, User, NewsItem, RefreshResult
-
-
-def now_in_utc() -> datetime:
-    return datetime.now(tz=pytz.utc)
 
 
 def are_titles_similar(new_item: FeedItem, item: FeedItem) -> bool:
@@ -23,7 +20,10 @@ def are_titles_similar(new_item: FeedItem, item: FeedItem) -> bool:
 
 
 def item_is_still_relevant(item: FeedItem) -> bool:
-    return item.created_on > datetime.now() - timedelta(hours=18)
+    try:
+        return item.created_on > (datetime.now(tz=pytz.utc) - timedelta(hours=18))
+    except TypeError:
+        return item.created_on > (datetime.now() - timedelta(hours=18))
 
 
 def upsert_new_items_for_feed(feed: Feed, updated_feed: Feed, feed_items_from_rss: List[FeedItem]) -> int:
@@ -66,7 +66,7 @@ def upsert_new_items_for_feed(feed: Feed, updated_feed: Feed, feed_items_from_rs
                 if first_hit.feed_item_id not in [n.feed_item_id for n in new_feed_items]:
                     updated_feed_items_with_news.append(first_hit)
             for item in items_with_similar_titles:
-                item.last_seen = datetime.utcnow()
+                item.last_seen = now_in_utc()
                 updated_feed_items.append(item)
 
         # Or just insert in the store
@@ -131,7 +131,7 @@ def news_item_from_feed_item(feed_item: FeedItem, feed: Feed, user: User) -> New
         title=feed_item.title,
         description=feed_item.description,
         link=feed_item.link,
-        published=feed_item.published or datetime.utcnow(),
+        published=feed_item.published or now_in_utc(),
         alternate_links=feed_item.alternate_links,
         alternate_title_links=feed_item.alternate_title_links,
         favicon=determine_favicon_link(feed_item, feed),

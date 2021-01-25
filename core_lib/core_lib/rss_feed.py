@@ -12,6 +12,7 @@ from lxml.etree import ElementBase, fromstring
 
 from core_lib.application_data import repositories
 from core_lib.feed_utils import upsert_new_items_for_feed, update_users_unread_count_with_refresh_results
+from core_lib.date_utils import now_in_utc
 from core_lib.repositories import Feed, FeedItem, FeedSourceType, RefreshResult
 
 log = logging.getLogger(__file__)
@@ -88,9 +89,9 @@ def rss_document_to_feed_items(feed: Feed, tree: ElementBase) -> List[FeedItem]:
             title=item_element.findtext("title"),
             link=_sanitize_link(item_element.findtext("link")),
             description=_parse_description(item_element.findtext("description")),
-            last_seen=datetime.utcnow(),
+            last_seen=now_in_utc(),
             published=_parse_optional_rss_datetime(item_element.findtext("pubDate")),
-            created_on=datetime.utcnow(),
+            created_on=now_in_utc(),
         )
         for item_element in item_elements
     ]

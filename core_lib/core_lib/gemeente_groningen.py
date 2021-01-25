@@ -4,6 +4,7 @@ from typing import List
 
 from bs4 import BeautifulSoup, Tag
 
+from core_lib.date_utils import now_in_utc
 from core_lib.repositories import Feed, FeedItem, FeedSourceType
 
 
@@ -46,9 +47,9 @@ def gemeente_groningen_parser(feed: Feed, html_source: str) -> List[FeedItem]:
             title=_title(article),
             description=_description(article),
             link=_link(article),
-            last_seen=datetime.utcnow(),
+            last_seen=now_in_utc(),
             published=datetime.fromisoformat(article.find("time")["datetime"]),
-            created_on=datetime.utcnow(),
+            created_on=now_in_utc(),
         )
         for article in articles
     ]
