@@ -67,9 +67,6 @@ def upsert_new_items_for_feed(feed: Feed, updated_feed: Feed, feed_items_from_rs
                 )
                 if first_hit.feed_item_id not in [n.feed_item_id for n in new_feed_items]:
                     updated_feed_items_with_news.append(first_hit)
-            for item in items_with_similar_titles:
-                item.last_seen = now_in_utc()
-                updated_feed_items.append(item)
 
         # Or just insert in the store
         elif len(items_with_same_link) == 0 and len(items_with_same_link) == 0:
@@ -110,20 +107,21 @@ def news_items_from_feed_items(feed_items: List[FeedItem], feed: Feed, user: Use
     return [news_item_from_feed_item(feed_item, feed, user) for feed_item in feed_items]
 
 
+domain_to_favicon_map = {
+    "www.sikkom.nl": "https://www.sikkom.nl/wp-content/themes/sikkom-v3/img/favicon.ico",
+    "www.gic.nl": "https://www.gic.nl/img/favicon.ico",
+    "www.rtvnoord.nl": "https://www.rtvnoord.nl/Content/Images/noord/favicon.ico",
+    "www.filtergroningen.nl": "https://i1.wp.com/www.filtergroningen.nl/wp-content/uploads/2017/03/favicon.png?fit=32%2C32&#038;ssl=1",
+    "www.tivolivredenburg.nl": "https://www.tivolivredenburg.nl/wp-content/themes/tivolivredenburg/favicon.ico",
+}
+
+
 def determine_favicon_link(feed_item: FeedItem, feed: Feed) -> str:
     feed_item_link_domain = urlparse(feed_item.link).netloc
     feed_domain = urlparse(feed.url).netloc
     if feed_item_link_domain == feed_domain:
         return feed.image_url or f"https://{feed_domain}/favicon.ico"
-    if feed_item_link_domain == "www.sikkom.nl":
-        return "https://www.sikkom.nl/wp-content/themes/sikkom-v3/img/favicon.ico"
-    if feed_item_link_domain == "www.gic.nl":
-        return "https://www.gic.nl/img/favicon.ico"
-    if feed_item_link_domain == "www.rtvnoord.nl":
-        return "https://www.rtvnoord.nl/Content/Images/noord/favicon.ico"
-    if feed_item_link_domain == "www.filtergroningen.nl":
-        return "https://i1.wp.com/www.filtergroningen.nl/wp-content/uploads/2017/03/favicon.png?fit=32%2C32&#038;ssl=1"
-    return f"https://{feed_item_link_domain}/favicon.ico"
+    return domain_to_favicon_map.get(feed_item_link_domain, f"https://{feed_item_link_domain}/favicon.ico")
 
 
 def news_item_from_feed_item(feed_item: FeedItem, feed: Feed, user: User) -> NewsItem:
