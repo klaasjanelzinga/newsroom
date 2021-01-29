@@ -11,9 +11,7 @@ from core_lib.date_utils import now_in_utc
 from core_lib.repositories import Feed, FeedItem, User, NewsItem, RefreshResult
 
 
-def are_titles_similar(new_item: FeedItem, item: FeedItem) -> bool:
-    title_1 = item.title
-    title_2 = new_item.title
+def are_titles_similar(title_1: str, title_2: str) -> bool:
     title_1 = re.sub(r"\[.*]", "", title_1)
     title_2 = re.sub(r"\[.*]", "", title_2)
     return len(title_1) > 10 and difflib.SequenceMatcher(None, title_1, title_2).ratio() > 0.516
@@ -24,6 +22,17 @@ def item_is_still_relevant(item: FeedItem) -> bool:
         return item.created_on > (datetime.now(tz=pytz.utc) - timedelta(hours=18))
     except TypeError:
         return item.created_on > (datetime.now() - timedelta(hours=18))
+
+
+def upsert_new_feed_items_for_feed(feed: Feed, feed_items: List[FeedItem]) -> int:
+    current_feed_item_links = [
+        feed_item.link for feed_item in repositories.feed_item_repository.fetch_all_for_feed(feed)
+    ]
+    new_feed_items = [
+        new_feed_item for new_feed_item in feed_items if new_feed_item.link not in current_feed_item_links
+    ]
+    repositories.feed_item_repository.upsert_many(new_feed_items)
+    return len(new_feed_items)
 
 
 def upsert_new_items_for_feed(feed: Feed, updated_feed: Feed, feed_items_from_rss: List[FeedItem]) -> int:
@@ -38,58 +47,58 @@ def upsert_new_items_for_feed(feed: Feed, updated_feed: Feed, feed_items_from_rs
     returns: Number of new NewsItems created.
     """
     current_feed_items = repositories.feed_item_repository.fetch_all_for_feed(feed)
-    new_feed_items: List[FeedItem] = []  # new feed_items that will be inserted.
+    subscribed_users = repositories.user_repository.fetch_subscribed_to(feed)
+
     updated_feed_items: List[FeedItem] = []  # updated feed_items that will be updated.
-    updated_feed_items_with_news: List[FeedItem] = []  # updated feed_items that contain relevant information for news.
-    for new_item in feed_items_from_rss:
-        items_with_similar_titles = [
-            item
-            for item in current_feed_items
-            if item_is_still_relevant(item) and are_titles_similar(new_item=new_item, item=item)
-        ]
-        items_with_same_link = [item for item in current_feed_items if item.link == new_item.link]
+    new_feed_items: List[FeedItem] = []  # new feed_items that will be inserted.
+    new_news_items: List[NewsItem] = []  # news items that will be inserted.
+    updated_news_items: List[NewsItem] = []  # news items that are updated.
 
-        # Items with the same link, we already had that one. Update last_seen timestamp.
-        if len(items_with_same_link) == 1:
-            items_with_same_link[0].last_seen = now_in_utc()
-            updated_feed_items.append(items_with_same_link[0])
+    for user in subscribed_users:
+        current_news_items = repositories.news_item_repository.fetch_all_non_read_for_feed(feed, user)
+        for new_feed_item in feed_items_from_rss:
+            feed_items_with_same_link = [item for item in current_feed_items if item.link == new_feed_item.link]
+            if len(feed_items_with_same_link) > 0:  # We have seen this item already, update last seen.
+                for feed_item in feed_items_with_same_link:
+                    feed_item.last_seen = now_in_utc()
+                updated_feed_items.extend(feed_items_with_same_link)
+            else:
+                # New feed item.
+                new_feed_items.append(new_feed_item)
+                current_feed_items.append(new_feed_item)
 
-        # Items with different link, but similarities in the title. Update last_seen of all and
-        # - make of the first hit item a news item, so it will reappear.
-        elif len(items_with_similar_titles) > 0:
-            first_hit = items_with_similar_titles[0]
-            if new_item.link not in first_hit.alternate_links:
-                first_hit.append_alternate(
-                    link=new_item.link, title=new_item.title, icon_link=determine_favicon_link(new_item, feed)
-                )
-                first_hit.title = (
-                    f"[Updated] {first_hit.title}" if "[Updated]" not in first_hit.title else first_hit.title
-                )
-                if first_hit.feed_item_id not in [n.feed_item_id for n in new_feed_items]:
-                    updated_feed_items_with_news.append(first_hit)
-
-        # Or just insert in the store
-        elif len(items_with_same_link) == 0 and len(items_with_same_link) == 0:
-            new_feed_items.append(new_item)
-            current_feed_items.append(new_item)  # Make sure to include new items in this run for the seqmatcher.
+                # Check if there is already a similar news item to flag alternates.
+                news_items_similar_titles = [
+                    news_item
+                    for news_item in current_news_items
+                    if are_titles_similar(title_1=news_item.title, title_2=new_feed_item.title)
+                ]
+                # If no similar news items, just insert new news item and feed item, else update existing news item.
+                if len(news_items_similar_titles) == 0:
+                    new_news_item = news_item_from_feed_item(new_feed_item, feed, user)
+                    new_news_items.append(new_news_item)
+                    current_news_items.append(new_news_item)
+                else:
+                    for existing_news_item in news_items_similar_titles:
+                        existing_news_item.append_alternate(
+                            new_feed_item.link, new_feed_item.title, determine_favicon_link(new_feed_item, feed)
+                        )
+                        existing_news_item.published = new_feed_item.published or now_in_utc()
+                        updated_news_items.append(existing_news_item)
 
     # Upsert the new and updated feed_items.
     repositories.feed_item_repository.upsert_many(new_feed_items)
     repositories.feed_item_repository.upsert_many(updated_feed_items)
-    # Splice to subscribed users. Make news_items for new feed_items and for feed_items with relevant updates.
-    users = repositories.user_repository.fetch_subscribed_to(feed)
-    for user in users:
-        repositories.news_item_repository.upsert_many(news_items_from_feed_items(new_feed_items, feed, user))
-        repositories.news_item_repository.upsert_many(
-            news_items_from_feed_items(updated_feed_items_with_news, feed, user)
-        )
+    repositories.news_item_repository.upsert_many(new_news_items)
+    repositories.news_item_repository.upsert_many(updated_news_items)
+
     # Update information in feed item with latest information from the url.
     feed.last_fetched = datetime.utcnow()
     feed.description = updated_feed.description
     feed.title = updated_feed.title
     feed.number_of_items = feed.number_of_items + len(new_feed_items)
     repositories.feed_repository.upsert(feed)
-    return len(new_feed_items) + len(updated_feed_items_with_news)
+    return len(new_news_items)
 
 
 def update_users_unread_count_with_refresh_results(refresh_results: List[Optional[RefreshResult]]) -> None:
@@ -113,6 +122,8 @@ domain_to_favicon_map = {
     "www.rtvnoord.nl": "https://www.rtvnoord.nl/Content/Images/noord/favicon.ico",
     "www.filtergroningen.nl": "https://i1.wp.com/www.filtergroningen.nl/wp-content/uploads/2017/03/favicon.png?fit=32%2C32&#038;ssl=1",
     "www.tivolivredenburg.nl": "https://www.tivolivredenburg.nl/wp-content/themes/tivolivredenburg/favicon.ico",
+    "www.vera-groningen.nl": "https://www.vera-groningen.nl/vera/assets/img/favicon.png",
+    "https://www.desmaakvanstad.nl": "https://www.desmaakvanstad.nl/wp-content/uploads/2017/08/cropped-FAVICON-1.jpg",
 }
 
 
@@ -134,8 +145,6 @@ def news_item_from_feed_item(feed_item: FeedItem, feed: Feed, user: User) -> New
         description=feed_item.description,
         link=feed_item.link,
         published=feed_item.published or now_in_utc(),
-        alternate_links=feed_item.alternate_links,
-        alternate_title_links=feed_item.alternate_title_links,
-        alternate_favicons=feed_item.alternate_favicons,
         favicon=determine_favicon_link(feed_item, feed),
+        created_on=now_in_utc(),
     )

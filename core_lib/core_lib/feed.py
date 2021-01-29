@@ -3,34 +3,15 @@ from datetime import datetime, timedelta
 from typing import Optional
 
 from aiohttp import ClientSession, ClientConnectorError
-from lxml.etree import ElementBase, fromstring
+from lxml.etree import fromstring
 
 from core_lib.application_data import repositories
 from core_lib.atom_feed import is_atom_file, atom_document_to_feed_items, atom_document_to_feed
-from core_lib.feed_utils import news_items_from_feed_items, upsert_new_items_for_feed
+from core_lib.feed_utils import news_items_from_feed_items, upsert_new_feed_items_for_feed
 from core_lib.repositories import Feed, Subscription, User
 from core_lib.rss_feed import rss_document_to_feed, rss_document_to_feed_items, is_rss_document, is_html_with_rss_ref
 
 log = logging.getLogger(__file__)
-
-
-def _process_rss_document(
-    url: str,
-    rss_document: ElementBase,
-) -> Feed:
-    feed = rss_document_to_feed(url, rss_document)
-    feed_items = rss_document_to_feed_items(feed, rss_document)
-    feed.number_of_items = upsert_new_items_for_feed(feed, feed, feed_items)
-    return feed
-
-
-def _process_atom_document(url: str, atom_document: ElementBase) -> Feed:
-    feed = atom_document_to_feed(url, atom_document)
-    feed_items = atom_document_to_feed_items(feed, atom_document)
-    feed.number_of_items = len(feed_items)
-    feed = repositories.feed_repository.upsert(feed)
-    repositories.feed_item_repository.upsert_many(feed_items)
-    return feed
 
 
 class NetworkingException(Exception):
@@ -54,15 +35,26 @@ async def fetch_feed_information_for(
     try:
         async with session.get(url, headers={"accept-encoding": "gzip"}) as response:
             with repositories.client.transaction():
-                text = await response.text(encoding="utf-8")
+                text = await response.read()
                 rss_ref = is_html_with_rss_ref(text)
                 if rss_ref is not None:
                     async with session.get(rss_ref) as xml_response:
-                        return _process_rss_document(rss_ref, fromstring(await xml_response.read()))
-                elif is_rss_document(text):
-                    return _process_rss_document(url, fromstring(bytes(text, "utf-8")))
-                elif is_atom_file(text):
-                    return _process_atom_document(url=url, atom_document=fromstring(bytes(text, "utf-8")))
+                        text = await xml_response.read()
+
+                if is_rss_document(text):
+                    rss_document = fromstring(text)
+                    feed = rss_document_to_feed(rss_ref if rss_ref is not None else url, rss_document)
+                    feed_items = rss_document_to_feed_items(feed, rss_document)
+                    feed.number_of_items = upsert_new_feed_items_for_feed(feed, feed_items)
+                    repositories.feed_repository.upsert(feed)
+                    return feed
+                if is_atom_file(text):
+                    atom_document = fromstring(text)
+                    feed = atom_document_to_feed(url, atom_document)
+                    feed_items = atom_document_to_feed_items(feed, atom_document)
+                    feed.number_of_items = upsert_new_feed_items_for_feed(feed, feed_items)
+                    feed = repositories.feed_repository.upsert(feed)
+                    return feed
         return None
     except ClientConnectorError as cce:
         raise NetworkingException(f"Url {url} not reachable. Details: {cce.__str__()}") from cce

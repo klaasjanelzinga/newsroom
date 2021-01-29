@@ -23,10 +23,6 @@ class AlternateLinks extends React.Component<AlternateLinksProps> {
 
     element: Element | null = null
 
-    constructor(props: AlternateLinksProps) {
-        super(props);
-    }
-
     render() {
         const {classes} = this.props
         const newsItem = this.props.newsItem

@@ -6,7 +6,10 @@ from aiohttp import ClientSession, ClientError
 
 from core_lib.application_data import repositories, html_feeds, html_feed_parsers
 from core_lib.repositories import Feed, RefreshResult
-from core_lib.feed_utils import upsert_new_items_for_feed, update_users_unread_count_with_refresh_results
+from core_lib.feed_utils import (
+    upsert_new_items_for_feed,
+    update_users_unread_count_with_refresh_results,
+)
 
 log = logging.getLogger(__file__)
 
