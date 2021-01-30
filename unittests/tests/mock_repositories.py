@@ -99,6 +99,13 @@ class NewsItemRepository:
     def count(self) -> int:
         return len(self.store)
 
+    def fetch_all_non_read_for_feed(self, feed: Feed, user: User) -> List[NewsItem]:
+        return [
+            news_item
+            for news_item in self.store.values()
+            if not news_item.is_read and news_item.feed_id == feed.feed_id and news_item.user_id == user.user_id
+        ]
+
     def upsert_many(self, news_items: List[NewsItem]) -> List[NewsItem]:
         for news_item in news_items:
             self.store[news_item.news_item_id] = news_item

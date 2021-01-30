@@ -22,12 +22,12 @@ def _sanitize_link(link: str) -> str:
     return link.replace("\n", "").strip()
 
 
-def is_rss_document(text: str) -> bool:
-    return "<rss" in text
+def is_rss_document(text: bytes) -> bool:
+    return b"<rss" in text
 
 
-def is_html_with_rss_ref(text: str) -> Optional[str]:
-    if "<!DOCTYPE html>" in text or "<html" in text:
+def is_html_with_rss_ref(text: bytes) -> Optional[str]:
+    if b"<!DOCTYPE html>" in text or b"<html" in text:
         soup = BeautifulSoup(text, "html.parser")
         rss_links = soup.find_all("link", type="application/rss+xml")
         if len(rss_links) == 1:

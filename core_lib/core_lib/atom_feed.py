@@ -17,8 +17,8 @@ from core_lib.repositories import Feed, FeedItem, FeedSourceType, RefreshResult
 log = logging.getLogger(__file__)
 
 
-def is_atom_file(text: str) -> bool:
-    return "http://www.w3.org/2005/Atom" in text
+def is_atom_file(text: bytes) -> bool:
+    return b"http://www.w3.org/2005/Atom" in text
 
 
 def atom_document_to_feed(atom_url: str, tree: ElementBase) -> Feed:

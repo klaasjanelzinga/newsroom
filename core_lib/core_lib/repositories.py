@@ -11,6 +11,8 @@ from google.cloud.datastore import Client, Query, Key
 from pydantic.main import BaseModel
 from pydantic import Field
 
+from core_lib.date_utils import now_in_utc
+
 
 def uuid4_str() -> str:
     return uuid4().__str__()
@@ -85,18 +87,10 @@ class FeedItem(BaseModel):  # pylint: disable=too-few-public-methods
 
     title: str
     link: str
-    alternate_links: List[str] = Field(default_factory=list)
-    alternate_title_links: List[str] = Field(default_factory=list)
-    alternate_favicons: List[str] = Field(default_factory=list)
     description: Optional[str]
     last_seen: datetime
     published: Optional[datetime]
     created_on: datetime
-
-    def append_alternate(self, link: str, title: str, icon_link: str) -> None:
-        self.alternate_title_links.append(title)
-        self.alternate_links.append(link)
-        self.alternate_favicons.append(icon_link)
 
 
 class NewsItem(BaseModel):  # pylint: disable=too-few-public-methods
@@ -115,7 +109,16 @@ class NewsItem(BaseModel):  # pylint: disable=too-few-public-methods
     alternate_favicons: List[str] = Field(default_factory=list)
     favicon: Optional[str]
 
+    created_on: datetime = now_in_utc()
     is_read: bool = False
+
+    def append_alternate(self, link: str, title: str, icon_link: str) -> None:
+        """ Append an alternate source for the news. Only appended if not yet present. """
+        if link not in self.alternate_links:
+            self.title = f"[Updated] {self.title}" if not self.title.startswith("[Updated] ") else self.title
+            self.alternate_title_links.append(title)
+            self.alternate_links.append(link)
+            self.alternate_favicons.append(icon_link)
 
 
 class FeedRepository:
@@ -260,6 +263,13 @@ class NewsItemRepository:
 
         token, entities = token_and_entities_for_query(cursor=google_cursor, query=query, limit=limit)
         return token, [NewsItem.parse_obj(entity) for entity in entities]
+
+    def fetch_all_non_read_for_feed(self, feed: Feed, user: User) -> List[NewsItem]:
+        query = self.client.query(kind="NewsItem")
+        query.add_filter("feed_id", "=", feed.feed_id)
+        query.add_filter("is_read", "=", False)
+        query.add_filter("user_id", "=", user.user_id)
+        return [NewsItem.parse_obj(news_item) for news_item in query.fetch()]
 
     def mark_items_as_read(self, user: User, news_item_ids: List[str]) -> None:
         keys = [self.client.key("NewsItem", key) for key in news_item_ids]
