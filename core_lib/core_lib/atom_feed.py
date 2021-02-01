@@ -11,7 +11,7 @@ from lxml.etree import fromstring, ElementBase
 
 from core_lib.application_data import repositories
 from core_lib.feed_utils import upsert_new_items_for_feed, update_users_unread_count_with_refresh_results
-from core_lib.date_utils import now_in_utc
+from core_lib.utils import now_in_utc
 from core_lib.repositories import Feed, FeedItem, FeedSourceType, RefreshResult
 
 log = logging.getLogger(__file__)

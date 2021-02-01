@@ -34,6 +34,7 @@ class Repositories:
         self.client_session = ClientSession(timeout=timeout)
 
 
+token_secret_key = os.environ.get("token_secret")
 repositories: Repositories = Repositories() if Repositories.not_in_unit_tests() else None  # type: ignore
 html_feeds = [feed_gemeente_groningen]
 html_feed_parsers = {

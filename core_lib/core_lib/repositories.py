@@ -11,7 +11,7 @@ from google.cloud.datastore import Client, Query, Key
 from pydantic.main import BaseModel
 from pydantic import Field
 
-from core_lib.date_utils import now_in_utc
+from core_lib.utils import now_in_utc
 
 
 def uuid4_str() -> str:
@@ -41,10 +41,9 @@ class QueryResult:
 
 class User(BaseModel):  # pylint: disable=too-few-public-methods
     user_id: str = Field(default_factory=uuid4_str)
-    email: str
-    given_name: str
-    family_name: str
-    avatar_url: str
+    name: str
+    password_hash: str
+    password_salt: str
     is_approved: bool
     subscribed_to: List[str] = []
     number_of_unread_items: int = 0
@@ -303,16 +302,16 @@ class UserRepository:
     def __init__(self, client: Client):
         self.client = client
 
-    def fetch_user_by_email(self, email: str) -> Optional[User]:
+    def fetch_user_by_name(self, name: str) -> Optional[User]:
         query = self.client.query(kind="User")
-        query.add_filter("email", "=", email)
+        query.add_filter("name", "=", name)
         result = list(query.fetch())
         if not result:
             return None
         return User.parse_obj(result[0])
 
     def upsert(self, user: User) -> User:
-        entity = datastore.Entity(self.client.key("User", user.email))
+        entity = datastore.Entity(self.client.key("User", user.name))
         entity.update(user.dict())
         self.client.put(entity)
         return User.parse_obj(entity)
@@ -320,7 +319,7 @@ class UserRepository:
     def upsert_many(self, users: List[User]) -> List[User]:
         entities = []
         for user in users:
-            entity = datastore.Entity(self.client.key("User", user.email))
+            entity = datastore.Entity(self.client.key("User", user.name))
             entity.update(user.dict())
             entities.append(entity)
 

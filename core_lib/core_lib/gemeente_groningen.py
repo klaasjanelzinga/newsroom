@@ -4,7 +4,7 @@ from typing import List
 
 from bs4 import BeautifulSoup, Tag
 
-from core_lib.date_utils import now_in_utc
+from core_lib.utils import now_in_utc
 from core_lib.repositories import Feed, FeedItem, FeedSourceType
 
 

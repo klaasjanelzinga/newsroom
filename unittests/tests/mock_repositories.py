@@ -151,8 +151,8 @@ class UserRepository:
     def count(self) -> int:
         return len(self.store)
 
-    def fetch_user_by_email(self, email: str) -> Optional[User]:
-        users = [user for user in self.store.values() if user.email == email]
+    def fetch_user_by_name(self, name: str) -> Optional[User]:
+        users = [user for user in self.store.values() if user.name == name]
         if len(users) != 1:
             return None
         return users[0]
