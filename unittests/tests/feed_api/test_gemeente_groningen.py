@@ -3,8 +3,8 @@ from faker import Faker
 
 from api.feed_api import subscribe_to_feed
 from core_lib.gemeente_groningen import feed_gemeente_groningen
-from core_lib.html_feed import refresh_html_feeds
 from core_lib.repositories import User, FeedItem
+from cron.maintenance_api import refresh_all_html_feeds
 from tests.mock_repositories import MockRepositories
 
 
@@ -22,7 +22,7 @@ async def test_subscribe_to_gemeente_groningen(
         ]
     )
 
-    response = await refresh_html_feeds()
+    response = await refresh_all_html_feeds()
     assert response is not None
     assert feed.number_of_subscriptions == 0
     assert repositories.feed_item_repository.count() == 0
@@ -39,8 +39,8 @@ async def test_subscribe_to_gemeente_groningen(
     assert feed.number_of_subscriptions == 1
 
     # 3. Refresh - let the news flow in.
-    response = await refresh_html_feeds()
-    assert response == 1
+    response = await refresh_all_html_feeds()
+    assert response.number_of_feeds_refreshed == 1
     assert repositories.news_item_repository.count() == 10
     item: FeedItem = repositories.feed_item_repository.fetch_all_for_feed(feed)[0]
     assert item.title == "Glasvezel in gebied Ten Boer"
@@ -50,6 +50,6 @@ async def test_subscribe_to_gemeente_groningen(
     assert item.last_seen is not None
 
     # 3. Refresh again
-    response = await refresh_html_feeds()
-    assert response == 1
+    response = await refresh_all_html_feeds()
+    assert response.number_of_feeds_refreshed == 1
     assert repositories.news_item_repository.count() == 20

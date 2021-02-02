@@ -5,9 +5,9 @@ import pytest
 from faker import Faker
 from lxml.etree import parse
 
-from api.feed_api import fetch_feed_information_for_url, FeedWithSubscriptionInformationResponse
-from core_lib.feed import subscribe_user_to_feed
+from api.feed_api import fetch_feed_information_for_url, FeedWithSubscriptionInformationResponse, subscribe_to_feed
 from core_lib.repositories import Feed, User, FeedItem
+from core_lib.utils import sanitize_link
 from tests.mock_repositories import MockRepositories
 
 
@@ -25,7 +25,7 @@ async def test_unsubscribed(faker: Faker, repositories: MockRepositories, user: 
 @pytest.mark.asyncio
 async def test_subscribed(faker: Faker, repositories: MockRepositories, user: User, feed: Feed, bearer_token: str):
     response_mock = MagicMock()
-    subscribe_user_to_feed(user, feed)
+    await subscribe_to_feed(feed_id=feed.feed_id, authorization=bearer_token)
 
     response = await fetch_feed_information_for_url(
         response=response_mock, url=feed.url, authorization=bearer_token
@@ -56,7 +56,7 @@ def _assert_fetch_feed_information_response(
         assert response.feed.image_title == xml_element.find("channel/image/title").text
     assert repositories.feed_repository.count() == 1
     item: FeedItem = choice(repositories.feed_item_repository.fetch_all_for_feed(response.feed))
-    xml_item = [element for element in xml_element.findall("channel/item") if element.findtext("link") == item.link]
+    xml_item = [element for element in xml_element.findall("channel/item") if sanitize_link(element.findtext("link")) == item.link]
 
     assert len(xml_item) == 1
     assert xml_item[0].findtext("title") in item.title  # Use of in since [Updated] may be prepended.

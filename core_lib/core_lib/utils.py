@@ -10,3 +10,7 @@ def now_in_utc() -> datetime:
 
 def bytes_to_str_base64(bytes_to_decode: bytes) -> str:
     return b64encode(bytes_to_decode).decode("utf-8")
+
+
+def sanitize_link(link: str) -> str:
+    return link.replace("\n", "").strip()
