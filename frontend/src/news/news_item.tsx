@@ -40,7 +40,7 @@ const styles = createStyles({
     domainIcon: {
         height: 20,
         verticalAlign: "middle",
-        paddingLeft: 4,
+        paddingRight: 4,
     },
 
     itemControlBar: {},
