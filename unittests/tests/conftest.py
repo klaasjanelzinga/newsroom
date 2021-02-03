@@ -57,7 +57,7 @@ def repositories() -> Repositories:
 
 @pytest.fixture
 def user(faker: Faker, repositories: MockRepositories) -> User:
-    user = User(name=faker.name(), password_hash="hash", password_salt="salt", is_approved=True)
+    user = User(email_address=faker.name(), password_hash="hash", password_salt="salt", is_approved=True)
     repositories.user_repository.upsert(user)
     return user
 

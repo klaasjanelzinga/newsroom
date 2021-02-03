@@ -23,8 +23,7 @@ const NeedsApproval: React.FunctionComponent<NeedsApprovalProps> = (props) => {
                 Hooray! You are signed in!
             </Typography>
             <Typography variant="subtitle1" color="textSecondary">
-                But, your account has to be approved before you can actually use this site. Don&amp;apos;t worry, the webmaster
-                promised to do this quickly. You receive an email when your account is approved and ready to go!.
+                {"But, your account has to be approved before you can actually use this site. Don't worry, the webmaster promised to do this quickly. You receive an email when your account is approved and ready to go!."}
             </Typography>
         </div>
     </div>

@@ -32,7 +32,7 @@ async def test_subscribe_to_gemeente_groningen(
     # 2. Subscribe
     assert feed.feed_id not in user.subscribed_to
     await subscribe_to_feed(feed_id=feed.feed_id, authorization=bearer_token)
-    assert feed.feed_id in repositories.user_repository.fetch_user_by_name(user.name).subscribed_to
+    assert feed.feed_id in repositories.user_repository.fetch_user_by_email(user.email_address).subscribed_to
     assert repositories.news_item_repository.count() == repositories.feed_item_repository.count()
     assert feed.number_of_items == 0
     assert user.number_of_unread_items == feed.number_of_items

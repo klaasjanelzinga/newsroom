@@ -27,9 +27,7 @@ async def test_subscribed(faker: Faker, repositories: MockRepositories, user: Us
     response_mock = MagicMock()
     await subscribe_to_feed(feed_id=feed.feed_id, authorization=bearer_token)
 
-    response = await fetch_feed_information_for_url(
-        response=response_mock, url=feed.url, authorization=bearer_token
-    )
+    response = await fetch_feed_information_for_url(response=response_mock, url=feed.url, authorization=bearer_token)
     assert response.user_is_subscribed
     assert response_mock.status_code == 200
 
@@ -56,7 +54,11 @@ def _assert_fetch_feed_information_response(
         assert response.feed.image_title == xml_element.find("channel/image/title").text
     assert repositories.feed_repository.count() == 1
     item: FeedItem = choice(repositories.feed_item_repository.fetch_all_for_feed(response.feed))
-    xml_item = [element for element in xml_element.findall("channel/item") if sanitize_link(element.findtext("link")) == item.link]
+    xml_item = [
+        element
+        for element in xml_element.findall("channel/item")
+        if sanitize_link(element.findtext("link")) == item.link
+    ]
 
     assert len(xml_item) == 1
     assert xml_item[0].findtext("title") in item.title  # Use of in since [Updated] may be prepended.
@@ -83,7 +85,9 @@ async def test_parse_sample_rss_feeds(repositories: MockRepositories, faker: Fak
     for xml_test_file in xml_test_files:
         repositories.reset()
         repositories.user_repository.upsert(user)
-        response = await fetch_feed_information_for_url(response=response_mock, url=test_url, authorization=bearer_token)
+        response = await fetch_feed_information_for_url(
+            response=response_mock, url=test_url, authorization=bearer_token
+        )
         _assert_fetch_feed_information_response(
             response=response,
             response_mock=response_mock,
@@ -122,9 +126,7 @@ async def test_atom_feed(faker: Faker, repositories: MockRepositories, user: Use
     repositories.mock_client_session_for_files(xml_test_files)
     test_url = faker.url()
 
-    response = await fetch_feed_information_for_url(
-        response=response_mock, url=test_url, authorization=bearer_token
-    )
+    response = await fetch_feed_information_for_url(response=response_mock, url=test_url, authorization=bearer_token)
     assert response_mock.status_code == 201
     assert response is not None
 
@@ -133,9 +135,7 @@ async def test_atom_feed(faker: Faker, repositories: MockRepositories, user: Use
     assert response.feed.title == "The Quietus | All Articles"
 
     xml_element = parse(xml_test_files[0])
-    assert repositories.feed_item_repository.count() == len(
-        xml_element.findall("{http://www.w3.org/2005/Atom}entry")
-    )
+    assert repositories.feed_item_repository.count() == len(xml_element.findall("{http://www.w3.org/2005/Atom}entry"))
 
     item: FeedItem = choice(repositories.feed_item_repository.fetch_all_for_feed(response.feed))
     xml_item = [

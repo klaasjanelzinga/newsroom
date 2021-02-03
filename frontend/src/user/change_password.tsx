@@ -4,10 +4,10 @@ import {withSnackbar, WithSnackbarProps} from 'notistack';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import HeaderBar from '../headerbar/HeaderBar';
 import {Api} from "../Api";
-import queryString from 'query-string';
 import {TokenBasedAuthenticator, withAuthHandling, WithAuthHandling} from "../WithAuthHandling";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
+import LockIcon from "@material-ui/icons/Lock"
 
 
 const styles = createStyles({
@@ -34,49 +34,59 @@ const styles = createStyles({
     },
 });
 
-interface SignInProps extends WithAuthHandling, WithStyles<typeof styles>, RouteComponentProps, WithSnackbarProps {
+interface ChangePasswordAttrs extends WithAuthHandling, WithStyles<typeof styles>, RouteComponentProps, WithSnackbarProps {
 }
 
-interface SignInState {
-    email_address: string;
-    password: string;
+interface ChangePasswordState {
+    email_address: string
+    current_password: string
+    new_password: string
+    new_password_repeated: string
 }
 
-class SignIn extends React.Component<SignInProps, SignInState> {
+class ChangePassword extends React.Component<ChangePasswordAttrs, ChangePasswordState> {
 
-    redirect_to: string | null
+    apiFetch: Api
     authHandling: TokenBasedAuthenticator
 
-    constructor(props: SignInProps) {
+    constructor(props: ChangePasswordAttrs) {
         super(props);
+        this.apiFetch = new Api(props)
+        this.authHandling = props.authHandling
         this.state = {
             email_address: this.props.authHandling.user_information?.email_address || '',
-            password: '',
+            current_password: '',
+            new_password: '',
+            new_password_repeated: ''
         }
-        this.authHandling = props.authHandling
-        this.redirect_to = queryString.parse(this.props.location.search).redirect_to as string || null
-        if (this.redirect_to === this.props.location.pathname) {
-            this.redirect_to = null
-        }
-
     }
 
-    async sign_in(): Promise<void> {
+    async change_password(): Promise<void> {
         try {
-            const sign_in_result = await this.authHandling.sign_in(this.state.email_address, this.state.password)
+            const sign_in_result = await this.authHandling.change_password(
+                this.state.email_address, this.state.current_password, this.state.new_password, this.state.new_password_repeated
+            )
             if (!sign_in_result.success) {
-                this.setState({password: ""})
-                this.props.enqueueSnackbar(`Sign in failed: ${sign_in_result.reason}`, {
+                this.setState({
+                    new_password: "",
+                    new_password_repeated: "",
+                    current_password: ""
+                })
+                this.props.enqueueSnackbar(`Changing of password failed: ${sign_in_result.reason}`, {
                     variant: 'warning',
                     autoHideDuration: 3000,
                 });
                 return Promise.resolve()
             }
             if (this.authHandling.user_information?.is_approved) {
-                this.props.history.push(this.redirect_to || '/')
+                this.props.history.push('/')
             } else {
                 this.props.history.push('/user/needs-approval')
             }
+            this.props.enqueueSnackbar("Password changed", {
+                variant: 'info',
+                autoHideDuration: 3000,
+            });
         } catch (error) {
             this.props.enqueueSnackbar('Cannot signin', {
                 variant: 'warning',
@@ -97,7 +107,7 @@ class SignIn extends React.Component<SignInProps, SignInState> {
                         <Grid container>
                             <Grid item xs={12}>
                                 <Typography component="h5" variant="h5">
-                                    Sign into your newsroom:
+                                    Start the signing up process for newsroom:
                                 </Typography>
                             </Grid>
                             <Grid item xs={12}>
@@ -107,8 +117,8 @@ class SignIn extends React.Component<SignInProps, SignInState> {
                                     name="email"
                                     label="Email address"
                                     fullWidth
-                                    value={this.state.email_address}
                                     onChange={(e) => this.setState({email_address: e.currentTarget.value})}
+                                    value={this.state.email_address}
                                     autoComplete="username"
                                 />
                             </Grid>
@@ -117,12 +127,38 @@ class SignIn extends React.Component<SignInProps, SignInState> {
                                     required
                                     id="password"
                                     name="password"
-                                    label="Password"
+                                    label="Current password"
                                     type="password"
-                                    onChange={(e) => this.setState({password: e.currentTarget.value})}
+                                    onChange={(e) => this.setState({current_password: e.currentTarget.value})}
+                                    value={this.state.current_password}
                                     fullWidth
-                                    value={this.state.password}
-                                    autoComplete="password"
+                                    autoComplete="current-password"
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    required
+                                    id="new_password"
+                                    name="password"
+                                    label="New password"
+                                    type="password"
+                                    onChange={(e) => this.setState({new_password: e.currentTarget.value})}
+                                    value={this.state.new_password}
+                                    fullWidth
+                                    autoComplete="new-password"
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    required
+                                    id="new_repeated_password"
+                                    name="new_repeated_password"
+                                    label="Repeat password"
+                                    type="password"
+                                    onChange={(e) => this.setState({new_password_repeated: e.currentTarget.value})}
+                                    value={this.state.new_password_repeated}
+                                    fullWidth
+                                    autoComplete="new-password"
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -131,17 +167,10 @@ class SignIn extends React.Component<SignInProps, SignInState> {
                                         variant="contained"
                                         color="primary"
                                         className={classes.saveButton}
-                                        onClick={async () => await this.sign_in()}
-                                        endIcon={<Icon>login</Icon>}>
-                                        Login
-                                    </Button>
-                                    <Button
-                                        variant="contained"
-                                        color="default"
-                                        className={classes.signUpButton}
-                                        onClick={() => this.props.history.push('/user/signup')}
-                                        endIcon={<Icon>account_box</Icon>}>
-                                        OR Sign up ...
+                                        onClick={async () => await this.change_password()}
+                                        >
+                                        Change password
+                                        <LockIcon/>
                                     </Button>
                                 </div>
                             </Grid>
@@ -153,5 +182,5 @@ class SignIn extends React.Component<SignInProps, SignInState> {
     }
 }
 
-export default withStyles(styles)(withRouter(withSnackbar(withAuthHandling(SignIn))))
+export default withStyles(styles)(withRouter(withSnackbar(withAuthHandling(ChangePassword))))
 

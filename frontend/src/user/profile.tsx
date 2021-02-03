@@ -154,7 +154,6 @@ class Profile extends React.Component<ProfileProps, ProfileState> {
                     </Button>
                     <Button variant="contained" size="small" className={classes.continueButton}
                             onClick={ () => {
-                                console.log(this.state)
                                 this.props.enqueueSnackbar('Profile is acknowledged.', {
                                     variant: 'info',
                                 });

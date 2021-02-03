@@ -6,17 +6,11 @@ import jwt
 from fastapi import HTTPException
 from starlette.status import HTTP_403_FORBIDDEN, HTTP_401_UNAUTHORIZED
 
+from core_lib.application_data import token_secret_key
 from core_lib.repositories import User, UserRepository
-from core_lib.utils import bytes_to_str_base64
-
-
-class TokenVerificationException(Exception):
-    pass
 
 
 log = logging.getLogger(__file__)
-
-secret_key = "secret"
 
 
 class TokenVerifier:
@@ -39,18 +33,18 @@ class TokenVerifier:
         if not bearer_token.startswith("Bearer"):
             raise HTTPException(status_code=401, detail="Unauthorized")
         token = bearer_token[7:]
-        decoded = jwt.decode(token, secret_key, "HS256")
+        decoded = jwt.decode(token, token_secret_key, algorithms=["HS256"])
         return decoded
 
     @staticmethod
     def create_token(user: User) -> str:
         return jwt.encode(
             {
-                "name": user.name,
+                "name": user.email_address,
                 "user_id": user.user_id,
                 "exp": datetime.utcnow() + timedelta(days=7),
             },
-            secret_key,
+            token_secret_key,
             algorithm="HS256",
         )
 
@@ -65,7 +59,7 @@ class Security:
         403 FORBIDDEN is returned.
         """
         user_from_token = await TokenVerifier.verify(authorization_header)
-        user_from_repo = self.user_repository.fetch_user_by_name(user_from_token["name"])
+        user_from_repo = self.user_repository.fetch_user_by_email(user_from_token["name"])
         if user_from_repo is None:
             raise HTTPException(status_code=HTTP_401_UNAUTHORIZED)
         if not user_from_repo.is_approved:

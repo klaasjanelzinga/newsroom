@@ -11,23 +11,23 @@ from tests.mock_repositories import MockRepositories
 async def test_change_password(repositories: MockRepositories, faker: Faker, signed_up_user: User, user_password: str):
     new_password = faker.password(length=16, special_chars=True, digits=True, upper_case=True, lower_case=True)
     request = UserChangePasswordRequest(
-        name=signed_up_user.name,
+        email_address=signed_up_user.email_address,
         old_password=user_password,
         new_password=new_password,
         new_password_repeated=new_password,
     )
     response = await change_password_user(request)
-    assert response.name == signed_up_user.name
+    assert response.email_address == signed_up_user.email_address
     assert response.user_id == signed_up_user.user_id
 
     # Sign in using new password
-    request = UserSignInRequest(name=signed_up_user.name, password=new_password)
+    request = UserSignInRequest(email_address=signed_up_user.email_address, password=new_password)
     response = await sign_in_user(request)
     assert response is not None
 
     # Sign in using old password -> fail 401
     with pytest.raises(HTTPException) as http_exception:
-        request = UserSignInRequest(name=signed_up_user.name, password=user_password)
+        request = UserSignInRequest(email_address=signed_up_user.email_address, password=user_password)
         response = await sign_in_user(request)
     assert http_exception.value.status_code == 401
 
@@ -38,7 +38,7 @@ async def test_change_password_non_existing_user(
 ):
     with pytest.raises(HTTPException) as http_exception:
         request = UserChangePasswordRequest(
-            name=f"non-existing-{signed_up_user.name}",
+            email_address=f"non-existing-{signed_up_user.email_address}",
             old_password=user_password,
             new_password=f"new-{user_password}",
             new_password_repeated=f"new-{user_password}",
@@ -52,7 +52,7 @@ async def test_change_password_weak_passwords(repositories: MockRepositories, si
     for weak_password in ["shortie", "nocaps(@#*$&9879", "NOLOWER293874@(#*&$", "NoSDigits(@#*&$", "NoSpecials2897365"]:
         with pytest.raises(HTTPException) as http_exception:
             request = UserChangePasswordRequest(
-                name=signed_up_user.name,
+                email_address=signed_up_user.email_address,
                 old_password=user_password,
                 new_password=weak_password,
                 new_password_repeated=weak_password,
@@ -67,7 +67,7 @@ async def test_change_password_non_matching_passwords(
 ):
     new_password = faker.password(length=16, special_chars=True, digits=True, upper_case=True, lower_case=True)
     request = UserChangePasswordRequest(
-        name=signed_up_user.name,
+        email_address=signed_up_user.email_address,
         old_password=user_password,
         new_password=new_password,
         new_password_repeated=f"non-{new_password}",

@@ -4,6 +4,7 @@ export class GoogleAuthHandling {
     currentUser: gapi.auth2.GoogleUser | null = null
     is_ready = false
     isSignedIn = false
+    some_special_token = "it's here"
 
     constructor() {
         const script = document.createElement("script");

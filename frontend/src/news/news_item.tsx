@@ -157,8 +157,8 @@ class NewsItemNode extends React.Component<NewsItemProps> implements NewsItemCon
                     <Link href={newsItem.link}
                           className={classes.titleLink}
                           target="_blank" rel="noopener">
-                        {newsItem.title}
                         <img src={newsItem.favicon}  className={classes.domainIcon} alt={`[${domain}]`}/>
+                        {newsItem.title}
                     </Link>
                 </Grid>
                 <Grid item xs={12} className={classes.cardDescription}>

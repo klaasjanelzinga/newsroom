@@ -16,23 +16,25 @@ logger = logging.getLogger(__name__)
 
 
 class UserSignUpRequest(BaseModel):
-    name: str
+    email_address: str
     password: str
     password_repeated: str
 
 
 class UserSignInRequest(BaseModel):
-    name: str
+    email_address: str
     password: str
 
 
 class UserSignInResponse(BaseModel):
     token: str
+    email_address: str
+    is_approved: bool
 
 
 class UserChangePasswordRequest(BaseModel):
-    name: str
-    old_password: str
+    email_address: str
+    current_password: str
     new_password: str
     new_password_repeated: str
 
@@ -52,37 +54,39 @@ async def sign_up_user(user_sign_up_request: UserSignUpRequest) -> UserSignInRes
     try:
         with repositories.client.transaction():
             user = signup(
-                name=user_sign_up_request.name,
+                email_address=user_sign_up_request.email_address,
                 password=user_sign_up_request.password,
                 password_repeated=user_sign_up_request.password_repeated,
             )
             token = TokenVerifier.create_token(user)
-            return UserSignInResponse(token=token)
-    except AuthorizationException as ex:
-        raise HTTPException(status_code=401, detail=ex.__str__()) from ex
+            return UserSignInResponse(token=token, email_address=user.email_address, is_approved=user.is_approved)
+    except AuthorizationException as authorization_exception:
+        raise HTTPException(status_code=401, detail=authorization_exception.__str__()) from authorization_exception
 
 
 @user_router.post(
     "/user/change_password",
     tags=["user"],
-    response_model=User,
+    response_model=UserSignInResponse,
     responses={
         status.HTTP_401_UNAUTHORIZED: {"model": ErrorMessage},
     },
 )
-async def change_password_user(user_change_password_request: UserChangePasswordRequest) -> User:
+async def change_password_user(user_change_password_request: UserChangePasswordRequest) -> UserSignInResponse:
     """
     Change the password for the user.
     """
     try:
-        return change_password(
-            name=user_change_password_request.name,
-            old_password=user_change_password_request.old_password,
+        user = change_password(
+            email_address=user_change_password_request.email_address,
+            current_password=user_change_password_request.current_password,
             new_password=user_change_password_request.new_password,
             new_password_repeated=user_change_password_request.new_password_repeated,
         )
-    except AuthorizationException as ex:
-        raise HTTPException(status_code=401, detail=ex.__str__()) from ex
+        token = TokenVerifier.create_token(user)
+        return UserSignInResponse(token=token, email_address=user.email_address, is_approved=user.is_approved)
+    except AuthorizationException as authorization_exception:
+        raise HTTPException(status_code=401, detail=authorization_exception.__str__()) from authorization_exception
 
 
 @user_router.post(
@@ -99,8 +103,8 @@ async def change_password_user(user_change_password_request: UserChangePasswordR
 )
 async def sign_in_user(user_sign_in_request: UserSignInRequest) -> UserSignInResponse:
     try:
-        user = sign_in(name=user_sign_in_request.name, password=user_sign_in_request.password)
+        user = sign_in(email_address=user_sign_in_request.email_address, password=user_sign_in_request.password)
         token = TokenVerifier.create_token(user)
-        return UserSignInResponse(token=token)
-    except AuthorizationException:
-        raise HTTPException(status_code=401)
+        return UserSignInResponse(token=token, email_address=user.email_address, is_approved=user.is_approved)
+    except AuthorizationException as authorization_exception:
+        raise HTTPException(status_code=401) from authorization_exception

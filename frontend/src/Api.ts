@@ -3,8 +3,7 @@ import config from './Config'
 import {RouteComponentProps} from "react-router-dom";
 import {WithSnackbarProps} from "notistack";
 import {ErrorResponse} from "./user/model";
-import {WithAuthHandling} from "./WithAuthHandling";
-import {GoogleAuthHandling} from "./GoogleAuthHandling";
+import {TokenBasedAuthenticator, WithAuthHandling} from "./WithAuthHandling";
 
 interface ApiProps extends WithSnackbarProps, RouteComponentProps, WithAuthHandling {
 }
@@ -12,7 +11,7 @@ interface ApiProps extends WithSnackbarProps, RouteComponentProps, WithAuthHandl
 export class Api {
     props: ApiProps
     userProfile: UserProfile | null
-    authHandling: GoogleAuthHandling
+    authHandling: TokenBasedAuthenticator
 
     constructor(props: ApiProps) {
         this.props = props
@@ -20,15 +19,11 @@ export class Api {
         this.authHandling = props.authHandling
     }
 
-    static createBearerTokenFrom(id_token: string): string {
-        return `Bearer ${id_token}`
-    }
-
-    _headers_from(id_token: string| null): Headers {
+    _headers_from(bearer_token: string| null): Headers {
         const headers: HeadersInit = new Headers()
         headers.set('Content-Type', 'application/json')
-        if (id_token) {
-            headers.set("Authorization", Api.createBearerTokenFrom(id_token))
+        if (bearer_token) {
+            headers.set("Authorization", bearer_token)
         }
         return headers;
     }
@@ -54,21 +49,21 @@ export class Api {
     }
 
     async get<T>(endpoint: string): Promise<[number, T]> {
-        const authReponse = await this.authHandling.authResponse()
+        const bearer_token = this.authHandling.bearer_token()
         const url = `${config.apihost}${endpoint}`
         const request = new Request(url, {
             method: 'GET',
-            headers: this._headers_from(authReponse.id_token)
+            headers: this._headers_from(bearer_token)
         });
         const response = await fetch(request)
         return [response.status, await this._parseResponse(response)]
     }
 
     async post<T>(endpoint: string, body: string| null = null): Promise<[number, T]> {
-        const authReponse = await this.authHandling.authResponse()
+        const bearer_token = this.authHandling.bearer_token()
         const url = `${config.apihost}${endpoint}`
         const response = await fetch(url, {
-            headers: this._headers_from(authReponse.id_token),
+            headers: this._headers_from(bearer_token),
             method: "POST",
             body: body,
         })

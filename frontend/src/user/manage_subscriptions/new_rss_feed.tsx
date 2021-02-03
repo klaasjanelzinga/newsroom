@@ -120,7 +120,6 @@ class NewRssFeed extends React.Component<NewRssFeedProps, NewRssFeedState> {
                         label="Add new RSS-Feed url"
                         fullWidth
                         onChange={(event) => this.setState({newURL: event.currentTarget.value})}
-                        autoComplete="fname"
                     />
                 </Grid>
                 {this.state.isLoading && <CircularProgress />}

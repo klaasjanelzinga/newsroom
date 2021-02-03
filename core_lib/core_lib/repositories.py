@@ -41,7 +41,7 @@ class QueryResult:
 
 class User(BaseModel):  # pylint: disable=too-few-public-methods
     user_id: str = Field(default_factory=uuid4_str)
-    name: str
+    email_address: str
     password_hash: str
     password_salt: str
     is_approved: bool
@@ -302,16 +302,16 @@ class UserRepository:
     def __init__(self, client: Client):
         self.client = client
 
-    def fetch_user_by_name(self, name: str) -> Optional[User]:
+    def fetch_user_by_email(self, email_address: str) -> Optional[User]:
         query = self.client.query(kind="User")
-        query.add_filter("name", "=", name)
+        query.add_filter("email_address", "=", email_address)
         result = list(query.fetch())
         if not result:
             return None
         return User.parse_obj(result[0])
 
     def upsert(self, user: User) -> User:
-        entity = datastore.Entity(self.client.key("User", user.name))
+        entity = datastore.Entity(self.client.key("User", user.user_id))
         entity.update(user.dict())
         self.client.put(entity)
         return User.parse_obj(entity)
@@ -319,7 +319,7 @@ class UserRepository:
     def upsert_many(self, users: List[User]) -> List[User]:
         entities = []
         for user in users:
-            entity = datastore.Entity(self.client.key("User", user.name))
+            entity = datastore.Entity(self.client.key("User", user.user_id))
             entity.update(user.dict())
             entities.append(entity)
 
