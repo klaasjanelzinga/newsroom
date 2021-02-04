@@ -64,6 +64,7 @@ def user(faker: Faker, repositories: MockRepositories) -> User:
 
 @pytest.fixture
 def bearer_token(faker: Faker, user: User) -> str:
+    application_data.token_secret_key = "junit-secret"
     return f"Bearer {TokenVerifier.create_token(user)}"
 
 
