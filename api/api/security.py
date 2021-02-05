@@ -6,7 +6,7 @@ import jwt
 from fastapi import HTTPException
 from starlette.status import HTTP_403_FORBIDDEN, HTTP_401_UNAUTHORIZED
 
-from core_lib.application_data import token_secret_key
+from core_lib import application_data
 from core_lib.repositories import User, UserRepository
 
 
@@ -33,18 +33,18 @@ class TokenVerifier:
         if not bearer_token.startswith("Bearer"):
             raise HTTPException(status_code=401, detail="Unauthorized")
         token = bearer_token[7:]
-        decoded = jwt.decode(token, token_secret_key, algorithms=["HS256"])
+        decoded = jwt.decode(jwt=token, key=application_data.token_secret_key, algorithms=["HS256"])
         return decoded
 
     @staticmethod
     def create_token(user: User) -> str:
         return jwt.encode(
-            {
+            payload={
                 "name": user.email_address,
                 "user_id": user.user_id,
                 "exp": datetime.utcnow() + timedelta(days=7),
             },
-            token_secret_key,
+            key=application_data.token_secret_key,
             algorithm="HS256",
         )
 

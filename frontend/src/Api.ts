@@ -1,4 +1,3 @@
-import UserProfile from "./user/UserProfile";
 import config from './Config'
 import {RouteComponentProps} from "react-router-dom";
 import {WithSnackbarProps} from "notistack";
@@ -10,12 +9,10 @@ interface ApiProps extends WithSnackbarProps, RouteComponentProps, WithAuthHandl
 
 export class Api {
     props: ApiProps
-    userProfile: UserProfile | null
     authHandling: TokenBasedAuthenticator
 
     constructor(props: ApiProps) {
         this.props = props
-        this.userProfile = UserProfile.load()
         this.authHandling = props.authHandling
     }
 

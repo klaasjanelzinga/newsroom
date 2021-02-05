@@ -4,7 +4,6 @@ import './App.css';
 import {Api} from "./Api"
 import {withSnackbar, WithSnackbarProps} from "notistack";
 import {RouteComponentProps} from "react-router";
-import UserProfile from "./user/UserProfile";
 import News, {NewsVariant} from "./news/news";
 import {withRouter} from "react-router-dom";
 import {WithAuthHandling, withAuthHandling} from "./WithAuthHandling";
@@ -15,13 +14,11 @@ interface AppProps extends RouteComponentProps, WithSnackbarProps, WithAuthHandl
 }
 
 interface AppState {
-    userProfile: UserProfile | null
 }
 
 class App extends React.Component<AppProps, AppState> {
 
     state: AppState = {
-        userProfile: null
     }
 
     apiFetch: Api
@@ -32,23 +29,12 @@ class App extends React.Component<AppProps, AppState> {
     }
 
     componentDidMount() {
-        const userProfile = UserProfile.load()
-        if (!userProfile) {
-            this.props.history.push("/user/signin")
-        }
-        this.setState({userProfile: userProfile})
     }
 
     render() {
-        if (this.state.userProfile == null) {
-            return <div>
-                <LinearProgress/>
-            </div>
-        } else {
-            return <div>
-                <News userProfile={this.state.userProfile} variant={NewsVariant.NEWS}/>
-            </div>
-        }
+        return <div>
+            <News variant={NewsVariant.NEWS}/>
+        </div>
     }
 }
 

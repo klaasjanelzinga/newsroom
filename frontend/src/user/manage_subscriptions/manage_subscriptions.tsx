@@ -16,7 +16,6 @@ import {withStyles} from "@material-ui/core/styles";
 import HeaderBar from "../../headerbar/HeaderBar";
 import Header from '../header'
 import Grid from "@material-ui/core/Grid";
-import UserProfile from "../UserProfile";
 import {Api} from "../../Api";
 import {withSnackbar, WithSnackbarProps} from "notistack";
 import NewRssFeed from './new_rss_feed';
@@ -54,7 +53,6 @@ interface MangeSubscriptionsState {
 
 class ManageSubscriptions extends React.Component<ManageSubscriptionsProps, MangeSubscriptionsState> {
 
-    userProfile: UserProfile
     api: Api
     state: MangeSubscriptionsState = {
         feedsForUser: [],
@@ -65,7 +63,6 @@ class ManageSubscriptions extends React.Component<ManageSubscriptionsProps, Mang
         super(props);
 
         this.api = new Api(props)
-        this.userProfile = UserProfile.get()
     }
 
 
@@ -131,7 +128,7 @@ class ManageSubscriptions extends React.Component<ManageSubscriptionsProps, Mang
 
             <div className={classes.signedInUI}>
                 <Typography variant="h6" gutterBottom>
-                    Welcome {this.userProfile.givenName} {this.userProfile.familyName}!
+                    Welcome!
                 </Typography>
                 <Typography variant="subtitle1" gutterBottom>
                     Subscribe here to news sources. News sources are rss feeds, custom news sources or plugins.
@@ -178,7 +175,6 @@ class ManageSubscriptions extends React.Component<ManageSubscriptionsProps, Mang
                         </Grid>
                     </Grid>
                 </div>
-
             </div>
         </div>
     }

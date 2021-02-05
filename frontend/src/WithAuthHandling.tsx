@@ -60,7 +60,6 @@ export class TokenBasedAuthenticator {
     }
 
     constructor() {
-        console.log("TokenBasedAuthenticator instantiated.")
         this.user_information = UserInformation.load()
         if (this.user_information) {
             this.isSignedIn = true

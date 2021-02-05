@@ -107,7 +107,7 @@ class ChangePassword extends React.Component<ChangePasswordAttrs, ChangePassword
                         <Grid container>
                             <Grid item xs={12}>
                                 <Typography component="h5" variant="h5">
-                                    Start the signing up process for newsroom:
+                                    Change your password for newsroom:
                                 </Typography>
                             </Grid>
                             <Grid item xs={12}>

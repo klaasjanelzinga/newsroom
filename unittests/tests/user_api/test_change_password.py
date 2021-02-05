@@ -12,13 +12,14 @@ async def test_change_password(repositories: MockRepositories, faker: Faker, sig
     new_password = faker.password(length=16, special_chars=True, digits=True, upper_case=True, lower_case=True)
     request = UserChangePasswordRequest(
         email_address=signed_up_user.email_address,
-        old_password=user_password,
+        current_password=user_password,
         new_password=new_password,
         new_password_repeated=new_password,
     )
     response = await change_password_user(request)
     assert response.email_address == signed_up_user.email_address
-    assert response.user_id == signed_up_user.user_id
+    assert response.is_approved == signed_up_user.is_approved
+    assert response.token is not None
 
     # Sign in using new password
     request = UserSignInRequest(email_address=signed_up_user.email_address, password=new_password)
@@ -27,8 +28,7 @@ async def test_change_password(repositories: MockRepositories, faker: Faker, sig
 
     # Sign in using old password -> fail 401
     with pytest.raises(HTTPException) as http_exception:
-        request = UserSignInRequest(email_address=signed_up_user.email_address, password=user_password)
-        response = await sign_in_user(request)
+        await sign_in_user(UserSignInRequest(email_address=signed_up_user.email_address, password=user_password))
     assert http_exception.value.status_code == 401
 
 
@@ -39,7 +39,7 @@ async def test_change_password_non_existing_user(
     with pytest.raises(HTTPException) as http_exception:
         request = UserChangePasswordRequest(
             email_address=f"non-existing-{signed_up_user.email_address}",
-            old_password=user_password,
+            current_password=user_password,
             new_password=f"new-{user_password}",
             new_password_repeated=f"new-{user_password}",
         )
@@ -53,7 +53,7 @@ async def test_change_password_weak_passwords(repositories: MockRepositories, si
         with pytest.raises(HTTPException) as http_exception:
             request = UserChangePasswordRequest(
                 email_address=signed_up_user.email_address,
-                old_password=user_password,
+                current_password=user_password,
                 new_password=weak_password,
                 new_password_repeated=weak_password,
             )
@@ -68,7 +68,7 @@ async def test_change_password_non_matching_passwords(
     new_password = faker.password(length=16, special_chars=True, digits=True, upper_case=True, lower_case=True)
     request = UserChangePasswordRequest(
         email_address=signed_up_user.email_address,
-        old_password=user_password,
+        current_password=user_password,
         new_password=new_password,
         new_password_repeated=f"non-{new_password}",
     )
