@@ -3,7 +3,6 @@ import {Button, Card, CardContent, createStyles, Icon, Typography, WithStyles, w
 import {withSnackbar, WithSnackbarProps} from 'notistack';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import HeaderBar from '../headerbar/HeaderBar';
-import {Api} from "../Api";
 import queryString from 'query-string';
 import {TokenBasedAuthenticator, withAuthHandling, WithAuthHandling} from "../WithAuthHandling";
 import Grid from "@material-ui/core/Grid";
@@ -66,7 +65,7 @@ class SignIn extends React.Component<SignInProps, SignInState> {
             const sign_in_result = await this.authHandling.sign_in(this.state.email_address, this.state.password)
             if (!sign_in_result.success) {
                 this.setState({password: ""})
-                this.props.enqueueSnackbar(`Sign in failed: ${sign_in_result.reason}`, {
+                this.props.enqueueSnackbar(`Sign in failed: ${sign_in_result.reason || "Unknown"}`, {
                     variant: 'warning',
                     autoHideDuration: 3000,
                 });

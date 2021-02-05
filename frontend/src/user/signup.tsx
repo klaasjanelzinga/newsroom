@@ -4,12 +4,9 @@ import {withSnackbar, WithSnackbarProps} from 'notistack';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import HeaderBar from '../headerbar/HeaderBar';
 import {Api} from "../Api";
-import queryString from 'query-string';
-import {TokenBasedAuthenticator, withAuthHandling, WithAuthHandling} from "../WithAuthHandling";
+import {SignInResult, TokenBasedAuthenticator, withAuthHandling, WithAuthHandling} from "../WithAuthHandling";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
-import {string} from "prop-types";
-import {sign} from "crypto";
 
 
 const styles = createStyles({
@@ -63,7 +60,7 @@ class SignUp extends React.Component<SignUpProps, SignUpState> {
 
     async sign_up(): Promise<void> {
         try {
-            const sign_in_result = await this.authHandling.sign_up(
+            const sign_in_result: SignInResult = await this.authHandling.sign_up(
                 this.state.email_address, this.state.password, this.state.password_repeated
             )
             if (!sign_in_result.success) {
@@ -71,7 +68,7 @@ class SignUp extends React.Component<SignUpProps, SignUpState> {
                     password: "",
                     password_repeated: "",
                 })
-                this.props.enqueueSnackbar(`Sign up failed: ${sign_in_result.reason}`, {
+                this.props.enqueueSnackbar(`Sign up failed: ${sign_in_result.reason || "unknown"}`, {
                     variant: 'warning',
                     autoHideDuration: 3000,
                 });

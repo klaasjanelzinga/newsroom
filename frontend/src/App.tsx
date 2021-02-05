@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {createStyles, LinearProgress, WithStyles, withStyles} from "@material-ui/core";
+import {createStyles, WithStyles, withStyles} from "@material-ui/core";
 import './App.css';
 import {Api} from "./Api"
 import {withSnackbar, WithSnackbarProps} from "notistack";
@@ -13,22 +13,13 @@ const styles = createStyles({})
 interface AppProps extends RouteComponentProps, WithSnackbarProps, WithAuthHandling, WithStyles<typeof styles> {
 }
 
-interface AppState {
-}
-
-class App extends React.Component<AppProps, AppState> {
-
-    state: AppState = {
-    }
+class App extends React.Component<AppProps> {
 
     apiFetch: Api
 
     constructor(props: AppProps) {
         super(props);
         this.apiFetch = new Api(this.props)
-    }
-
-    componentDidMount() {
     }
 
     render() {

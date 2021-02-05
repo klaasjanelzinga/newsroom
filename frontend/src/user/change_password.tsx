@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Button, Card, CardContent, createStyles, Icon, Typography, WithStyles, withStyles} from '@material-ui/core';
+import {Button, Card, CardContent, createStyles, Typography, WithStyles, withStyles} from '@material-ui/core';
 import {withSnackbar, WithSnackbarProps} from 'notistack';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import HeaderBar from '../headerbar/HeaderBar';
@@ -72,7 +72,7 @@ class ChangePassword extends React.Component<ChangePasswordAttrs, ChangePassword
                     new_password_repeated: "",
                     current_password: ""
                 })
-                this.props.enqueueSnackbar(`Changing of password failed: ${sign_in_result.reason}`, {
+                this.props.enqueueSnackbar(`Changing of password failed: ${sign_in_result.reason || "Unknwon"}`, {
                     variant: 'warning',
                     autoHideDuration: 3000,
                 });

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {createStyles, LinearProgress, WithStyles, withStyles} from "@material-ui/core";
+import {createStyles, WithStyles, withStyles} from "@material-ui/core";
 import './App.css';
 import {Api} from "./Api"
 import {withSnackbar, WithSnackbarProps} from "notistack";

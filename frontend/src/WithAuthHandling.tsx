@@ -2,9 +2,8 @@ import * as React from 'react'
 import {Subtract} from "utility-types";
 import {AuthHandling} from "./index";
 import config from './Config'
-import {UserProfileResponse} from "./user/model";
 
-interface SignInResult {
+export interface SignInResult {
     success: boolean
     reason?: string
 }
@@ -83,7 +82,7 @@ export class TokenBasedAuthenticator {
             }),
         })
 
-        return this._parseRequestForToken(response, email_address)
+        return this._parseRequestForToken(response)
     }
 
     async sign_out(): Promise<void> {
@@ -105,7 +104,7 @@ export class TokenBasedAuthenticator {
             }),
         })
 
-        return this._parseRequestForToken(response, email_address)
+        return this._parseRequestForToken(response)
     }
 
     async sign_up(email_address: string, password: string, password_repeated: string) : Promise<SignInResult> {
@@ -121,10 +120,10 @@ export class TokenBasedAuthenticator {
             }),
         })
 
-        return this._parseRequestForToken(response, email_address)
+        return this._parseRequestForToken(response)
     }
 
-    async _parseRequestForToken(response: Response, email_address: string) : Promise<SignInResult> {
+    async _parseRequestForToken(response: Response) : Promise<SignInResult> {
         if (response.status == 200) {
             const json_response = await response.json() as SignInResponse
             this.user_information = {
