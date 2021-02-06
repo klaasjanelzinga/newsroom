@@ -14,12 +14,14 @@ export interface Feed {
     image_link: string;
 }
 
-export interface UserProfileResponse {
-    given_name: string;
-    family_name: string;
-    email: string;
-    avatar_url: string;
-    id_token: string;
+export interface UserProfileRequest {
+    display_name: string | null
+}
+
+export interface UserResponse {
+    display_name: string | null
+    email_address: string
+    is_approved: boolean
 }
 
 export interface ErrorResponse {

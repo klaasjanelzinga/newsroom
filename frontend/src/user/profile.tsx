@@ -1,4 +1,4 @@
-import {createStyles, WithStyles, withStyles} from '@material-ui/core';
+import {Button, createStyles, Icon, WithStyles, withStyles} from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
@@ -8,7 +8,8 @@ import {RouteComponentProps, withRouter} from 'react-router-dom';
 import HeaderBar from '../headerbar/HeaderBar';
 import {Api} from "../Api";
 import Header from "./header";
-import {withAuthHandling, WithAuthHandling} from "../WithAuthHandling";
+import {TokenBasedAuthenticator, withAuthHandling, WithAuthHandling} from "../WithAuthHandling";
+import {UserProfileRequest, UserResponse} from "./model";
 
 const styles = createStyles({
     saveButton: {
@@ -36,25 +37,46 @@ interface ProfileProps extends WithAuthHandling, WithSnackbarProps, WithStyles<t
 
 interface ProfileState {
     email_address: string
+    display_name: string
 }
 
 class Profile extends React.Component<ProfileProps, ProfileState> {
 
-    apiFetch: Api
+    api: Api
+    authHandler: TokenBasedAuthenticator
 
     constructor(props: ProfileProps) {
         super(props);
         this.state = {
-            email_address: props.authHandling.user_information?.email_address || ''
+            email_address: props.authHandling.user_information?.email_address || '',
+            display_name: props.authHandling.user_information?.display_name || '',
         }
-        this.apiFetch  = new Api(props)
+        this.api = new Api(props)
+        this.authHandler = this.props.authHandling
     }
 
-    notifyNoUpdate() {
-        this.props.enqueueSnackbar('Profile was not updated. Continue to app...', {
-            variant: 'warning',
-            autoHideDuration: 3000,
-        });
+    async update_profile(): Promise<void> {
+        this.api.post<UserResponse>("/user/update-profile", JSON.stringify({
+            display_name: this.state.display_name,
+        }))
+            .then(userResponse => {
+                if (userResponse[0] == 200) {
+                    this.authHandler.update_user_information(userResponse[1])
+                    this.props.enqueueSnackbar(`Profile updated`, {
+                        variant: 'info',
+                        autoHideDuration: 1500,
+                    });
+                    this.props.history.push('/')
+                }
+                else {
+                    this.props.enqueueSnackbar(`Profile not updated`, {
+                        variant: 'warning',
+                        autoHideDuration: 3000,
+                    });
+                }
+            })
+            .catch(reason => console.log(reason))
+        return Promise.resolve()
     }
 
     render() {
@@ -62,10 +84,10 @@ class Profile extends React.Component<ProfileProps, ProfileState> {
 
         return <div>
             <HeaderBar/>
-            <Header title={"Manage profile"} />
+            <Header title={"Manage profile"}/>
             <div className={classes.signedInUI}>
                 <Typography variant="h6" gutterBottom>
-                    Welcome!
+                    Welcome {this.authHandler.user_information?.display_name || ''}!
                 </Typography>
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
@@ -79,6 +101,28 @@ class Profile extends React.Component<ProfileProps, ProfileState> {
                             fullWidth
                             autoComplete="username"
                         />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            required
+                            id="display_name"
+                            name="display_name"
+                            label="Display name"
+                            value={this.state.display_name}
+                            onChange={(e) => this.setState({display_name: e.currentTarget.value})}
+                            fullWidth
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <div className={classes.buttonBar}>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                className={classes.saveButton}
+                                onClick={async () => await this.update_profile()} >
+                                Change profile
+                            </Button>
+                        </div>
                     </Grid>
                 </Grid>
             </div>

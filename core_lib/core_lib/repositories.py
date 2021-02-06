@@ -42,6 +42,7 @@ class QueryResult:
 class User(BaseModel):  # pylint: disable=too-few-public-methods
     user_id: str = Field(default_factory=uuid4_str)
     email_address: str
+    display_name: Optional[str]
     password_hash: str
     password_salt: str
     is_approved: bool

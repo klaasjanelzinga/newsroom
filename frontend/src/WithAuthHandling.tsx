@@ -2,6 +2,7 @@ import * as React from 'react'
 import {Subtract} from "utility-types";
 import {AuthHandling} from "./index";
 import config from './Config'
+import {UserResponse} from "./user/model";
 
 export interface SignInResult {
     success: boolean
@@ -11,11 +12,13 @@ export interface SignInResult {
 class UserInformation {
     token: string
     email_address: string
+    display_name: string | null
     is_approved: boolean
 
-    constructor(token: string, email_address: string, is_approved: boolean) {
+    constructor(token: string, email_address: string, display_name: string | null, is_approved: boolean) {
         this.token = token
         this.email_address = email_address
+        this.display_name = display_name
         this.is_approved = is_approved
     }
 
@@ -37,10 +40,15 @@ class UserInformation {
     }
 }
 
+interface User {
+    display_name: string | null
+}
+
 interface SignInResponse {
     token: string
     is_approved: boolean
     email_address: string
+    user: User
 }
 
 interface ErrorMessage {
@@ -70,6 +78,21 @@ export class TokenBasedAuthenticator {
             return null
         }
         return `Bearer ${this.user_information?.token}`
+    }
+
+    async refresh_token() {
+        if (!this.user_information) {
+            return Promise.resolve()
+        }
+        const response = await fetch(`${config.apihost}/user/refresh-token`, {
+            headers:  TokenBasedAuthenticator.unsecure_headers(),
+            method: "POST",
+            body: JSON.stringify({
+            }),
+        })
+
+        return this._parseRequestForToken(response)
+
     }
 
     async sign_in(email_address: string, password: string) : Promise<SignInResult> {
@@ -123,13 +146,22 @@ export class TokenBasedAuthenticator {
         return this._parseRequestForToken(response)
     }
 
+    update_user_information(userResponse: UserResponse) {
+        if (this.user_information) {
+            this.user_information.display_name = userResponse.display_name
+            this.user_information.is_approved = userResponse.is_approved
+            UserInformation.save(this.user_information)
+        }
+    }
+
     async _parseRequestForToken(response: Response) : Promise<SignInResult> {
-        if (response.status == 200) {
+        if (response.status === 200) {
             const json_response = await response.json() as SignInResponse
             this.user_information = {
                 token: json_response.token,
                 email_address: json_response.email_address,
-                is_approved: json_response.is_approved
+                display_name: json_response.user.display_name || '',
+                is_approved: json_response.is_approved,
             }
             UserInformation.save(this.user_information)
             this.isSignedIn = true
@@ -137,7 +169,7 @@ export class TokenBasedAuthenticator {
                 success: true
             })
         }
-        else if (response.status == 401) {
+        else if (response.status === 401) {
             const json_response = await response.json() as ErrorMessage
             return Promise.resolve({
                 success: false,

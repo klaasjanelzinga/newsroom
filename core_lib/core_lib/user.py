@@ -110,3 +110,9 @@ def signup(email_address: str, password: str, password_repeated: str) -> User:
         is_approved=False,
     )
     return repositories.user_repository.upsert(user)
+
+
+def update_user_profile(user: User, display_name: str) -> User:
+    """ Update profile and return the updated user. """
+    user.display_name = display_name
+    return repositories.user_repository.upsert(user)
