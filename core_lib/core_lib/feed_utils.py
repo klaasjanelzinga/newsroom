@@ -7,7 +7,7 @@ from urllib.parse import urlparse
 import pytz
 
 from core_lib.application_data import repositories
-from core_lib.date_utils import now_in_utc
+from core_lib.utils import now_in_utc
 from core_lib.repositories import Feed, FeedItem, User, NewsItem, RefreshResult
 
 
@@ -123,7 +123,9 @@ domain_to_favicon_map = {
     "www.filtergroningen.nl": "https://i1.wp.com/www.filtergroningen.nl/wp-content/uploads/2017/03/favicon.png?fit=32%2C32&#038;ssl=1",
     "www.tivolivredenburg.nl": "https://www.tivolivredenburg.nl/wp-content/themes/tivolivredenburg/favicon.ico",
     "www.vera-groningen.nl": "https://www.vera-groningen.nl/vera/assets/img/favicon.png",
-    "https://www.desmaakvanstad.nl": "https://www.desmaakvanstad.nl/wp-content/uploads/2017/08/cropped-FAVICON-1.jpg",
+    "www.desmaakvanstad.nl": "https://www.desmaakvanstad.nl/wp-content/uploads/2017/08/cropped-FAVICON-1.jpg",
+    "campus.groningen.nl": "https://campus.groningen.nl/img/favicons/campus-groningen/favicon-32x32.png",
+    "gemeente.groningen.nl": "https://gemeente.groningen.nl/sites/all/themes/custom/groningen/favicon.ico",
 }
 
 

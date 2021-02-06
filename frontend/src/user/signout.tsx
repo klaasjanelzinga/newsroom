@@ -2,8 +2,7 @@ import * as React from 'react';
 import {withSnackbar, WithSnackbarProps} from 'notistack';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import HeaderBar from '../headerbar/HeaderBar';
-import UserProfile from './UserProfile';
-import {createStyles, Typography, WithStyles} from "@material-ui/core";
+import {Button, createStyles, Icon, Typography, WithStyles} from "@material-ui/core";
 import withStyles from "@material-ui/core/styles/withStyles";
 import {withAuthHandling, WithAuthHandling} from "../WithAuthHandling";
 
@@ -22,7 +21,6 @@ interface SignoutProps extends RouteComponentProps, WithSnackbarProps, WithAuthH
 class SignOut extends React.Component<SignoutProps> {
 
     async logout() {
-        UserProfile.delete();
         await this.props.authHandling.sign_out()
         this.props.enqueueSnackbar('You were signed out.', {
             variant: 'info',
@@ -36,10 +34,15 @@ class SignOut extends React.Component<SignoutProps> {
             <HeaderBar/>
             <div className={classes.signoutForm}>
                 <Typography component="h5" variant="h5">
-                    Logout with google for the newsroom site.
+                    Logout off the newsroom site.
                 </Typography>
                 <Typography variant="subtitle1" color="textSecondary">
-                        <button onClick={() => this.logout()}>Sign out from google</button>
+                        <Button
+                            onClick={() => this.logout()}
+                            color="primary"
+                            endIcon={<Icon>logout</Icon>}>
+                            Logout from newsroom
+                        </Button>
                 </Typography>
             </div>
         </div>

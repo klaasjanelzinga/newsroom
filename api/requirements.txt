@@ -32,6 +32,8 @@ pydantic==1.7.3
     # via
     #   -r requirements.in
     #   fastapi
+pyjwt==2.0.1
+    # via -r requirements.in
 starlette==0.13.6
     # via fastapi
 typing-extensions==3.7.4.3

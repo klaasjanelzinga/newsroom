@@ -1,7 +1,6 @@
 aiohttp
 
 google-api-core
-google-auth
 google-cloud-core
 google-cloud-datastore
 grpcio

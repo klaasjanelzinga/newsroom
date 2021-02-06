@@ -5,6 +5,7 @@ from unittest.mock import Mock, AsyncMock
 import pytest
 from faker import Faker
 
+from api.security import TokenVerifier
 from core_lib import application_data
 from core_lib.application_data import Repositories
 from core_lib.repositories import (
@@ -16,17 +17,7 @@ from core_lib.repositories import (
 from tests.mock_repositories import MockRepositories
 
 application_data.repositories = MockRepositories()
-
-
-def user_factory(faker: Faker) -> User:
-    user = User(
-        given_name=faker.name(),
-        family_name=faker.name(),
-        email=faker.email(),
-        avatar_url=faker.url(),
-        is_approved=faker.pybool(),
-    )
-    return user
+application_data.token_secret_key = "junit-secret"
 
 
 def feed_factory(faker: Faker) -> Feed:
@@ -65,10 +56,15 @@ def repositories() -> Repositories:
 
 
 @pytest.fixture
-def user(faker: Faker, repositories: Repositories) -> User:
-    user = user_factory(faker)
-    user = repositories.user_repository.upsert(user)
+def user(faker: Faker, repositories: MockRepositories) -> User:
+    user = User(email_address=faker.name(), password_hash="hash", password_salt="salt", is_approved=True)
+    repositories.user_repository.upsert(user)
     return user
+
+
+@pytest.fixture
+def bearer_token(faker: Faker, user: User) -> str:
+    return f"Bearer {TokenVerifier.create_token(user)}"
 
 
 @pytest.fixture
@@ -91,18 +87,3 @@ def subscription(repositories: Repositories, user: User, feed: Feed) -> Subscrip
     repositories.feed_repository.upsert(feed)
     repositories.user_repository.upsert(user)
     return repositories.subscription_repository.upsert(Subscription(user_id=user.user_id, feed_id=feed.feed_id))
-
-
-# @pytest.fixture
-# def subscribed_user(user: User, feed: Feed, subscription: Subscription, feed_items: List[FeedItem]) -> Tuple[User, Feed]:
-#     return user, feed
-#
-#
-@contextmanager
-def authorization_for(security_mock: Mock, user: User, repositories: MockRepositories):
-    security_mock.get_approved_user = AsyncMock()
-    security_mock.get_approved_user.return_value = user
-
-    yield
-
-    security_mock.get_approved_user.assert_called_once()

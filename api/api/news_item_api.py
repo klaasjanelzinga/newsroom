@@ -61,7 +61,7 @@ class MarkAsReadRequest(BaseModel):
 
 
 @news_router.post("/news-items/mark-as-read", tags=["news-items"])
-async def mark_as_read(mark_as_read_request: MarkAsReadRequest, authorization: Optional[str] = Header(None)) -> None:
+async def mark_as_read(mark_as_read_request: MarkAsReadRequest, authorization: Optional[str] = Header("")) -> None:
     user = await security.get_approved_user(authorization)
     repositories.news_item_repository.mark_items_as_read(user=user, news_item_ids=mark_as_read_request.news_item_ids)
     user.number_of_unread_items = max(0, user.number_of_unread_items - len(mark_as_read_request.news_item_ids))

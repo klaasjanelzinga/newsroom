@@ -2,7 +2,6 @@ import * as React from "react";
 import {createStyles, WithStyles} from "@material-ui/core";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {withStyles} from "@material-ui/core/styles";
-import UserProfile from "../user/UserProfile";
 import HeaderBar from "../headerbar/HeaderBar";
 import Header from "../user/header";
 import {withSnackbar, WithSnackbarProps} from "notistack";
@@ -32,7 +31,6 @@ export enum NewsVariant {
 }
 
 export interface NewsProps extends RouteComponentProps, WithAuthHandling, WithSnackbarProps, WithStyles<typeof styles> {
-    userProfile: UserProfile
     variant: NewsVariant
 }
 

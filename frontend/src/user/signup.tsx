@@ -3,8 +3,8 @@ import {Button, Card, CardContent, createStyles, Icon, Typography, WithStyles, w
 import {withSnackbar, WithSnackbarProps} from 'notistack';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import HeaderBar from '../headerbar/HeaderBar';
-import queryString from 'query-string';
-import {TokenBasedAuthenticator, withAuthHandling, WithAuthHandling} from "../WithAuthHandling";
+import {Api} from "../Api";
+import {SignInResult, TokenBasedAuthenticator, withAuthHandling, WithAuthHandling} from "../WithAuthHandling";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 
@@ -33,46 +33,49 @@ const styles = createStyles({
     },
 });
 
-interface SignInProps extends WithAuthHandling, WithStyles<typeof styles>, RouteComponentProps, WithSnackbarProps {
+interface SignUpProps extends WithAuthHandling, WithStyles<typeof styles>, RouteComponentProps, WithSnackbarProps {
 }
 
-interface SignInState {
-    email_address: string;
-    password: string;
+interface SignUpState {
+    email_address: string
+    password: string
+    password_repeated: string
 }
 
-class SignIn extends React.Component<SignInProps, SignInState> {
+class SignUp extends React.Component<SignUpProps, SignUpState> {
 
-    redirect_to: string | null
+    apiFetch: Api
     authHandling: TokenBasedAuthenticator
 
-    constructor(props: SignInProps) {
+    constructor(props: SignUpProps) {
         super(props);
+        this.apiFetch = new Api(props)
+        this.authHandling = props.authHandling
         this.state = {
             email_address: this.props.authHandling.user_information?.email_address || '',
             password: '',
+            password_repeated: ''
         }
-        this.authHandling = props.authHandling
-        this.redirect_to = queryString.parse(this.props.location.search).redirect_to as string || null
-        if (this.redirect_to === this.props.location.pathname) {
-            this.redirect_to = null
-        }
-
     }
 
-    async sign_in(): Promise<void> {
+    async sign_up(): Promise<void> {
         try {
-            const sign_in_result = await this.authHandling.sign_in(this.state.email_address, this.state.password)
+            const sign_in_result: SignInResult = await this.authHandling.sign_up(
+                this.state.email_address, this.state.password, this.state.password_repeated
+            )
             if (!sign_in_result.success) {
-                this.setState({password: ""})
-                this.props.enqueueSnackbar(`Sign in failed: ${sign_in_result.reason || "Unknown"}`, {
+                this.setState({
+                    password: "",
+                    password_repeated: "",
+                })
+                this.props.enqueueSnackbar(`Sign up failed: ${sign_in_result.reason || "unknown"}`, {
                     variant: 'warning',
                     autoHideDuration: 3000,
                 });
                 return Promise.resolve()
             }
             if (this.authHandling.user_information?.is_approved) {
-                this.props.history.push(this.redirect_to || '/')
+                this.props.history.push('/')
             } else {
                 this.props.history.push('/user/needs-approval')
             }
@@ -96,7 +99,7 @@ class SignIn extends React.Component<SignInProps, SignInState> {
                         <Grid container>
                             <Grid item xs={12}>
                                 <Typography component="h5" variant="h5">
-                                    Sign into your newsroom:
+                                    Start the signing up process for newsroom:
                                 </Typography>
                             </Grid>
                             <Grid item xs={12}>
@@ -106,8 +109,8 @@ class SignIn extends React.Component<SignInProps, SignInState> {
                                     name="email"
                                     label="Email address"
                                     fullWidth
-                                    value={this.state.email_address}
                                     onChange={(e) => this.setState({email_address: e.currentTarget.value})}
+                                    value={this.state.email_address}
                                     autoComplete="username"
                                 />
                             </Grid>
@@ -119,8 +122,21 @@ class SignIn extends React.Component<SignInProps, SignInState> {
                                     label="Password"
                                     type="password"
                                     onChange={(e) => this.setState({password: e.currentTarget.value})}
-                                    fullWidth
                                     value={this.state.password}
+                                    fullWidth
+                                    autoComplete="password"
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    required
+                                    id="repeated_password"
+                                    name="repeated_password"
+                                    label="Repeat password"
+                                    type="password"
+                                    onChange={(e) => this.setState({password_repeated: e.currentTarget.value})}
+                                    value={this.state.password_repeated}
+                                    fullWidth
                                     autoComplete="password"
                                 />
                             </Grid>
@@ -130,17 +146,9 @@ class SignIn extends React.Component<SignInProps, SignInState> {
                                         variant="contained"
                                         color="primary"
                                         className={classes.saveButton}
-                                        onClick={async () => await this.sign_in()}
+                                        onClick={async () => await this.sign_up()}
                                         endIcon={<Icon>login</Icon>}>
-                                        Login
-                                    </Button>
-                                    <Button
-                                        variant="contained"
-                                        color="default"
-                                        className={classes.signUpButton}
-                                        onClick={() => this.props.history.push('/user/signup')}
-                                        endIcon={<Icon>account_box</Icon>}>
-                                        OR Sign up ...
+                                        Sign up
                                     </Button>
                                 </div>
                             </Grid>
@@ -152,5 +160,5 @@ class SignIn extends React.Component<SignInProps, SignInState> {
     }
 }
 
-export default withStyles(styles)(withRouter(withSnackbar(withAuthHandling(SignIn))))
+export default withStyles(styles)(withRouter(withSnackbar(withAuthHandling(SignUp))))
 

@@ -3,7 +3,6 @@ import {withStyles} from '@material-ui/core/styles';
 import {AccountCircle} from '@material-ui/icons';
 import React from 'react';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
-import UserProfile from '../user/UserProfile';
 import {withAuthHandling, WithAuthHandling} from "../WithAuthHandling";
 
 const styles = createStyles({});
@@ -14,7 +13,6 @@ interface HeaderMenuProps extends RouteComponentProps, WithAuthHandling, WithSty
 type HeaderMenuState = {
     anchorEl: null | HTMLElement;
     menuOpen: boolean;
-    userProfile: UserProfile|null;
 }
 
 class HeaderMenu extends React.Component<HeaderMenuProps, HeaderMenuState> {
@@ -22,12 +20,7 @@ class HeaderMenu extends React.Component<HeaderMenuProps, HeaderMenuState> {
     state: HeaderMenuState = {
         anchorEl: null,
         menuOpen: false,
-        userProfile: null,
     };
-
-    componentDidMount= () => {
-        this.setState({userProfile: UserProfile.load() })
-    }
 
     handleMenu = (event: React.MouseEvent<HTMLElement>):void => {
         this.setState({
@@ -58,12 +51,12 @@ class HeaderMenu extends React.Component<HeaderMenuProps, HeaderMenuState> {
         this.props.history.push('/user/profile');
     }
 
+    handleChangePassword = () => {
+        this.handleClose();
+        this.props.history.push('/user/change-password');
+    }
+
     accountAvatar = () => {
-        if (this.state.userProfile != null) {
-            return <Avatar alt={this.state.userProfile.givenName}
-                           src={this.state.userProfile.avatarUrl}
-            />
-        }
         return <AccountCircle/>
     }
 
@@ -87,6 +80,7 @@ class HeaderMenu extends React.Component<HeaderMenuProps, HeaderMenuState> {
                     <MenuItem disabled={this.props.authHandling.isSignedIn} onClick={this.handleSignIn}>Sign in</MenuItem>
                     <MenuItem disabled={!this.props.authHandling.isSignedIn} onClick={this.handleMyProfile}>Profile</MenuItem>
                     <MenuItem disabled={!this.props.authHandling.isSignedIn} onClick={this.handleSignOut}>Sign out</MenuItem>
+                    <MenuItem onClick={this.handleChangePassword}>Change password</MenuItem>
                 </Menu>
             </div>
         );

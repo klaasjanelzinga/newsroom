@@ -1,17 +1,13 @@
 import logging
-from asyncio.tasks import Task
+from datetime import timedelta, datetime
 from typing import Dict, Optional
 
-import aiohttp
+import jwt
 from fastapi import HTTPException
-from google.auth import jwt
-from starlette.status import HTTP_403_FORBIDDEN
+from starlette.status import HTTP_403_FORBIDDEN, HTTP_401_UNAUTHORIZED
 
+from core_lib import application_data
 from core_lib.repositories import User, UserRepository
-
-
-class TokenVerificationException(Exception):
-    pass
 
 
 log = logging.getLogger(__file__)
@@ -19,50 +15,38 @@ log = logging.getLogger(__file__)
 
 class TokenVerifier:
     @staticmethod
-    async def _fetch_certs() -> Dict:
-        timeout = aiohttp.ClientTimeout(total=10)
-        async with aiohttp.ClientSession(timeout=timeout) as task_session:
-            log.info("Getting certs")
-            async with task_session.get("https://www.googleapis.com/oauth2/v1/certs") as response:
-                return await response.json()
-
-    @staticmethod
-    async def verify(bearer_token: Optional[str]) -> User:
+    async def verify(bearer_token: Optional[str]) -> Dict[str, str]:
         """
         Verifies the bearer token.
 
         :param bearer_token: The content of the authorization header.
         :return: A User object constructed from the token with is_approved set to False.
-        :raises Http
+        :raises HTTPException: If the authorization from the token failed.
 
         """
-        token_certs = Task(TokenVerifier._fetch_certs())
-        try:
-            if bearer_token is None:
-                token_certs.cancel()
-                raise HTTPException(status_code=401, detail="Unauthorized")
-            if len(bearer_token) < 15:
-                token_certs.cancel()
-                raise HTTPException(status_code=401, detail="Unauthorized")
-            if not bearer_token.startswith("Bearer"):
-                token_certs.cancel()
-                raise HTTPException(status_code=401, detail="Unauthorized")
-            token = bearer_token[7:]
-            result = jwt.decode(
-                token=token,
-                certs=await token_certs,
-                verify=True,
-                audience="662875567592-9do93u1nppl2ks4geufjtm7n5hfo23m3.apps.googleusercontent.com",
-            )
-            return User(
-                given_name=result["given_name"],
-                family_name=result["family_name"],
-                email=result["email"],
-                avatar_url=result["picture"],
-                is_approved=False,
-            )
-        except ValueError as error:
-            raise HTTPException(status_code=401, detail=error.__str__()) from error
+        if bearer_token is None:
+            raise HTTPException(status_code=401, detail="Unauthorized")
+        if not isinstance(bearer_token, str):
+            raise HTTPException(status_code=401, detail="Unauthorized")
+        if len(bearer_token) < 15:
+            raise HTTPException(status_code=401, detail="Unauthorized")
+        if not bearer_token.startswith("Bearer"):
+            raise HTTPException(status_code=401, detail="Unauthorized")
+        token = bearer_token[7:]
+        decoded = jwt.decode(jwt=token, key=application_data.token_secret_key, algorithms=["HS256"])
+        return decoded
+
+    @staticmethod
+    def create_token(user: User) -> str:
+        return jwt.encode(
+            payload={
+                "name": user.email_address,
+                "user_id": user.user_id,
+                "exp": datetime.utcnow() + timedelta(days=7),
+            },
+            key=application_data.token_secret_key,
+            algorithm="HS256",
+        )
 
 
 class Security:
@@ -75,7 +59,9 @@ class Security:
         403 FORBIDDEN is returned.
         """
         user_from_token = await TokenVerifier.verify(authorization_header)
-        user_from_repo = self.user_repository.fetch_user_by_email(user_from_token.email)
+        user_from_repo = self.user_repository.fetch_user_by_email(user_from_token["name"])
+        if user_from_repo is None:
+            raise HTTPException(status_code=HTTP_401_UNAUTHORIZED)
         if not user_from_repo.is_approved:
             raise HTTPException(status_code=HTTP_403_FORBIDDEN, detail="User is not yet approved")
         return user_from_repo
