@@ -14,12 +14,14 @@ class UserInformation {
     email_address: string
     display_name: string | null
     is_approved: boolean
+    avatar_image: string | null
 
-    constructor(token: string, email_address: string, display_name: string | null, is_approved: boolean) {
+    constructor(token: string, email_address: string, display_name: string | null, is_approved: boolean, avatar_image: string | null) {
         this.token = token
         this.email_address = email_address
         this.display_name = display_name
         this.is_approved = is_approved
+        this.avatar_image = avatar_image
     }
 
     static delete(): void {
@@ -31,7 +33,7 @@ class UserInformation {
         return user_information
     }
 
-    static load() : UserInformation | null {
+    static load(): UserInformation | null {
         const local_storage = localStorage.getItem('user-profile')
         if (local_storage) {
             return JSON.parse(local_storage) as UserInformation
@@ -40,19 +42,19 @@ class UserInformation {
     }
 }
 
-interface User {
-    display_name: string | null
+export interface User {
+    display_name: string | null;
 }
 
-interface SignInResponse {
-    token: string
-    is_approved: boolean
-    email_address: string
-    user: User
+export interface SignInResponse {
+    token: string;
+    is_approved: boolean;
+    email_address: string;
+    user: User;
 }
 
 interface ErrorMessage {
-    detail: string
+    detail: string;
 }
 
 export class TokenBasedAuthenticator {
@@ -80,22 +82,7 @@ export class TokenBasedAuthenticator {
         return `Bearer ${this.user_information?.token}`
     }
 
-    async refresh_token() {
-        if (!this.user_information) {
-            return Promise.resolve()
-        }
-        const response = await fetch(`${config.apihost}/user/refresh-token`, {
-            headers:  TokenBasedAuthenticator.unsecure_headers(),
-            method: "POST",
-            body: JSON.stringify({
-            }),
-        })
-
-        return this._parseRequestForToken(response)
-
-    }
-
-    async sign_in(email_address: string, password: string) : Promise<SignInResult> {
+    async sign_in(email_address: string, password: string): Promise<SignInResult> {
         const response = await fetch(`${config.apihost}/user/signin`, {
             headers:  TokenBasedAuthenticator.unsecure_headers(),
             method: "POST",
@@ -115,6 +102,13 @@ export class TokenBasedAuthenticator {
         return Promise.resolve()
     }
 
+    update_avatar_image(avatar_image: string | null): void {
+        if (this.user_information) {
+            this.user_information.avatar_image = avatar_image
+            UserInformation.save(this.user_information)
+        }
+    }
+
     async change_password(email_address: string, current_password: string, new_password:string, new_password_repeated: string) : Promise<SignInResult> {
         const response = await fetch(`${config.apihost}/user/change_password`, {
             headers:  TokenBasedAuthenticator.unsecure_headers(),
@@ -130,7 +124,7 @@ export class TokenBasedAuthenticator {
         return this._parseRequestForToken(response)
     }
 
-    async sign_up(email_address: string, password: string, password_repeated: string) : Promise<SignInResult> {
+    async sign_up(email_address: string, password: string, password_repeated: string): Promise<SignInResult> {
         const headers: HeadersInit = new Headers()
         headers.set('Content-Type', 'application/json')
         const response = await fetch(`${config.apihost}/user/signup`, {
@@ -146,7 +140,7 @@ export class TokenBasedAuthenticator {
         return this._parseRequestForToken(response)
     }
 
-    update_user_information(userResponse: UserResponse) {
+    update_user_information(userResponse: UserResponse): void {
         if (this.user_information) {
             this.user_information.display_name = userResponse.display_name
             this.user_information.is_approved = userResponse.is_approved
@@ -154,7 +148,7 @@ export class TokenBasedAuthenticator {
         }
     }
 
-    async _parseRequestForToken(response: Response) : Promise<SignInResult> {
+    async _parseRequestForToken(response: Response): Promise<SignInResult> {
         if (response.status === 200) {
             const json_response = await response.json() as SignInResponse
             this.user_information = {
@@ -162,6 +156,7 @@ export class TokenBasedAuthenticator {
                 email_address: json_response.email_address,
                 display_name: json_response.user.display_name || '',
                 is_approved: json_response.is_approved,
+                avatar_image: null,
             }
             UserInformation.save(this.user_information)
             this.isSignedIn = true
@@ -185,7 +180,7 @@ export class TokenBasedAuthenticator {
 }
 
 export interface WithAuthHandling {
-    authHandling: TokenBasedAuthenticator
+    authHandling: TokenBasedAuthenticator;
 }
 
 

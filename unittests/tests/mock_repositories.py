@@ -6,8 +6,7 @@ from aiohttp import ClientSession, ClientResponse
 from google.cloud.datastore import Client
 
 from core_lib.gemeente_groningen import feed_gemeente_groningen
-from core_lib.repositories import Feed, Subscription, User, FeedItem, NewsItem
-
+from core_lib.repositories import Feed, Subscription, User, FeedItem, NewsItem, Avatar
 
 logging.basicConfig(level=logging.INFO)
 log = logging.getLogger(__file__)
@@ -144,6 +143,7 @@ class NewsItemRepository:
 class UserRepository:
     def __init__(self):
         self.store: Dict[str, User] = {}
+        self.avatar_store: Dict[str, Avatar] = {}
 
     def reset(self):
         self.store = {}
@@ -168,6 +168,16 @@ class UserRepository:
 
     def fetch_subscribed_to(self, feed: Feed) -> List[User]:
         return [user for user in self.store.values() if feed.feed_id in user.subscribed_to]
+
+    def fetch_avatar_for_user(self, user: User) -> Optional[Avatar]:
+        return self.avatar_store.get(user.user_id)
+
+    def update_avatar(self, user: User, avatar_image: Optional[str]) -> Avatar:
+        if avatar_image is None:
+            if user.user_id in self.avatar_store:
+                self.avatar_store.pop(user.user_id)
+            return
+        self.avatar_store[user.user_id] = Avatar(user_id=user.user_id, image=avatar_image)
 
 
 class MockRepositories:

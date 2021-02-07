@@ -37,9 +37,9 @@ interface SignUpProps extends WithAuthHandling, WithStyles<typeof styles>, Route
 }
 
 interface SignUpState {
-    email_address: string
-    password: string
-    password_repeated: string
+    email_address: string;
+    password: string;
+    password_repeated: string;
 }
 
 class SignUp extends React.Component<SignUpProps, SignUpState> {
@@ -88,7 +88,7 @@ class SignUp extends React.Component<SignUpProps, SignUpState> {
         return Promise.resolve()
     }
 
-    render() {
+    render(): JSX.Element {
         const {classes} = this.props;
         return <div>
             <HeaderBar/>

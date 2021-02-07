@@ -5,8 +5,12 @@ module.exports = {
         tsconfigRootDir: __dirname,
         project: ['./tsconfig.json'],
         "ecmaFeatures": {
-            "jsx": true
+            "jsx": true,
+            "es6": true
         }
+    },
+    env: {
+        es6: true,
     },
     plugins: [
         '@typescript-eslint',
@@ -19,6 +23,7 @@ module.exports = {
     ],
     "rules": {
         "react/prop-types": "off",
+        "@typescript-eslint/camelcase": "off"
     },
     "settings":
         {

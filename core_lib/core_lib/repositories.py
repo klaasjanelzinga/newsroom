@@ -39,6 +39,11 @@ class QueryResult:
     token: bytes
 
 
+class Avatar(BaseModel):
+    user_id: str
+    image: str
+
+
 class User(BaseModel):  # pylint: disable=too-few-public-methods
     user_id: str = Field(default_factory=uuid4_str)
     email_address: str
@@ -333,6 +338,23 @@ class UserRepository:
         if not result:
             return []
         return [User.parse_obj(entity) for entity in result if feed.feed_id in entity["subscribed_to"]]
+
+    def update_avatar(self, user: User, avatar_image: Optional[str]) -> Optional[Avatar]:
+        entity = datastore.Entity(self.client.key("Avatar", user.user_id), exclude_from_indexes=["image"])
+        if avatar_image is None:
+            self.client.delete(entity)
+            return None
+        avatar = Avatar(user_id=user.user_id, image=avatar_image)
+        entity.update(avatar.dict())
+        self.client.put(entity)
+        return Avatar.parse_obj(entity)
+
+    def fetch_avatar_for_user(self, user: User) -> Optional[Avatar]:
+        key = self.client.key("Avatar", user.user_id)
+        data = self.client.get(key)
+        if data is None:
+            return None
+        return Avatar.parse_obj(data)
 
 
 class RefreshResult(pydantic.main.BaseModel):

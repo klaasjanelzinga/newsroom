@@ -1,8 +1,7 @@
 import logging
 from typing import Optional
 
-from fastapi import APIRouter, HTTPException
-from fastapi.params import Header
+from fastapi import APIRouter, Header, HTTPException
 from pydantic.main import BaseModel
 from starlette import status
 
@@ -12,7 +11,7 @@ from api.security import TokenVerifier
 from core_lib.application_data import repositories
 from core_lib.exceptions import AuthorizationException
 from core_lib.repositories import User
-from core_lib.user import signup, sign_in, change_password, update_user_profile
+from core_lib.user import signup, sign_in, change_password, update_user_profile, avatar_image_for_user
 
 user_router = APIRouter()
 logger = logging.getLogger(__name__)
@@ -20,7 +19,7 @@ logger = logging.getLogger(__name__)
 
 class UserResponse(BaseModel):
     email_address: str
-    display_name: str
+    display_name: Optional[str]
     is_approved: bool
 
 
@@ -50,7 +49,13 @@ class UserChangePasswordRequest(BaseModel):
 
 
 class UpdateUserProfileRequest(BaseModel):
-    display_name: str
+    display_name: Optional[str]
+    avatar_image: Optional[str]
+    avatar_action: str
+
+
+class UserAvatarResponse(BaseModel):
+    avatar_image: Optional[str]
 
 
 @user_router.post(
@@ -131,27 +136,6 @@ async def sign_in_user(user_sign_in_request: UserSignInRequest) -> UserSignInRes
 
 
 @user_router.post(
-    "/user/refresh-token",
-    tags=["user"],
-    response_model=UserSignInResponse,
-    responses={
-        status.HTTP_200_OK: {
-            "model": User,
-            "description": "The user is logged in.",
-        },
-        status.HTTP_401_UNAUTHORIZED: {"model": ErrorMessage},
-    },
-)
-async def refresh_token(authorization: Optional[str] = Header(None)) -> UserSignInResponse:
-    try:
-        user = await security.get_approved_user(authorization)
-        token = TokenVerifier.create_token(user)
-        return UserSignInResponse(token=token, email_address=user.email_address, is_approved=user.is_approved, user=user)
-    except AuthorizationException as authorization_exception:
-        raise HTTPException(status_code=401) from authorization_exception
-
-
-@user_router.post(
     "/user/update-profile",
     tags=["user"],
     response_model=UserResponse,
@@ -167,7 +151,25 @@ async def update_profile(
 ) -> UserResponse:
     try:
         user = await security.get_approved_user(authorization)
-        user = update_user_profile(user, update_profile_request.display_name)
+        user = update_user_profile(
+            user,
+            update_profile_request.display_name,
+            avatar_image=update_profile_request.avatar_image,
+            avatar_action=update_profile_request.avatar_action,
+        )
         return UserResponse.parse_obj(user)
+    except AuthorizationException as authorization_exception:
+        raise HTTPException(status_code=401) from authorization_exception
+
+
+@user_router.get(
+    "/user/avatar",
+    tags=["user"],
+    response_model=UserAvatarResponse,
+)
+async def fetch_avatar_image(authorization: Optional[str] = Header(None)) -> UserAvatarResponse:
+    try:
+        user = await security.get_approved_user(authorization)
+        return UserAvatarResponse(avatar_image=avatar_image_for_user(user))
     except AuthorizationException as authorization_exception:
         raise HTTPException(status_code=401) from authorization_exception

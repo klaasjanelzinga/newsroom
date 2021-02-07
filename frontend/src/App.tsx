@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {createStyles, WithStyles, withStyles} from "@material-ui/core";
 import './App.css';
-import {Api} from "./Api"
 import {withSnackbar, WithSnackbarProps} from "notistack";
 import {RouteComponentProps} from "react-router";
 import News, {NewsVariant} from "./news/news";
@@ -15,14 +14,11 @@ interface AppProps extends RouteComponentProps, WithSnackbarProps, WithAuthHandl
 
 class App extends React.Component<AppProps> {
 
-    apiFetch: Api
-
     constructor(props: AppProps) {
         super(props);
-        this.apiFetch = new Api(this.props)
     }
 
-    render() {
+    render(): JSX.Element {
         return <div>
             <News variant={NewsVariant.NEWS}/>
         </div>
