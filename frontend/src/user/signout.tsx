@@ -20,15 +20,16 @@ interface SignoutProps extends RouteComponentProps, WithSnackbarProps, WithAuthH
 
 class SignOut extends React.Component<SignoutProps> {
 
-    async logout() {
+    async logout(): Promise<void> {
         await this.props.authHandling.sign_out()
         this.props.enqueueSnackbar('You were signed out.', {
             variant: 'info',
         });
         this.props.history.push('/user/signin');
+        return Promise.resolve()
     }
 
-    render() {
+    render(): JSX.Element  {
         const {classes} = this.props
         return <div>
             <HeaderBar/>

@@ -22,7 +22,7 @@ class ReadNews extends React.Component<AppProps> {
         this.apiFetch = new Api(props)
     }
 
-    render() {
+    render(): JSX.Element {
         return <News variant={NewsVariant.READ_NEWS}/>
     }
 }

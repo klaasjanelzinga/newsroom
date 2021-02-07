@@ -4,23 +4,53 @@ import {AccountCircle} from '@material-ui/icons';
 import React from 'react';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {withAuthHandling, WithAuthHandling} from "../WithAuthHandling";
+import {Api} from "../Api";
+import {withSnackbar, WithSnackbarProps} from "notistack";
 
 const styles = createStyles({});
 
-interface HeaderMenuProps extends RouteComponentProps, WithAuthHandling, WithStyles<typeof styles> {
+interface UserAvatarResponse {
+    avatar_image: string | null;
+}
+
+interface HeaderMenuProps extends RouteComponentProps, WithAuthHandling, WithSnackbarProps, WithStyles<typeof styles> {
 }
 
 type HeaderMenuState = {
     anchorEl: null | HTMLElement;
     menuOpen: boolean;
+    avatar_image: string | null;
 }
 
 class HeaderMenu extends React.Component<HeaderMenuProps, HeaderMenuState> {
 
-    state: HeaderMenuState = {
-        anchorEl: null,
-        menuOpen: false,
-    };
+    api: Api
+
+    constructor(props: HeaderMenuProps) {
+        super(props);
+        this.api = new Api(props)
+        this.state = {
+            anchorEl: null,
+            menuOpen: false,
+            avatar_image: this.props.authHandling.user_information?.avatar_image || null,
+        };
+
+        this.fetch_avatar_image()
+    }
+
+    fetch_avatar_image() {
+        if (this.state.avatar_image) {
+            return
+        }
+        this.api.get<UserAvatarResponse>("/user/avatar")
+            .then(user_avatar_response => {
+                if (user_avatar_response[0] === 200) {
+                    this.setState({avatar_image: user_avatar_response[1].avatar_image})
+                    this.props.authHandling.update_avatar_image(user_avatar_response[1].avatar_image)
+                }
+            })
+            .catch(reason => console.log(reason))
+    }
 
     handleMenu = (event: React.MouseEvent<HTMLElement>):void => {
         this.setState({
@@ -57,7 +87,11 @@ class HeaderMenu extends React.Component<HeaderMenuProps, HeaderMenuState> {
     }
 
     accountAvatar = () => {
-        return <AccountCircle/>
+        if (this.state.avatar_image) {
+            return <Avatar src={this.state.avatar_image}
+                           alt={this.props.authHandling.user_information?.display_name || "?"}/>
+        }
+        return <AccountCircle />
     }
 
     render() {
@@ -87,4 +121,4 @@ class HeaderMenu extends React.Component<HeaderMenuProps, HeaderMenuState> {
     }
 }
 
-export default withStyles(styles)(withRouter(withAuthHandling(HeaderMenu)));
+export default withStyles(styles)(withRouter(withAuthHandling(withSnackbar(HeaderMenu))))

@@ -2,6 +2,7 @@ import hashlib
 import re
 from base64 import b64decode
 from os import urandom
+from typing import Optional
 
 from core_lib.application_data import repositories
 from core_lib.exceptions import AuthorizationFailed, UserNameTaken, PasswordsDoNotMatch, IllegalPassword
@@ -110,3 +111,22 @@ def signup(email_address: str, password: str, password_repeated: str) -> User:
         is_approved=False,
     )
     return repositories.user_repository.upsert(user)
+
+
+def update_user_profile(
+    user: User, display_name: Optional[str], avatar_image: Optional[str], avatar_action: str
+) -> User:
+    """ Update profile and avatar. Return the updated user. """
+    user.display_name = display_name
+    if avatar_action == "delete":
+        repositories.user_repository.update_avatar(user, None)
+    if avatar_image is not None:
+        repositories.user_repository.update_avatar(user, avatar_image)
+    return repositories.user_repository.upsert(user)
+
+
+def avatar_image_for_user(user: User) -> Optional[str]:
+    avatar = repositories.user_repository.fetch_avatar_for_user(user)
+    if avatar is None:
+        return None
+    return avatar.image

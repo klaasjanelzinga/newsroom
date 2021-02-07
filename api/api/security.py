@@ -4,11 +4,11 @@ from typing import Dict, Optional
 
 import jwt
 from fastapi import HTTPException
+from jwt import PyJWTError
 from starlette.status import HTTP_403_FORBIDDEN, HTTP_401_UNAUTHORIZED
 
 from core_lib import application_data
 from core_lib.repositories import User, UserRepository
-
 
 log = logging.getLogger(__file__)
 
@@ -33,8 +33,12 @@ class TokenVerifier:
         if not bearer_token.startswith("Bearer"):
             raise HTTPException(status_code=401, detail="Unauthorized")
         token = bearer_token[7:]
-        decoded = jwt.decode(jwt=token, key=application_data.token_secret_key, algorithms=["HS256"])
-        return decoded
+        try:
+            return jwt.decode(jwt=token, key=application_data.token_secret_key, algorithms=["HS256"])
+        except ValueError as value_error:
+            raise HTTPException(status_code=401, detail="Unauthorized") from value_error
+        except PyJWTError as jwt_error:
+            raise HTTPException(status_code=401, detail="Unauthorized") from jwt_error
 
     @staticmethod
     def create_token(user: User) -> str:
