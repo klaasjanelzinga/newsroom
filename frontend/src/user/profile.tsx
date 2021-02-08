@@ -1,4 +1,4 @@
-import {Button, createStyles, Icon, WithStyles, withStyles} from '@material-ui/core';
+import {Button, createStyles, WithStyles, withStyles} from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
@@ -9,7 +9,7 @@ import HeaderBar from '../headerbar/HeaderBar';
 import {Api} from "../Api";
 import Header from "./header";
 import {TokenBasedAuthenticator, withAuthHandling, WithAuthHandling} from "../WithAuthHandling";
-import {UserProfileRequest, UserResponse} from "./model";
+import {UserResponse} from "./model";
 import Avatar from "react-avatar-edit";
 
 const styles = createStyles({
@@ -103,11 +103,11 @@ class Profile extends React.Component<ProfileProps, ProfileState> {
         return Promise.resolve()
     }
 
-    onClose() {
+    onClose(): void {
         this.setState({preview: null})
     }
 
-    onCrop(preview: string) {
+    onCrop(preview: string): void {
         if (preview.length > 1 * 1000 * 1000) {
             this.props.enqueueSnackbar(`Max size profile picture is 1MB`, {
                 variant: 'warning',
@@ -118,7 +118,7 @@ class Profile extends React.Component<ProfileProps, ProfileState> {
         this.setState({preview: preview})
     }
 
-    delete_avatar() {
+    delete_avatar(): void {
         this.setState({avatar_action: "delete"})
         this.props.enqueueSnackbar("Avatar is scheduled for deletion. Hit Change Profile to confirm", {
             variant: 'warning',
@@ -126,7 +126,7 @@ class Profile extends React.Component<ProfileProps, ProfileState> {
         });
     }
 
-    render() {
+    render(): JSX.Element {
         const {classes} = this.props;
 
         return <div>
@@ -156,7 +156,7 @@ class Profile extends React.Component<ProfileProps, ProfileState> {
                             name="display_name"
                             label="Display name"
                             value={this.state.display_name}
-                            onChange={(e) => this.setState({display_name: e.currentTarget.value})}
+                            onChange={(e): void => this.setState({display_name: e.currentTarget.value})}
                             fullWidth
                         />
                     </Grid>
@@ -165,8 +165,8 @@ class Profile extends React.Component<ProfileProps, ProfileState> {
                             <Avatar
                                 width={200}
                                 height={200}
-                                onCrop={this.onCrop}
-                                onClose={this.onClose}
+                                onCrop={(arg): void => this.onCrop(arg)}
+                                onClose={(): void => this.onClose()}
                                 src={this.state.src}
                             />
                             <img className={classes.previewImage} src={this.state.preview || ''} alt="Preview"/>
@@ -176,7 +176,7 @@ class Profile extends React.Component<ProfileProps, ProfileState> {
                             color="secondary"
                             className={classes.saveButton}
                             disabled={this.props.authHandling.user_information?.avatar_image == null}
-                            onClick={async () => await this.delete_avatar()}>
+                            onClick={(): void => this.delete_avatar()}>
                             Delete avatar
                         </Button>
                     </Grid>
@@ -188,7 +188,7 @@ class Profile extends React.Component<ProfileProps, ProfileState> {
                                 variant="contained"
                                 color="primary"
                                 className={classes.saveButton}
-                                onClick={async () => await this.update_profile()}>
+                                onClick={async (): Promise<void> => await this.update_profile()}>
                                 Change profile
                             </Button>
                         </div>

@@ -10,9 +10,9 @@ from aiohttp import ClientSession
 from lxml.etree import fromstring, ElementBase
 
 from core_lib.application_data import repositories
-from core_lib.feed_utils import upsert_new_items_for_feed, update_users_unread_count_with_refresh_results
-from core_lib.utils import now_in_utc
+from core_lib.feed_utils import upsert_new_items_for_feed
 from core_lib.repositories import Feed, FeedItem, FeedSourceType, RefreshResult
+from core_lib.utils import now_in_utc
 
 log = logging.getLogger(__file__)
 
@@ -93,6 +93,5 @@ async def refresh_atom_feeds() -> int:
     tasks = [
         refresh_atom_feed(client_session, feed) for feed in feeds if feed.feed_source_type == FeedSourceType.ATOM.name
     ]
-    refresh_results: List[Optional[RefreshResult]] = await asyncio.gather(*tasks)
-    update_users_unread_count_with_refresh_results(refresh_results)
+    await asyncio.gather(*tasks)
     return len(tasks)

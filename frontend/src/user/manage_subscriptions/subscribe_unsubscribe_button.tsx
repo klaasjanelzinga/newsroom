@@ -13,9 +13,9 @@ const styles = createStyles({
 })
 
 interface SubscribeUnsubscribeButtonProps extends WithStyles<typeof styles> {
-    feedResponse: GetFeedsResponse
-    subscribe_callback: (feed: GetFeedsResponse) => void
-    unsubscribe_callback: (feed: GetFeedsResponse) => void
+    feedResponse: GetFeedsResponse;
+    subscribe_callback: (feed: GetFeedsResponse) => void;
+    unsubscribe_callback: (feed: GetFeedsResponse) => void;
 }
 
 
@@ -24,14 +24,14 @@ const SubscribeUnsubscribeButton: React.FunctionComponent<SubscribeUnsubscribeBu
 
     if (props.feedResponse.user_is_subscribed) {
         return <Button size="small"
-                       onClick={() => props.unsubscribe_callback(props.feedResponse)}
+                       onClick={(): void => props.unsubscribe_callback(props.feedResponse)}
                        className={classes.button}>
             <UnsubscribeIcon/>
             Unsubscribe
         </Button>
     }
     return <Button size="small"
-                   onClick={() => props.subscribe_callback(props.feedResponse)}
+                   onClick={(): void => props.subscribe_callback(props.feedResponse)}
                    className={classes.button}>
         <SubscriptionsIcon/>
         Subscribe

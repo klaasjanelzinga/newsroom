@@ -30,19 +30,19 @@ const styles = createStyles({
 })
 
 interface NewsItemsProps extends WithAuthHandling, RouteComponentProps, WithSnackbarProps, WithStyles<typeof styles> {
-    newsItems: NewsItem[]
-    monitorScroll: boolean
-    needMoreItems: () => void
-    refreshRequested: () => void
+    newsItems: NewsItem[];
+    monitorScroll: boolean;
+    needMoreItems: () => void;
+    refreshRequested: () => void;
 
-    registerNewsItemsControl: (newsItemsCtrl: NewsItemsControl) => void
-    markAsRead: (count: number) => void
-    markAllAsRead: () => void
+    registerNewsItemsControl: (newsItemsCtrl: NewsItemsControl) => void;
+    markAsRead: (count: number) => void;
+    markAllAsRead: () => void;
 }
 
 export interface NewsItemsControl {
-    goToNextItem: () => void
-    goToPreviousItem: () => void
+    goToNextItem: () => void;
+    goToPreviousItem: () => void;
 }
 
 class NewsItemsNode extends React.Component<NewsItemsProps> implements NewsItemsControl {
@@ -61,15 +61,15 @@ class NewsItemsNode extends React.Component<NewsItemsProps> implements NewsItems
         this.props.registerNewsItemsControl(this)
     }
 
-    componentDidMount() {
+    componentDidMount(): void {
         document.addEventListener("keypress", this.keypress)
     }
 
-    componentWillUnmount() {
+    componentWillUnmount(): void {
         document.removeEventListener("keypress", this.keypress)
     }
 
-    onScroll = () => {
+    onScroll = (): void => {
         this.scrollEventClients.forEach(client => client.scrollEvent())
 
         // Mark news-items that have isRead as is_read at the server.
@@ -93,16 +93,16 @@ class NewsItemsNode extends React.Component<NewsItemsProps> implements NewsItems
         }
     }
 
-    registerForScrollEvents = (name: NewsItemControl) => {
+    registerForScrollEvents = (name: NewsItemControl): void => {
         if (this.props.monitorScroll)
             this.scrollEventClients.push(name)
     }
 
-    registerForDynamicFetch = (client: NewsItemDynamicFetchControl) => {
+    registerForDynamicFetch = (client: NewsItemDynamicFetchControl): void => {
         this.dynamicFetchClients.push(client)
     }
 
-    keypress = (event: KeyboardEvent) => {
+    keypress = (event: KeyboardEvent): void => {
         if (event.key === "j") {
             this.goToNextItem()
         } else if (event.key === "k") {
@@ -114,18 +114,18 @@ class NewsItemsNode extends React.Component<NewsItemsProps> implements NewsItems
         }
     }
 
-    openCurrentItem() {
+    openCurrentItem(): void {
         const element = this.scrollEventClients.slice().find(client => client.reportYPosition() > 100)
         element?.openLink()
     }
 
-    markAllAsRead() {
+    markAllAsRead(): void {
         this.scrollEventClients.forEach(client => client.markAsRead())
         this.onScroll()
         this.props.markAllAsRead()
     }
 
-    goToNextItem() {
+    goToNextItem(): void {
         const element = this.scrollEventClients.find(client => client.reportYPosition() > 170)
         element?.scrollToTop()
         if (!element) {
@@ -134,12 +134,12 @@ class NewsItemsNode extends React.Component<NewsItemsProps> implements NewsItems
         }
     }
 
-    goToPreviousItem() {
+    goToPreviousItem(): void {
         const element = this.scrollEventClients.slice().reverse().find(client => client.reportYPosition() < 40)
         element?.scrollToTop()
     }
 
-    render() {
+    render(): JSX.Element {
         const {classes} = this.props
         return <div className={classes.newsItems} onScroll={this.onScrollDebounced}>
             {this.props.newsItems.length === 0 && <div className={classes.noNews}>

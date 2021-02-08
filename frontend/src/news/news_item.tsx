@@ -47,31 +47,31 @@ const styles = createStyles({
 })
 
 export interface NewsItemControl {
-    scrollEvent: () => void
-    openLink: () => void
-    markAsRead: () => void
-    isRead: () => boolean
-    isReadStateIsSent: () => boolean
-    setIsReadStateIsSent: (newValue: boolean) => void
-    newsItemId: () => string
-    scrollToTop: () => void
-    reportYPosition: () => number
+    scrollEvent: () => void;
+    openLink: () => void;
+    markAsRead: () => void;
+    isRead: () => boolean;
+    isReadStateIsSent: () => boolean;
+    setIsReadStateIsSent: (newValue: boolean) => void;
+    newsItemId: () => string;
+    scrollToTop: () => void;
+    reportYPosition: () => number;
 }
 
 export interface NewsItemDynamicFetchControl {
-    isOutOfView: () => boolean
+    isOutOfView: () => boolean;
 }
 
 interface NewsItemProps extends WithStyles<typeof styles> {
-    newsItem: NewsItem
-    scrollEventRegistry: (newsItemControll: NewsItemControl) => void
-    dynamicFetchRegistry: (newsItemDynamicFetchControl: NewsItemDynamicFetchControl) => void
+    newsItem: NewsItem;
+    scrollEventRegistry: (newsItemControll: NewsItemControl) => void;
+    dynamicFetchRegistry: (newsItemDynamicFetchControl: NewsItemDynamicFetchControl) => void;
 }
 
 interface NewsItemState {
-    keepUnread: boolean
-    isRead: boolean
-    isReadStateIsSent: boolean
+    keepUnread: boolean;
+    isRead: boolean;
+    isReadStateIsSent: boolean;
 }
 
 
@@ -92,41 +92,41 @@ class NewsItemNode extends React.Component<NewsItemProps> implements NewsItemCon
         this.state.isRead = props.newsItem.is_read
     }
 
-    isOutOfView() {
+    isOutOfView(): boolean {
         if (this.element) {
             return this.element.getBoundingClientRect().y < 0
         }
         return false
     }
 
-    isRead() {
+    isRead(): boolean {
         return this.state.isRead
     }
 
-    scrollToTop() {
+    scrollToTop(): void {
         this.element?.scrollIntoView()
     }
 
-    reportYPosition() {
+    reportYPosition(): number {
         if (this.element) {
             return this.element.getBoundingClientRect().y
         }
         return -1
     }
 
-    newsItemId() {
+    newsItemId(): string {
         return this.props.newsItem.news_item_id
     }
 
-    isReadStateIsSent() {
+    isReadStateIsSent(): boolean {
         return this.state.isReadStateIsSent
     }
 
-    setIsReadStateIsSent(newValue: boolean) {
+    setIsReadStateIsSent(newValue: boolean): void {
         this.setState({isReadStateIsSent: newValue})
     }
 
-    scrollEvent = () => {
+    scrollEvent = (): void => {
         if (this.element) {
             const rect = this.element.getBoundingClientRect()
             if (rect.bottom < 100) {
@@ -135,17 +135,17 @@ class NewsItemNode extends React.Component<NewsItemProps> implements NewsItemCon
         }
     }
 
-    markAsRead() {
+    markAsRead(): void {
         if (!this.state.keepUnread) {
             this.setState({isRead: true})
         }
     }
 
-    openLink() {
+    openLink(): void {
         document.open(this.props.newsItem.link, "_blank", "noopener")
     }
 
-    render() {
+    render(): JSX.Element {
         const {classes} = this.props
         const newsItem = this.props.newsItem
         const url = new URL(newsItem.link)

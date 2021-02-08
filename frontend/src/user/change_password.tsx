@@ -38,10 +38,10 @@ interface ChangePasswordAttrs extends WithAuthHandling, WithStyles<typeof styles
 }
 
 interface ChangePasswordState {
-    email_address: string
-    current_password: string
-    new_password: string
-    new_password_repeated: string
+    email_address: string;
+    current_password: string;
+    new_password: string;
+    new_password_repeated: string;
 }
 
 class ChangePassword extends React.Component<ChangePasswordAttrs, ChangePasswordState> {
@@ -72,7 +72,7 @@ class ChangePassword extends React.Component<ChangePasswordAttrs, ChangePassword
                     new_password_repeated: "",
                     current_password: ""
                 })
-                this.props.enqueueSnackbar(`Changing of password failed: ${sign_in_result.reason || "Unknwon"}`, {
+                this.props.enqueueSnackbar(`Changing of password failed: ${sign_in_result.reason || "Unknown"}`, {
                     variant: 'warning',
                     autoHideDuration: 3000,
                 });
@@ -88,7 +88,7 @@ class ChangePassword extends React.Component<ChangePasswordAttrs, ChangePassword
                 autoHideDuration: 3000,
             });
         } catch (error) {
-            this.props.enqueueSnackbar('Cannot signin', {
+            this.props.enqueueSnackbar('Cannot sign in', {
                 variant: 'warning',
                 autoHideDuration: 3000,
             });
@@ -96,7 +96,7 @@ class ChangePassword extends React.Component<ChangePasswordAttrs, ChangePassword
         return Promise.resolve()
     }
 
-    render() {
+    render(): JSX.Element {
         const {classes} = this.props;
         return <div>
             <HeaderBar/>
@@ -117,7 +117,7 @@ class ChangePassword extends React.Component<ChangePasswordAttrs, ChangePassword
                                     name="email"
                                     label="Email address"
                                     fullWidth
-                                    onChange={(e) => this.setState({email_address: e.currentTarget.value})}
+                                    onChange={(e): void => this.setState({email_address: e.currentTarget.value})}
                                     value={this.state.email_address}
                                     autoComplete="username"
                                 />
@@ -129,7 +129,7 @@ class ChangePassword extends React.Component<ChangePasswordAttrs, ChangePassword
                                     name="password"
                                     label="Current password"
                                     type="password"
-                                    onChange={(e) => this.setState({current_password: e.currentTarget.value})}
+                                    onChange={(e): void => this.setState({current_password: e.currentTarget.value})}
                                     value={this.state.current_password}
                                     fullWidth
                                     autoComplete="current-password"
@@ -142,7 +142,7 @@ class ChangePassword extends React.Component<ChangePasswordAttrs, ChangePassword
                                     name="password"
                                     label="New password"
                                     type="password"
-                                    onChange={(e) => this.setState({new_password: e.currentTarget.value})}
+                                    onChange={(e): void => this.setState({new_password: e.currentTarget.value})}
                                     value={this.state.new_password}
                                     fullWidth
                                     autoComplete="new-password"
@@ -155,7 +155,7 @@ class ChangePassword extends React.Component<ChangePasswordAttrs, ChangePassword
                                     name="new_repeated_password"
                                     label="Repeat password"
                                     type="password"
-                                    onChange={(e) => this.setState({new_password_repeated: e.currentTarget.value})}
+                                    onChange={(e): void=> this.setState({new_password_repeated: e.currentTarget.value})}
                                     value={this.state.new_password_repeated}
                                     fullWidth
                                     autoComplete="new-password"
@@ -167,7 +167,7 @@ class ChangePassword extends React.Component<ChangePasswordAttrs, ChangePassword
                                         variant="contained"
                                         color="primary"
                                         className={classes.saveButton}
-                                        onClick={async () => await this.change_password()}
+                                        onClick={async (): Promise<void> => await this.change_password()}
                                         >
                                         Change password
                                         <LockIcon/>

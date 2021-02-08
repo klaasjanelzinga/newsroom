@@ -48,7 +48,7 @@ interface SubscribeResponse {
 
 interface MangeSubscriptionsState {
     feedsForUser: GetFeedsResponse[];
-    isLoading: boolean
+    isLoading: boolean;
 }
 
 class ManageSubscriptions extends React.Component<ManageSubscriptionsProps, MangeSubscriptionsState> {
@@ -66,11 +66,11 @@ class ManageSubscriptions extends React.Component<ManageSubscriptionsProps, Mang
     }
 
 
-    componentDidMount() {
+    componentDidMount(): void {
         this.fetchAvailableFeeds()
     }
 
-    fetchAvailableFeeds() {
+    fetchAvailableFeeds(): void {
         this.setState({isLoading: true})
         this.api.get<[GetFeedsResponse]>("/feeds")
             .then(feedsWithInfo => {
@@ -80,13 +80,13 @@ class ManageSubscriptions extends React.Component<ManageSubscriptionsProps, Mang
             .finally(() => this.setState({isLoading: false}))
     }
 
-    showNotification(message: string) {
+    showNotification(message: string): void {
         this.props.enqueueSnackbar(message, {
             variant: "info"
         })
     }
 
-    subscribeTo(feedForUser: GetFeedsResponse) {
+    subscribeTo(feedForUser: GetFeedsResponse): void {
         this.api.post<SubscribeResponse>(`/feeds/${feedForUser.feed.feed_id}/subscribe`)
             .then(() => {
                 this.showNotification('Subscribed')
@@ -99,10 +99,10 @@ class ManageSubscriptions extends React.Component<ManageSubscriptionsProps, Mang
                     })
                 })
             })
-            .catch((reason:Error) => console.error(reason))
+            .catch((reason) => console.error(reason))
     }
 
-    unsubscribeFrom(feedForUser: GetFeedsResponse) {
+    unsubscribeFrom(feedForUser: GetFeedsResponse): void {
         this.api.post<SubscribeResponse>(`/feeds/${feedForUser.feed.feed_id}/unsubscribe`)
             .then(() => {
                 this.showNotification('Unsubscribed')
@@ -118,7 +118,7 @@ class ManageSubscriptions extends React.Component<ManageSubscriptionsProps, Mang
             .catch(reason => console.error(reason))
     }
 
-    render() {
+    render(): JSX.Element {
         const {classes} = this.props
 
 

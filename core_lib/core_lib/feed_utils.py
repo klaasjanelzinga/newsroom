@@ -1,14 +1,14 @@
 import difflib
 import re
 from datetime import datetime, timedelta
-from typing import List, Optional
+from typing import List
 from urllib.parse import urlparse
 
 import pytz
 
 from core_lib.application_data import repositories
+from core_lib.repositories import Feed, FeedItem, User, NewsItem
 from core_lib.utils import now_in_utc
-from core_lib.repositories import Feed, FeedItem, User, NewsItem, RefreshResult
 
 
 def are_titles_similar(title_1: str, title_2: str) -> bool:
@@ -77,6 +77,7 @@ def upsert_new_items_for_feed(feed: Feed, updated_feed: Feed, feed_items_from_rs
                 if len(news_items_similar_titles) == 0:
                     new_news_item = news_item_from_feed_item(new_feed_item, feed, user)
                     new_news_items.append(new_news_item)
+                    user.number_of_unread_items += 1
                     current_news_items.append(new_news_item)
                 else:
                     for existing_news_item in news_items_similar_titles:
@@ -87,6 +88,7 @@ def upsert_new_items_for_feed(feed: Feed, updated_feed: Feed, feed_items_from_rs
                         updated_news_items.append(existing_news_item)
 
     # Upsert the new and updated feed_items.
+    repositories.user_repository.upsert_many(subscribed_users)
     repositories.feed_item_repository.upsert_many(new_feed_items)
     repositories.feed_item_repository.upsert_many(updated_feed_items)
     repositories.news_item_repository.upsert_many(new_news_items)
@@ -99,17 +101,6 @@ def upsert_new_items_for_feed(feed: Feed, updated_feed: Feed, feed_items_from_rs
     feed.number_of_items = feed.number_of_items + len(new_feed_items)
     repositories.feed_repository.upsert(feed)
     return len(new_news_items)
-
-
-def update_users_unread_count_with_refresh_results(refresh_results: List[Optional[RefreshResult]]) -> None:
-    """
-    Update the count of unread items per feed per subscribed user.
-    """
-    for refresh_result in [result for result in refresh_results if result is not None]:
-        subscribed_users = repositories.user_repository.fetch_subscribed_to(refresh_result.feed)
-        for user in subscribed_users:
-            user.number_of_unread_items += refresh_result.number_of_items
-        repositories.user_repository.upsert_many(subscribed_users)
 
 
 def news_items_from_feed_items(feed_items: List[FeedItem], feed: Feed, user: User) -> List[NewsItem]:

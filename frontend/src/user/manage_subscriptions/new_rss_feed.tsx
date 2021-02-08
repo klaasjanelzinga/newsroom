@@ -17,12 +17,12 @@ interface NewRssFeedState {
     newURL: string;
     foundFeed: GetFeedsResponse | null;
     possibleError: string | null;
-    isLoading: boolean
+    isLoading: boolean;
 }
 
 interface NewRssFeedProps extends WithAuthHandling, RouteComponentProps, WithSnackbarProps, WithStyles<typeof styles> {
-    subscribe_callback: (feed: GetFeedsResponse) => void
-    unsubscribe_callback: (feed: GetFeedsResponse) => void
+    subscribe_callback: (feed: GetFeedsResponse) => void;
+    unsubscribe_callback: (feed: GetFeedsResponse) => void;
 }
 
 const styles = createStyles({
@@ -63,7 +63,7 @@ class NewRssFeed extends React.Component<NewRssFeedProps, NewRssFeedState> {
         this.api = new Api(props)
     }
 
-    checkNewRssURL = () => {
+    checkNewRssURL = (): void => {
         this.setState({isLoading: true, foundFeed: null, possibleError: null})
         setInterval(() => {
             if (this.state.isLoading)
@@ -73,7 +73,7 @@ class NewRssFeed extends React.Component<NewRssFeedProps, NewRssFeedState> {
             .then(for_url_response => {
                 this.setState({foundFeed: for_url_response[1], possibleError: null})
             })
-            .catch((reason:Error) => this.setState({possibleError: reason?.message}))
+            .catch((reason: Error) => this.setState({possibleError: reason?.message}))
             .finally(() => this.setState({isLoading:false}))
     }
 
@@ -84,7 +84,7 @@ class NewRssFeed extends React.Component<NewRssFeedProps, NewRssFeedState> {
         return is_https && is_not_null
     }
 
-    subscribeTo(feedResponse: GetFeedsResponse | null) {
+    subscribeTo(feedResponse: GetFeedsResponse | null): void {
         if (feedResponse) {
             this.props.subscribe_callback(feedResponse)
             this.setState({
@@ -96,7 +96,7 @@ class NewRssFeed extends React.Component<NewRssFeedProps, NewRssFeedState> {
         }
     }
 
-    unsubscribeFrom(feedResponse: GetFeedsResponse | null) {
+    unsubscribeFrom(feedResponse: GetFeedsResponse | null): void {
         if (feedResponse) {
             this.props.unsubscribe_callback(feedResponse)
             this.setState({
@@ -108,7 +108,7 @@ class NewRssFeed extends React.Component<NewRssFeedProps, NewRssFeedState> {
         }
     }
 
-    render() {
+    render(): JSX.Element {
         const {classes} = this.props
         return <Grid container>
             <Grid container>
@@ -119,7 +119,7 @@ class NewRssFeed extends React.Component<NewRssFeedProps, NewRssFeedState> {
                         name="url"
                         label="Add new RSS-Feed url"
                         fullWidth
-                        onChange={(event) => this.setState({newURL: event.currentTarget.value})}
+                        onChange={(event): void => this.setState({newURL: event.currentTarget.value})}
                     />
                 </Grid>
                 {this.state.isLoading && <CircularProgress />}
@@ -150,8 +150,8 @@ class NewRssFeed extends React.Component<NewRssFeedProps, NewRssFeedState> {
                 <Grid item xs={12} className={classes.foundPanelItem}>{this.state.foundFeed.feed.description}</Grid>
                 <Grid item xs={2} className={classes.foundPanelItem}>
                     <SubscribeUnsubscribeButton feedResponse={this.state.foundFeed}
-                                                subscribe_callback={feedResponse => this.subscribeTo(feedResponse)}
-                                                unsubscribe_callback={feedResponse => this.unsubscribeFrom(feedResponse)} />
+                                                subscribe_callback={(feedResponse): void => this.subscribeTo(feedResponse)}
+                                                unsubscribe_callback={(feedResponse): void => this.unsubscribeFrom(feedResponse)} />
                 </Grid>
             </Grid>}
         </Grid>

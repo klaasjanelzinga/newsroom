@@ -15,13 +15,13 @@ export interface Feed {
 }
 
 export interface UserProfileRequest {
-    display_name: string | null
+    display_name: string | null;
 }
 
 export interface UserResponse {
-    display_name: string | null
-    email_address: string
-    is_approved: boolean
+    display_name: string | null;
+    email_address: string;
+    is_approved: boolean;
 }
 
 export interface ErrorResponse {
@@ -29,32 +29,32 @@ export interface ErrorResponse {
 }
 
 export interface NewsItem {
-    news_item_id: string
-    feed_id: string
-    feed_item_id: string
+    news_item_id: string;
+    feed_id: string;
+    feed_item_id: string;
 
-    published: string
-    title: string
-    description: string
-    link: string
-    feed_title: string
+    published: string;
+    title: string;
+    description: string;
+    link: string;
+    feed_title: string;
 
-    alternate_links: string[]
-    alternate_title_links: string[]
-    alternate_favicons: string[]
-    favicon: string
+    alternate_links: string[];
+    alternate_title_links: string[];
+    alternate_favicons: string[];
+    favicon: string;
 
-    is_read: boolean
+    is_read: boolean;
 }
 
 export interface GetNewsItemsResponse {
     token: string;
-    news_items: NewsItem[]
-    number_of_unread_items: number
+    news_items: NewsItem[];
+    number_of_unread_items: number;
 }
 
 export interface GetReadNewsItemsResponse {
     token: string;
-    news_items: NewsItem[]
-    number_of_unread_items: number
+    news_items: NewsItem[];
+    number_of_unread_items: number;
 }

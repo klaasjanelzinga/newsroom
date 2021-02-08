@@ -93,3 +93,10 @@ async def test_refresh_with_duplicate_titles(faker: Faker, repositories: MockRep
     assert repositories.feed_item_repository.count() == 9
     assert repositories.news_item_repository.count() == 8
     assert user.number_of_unread_items == 8
+
+    # ----- Next run. The item is added with similar title but with different link.
+    repositories.mock_client_session_for_files(["sample-files/rss_feeds/brakdag_update_3.xml"])
+    await refresh_rss_feeds()
+    assert repositories.feed_item_repository.count() == 10
+    assert repositories.news_item_repository.count() == 8
+    assert user.number_of_unread_items == 8

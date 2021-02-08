@@ -109,7 +109,7 @@ class SignUp extends React.Component<SignUpProps, SignUpState> {
                                     name="email"
                                     label="Email address"
                                     fullWidth
-                                    onChange={(e) => this.setState({email_address: e.currentTarget.value})}
+                                    onChange={(e): void => this.setState({email_address: e.currentTarget.value})}
                                     value={this.state.email_address}
                                     autoComplete="username"
                                 />
@@ -121,7 +121,7 @@ class SignUp extends React.Component<SignUpProps, SignUpState> {
                                     name="password"
                                     label="Password"
                                     type="password"
-                                    onChange={(e) => this.setState({password: e.currentTarget.value})}
+                                    onChange={(e): void => this.setState({password: e.currentTarget.value})}
                                     value={this.state.password}
                                     fullWidth
                                     autoComplete="password"
@@ -134,7 +134,7 @@ class SignUp extends React.Component<SignUpProps, SignUpState> {
                                     name="repeated_password"
                                     label="Repeat password"
                                     type="password"
-                                    onChange={(e) => this.setState({password_repeated: e.currentTarget.value})}
+                                    onChange={(e): void => this.setState({password_repeated: e.currentTarget.value})}
                                     value={this.state.password_repeated}
                                     fullWidth
                                     autoComplete="password"
@@ -146,7 +146,7 @@ class SignUp extends React.Component<SignUpProps, SignUpState> {
                                         variant="contained"
                                         color="primary"
                                         className={classes.saveButton}
-                                        onClick={async () => await this.sign_up()}
+                                        onClick={async (): Promise<void> => await this.sign_up()}
                                         endIcon={<Icon>login</Icon>}>
                                         Sign up
                                     </Button>

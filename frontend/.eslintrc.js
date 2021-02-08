@@ -6,11 +6,13 @@ module.exports = {
         project: ['./tsconfig.json'],
         "ecmaFeatures": {
             "jsx": true,
-            "es6": true
+            "es6": true,
+            "dom": true,
         }
     },
     env: {
         es6: true,
+        browser: true
     },
     plugins: [
         '@typescript-eslint',

@@ -107,7 +107,7 @@ class SignIn extends React.Component<SignInProps, SignInState> {
                                     label="Email address"
                                     fullWidth
                                     value={this.state.email_address}
-                                    onChange={(e) => this.setState({email_address: e.currentTarget.value})}
+                                    onChange={(e): void  => this.setState({email_address: e.currentTarget.value})}
                                     autoComplete="username"
                                 />
                             </Grid>
@@ -118,7 +118,7 @@ class SignIn extends React.Component<SignInProps, SignInState> {
                                     name="password"
                                     label="Password"
                                     type="password"
-                                    onChange={(e) => this.setState({password: e.currentTarget.value})}
+                                    onChange={(e): void => this.setState({password: e.currentTarget.value})}
                                     fullWidth
                                     value={this.state.password}
                                     autoComplete="password"
@@ -130,7 +130,7 @@ class SignIn extends React.Component<SignInProps, SignInState> {
                                         variant="contained"
                                         color="primary"
                                         className={classes.saveButton}
-                                        onClick={async () => await this.sign_in()}
+                                        onClick={async (): Promise<void> => await this.sign_in()}
                                         endIcon={<Icon>login</Icon>}>
                                         Login
                                     </Button>
@@ -138,7 +138,7 @@ class SignIn extends React.Component<SignInProps, SignInState> {
                                         variant="contained"
                                         color="default"
                                         className={classes.signUpButton}
-                                        onClick={() => this.props.history.push('/user/signup')}
+                                        onClick={(): void => this.props.history.push('/user/signup')}
                                         endIcon={<Icon>account_box</Icon>}>
                                         OR Sign up ...
                                     </Button>

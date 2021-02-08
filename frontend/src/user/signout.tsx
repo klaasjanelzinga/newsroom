@@ -39,7 +39,7 @@ class SignOut extends React.Component<SignoutProps> {
                 </Typography>
                 <Typography variant="subtitle1" color="textSecondary">
                         <Button
-                            onClick={() => this.logout()}
+                            onClick={async (): Promise<void> => this.logout()}
                             color="primary"
                             endIcon={<Icon>logout</Icon>}>
                             Logout from newsroom

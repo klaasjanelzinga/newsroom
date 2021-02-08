@@ -8,8 +8,8 @@ from uuid import uuid4
 import pydantic
 from google.cloud import datastore
 from google.cloud.datastore import Client, Query, Key
-from pydantic.main import BaseModel
 from pydantic import Field
+from pydantic.main import BaseModel
 
 from core_lib.utils import now_in_utc
 

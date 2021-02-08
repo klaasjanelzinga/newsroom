@@ -11,9 +11,9 @@ from bs4 import BeautifulSoup
 from lxml.etree import ElementBase, fromstring
 
 from core_lib.application_data import repositories
-from core_lib.feed_utils import upsert_new_items_for_feed, update_users_unread_count_with_refresh_results
-from core_lib.utils import now_in_utc, sanitize_link
+from core_lib.feed_utils import upsert_new_items_for_feed
 from core_lib.repositories import Feed, FeedItem, FeedSourceType, RefreshResult
+from core_lib.utils import now_in_utc, sanitize_link
 
 log = logging.getLogger(__file__)
 
@@ -116,7 +116,5 @@ async def refresh_rss_feeds() -> int:
     tasks = [
         refresh_rss_feed(client_session, feed) for feed in feeds if feed.feed_source_type == FeedSourceType.RSS.name
     ]
-    refresh_results = await asyncio.gather(*tasks)
-    update_users_unread_count_with_refresh_results(refresh_results)
-
+    await asyncio.gather(*tasks)
     return len(tasks)
