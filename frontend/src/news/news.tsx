@@ -31,16 +31,16 @@ export enum NewsVariant {
 }
 
 export interface NewsProps extends RouteComponentProps, WithAuthHandling, WithSnackbarProps, WithStyles<typeof styles> {
-    variant: NewsVariant
+    variant: NewsVariant;
 }
 
 interface NewsState {
-    isLoading: boolean
-    isLoadingMoreItems: boolean
-    newsItems: NewsItem[]
-    error: string | null
-    noMoreItems: boolean
-    numberOfUnread: number | null
+    isLoading: boolean;
+    isLoadingMoreItems: boolean;
+    newsItems: NewsItem[];
+    error: string | null;
+    noMoreItems: boolean;
+    numberOfUnread: number | null;
 }
 
 class News extends React.Component<NewsProps, NewsState> {
@@ -63,16 +63,16 @@ class News extends React.Component<NewsProps, NewsState> {
         this.newsItemsCtrl = null
     }
 
-    componentDidMount() {
+    componentDidMount(): void {
         this.setState({isLoading: true})
         this.fetchNewsItems()
     }
 
-    registerNewsItemsControl = (newsItemCtrl: NewsItemsControl) => {
+    registerNewsItemsControl = (newsItemCtrl: NewsItemsControl): void => {
         this.newsItemsCtrl = newsItemCtrl
     }
 
-    fetchNewsItems() {
+    fetchNewsItems(): void {
         if (this.props.variant === NewsVariant.NEWS) {
             this.fetchUnreadNewsItems()
         } else {
@@ -80,7 +80,7 @@ class News extends React.Component<NewsProps, NewsState> {
         }
     }
 
-    fetchUnreadNewsItems() {
+    fetchUnreadNewsItems(): void {
         const endpoint = "/news-items"
         const endpoint_with_token = this.token ? `${endpoint}?fetch_offset=${this.token}` : endpoint
         this.api.get<GetNewsItemsResponse>(endpoint_with_token)
@@ -101,7 +101,7 @@ class News extends React.Component<NewsProps, NewsState> {
     }
 
 
-    fetchReadNewsItems() {
+    fetchReadNewsItems(): void {
         const endpoint = "/news-items/read"
         const endpoint_with_token = this.token ? `${endpoint}?fetch_offset=${this.token}` : endpoint
         this.api.get<GetReadNewsItemsResponse>(endpoint_with_token)
@@ -121,7 +121,7 @@ class News extends React.Component<NewsProps, NewsState> {
     }
 
 
-    needMoreItems = () => {
+    needMoreItems = (): void => {
         const canLoad = !this.state.isLoading && !this.state.isLoadingMoreItems && !this.state.noMoreItems
         if (canLoad) {
             this.setState({ isLoadingMoreItems: true, error: null })
@@ -129,7 +129,7 @@ class News extends React.Component<NewsProps, NewsState> {
         }
     }
 
-    refreshItems = () => {
+    refreshItems = (): void => {
         if (!this.state.isLoading && !this.state.isLoadingMoreItems) {
             this.token = null
             this.setState({isLoading: true, newsItems: [], error: null})
@@ -137,11 +137,11 @@ class News extends React.Component<NewsProps, NewsState> {
         }
     }
 
-    numberOfUnread = () => {
+    numberOfUnread = (): number => {
         return this.state.numberOfUnread ? this.state.numberOfUnread : 0
     }
 
-    markAsRead = (count: number) => {
+    markAsRead = (count: number): void => {
         if (this.state.numberOfUnread) {
             this.setState({
                 numberOfUnread: this.state.numberOfUnread - count
@@ -149,13 +149,13 @@ class News extends React.Component<NewsProps, NewsState> {
         }
     }
 
-    markAllAsRead = () => {
+    markAllAsRead = (): void => {
         this.setState({
             numberOfUnread: 0
         })
     }
 
-    render() {
+    render(): JSX.Element {
         const {classes} = this.props
         return <div className={classes.newsRoot}>
             <HeaderBar />
@@ -163,8 +163,8 @@ class News extends React.Component<NewsProps, NewsState> {
             <NewsBar
                 numberOfUnread={this.numberOfUnread}
                 refresh={this.refreshItems}
-                next={() => this.newsItemsCtrl?.goToNextItem()}
-                previous={() => this.newsItemsCtrl?.goToPreviousItem()}
+                next={(): void => this.newsItemsCtrl?.goToNextItem()}
+                previous={(): void => this.newsItemsCtrl?.goToPreviousItem()}
             />
             {this.state.isLoading && <LinearProgress />}
                 <div className={classes.newsItems}>

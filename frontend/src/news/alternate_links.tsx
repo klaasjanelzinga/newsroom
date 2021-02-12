@@ -16,14 +16,14 @@ const styles = createStyles({
 )
 
 interface AlternateLinksProps extends WithStyles<typeof styles> {
-    newsItem: NewsItem
+    newsItem: NewsItem;
 }
 
 class AlternateLinks extends React.Component<AlternateLinksProps> {
 
     element: Element | null = null
 
-    render() {
+    render(): JSX.Element[] {
         const {classes} = this.props
         const newsItem = this.props.newsItem
         return newsItem.alternate_links.map((alternate_link, index) => {

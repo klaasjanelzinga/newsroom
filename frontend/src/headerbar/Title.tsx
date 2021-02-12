@@ -10,13 +10,13 @@ const styles = createStyles({
 });
 
 export interface TitleProps extends RouteComponentProps, WithStyles<typeof styles> {
-    title: string
+    title: string;
 }
 
 
 const Title: React.FunctionComponent<TitleProps> = (props) => {
     const {classes} = props
-    return <Typography onClick={() => props.history.push('/')}
+    return <Typography onClick={(): void => props.history.push('/')}
                        className={classes.title}
                        variant="h6" color="inherit" noWrap>
         {props.title}

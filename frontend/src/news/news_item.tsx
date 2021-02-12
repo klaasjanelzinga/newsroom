@@ -174,7 +174,7 @@ class NewsItemNode extends React.Component<NewsItemProps> implements NewsItemCon
                         control={
                             <Checkbox
                                 checked={this.state.keepUnread}
-                                onChange={() => this.setState({keepUnread: !this.state.keepUnread})}
+                                onChange={(): void => this.setState({keepUnread: !this.state.keepUnread})}
                                 name="keep_unread"
                                 color="primary"
                             />

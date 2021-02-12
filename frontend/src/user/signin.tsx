@@ -85,7 +85,7 @@ class SignIn extends React.Component<SignInProps, SignInState> {
         return Promise.resolve()
     }
 
-    render() {
+    render(): JSX.Element {
         const {classes} = this.props;
         return <div>
             <HeaderBar/>

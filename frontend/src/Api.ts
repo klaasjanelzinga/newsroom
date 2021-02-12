@@ -25,7 +25,7 @@ export class Api {
         return headers;
     }
 
-    async _parseResponse<T>(response: Response):Promise<T> {
+    async _parseResponse<T>(response: Response): Promise<T> {
         if (response.status === 401) {
             this.props.history.push(`/user/signin?redirect_to=${this.props.history.location.pathname}`);
             this.props.enqueueSnackbar('You need to signin again.', {

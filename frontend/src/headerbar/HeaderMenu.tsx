@@ -38,7 +38,7 @@ class HeaderMenu extends React.Component<HeaderMenuProps, HeaderMenuState> {
         this.fetch_avatar_image()
     }
 
-    fetch_avatar_image() {
+    fetch_avatar_image(): void {
         if (this.state.avatar_image) {
             return
         }
@@ -52,41 +52,41 @@ class HeaderMenu extends React.Component<HeaderMenuProps, HeaderMenuState> {
             .catch(reason => console.log(reason))
     }
 
-    handleMenu = (event: React.MouseEvent<HTMLElement>):void => {
+    handleMenu = (event: React.MouseEvent<HTMLElement>): void => {
         this.setState({
             anchorEl: event.currentTarget,
             menuOpen: true,
         });
     }
 
-    handleClose = () => {
+    handleClose = (): void => {
         this.setState({
             menuOpen: false,
             anchorEl: null,
         });
     }
 
-    handleSignIn = () => {
+    handleSignIn = (): void => {
         this.handleClose();
         this.props.history.push('/user/signin');
     }
 
-    handleSignOut = () => {
+    handleSignOut = (): void => {
         this.handleClose();
         this.props.history.push('/user/signout');
     }
 
-    handleMyProfile = () => {
+    handleMyProfile = (): void => {
         this.handleClose();
         this.props.history.push('/user/profile');
     }
 
-    handleChangePassword = () => {
+    handleChangePassword = (): void => {
         this.handleClose();
         this.props.history.push('/user/change-password');
     }
 
-    accountAvatar = () => {
+    accountAvatar = (): JSX.Element => {
         if (this.state.avatar_image) {
             return <Avatar src={this.state.avatar_image}
                            alt={this.props.authHandling.user_information?.display_name || "?"}/>
@@ -94,7 +94,7 @@ class HeaderMenu extends React.Component<HeaderMenuProps, HeaderMenuState> {
         return <AccountCircle />
     }
 
-    render() {
+    render(): JSX.Element {
         return (
             <div>
                 <IconButton

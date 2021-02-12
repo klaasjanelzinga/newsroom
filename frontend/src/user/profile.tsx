@@ -50,7 +50,7 @@ interface ProfileState {
     email_address: string;
     display_name: string;
     preview: string | null;
-    src: any | null;
+    src: string | null;
     avatar_action: string;
 }
 
@@ -108,7 +108,7 @@ class Profile extends React.Component<ProfileProps, ProfileState> {
     }
 
     onCrop(preview: string): void {
-        if (preview.length > 1 * 1000 * 1000) {
+        if (preview.length > 1000 * 1000) {
             this.props.enqueueSnackbar(`Max size profile picture is 1MB`, {
                 variant: 'warning',
                 autoHideDuration: 3000,
@@ -167,7 +167,7 @@ class Profile extends React.Component<ProfileProps, ProfileState> {
                                 height={200}
                                 onCrop={(arg): void => this.onCrop(arg)}
                                 onClose={(): void => this.onClose()}
-                                src={this.state.src}
+                                src={this.state.src || undefined}
                             />
                             <img className={classes.previewImage} src={this.state.preview || ''} alt="Preview"/>
                         </div>

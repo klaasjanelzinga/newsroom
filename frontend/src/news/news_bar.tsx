@@ -15,10 +15,10 @@ const styles = createStyles({
 })
 
 interface NewsBarProps extends WithStyles<typeof styles> {
-    refresh: () => void
-    next: () => void
-    previous: () => void
-    numberOfUnread?: () => number
+    refresh: () => void;
+    next: () => void;
+    previous: () => void;
+    numberOfUnread?: () => number;
 }
 
 const NewsBar: React.FunctionComponent<NewsBarProps> = (props: NewsBarProps) => {

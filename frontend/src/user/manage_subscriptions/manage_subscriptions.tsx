@@ -133,8 +133,8 @@ class ManageSubscriptions extends React.Component<ManageSubscriptionsProps, Mang
                 <Typography variant="subtitle1" gutterBottom>
                     Subscribe here to news sources. News sources are rss feeds, custom news sources or plugins.
                 </Typography>
-                <NewRssFeed subscribe_callback={(feedResponse: GetFeedsResponse) => this.subscribeTo(feedResponse)}
-                            unsubscribe_callback={(feedResponse: GetFeedsResponse) => this.unsubscribeFrom(feedResponse)}/>
+                <NewRssFeed subscribe_callback={(feedResponse: GetFeedsResponse): void => this.subscribeTo(feedResponse)}
+                            unsubscribe_callback={(feedResponse: GetFeedsResponse): void => this.unsubscribeFrom(feedResponse)}/>
 
                 <div className={classes.subscriptionsTable}>
 
@@ -159,8 +159,8 @@ class ManageSubscriptions extends React.Component<ManageSubscriptionsProps, Mang
                                             <TableRow key={feedForUser.feed.feed_id}>
                                                 <TableCell>
                                                     <SubscribeUnsubscribeButton feedResponse={feedForUser}
-                                                                                subscribe_callback={feedResponse => this.subscribeTo(feedResponse)}
-                                                                                unsubscribe_callback={feedResponse => this.unsubscribeFrom(feedResponse)}/>
+                                                                                subscribe_callback={(feedResponse): void => this.subscribeTo(feedResponse)}
+                                                                                unsubscribe_callback={(feedResponse): void => this.unsubscribeFrom(feedResponse)}/>
                                                 </TableCell>
                                                 <TableCell component="th" scope="row">
                                                     <ImageAndTitle feed={feedForUser.feed}/>

@@ -21,29 +21,29 @@ class AppMenu extends React.Component<RouteComponentProps, AppMenuState> {
         });
     }
 
-    handleClose = () => {
+    handleClose = (): void => {
         this.setState({
             menuOpen: false,
             anchorEl: null,
         });
     }
 
-    handleManageSubscriptions = () => {
+    handleManageSubscriptions = (): void => {
         this.handleClose();
         this.props.history.push('/user/manage-subscriptions');
     }
 
-    handleNews = () => {
+    handleNews = (): void => {
         this.handleClose();
         this.props.history.push('/');
     }
 
-    handleReadNews = () => {
+    handleReadNews = (): void => {
         this.handleClose();
         this.props.history.push('/read-news');
     }
 
-    render() {
+    render(): JSX.Element {
         return (
             <div>
                 <IconButton

@@ -20,11 +20,6 @@ interface NewRssFeedState {
     isLoading: boolean;
 }
 
-interface NewRssFeedProps extends WithAuthHandling, RouteComponentProps, WithSnackbarProps, WithStyles<typeof styles> {
-    subscribe_callback: (feed: GetFeedsResponse) => void;
-    unsubscribe_callback: (feed: GetFeedsResponse) => void;
-}
-
 const styles = createStyles({
     button: {
         marginTop: "10px",
@@ -46,6 +41,10 @@ const styles = createStyles({
     },
 });
 
+interface NewRssFeedProps extends WithAuthHandling, RouteComponentProps, WithSnackbarProps, WithStyles<typeof styles> {
+    subscribe_callback: (feed: GetFeedsResponse) => void;
+    unsubscribe_callback: (feed: GetFeedsResponse) => void;
+}
 
 class NewRssFeed extends React.Component<NewRssFeedProps, NewRssFeedState> {
 

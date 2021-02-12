@@ -5,8 +5,8 @@ import config from './Config'
 import {UserResponse} from "./user/model";
 
 export interface SignInResult {
-    success: boolean
-    reason?: string
+    success: boolean;
+    reason?: string;
 }
 
 class UserInformation {
@@ -109,7 +109,7 @@ export class TokenBasedAuthenticator {
         }
     }
 
-    async change_password(email_address: string, current_password: string, new_password:string, new_password_repeated: string) : Promise<SignInResult> {
+    async change_password(email_address: string, current_password: string, new_password: string, new_password_repeated: string): Promise<SignInResult> {
         const response = await fetch(`${config.apihost}/user/change_password`, {
             headers:  TokenBasedAuthenticator.unsecure_headers(),
             method: "POST",
@@ -184,12 +184,13 @@ export interface WithAuthHandling {
 }
 
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const withAuthHandling = <P extends WithAuthHandling>(Component: React.ComponentType<P>) =>
     class WithGoogleAuthHandler extends React.Component<Subtract<P, WithAuthHandling>> {
 
-        render() {
+        render(): JSX.Element {
             return <AuthHandling.Consumer>
-                {value =>
+                {(value): JSX.Element =>
                     <Component
                         {...this.props as P}
                         authHandling={value}

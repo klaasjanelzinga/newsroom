@@ -19,7 +19,7 @@ const styles = createStyles({
 });
 
 export interface FeedProps extends RouteComponentProps, WithStyles<typeof styles> {
-    feed: Feed
+    feed: Feed;
 }
 
 
