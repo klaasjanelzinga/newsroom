@@ -24,6 +24,12 @@ export interface UserResponse {
     is_approved: boolean;
 }
 
+export interface OTPRegistrationResponse {
+    generated_secret: string;
+    uri: string;
+    backup_codes: string[];
+}
+
 export interface ErrorResponse {
     detail: string;
 }

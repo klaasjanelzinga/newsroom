@@ -1,5 +1,5 @@
 import logging
-from typing import Optional
+from typing import Optional, List
 
 from fastapi import APIRouter, Header, HTTPException
 from pydantic.main import BaseModel
@@ -11,7 +11,15 @@ from api.security import TokenVerifier
 from core_lib.application_data import repositories
 from core_lib.exceptions import AuthorizationException
 from core_lib.repositories import User
-from core_lib.user import signup, sign_in, change_password, update_user_profile, avatar_image_for_user
+from core_lib.user import (
+    signup,
+    sign_in,
+    change_password,
+    update_user_profile,
+    avatar_image_for_user,
+    start_registration_new_otp_for,
+    disable_otp_for,
+)
 
 user_router = APIRouter()
 logger = logging.getLogger(__name__)
@@ -21,6 +29,7 @@ class UserResponse(BaseModel):
     email_address: str
     display_name: Optional[str]
     is_approved: bool
+    totp_enabled: bool
 
 
 class UserSignUpRequest(BaseModel):
@@ -58,6 +67,21 @@ class UserAvatarResponse(BaseModel):
     avatar_image: Optional[str]
 
 
+class OTPRegistrationResponse(BaseModel):
+    generated_secret: str
+    uri: str
+    backup_codes: List[str]
+
+
+def user_to_user_response(user: User) -> UserResponse:
+    return UserResponse(
+        email_address=user.email_address,
+        display_name=user.display_name,
+        is_approved=user.is_approved,
+        totp_enabled=user.otp_hash is not None,
+    )
+
+
 @user_router.post(
     "/user/signup",
     tags=["user"],
@@ -79,7 +103,10 @@ async def sign_up_user(user_sign_up_request: UserSignUpRequest) -> UserSignInRes
             )
             token = TokenVerifier.create_token(user)
             return UserSignInResponse(
-                token=token, email_address=user.email_address, is_approved=user.is_approved, user=user
+                token=token,
+                email_address=user.email_address,
+                is_approved=user.is_approved,
+                user=user_to_user_response(user),
             )
     except AuthorizationException as authorization_exception:
         raise HTTPException(status_code=401, detail=authorization_exception.__str__()) from authorization_exception
@@ -106,7 +133,10 @@ async def change_password_user(user_change_password_request: UserChangePasswordR
         )
         token = TokenVerifier.create_token(user)
         return UserSignInResponse(
-            token=token, email_address=user.email_address, is_approved=user.is_approved, user=user
+            token=token,
+            email_address=user.email_address,
+            is_approved=user.is_approved,
+            user=user_to_user_response(user),
         )
     except AuthorizationException as authorization_exception:
         raise HTTPException(status_code=401, detail=authorization_exception.__str__()) from authorization_exception
@@ -129,7 +159,10 @@ async def sign_in_user(user_sign_in_request: UserSignInRequest) -> UserSignInRes
         user = sign_in(email_address=user_sign_in_request.email_address, password=user_sign_in_request.password)
         token = TokenVerifier.create_token(user)
         return UserSignInResponse(
-            token=token, email_address=user.email_address, is_approved=user.is_approved, user=user
+            token=token,
+            email_address=user.email_address,
+            is_approved=user.is_approved,
+            user=user_to_user_response(user),
         )
     except AuthorizationException as authorization_exception:
         raise HTTPException(status_code=401) from authorization_exception
@@ -171,5 +204,37 @@ async def fetch_avatar_image(authorization: Optional[str] = Header(None)) -> Use
     try:
         user = await security.get_approved_user(authorization)
         return UserAvatarResponse(avatar_image=avatar_image_for_user(user))
+    except AuthorizationException as authorization_exception:
+        raise HTTPException(status_code=401) from authorization_exception
+
+
+@user_router.post(
+    "/user/start-totp-registration",
+    tags=["User"],
+    response_model=OTPRegistrationResponse,
+)
+async def start_totp_registration(authorization: Optional[str] = Header(None)) -> OTPRegistrationResponse:
+    try:
+        user = await security.get_approved_user(authorization)
+        otp_result = start_registration_new_otp_for(user)
+        return OTPRegistrationResponse(
+            generated_secret=otp_result.generated_secret,
+            uri=otp_result.uri,
+            backup_codes=otp_result.backup_codes,
+        )
+    except AuthorizationException as authorization_exception:
+        raise HTTPException(status_code=401) from authorization_exception
+
+
+@user_router.post(
+    "user/disable-totp",
+    tags=["User"],
+    response_model=UserResponse,
+)
+async def disable_otp(authorization: Optional[str] = Header(None)) -> UserResponse:
+    try:
+        user = security.get_approved_user(authorization)
+        user = disable_otp_for(user)
+        return user_to_user_response(user)
     except AuthorizationException as authorization_exception:
         raise HTTPException(status_code=401) from authorization_exception

@@ -81,9 +81,9 @@ class HeaderMenu extends React.Component<HeaderMenuProps, HeaderMenuState> {
         this.props.history.push('/user/profile');
     }
 
-    handleChangePassword = (): void => {
+    handleAuthenticationSettings = (): void => {
         this.handleClose();
-        this.props.history.push('/user/change-password');
+        this.props.history.push('/user/authentication-settings');
     }
 
     accountAvatar = (): JSX.Element => {
@@ -114,7 +114,7 @@ class HeaderMenu extends React.Component<HeaderMenuProps, HeaderMenuState> {
                     <MenuItem disabled={this.props.authHandling.isSignedIn} onClick={this.handleSignIn}>Sign in</MenuItem>
                     <MenuItem disabled={!this.props.authHandling.isSignedIn} onClick={this.handleMyProfile}>Profile</MenuItem>
                     <MenuItem disabled={!this.props.authHandling.isSignedIn} onClick={this.handleSignOut}>Sign out</MenuItem>
-                    <MenuItem onClick={this.handleChangePassword}>Change password</MenuItem>
+                    <MenuItem onClick={this.handleAuthenticationSettings}>Authentication</MenuItem>
                 </Menu>
             </div>
         );

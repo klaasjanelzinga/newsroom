@@ -15,13 +15,15 @@ class UserInformation {
     display_name: string | null
     is_approved: boolean
     avatar_image: string | null
+    totp_enabled: boolean
 
-    constructor(token: string, email_address: string, display_name: string | null, is_approved: boolean, avatar_image: string | null) {
+    constructor(token: string, email_address: string, display_name: string | null, is_approved: boolean, avatar_image: string | null, totp_enabled: boolean) {
         this.token = token
         this.email_address = email_address
         this.display_name = display_name
         this.is_approved = is_approved
         this.avatar_image = avatar_image
+        this.totp_enabled = totp_enabled
     }
 
     static delete(): void {
@@ -44,11 +46,12 @@ class UserInformation {
 
 export interface User {
     display_name: string | null;
+    is_approved: boolean;
+    totp_enabled: boolean;
 }
 
 export interface SignInResponse {
     token: string;
-    is_approved: boolean;
     email_address: string;
     user: User;
 }
@@ -155,8 +158,9 @@ export class TokenBasedAuthenticator {
                 token: json_response.token,
                 email_address: json_response.email_address,
                 display_name: json_response.user.display_name || '',
-                is_approved: json_response.is_approved,
+                is_approved: json_response.user.is_approved,
                 avatar_image: null,
+                totp_enabled: json_response.user.totp_enabled,
             }
             UserInformation.save(this.user_information)
             this.isSignedIn = true

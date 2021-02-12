@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^7.1.2",
     "notistack": "^1.0.3",
     "prop-types": "^15.7.2",
+    "qrcode": "^1.4.4",
     "query-string": "^6.13.1",
     "react": "^16.13.1",
     "react-avatar-edit": "^0.9.0",
@@ -49,6 +50,7 @@
     "@types/react": "^16.9.48",
     "@types/react-dom": "^16.9.8",
     "@types/react-router-dom": "^5.1.5",
+    "@types/qrcode": "^1.4.0",
     "eslint": "^6.6.0"
   }
 }

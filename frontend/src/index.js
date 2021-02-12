@@ -8,7 +8,7 @@ import Profile from './user/profile';
 import Signin from './user/signin';
 import Signout from './user/signout';
 import SignUp from './user/signup';
-import ChangePassword from './user/change_password';
+import AuthenticationSettings from './user/authentication_settings';
 import NeedsApproval from './user/needs-approval';
 import * as serviceWorker from './serviceWorker';
 import ManageSubscriptions from "./user/manage_subscriptions/manage_subscriptions";
@@ -28,7 +28,7 @@ ReactDOM.render(
             <Route exact path="/user/signin" component={Signin}/>
             <Route exact path="/user/signout" component={Signout}/>
             <Route exact path="/user/signup" component={SignUp}/>
-            <Route exact path="/user/change-password" component={ChangePassword}/>
+            <Route exact path="/user/authentication-settings" component={AuthenticationSettings}/>
             <Route exact path="/user/profile" component={Profile}/>
             <Route exact path="/user/needs-approval" component={NeedsApproval}/>
             <Route exact path="/user/manage-subscriptions" component={ManageSubscriptions}/>

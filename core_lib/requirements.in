@@ -9,3 +9,4 @@ pydantic
 lxml
 beautifulsoup4
 dateparser
+pyotp

@@ -1,8 +1,13 @@
 import hashlib
+import random
 import re
+import string
 from base64 import b64decode
+from dataclasses import dataclass
 from os import urandom
-from typing import Optional
+from typing import Optional, List
+
+import pyotp
 
 from core_lib.application_data import repositories
 from core_lib.exceptions import AuthorizationFailed, UserNameTaken, PasswordsDoNotMatch, IllegalPassword
@@ -130,3 +135,46 @@ def avatar_image_for_user(user: User) -> Optional[str]:
     if avatar is None:
         return None
     return avatar.image
+
+
+def _random_string(length: int) -> str:
+    return "".join(random.choices(string.ascii_letters + string.digits, k=length))
+
+
+@dataclass
+class OtpRegistrationResult:
+    generated_secret: str
+    backup_codes: List[str]
+    uri: str
+    user: User
+
+
+def start_registration_new_otp_for(user: User) -> OtpRegistrationResult:
+    """ Start OTP registration process for the TOTP, returning the secret and a uri for generating a qr-code."""
+    generated_secret = pyotp.random_base32()
+
+    otp_salt = _generate_salt()
+    otp_hash = _generate_hash(generated_secret, otp_salt)
+
+    user.pending_otp_salt = bytes_to_str_base64(otp_salt)
+    user.pending_otp_hash = bytes_to_str_base64(otp_hash)
+    user.pending_backup_codes = [_random_string(16) for _ in range(6)]
+    uri = pyotp.totp.TOTP(generated_secret).provisioning_uri(
+        name=user.display_name or user.email_address, issuer_name="Newsroom"
+    )
+
+    repositories.user_repository.upsert(user)
+    return OtpRegistrationResult(
+        generated_secret=generated_secret, uri=uri, user=user, backup_codes=user.pending_backup_codes
+    )
+
+
+def disable_otp_for(user: User) -> User:
+    """ Disables the OTP for the user. """
+    user.pending_otp_hash = None
+    user.pending_otp_salt = None
+    user.otp_hash = None
+    user.otp_salt = None
+
+    repositories.user_repository.upsert(user)
+    return user
