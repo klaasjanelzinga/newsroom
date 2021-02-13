@@ -9,8 +9,15 @@ from typing import Optional, List
 
 import pyotp
 
-from core_lib.application_data import repositories
-from core_lib.exceptions import AuthorizationFailed, UserNameTaken, PasswordsDoNotMatch, IllegalPassword
+from core_lib import application_data
+from core_lib.exceptions import (
+    AuthorizationFailed,
+    UserNameTaken,
+    PasswordsDoNotMatch,
+    IllegalPassword,
+    TokenCouldNotBeVerified,
+    BackupCodeNotValid,
+)
 from core_lib.repositories import User
 from core_lib.utils import bytes_to_str_base64
 
@@ -55,7 +62,7 @@ def sign_in(email_address: str, password: str) -> User:
 
 def verify_password(email_address: str, password: str) -> User:
     """ Verifies if the password is  correct. """
-    user = repositories.user_repository.fetch_user_by_email(email_address)
+    user = application_data.repositories.user_repository.fetch_user_by_email(email_address)
     if user is None:
         raise AuthorizationFailed()
     salt = b64decode(bytes(user.password_salt, "utf-8"))
@@ -100,7 +107,7 @@ def signup(email_address: str, password: str, password_repeated: str) -> User:
     :raises IllegalPassword: if the password is not valid.
     """
     _validate_password(password)
-    existing_user = repositories.user_repository.fetch_user_by_email(email_address)
+    existing_user = application_data.repositories.user_repository.fetch_user_by_email(email_address)
     if existing_user is not None:
         raise UserNameTaken()
 
@@ -115,7 +122,7 @@ def signup(email_address: str, password: str, password_repeated: str) -> User:
         password_salt=bytes_to_str_base64(salt),
         is_approved=False,
     )
-    return repositories.user_repository.upsert(user)
+    return application_data.repositories.user_repository.upsert(user)
 
 
 def update_user_profile(
@@ -124,14 +131,14 @@ def update_user_profile(
     """ Update profile and avatar. Return the updated user. """
     user.display_name = display_name
     if avatar_action == "delete":
-        repositories.user_repository.update_avatar(user, None)
+        application_data.repositories.user_repository.update_avatar(user, None)
     if avatar_image is not None:
-        repositories.user_repository.update_avatar(user, avatar_image)
-    return repositories.user_repository.upsert(user)
+        application_data.repositories.user_repository.update_avatar(user, avatar_image)
+    return application_data.repositories.user_repository.upsert(user)
 
 
 def avatar_image_for_user(user: User) -> Optional[str]:
-    avatar = repositories.user_repository.fetch_avatar_for_user(user)
+    avatar = application_data.repositories.user_repository.fetch_avatar_for_user(user)
     if avatar is None:
         return None
     return avatar.image
@@ -153,17 +160,13 @@ def start_registration_new_otp_for(user: User) -> OtpRegistrationResult:
     """ Start OTP registration process for the TOTP, returning the secret and a uri for generating a qr-code."""
     generated_secret = pyotp.random_base32()
 
-    otp_salt = _generate_salt()
-    otp_hash = _generate_hash(generated_secret, otp_salt)
-
-    user.pending_otp_salt = bytes_to_str_base64(otp_salt)
-    user.pending_otp_hash = bytes_to_str_base64(otp_hash)
+    user.pending_otp_hash = generated_secret
     user.pending_backup_codes = [_random_string(16) for _ in range(6)]
     uri = pyotp.totp.TOTP(generated_secret).provisioning_uri(
         name=user.display_name or user.email_address, issuer_name="Newsroom"
     )
 
-    repositories.user_repository.upsert(user)
+    application_data.repositories.user_repository.upsert(user)
     return OtpRegistrationResult(
         generated_secret=generated_secret, uri=uri, user=user, backup_codes=user.pending_backup_codes
     )
@@ -172,9 +175,45 @@ def start_registration_new_otp_for(user: User) -> OtpRegistrationResult:
 def disable_otp_for(user: User) -> User:
     """ Disables the OTP for the user. """
     user.pending_otp_hash = None
-    user.pending_otp_salt = None
+    user.pending_backup_codes = []
     user.otp_hash = None
-    user.otp_salt = None
+    user.otp_backup_codes = []
 
-    repositories.user_repository.upsert(user)
+    application_data.repositories.user_repository.upsert(user)
     return user
+
+
+def confirm_otp_for(user: User, totp_value: str) -> User:
+    """ Confirms the generated secret for the user by submitting a totp-value. """
+    if user.pending_otp_hash is None:
+        raise TokenCouldNotBeVerified("Token could not be verified")
+
+    totp = pyotp.TOTP(user.pending_otp_hash)
+    if not totp.verify(totp_value):
+        raise TokenCouldNotBeVerified("Token could not be verified")
+
+    user.otp_hash = user.pending_otp_hash
+    user.otp_backup_codes = user.pending_backup_codes
+    user.pending_otp_hash = None
+    user.pending_backup_codes = []
+    user = application_data.repositories.user_repository.upsert(user)
+    return user
+
+
+def totp_verification_for(user: User, totp_value: str) -> User:
+    """ Verifies the totp value for the user. """
+    if user.otp_hash is None:
+        raise TokenCouldNotBeVerified("Token could not be verified")
+
+    totp = pyotp.TOTP(user.otp_hash)
+    if not totp.verify(totp_value, valid_window=5):
+        raise TokenCouldNotBeVerified("Token could not be verified")
+    return user
+
+
+def use_backup_code_for(user: User, backup_code: str) -> User:
+    """ Uses the backup code for the user. """
+    if backup_code not in user.otp_backup_codes:
+        raise BackupCodeNotValid()
+    user.otp_backup_codes = [code for code in user.otp_backup_codes if code != backup_code]
+    return application_data.repositories.user_repository.upsert(user)

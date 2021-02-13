@@ -50,12 +50,10 @@ class User(BaseModel):  # pylint: disable=too-few-public-methods
     display_name: Optional[str]
     password_hash: str
     password_salt: str
-    otp_salt: Optional[str]
     otp_hash: Optional[str]
-    backup_codes: Optional[List[str]]
-    pending_otp_salt: Optional[str]
+    otp_backup_codes: List[str] = Field(default_factory=list)
     pending_otp_hash: Optional[str]
-    pending_backup_codes: Optional[List[str]]
+    pending_backup_codes: List[str] = Field(default_factory=list)
     is_approved: bool
     subscribed_to: List[str] = []
     number_of_unread_items: int = 0

@@ -1,3 +1,4 @@
+import enum
 import logging
 from typing import Optional, List
 
@@ -9,7 +10,7 @@ from api.api_application_data import security
 from api.api_utils import ErrorMessage
 from api.security import TokenVerifier
 from core_lib.application_data import repositories
-from core_lib.exceptions import AuthorizationException
+from core_lib.exceptions import AuthorizationException, TokenCouldNotBeVerified
 from core_lib.repositories import User
 from core_lib.user import (
     signup,
@@ -19,6 +20,9 @@ from core_lib.user import (
     avatar_image_for_user,
     start_registration_new_otp_for,
     disable_otp_for,
+    totp_verification_for,
+    confirm_otp_for,
+    use_backup_code_for,
 )
 
 user_router = APIRouter()
@@ -43,11 +47,23 @@ class UserSignInRequest(BaseModel):
     password: str
 
 
+class SignInState(enum.Enum):
+    REQUIRES_OTP = "REQUIRES_OTP"
+    SIGNED_IN = "SIGNED_IN"
+
+
 class UserSignInResponse(BaseModel):
-    token: str
-    email_address: str
-    is_approved: bool
+    sign_in_state: SignInState
     user: UserResponse
+    token: Optional[str]
+
+
+class TOTPVerificationRequest(BaseModel):
+    totp_value: str
+
+
+class ConfirmTotpResponse(BaseModel):
+    otp_confirmed: bool
 
 
 class UserChangePasswordRequest(BaseModel):
@@ -71,6 +87,10 @@ class OTPRegistrationResponse(BaseModel):
     generated_secret: str
     uri: str
     backup_codes: List[str]
+
+
+class UseTOTPBackupRequest(BaseModel):
+    totp_backup_code: str
 
 
 def user_to_user_response(user: User) -> UserResponse:
@@ -104,8 +124,7 @@ async def sign_up_user(user_sign_up_request: UserSignUpRequest) -> UserSignInRes
             token = TokenVerifier.create_token(user)
             return UserSignInResponse(
                 token=token,
-                email_address=user.email_address,
-                is_approved=user.is_approved,
+                sign_in_state=SignInState.SIGNED_IN,
                 user=user_to_user_response(user),
             )
     except AuthorizationException as authorization_exception:
@@ -115,28 +134,23 @@ async def sign_up_user(user_sign_up_request: UserSignUpRequest) -> UserSignInRes
 @user_router.post(
     "/user/change_password",
     tags=["user"],
-    response_model=UserSignInResponse,
     responses={
         status.HTTP_401_UNAUTHORIZED: {"model": ErrorMessage},
     },
 )
-async def change_password_user(user_change_password_request: UserChangePasswordRequest) -> UserSignInResponse:
+async def change_password_user(
+    user_change_password_request: UserChangePasswordRequest, authorization: Optional[str] = Header(None)
+) -> None:
     """
     Change the password for the user.
     """
     try:
-        user = change_password(
+        await security.get_approved_user(authorization)
+        change_password(
             email_address=user_change_password_request.email_address,
             current_password=user_change_password_request.current_password,
             new_password=user_change_password_request.new_password,
             new_password_repeated=user_change_password_request.new_password_repeated,
-        )
-        token = TokenVerifier.create_token(user)
-        return UserSignInResponse(
-            token=token,
-            email_address=user.email_address,
-            is_approved=user.is_approved,
-            user=user_to_user_response(user),
         )
     except AuthorizationException as authorization_exception:
         raise HTTPException(status_code=401, detail=authorization_exception.__str__()) from authorization_exception
@@ -157,11 +171,10 @@ async def change_password_user(user_change_password_request: UserChangePasswordR
 async def sign_in_user(user_sign_in_request: UserSignInRequest) -> UserSignInResponse:
     try:
         user = sign_in(email_address=user_sign_in_request.email_address, password=user_sign_in_request.password)
-        token = TokenVerifier.create_token(user)
+        token = TokenVerifier.create_token(user, token_verified=False)
         return UserSignInResponse(
             token=token,
-            email_address=user.email_address,
-            is_approved=user.is_approved,
+            sign_in_state=SignInState.SIGNED_IN if user.otp_hash is None else SignInState.REQUIRES_OTP,
             user=user_to_user_response(user),
         )
     except AuthorizationException as authorization_exception:
@@ -190,7 +203,7 @@ async def update_profile(
             avatar_image=update_profile_request.avatar_image,
             avatar_action=update_profile_request.avatar_action,
         )
-        return UserResponse.parse_obj(user)
+        return user_to_user_response(user)
     except AuthorizationException as authorization_exception:
         raise HTTPException(status_code=401) from authorization_exception
 
@@ -227,14 +240,74 @@ async def start_totp_registration(authorization: Optional[str] = Header(None)) -
 
 
 @user_router.post(
-    "user/disable-totp",
+    "/user/totp-verification",
+    tags=["User"],
+    response_model=UserSignInResponse,
+)
+async def totp_verification(
+    totp_verification_request: TOTPVerificationRequest, authorization: Optional[str] = Header(None)
+) -> UserSignInResponse:
+    try:
+        user = await security.get_approved_user(authorization, check_totp=False)
+        user = totp_verification_for(user, totp_verification_request.totp_value)
+        token = TokenVerifier.create_token(user, token_verified=True)
+        return UserSignInResponse(
+            token=token,
+            sign_in_state=SignInState.SIGNED_IN,
+            user=user_to_user_response(user),
+        )
+    except AuthorizationException as authorization_exception:
+        raise HTTPException(status_code=401) from authorization_exception
+
+
+@user_router.post(
+    "/user/confirm-totp",
+    tags=["User"],
+    response_model=ConfirmTotpResponse,
+)
+async def confirm_totp(
+    otp_login_request: TOTPVerificationRequest, authorization: Optional[str] = Header(None)
+) -> ConfirmTotpResponse:
+    try:
+        user = await security.get_approved_user(authorization)
+        confirm_otp_for(user, otp_login_request.totp_value)
+        return ConfirmTotpResponse(otp_confirmed=True)
+    except TokenCouldNotBeVerified:
+        return ConfirmTotpResponse(otp_confirmed=False)
+    except AuthorizationException as authorization_exception:
+        raise HTTPException(status_code=401) from authorization_exception
+
+
+@user_router.post(
+    "/user/disable-totp",
     tags=["User"],
     response_model=UserResponse,
 )
-async def disable_otp(authorization: Optional[str] = Header(None)) -> UserResponse:
+async def disable_totp(authorization: Optional[str] = Header(None)) -> UserResponse:
     try:
-        user = security.get_approved_user(authorization)
+        user = await security.get_approved_user(authorization)
         user = disable_otp_for(user)
         return user_to_user_response(user)
+    except AuthorizationException as authorization_exception:
+        raise HTTPException(status_code=401) from authorization_exception
+
+
+@user_router.post(
+    "/user/use-totp-backup-code",
+    tags=["User"],
+    response_model=UserSignInResponse,
+)
+async def use_totp_backup_code(
+    backup_request: UseTOTPBackupRequest, authorization: Optional[str] = Header(None)
+) -> UserSignInResponse:
+    try:
+        user = await security.get_approved_user(authorization, check_totp=False)
+        user = use_backup_code_for(user, backup_request.totp_backup_code)
+        token = TokenVerifier.create_token(user, token_verified=True)
+        return UserSignInResponse(
+            token=token,
+            sign_in_state=SignInState.SIGNED_IN,
+            user=user_to_user_response(user),
+        )
     except AuthorizationException as authorization_exception:
         raise HTTPException(status_code=401) from authorization_exception

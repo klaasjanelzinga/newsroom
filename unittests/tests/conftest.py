@@ -1,23 +1,26 @@
-from contextlib import contextmanager
-from typing import Tuple, List
-from unittest.mock import Mock, AsyncMock
+from typing import List
 
 import pytest
 from faker import Faker
 
 from api.security import TokenVerifier
 from core_lib import application_data
-from core_lib.application_data import Repositories
+from core_lib.application_data import Repositories, repositories
 from core_lib.repositories import (
     User,
     Feed,
     FeedItem,
     Subscription,
 )
+from core_lib.user import _generate_salt, _generate_hash
+from core_lib.utils import bytes_to_str_base64
 from tests.mock_repositories import MockRepositories
 
 application_data.repositories = MockRepositories()
 application_data.token_secret_key = "junit-secret"
+
+if application_data.repositories is None:
+    print("Oeps")
 
 
 def feed_factory(faker: Faker) -> Feed:
@@ -56,14 +59,34 @@ def repositories() -> Repositories:
 
 
 @pytest.fixture
-def user(faker: Faker, repositories: MockRepositories) -> User:
-    user = User(email_address=faker.name(), password_hash="hash", password_salt="salt", is_approved=True)
+def user_password(faker: Faker) -> str:
+    return faker.password(length=16, special_chars=True, digits=True, upper_case=True, lower_case=True)
+
+
+@pytest.fixture
+def user_password_salt() -> bytes:
+    return _generate_salt()
+
+
+@pytest.fixture
+def user_password_hash(user_password: str, user_password_salt: bytes) -> bytes:
+    return _generate_hash(user_password, user_password_salt)
+
+
+@pytest.fixture
+def user(faker: Faker, repositories: MockRepositories, user_password_hash: bytes, user_password_salt: bytes) -> User:
+    user = User(
+        email_address=faker.email(),
+        password_hash=bytes_to_str_base64(user_password_hash),
+        password_salt=bytes_to_str_base64(user_password_salt),
+        is_approved=True,
+    )
     repositories.user_repository.upsert(user)
     return user
 
 
 @pytest.fixture
-def bearer_token(faker: Faker, user: User) -> str:
+def user_bearer_token(faker: Faker, user: User) -> str:
     return f"Bearer {TokenVerifier.create_token(user)}"
 
 

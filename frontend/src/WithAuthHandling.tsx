@@ -6,6 +6,7 @@ import {UserResponse} from "./user/model";
 
 export interface SignInResult {
     success: boolean;
+    needs_otp?: boolean;
     reason?: string;
 }
 
@@ -44,32 +45,21 @@ class UserInformation {
     }
 }
 
-export interface User {
-    display_name: string | null;
-    is_approved: boolean;
-    totp_enabled: boolean;
+interface ErrorMessage {
+    detail: string;
 }
 
 export interface SignInResponse {
     token: string;
-    email_address: string;
-    user: User;
-}
-
-interface ErrorMessage {
-    detail: string;
+    sign_in_state: string;
+    user: UserResponse;
 }
 
 export class TokenBasedAuthenticator {
 
     isSignedIn = false
+    needs_otp = false
     user_information: UserInformation | null = null
-
-    static unsecure_headers(): Headers {
-        const headers: HeadersInit = new Headers()
-        headers.set('Content-Type', 'application/json')
-        return headers
-    }
 
     constructor() {
         this.user_information = UserInformation.load()
@@ -78,16 +68,24 @@ export class TokenBasedAuthenticator {
         }
     }
 
-    bearer_token(): string | null {
-        if (!this.user_information) {
-            return null
-        }
-        return `Bearer ${this.user_information?.token}`
+    /** Return Headers usable for non-authorized calls */
+    unsecure_headers(): Headers {
+        const headers: HeadersInit = new Headers()
+        headers.set('Content-Type', 'application/json')
+        return headers
+    }
+
+    /** Return Headers usable for authorized calls. */
+    secure_headers(): Headers {
+        const headers: HeadersInit = new Headers()
+        headers.set('Content-Type', 'application/json')
+        headers.set("Authorization", `Bearer ${this.user_information?.token}`)
+        return headers
     }
 
     async sign_in(email_address: string, password: string): Promise<SignInResult> {
         const response = await fetch(`${config.apihost}/user/signin`, {
-            headers:  TokenBasedAuthenticator.unsecure_headers(),
+            headers:  this.unsecure_headers(),
             method: "POST",
             body: JSON.stringify({
                 email_address: email_address,
@@ -95,7 +93,31 @@ export class TokenBasedAuthenticator {
             }),
         })
 
-        return this._parseRequestForToken(response)
+        return await this.parse_response_for_token(response)
+    }
+
+    async totp_verification(otp_value: string): Promise<SignInResult> {
+        const response = await fetch(`${config.apihost}/user/totp-verification`, {
+            headers: this.secure_headers(),
+            method: "POST",
+            body: JSON.stringify({
+                totp_value: otp_value,
+            }),
+        })
+
+        return await this.parse_response_for_token(response)
+    }
+
+    async use_totp_backup_code(backup_code: string): Promise<SignInResult> {
+        const response = await fetch(`${config.apihost}/user/use-totp-backup-code`, {
+            headers: this.secure_headers(),
+            method: "POST",
+            body: JSON.stringify({
+                totp_backup_code: backup_code,
+            }),
+        })
+
+        return await this.parse_response_for_token(response)
     }
 
     async sign_out(): Promise<void> {
@@ -113,8 +135,8 @@ export class TokenBasedAuthenticator {
     }
 
     async change_password(email_address: string, current_password: string, new_password: string, new_password_repeated: string): Promise<SignInResult> {
-        const response = await fetch(`${config.apihost}/user/change_password`, {
-            headers:  TokenBasedAuthenticator.unsecure_headers(),
+        await fetch(`${config.apihost}/user/change_password`, {
+            headers:  this.secure_headers(),
             method: "POST",
             body: JSON.stringify({
                 email_address: email_address,
@@ -123,15 +145,14 @@ export class TokenBasedAuthenticator {
                 new_password_repeated: new_password_repeated,
             }),
         })
-
-        return this._parseRequestForToken(response)
+        return {
+            success: true,
+        }
     }
 
     async sign_up(email_address: string, password: string, password_repeated: string): Promise<SignInResult> {
-        const headers: HeadersInit = new Headers()
-        headers.set('Content-Type', 'application/json')
         const response = await fetch(`${config.apihost}/user/signup`, {
-            headers:  headers,
+            headers:  this.unsecure_headers(),
             method: "POST",
             body: JSON.stringify({
                 email_address: email_address,
@@ -140,7 +161,7 @@ export class TokenBasedAuthenticator {
             }),
         })
 
-        return this._parseRequestForToken(response)
+        return await this.parse_response_for_token(response)
     }
 
     update_user_information(userResponse: UserResponse): void {
@@ -151,21 +172,30 @@ export class TokenBasedAuthenticator {
         }
     }
 
-    async _parseRequestForToken(response: Response): Promise<SignInResult> {
+    async parse_response_for_token(response: Response): Promise<SignInResult> {
         if (response.status === 200) {
             const json_response = await response.json() as SignInResponse
             this.user_information = {
                 token: json_response.token,
-                email_address: json_response.email_address,
+                email_address: json_response.user.email_address,
                 display_name: json_response.user.display_name || '',
                 is_approved: json_response.user.is_approved,
                 avatar_image: null,
                 totp_enabled: json_response.user.totp_enabled,
             }
             UserInformation.save(this.user_information)
-            this.isSignedIn = true
+
+            if (json_response.sign_in_state === "REQUIRES_OTP") {
+                this.needs_otp = true
+                this.isSignedIn = false
+            }
+            else {
+                this.isSignedIn = true
+                this.needs_otp = false
+            }
             return Promise.resolve({
-                success: true
+                success: true,
+                needs_otp: this.needs_otp,
             })
         }
         else if (response.status === 401) {

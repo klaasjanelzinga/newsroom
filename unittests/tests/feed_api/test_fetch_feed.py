@@ -8,11 +8,11 @@ from tests.mock_repositories import MockRepositories
 
 
 @pytest.mark.asyncio
-async def test_fetch_user(repositories: MockRepositories, faker: Faker, feed: Feed, user: User, bearer_token: str):
+async def test_fetch_user(repositories: MockRepositories, faker: Faker, feed: Feed, user: User, user_bearer_token):
     # Subscribe user to 1 feed and create another (not subscribed)
-    await subscribe_to_feed(feed_id=feed.feed_id, authorization=bearer_token)
+    await subscribe_to_feed(feed_id=feed.feed_id, authorization=user_bearer_token)
     repositories.feed_repository.upsert(feed_factory(faker))
-    response = await get_all_feeds(authorization=bearer_token)
+    response = await get_all_feeds(authorization=user_bearer_token)
 
     assert len(response) == 2
     subscribed_feed = [response_feed for response_feed in response if response_feed.feed.feed_id == feed.feed_id][0]

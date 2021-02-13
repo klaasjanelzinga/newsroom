@@ -7,8 +7,7 @@ import {Api} from "../Api";
 import {TokenBasedAuthenticator, withAuthHandling, WithAuthHandling} from "../WithAuthHandling";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
-import LockIcon from "@material-ui/icons/Lock"
-import {OTPRegistrationResponse, UserResponse} from "./model";
+import {ConfirmTotpResponse, OTPRegistrationResponse, UserResponse} from "./model";
 import QRCode from 'qrcode'
 
 const styles = createStyles({
@@ -44,7 +43,7 @@ interface ChangeTotpState {
     generated_secret: string | null;
     uri: string | null;
     backup_codes: string[];
-    token_code: string | null;
+    totp_value: string | null;
 }
 
 class ChangeTotp extends React.Component<ChangeTotpAttrs, ChangeTotpState> {
@@ -64,7 +63,7 @@ class ChangeTotp extends React.Component<ChangeTotpAttrs, ChangeTotpState> {
             uri: null,
             generated_secret: null,
             backup_codes: [],
-            token_code: null,
+            totp_value: null,
         }
     }
 
@@ -85,7 +84,29 @@ class ChangeTotp extends React.Component<ChangeTotpAttrs, ChangeTotpState> {
     }
 
     async confirm_totp(): Promise<void> {
-        console.log("TODO", this.state.token_code)
+        this.api.post<ConfirmTotpResponse>("/user/confirm-totp", JSON.stringify({
+            totp_value: this.state.totp_value
+        }))
+            .then(async (confirmResponse) => {
+                if (confirmResponse[0] === 200) {
+                    if (confirmResponse[1].otp_confirmed) {
+                        await this.authHandler.sign_out()
+                        this.props.enqueueSnackbar(`TOTP successfully enabled, please sign in again.`, {
+                            variant: 'info',
+                            autoHideDuration: 1500,
+                        });
+                        this.props.history.push('/user/signin')
+                    }
+                    else {
+                        this.props.enqueueSnackbar(`TOTP code not verified. Please try again`, {
+                            variant: 'info',
+                            autoHideDuration: 1500,
+                        });
+                    }
+                }
+            })
+            .catch(reason => console.log(reason))
+        return Promise.resolve()
     }
 
     async disable_totp(): Promise<void> {
@@ -124,6 +145,7 @@ class ChangeTotp extends React.Component<ChangeTotpAttrs, ChangeTotpState> {
                                     <Button
                                         variant="contained"
                                         color="primary"
+                                        disabled={this.state.generated_secret !== null}
                                         className={classes.saveButton}
                                         onClick={async (): Promise<void> => await this.start_totp_registration()}>
                                         Enable 2FA
@@ -131,10 +153,12 @@ class ChangeTotp extends React.Component<ChangeTotpAttrs, ChangeTotpState> {
                                 </div>
                             </Grid>
                             }
+                            {!this.authHandler.user_information?.totp_enabled &&
                             <Grid item xs={12}>
                                 <canvas id={"qrcode"} height={"200px"} width={"200px"}
                                         ref={(t: HTMLCanvasElement): HTMLCanvasElement => this.qrcode_element = t}/>
                             </Grid>
+                                }
                             {this.state.generated_secret && <Grid container>
                                     <Grid item sm={12}>
                                         Scan the QR-code with your authenticator app or use the
@@ -152,9 +176,9 @@ class ChangeTotp extends React.Component<ChangeTotpAttrs, ChangeTotpState> {
                                             <TextField
                                                 required
                                                 label="Enter token from the authenticator"
-                                                onChange={(e): void => this.setState({token_code: e.currentTarget.value})}
+                                                onChange={(e): void => this.setState({totp_value: e.currentTarget.value})}
                                                 fullWidth
-                                                value={this.state.token_code}
+                                                value={this.state.totp_value}
                                             />
                                             <Button
                                                 variant="contained"

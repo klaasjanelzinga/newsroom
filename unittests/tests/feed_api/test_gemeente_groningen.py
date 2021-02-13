@@ -10,7 +10,7 @@ from tests.mock_repositories import MockRepositories
 
 @pytest.mark.asyncio
 async def test_subscribe_to_gemeente_groningen(
-    faker: Faker, repositories: MockRepositories, user: User, bearer_token: str
+    faker: Faker, repositories: MockRepositories, user: User, user_bearer_token
 ):
     # 1. Refresh feed so that it exists
     feed = feed_gemeente_groningen
@@ -31,7 +31,7 @@ async def test_subscribe_to_gemeente_groningen(
     total_before_subscribe = user.number_of_unread_items
     # 2. Subscribe
     assert feed.feed_id not in user.subscribed_to
-    await subscribe_to_feed(feed_id=feed.feed_id, authorization=bearer_token)
+    await subscribe_to_feed(feed_id=feed.feed_id, authorization=user_bearer_token)
     assert feed.feed_id in repositories.user_repository.fetch_user_by_email(user.email_address).subscribed_to
     assert repositories.news_item_repository.count() == repositories.feed_item_repository.count()
     assert feed.number_of_items == 0

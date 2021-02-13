@@ -3,7 +3,7 @@ import {withStyles} from '@material-ui/core/styles';
 import {AccountCircle} from '@material-ui/icons';
 import React from 'react';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {withAuthHandling, WithAuthHandling} from "../WithAuthHandling";
+import {TokenBasedAuthenticator, withAuthHandling, WithAuthHandling} from "../WithAuthHandling";
 import {Api} from "../Api";
 import {withSnackbar, WithSnackbarProps} from "notistack";
 
@@ -25,10 +25,12 @@ type HeaderMenuState = {
 class HeaderMenu extends React.Component<HeaderMenuProps, HeaderMenuState> {
 
     api: Api
+    authHandling: TokenBasedAuthenticator
 
     constructor(props: HeaderMenuProps) {
         super(props);
         this.api = new Api(props)
+        this.authHandling = props.authHandling
         this.state = {
             anchorEl: null,
             menuOpen: false,
@@ -41,15 +43,17 @@ class HeaderMenu extends React.Component<HeaderMenuProps, HeaderMenuState> {
     fetch_avatar_image(): void {
         if (this.state.avatar_image) {
             return
+        } else if (this.authHandling.isSignedIn) {
+            console.log(this.authHandling)
+            this.api.get<UserAvatarResponse>("/user/avatar")
+                .then(user_avatar_response => {
+                    if (user_avatar_response[0] === 200) {
+                        this.setState({avatar_image: user_avatar_response[1].avatar_image})
+                        this.props.authHandling.update_avatar_image(user_avatar_response[1].avatar_image)
+                    }
+                })
+                .catch(reason => console.log(reason))
         }
-        this.api.get<UserAvatarResponse>("/user/avatar")
-            .then(user_avatar_response => {
-                if (user_avatar_response[0] === 200) {
-                    this.setState({avatar_image: user_avatar_response[1].avatar_image})
-                    this.props.authHandling.update_avatar_image(user_avatar_response[1].avatar_image)
-                }
-            })
-            .catch(reason => console.log(reason))
     }
 
     handleMenu = (event: React.MouseEvent<HTMLElement>): void => {

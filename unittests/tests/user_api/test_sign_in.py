@@ -12,18 +12,27 @@ from tests.mock_repositories import MockRepositories
 
 
 @pytest.mark.asyncio
-async def test_sign_in(repositories: MockRepositories, signed_up_user: User, user_email_address, user_password: str):
-    user_sign_in_request = UserSignInRequest(email_address=user_email_address, password=user_password)
+async def test_sign_in(
+    repositories: MockRepositories,
+    signed_up_user: User,
+    signed_up_user_email_address: str,
+    signed_up_user_password: str,
+):
+    user_sign_in_request = UserSignInRequest(
+        email_address=signed_up_user_email_address, password=signed_up_user_password
+    )
     response = await sign_in_user(user_sign_in_request)
     assert response.token is not None
 
 
 @pytest.mark.asyncio
 async def test_sign_in_wrong_password(
-    repositories: MockRepositories, signed_up_user: User, user_email_address, user_password: str
+    repositories: MockRepositories, signed_up_user: User, signed_up_user_email_address: str, signed_up_user_password
 ):
     with pytest.raises(HTTPException) as http_exception:
-        user_sign_in_request = UserSignInRequest(email_address=user_email_address, password=f"wrong-{user_password}")
+        user_sign_in_request = UserSignInRequest(
+            email_address=signed_up_user_email_address, password=f"wrong-{signed_up_user_password}"
+        )
         await sign_in_user(user_sign_in_request)
     assert http_exception is not None
     assert http_exception.value.status_code == 401
@@ -31,10 +40,15 @@ async def test_sign_in_wrong_password(
 
 @pytest.mark.asyncio
 async def test_sign_in_wrong_user(
-    repositories: MockRepositories, signed_up_user: User, user_email_address, user_password: str
+    repositories: MockRepositories,
+    signed_up_user: User,
+    signed_up_user_email_address: str,
+    signed_up_user_password: str,
 ):
     with pytest.raises(HTTPException) as http_exception:
-        user_sign_in_request = UserSignInRequest(email_address=f"wrong{user_email_address}", password=user_password)
+        user_sign_in_request = UserSignInRequest(
+            email_address=f"wrong{signed_up_user_email_address}", password=signed_up_user_password
+        )
         await sign_in_user(user_sign_in_request)
     assert http_exception is not None
     assert http_exception.value.status_code == 401
@@ -42,9 +56,14 @@ async def test_sign_in_wrong_user(
 
 @pytest.mark.asyncio
 async def test_sign_in_tampered_token(
-    repositories: MockRepositories, approved_up_user: User, user_email_address, user_password: str
+    repositories: MockRepositories,
+    approved_up_user: User,
+    approved_up_user_email_address: str,
+    approved_up_user_password: str,
 ):
-    user_sign_in_request = UserSignInRequest(email_address=user_email_address, password=user_password)
+    user_sign_in_request = UserSignInRequest(
+        email_address=approved_up_user_email_address, password=approved_up_user_password
+    )
     response = await sign_in_user(user_sign_in_request)
     token = f"Bearer {response.token}"
     await get_all_feeds(authorization=token)

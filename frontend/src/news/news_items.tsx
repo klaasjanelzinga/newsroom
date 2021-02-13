@@ -56,7 +56,7 @@ class NewsItemsNode extends React.Component<NewsItemsProps> implements NewsItems
     constructor(props: NewsItemsProps) {
         super(props);
         this.api = new Api(props)
-        this.onScrollDebounced = debounce(this.onScroll, 100);
+        this.onScrollDebounced = debounce(this.onScroll, 200);
 
         this.props.registerNewsItemsControl(this)
     }

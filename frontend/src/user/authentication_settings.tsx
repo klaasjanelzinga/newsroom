@@ -7,20 +7,12 @@ import Change2fa from "./change_2fa"
 import * as React from "react";
 
 const styles = createStyles({
-    card: {
-        display: 'flex',
-        width: '600px',
-        margin: '10px',
-    },
 })
 
-interface AuthenticationSettings extends WithAuthHandling, WithStyles<typeof styles>, RouteComponentProps, WithSnackbarProps {
+interface AuthenticationSettingsProps extends WithAuthHandling, WithStyles<typeof styles>, RouteComponentProps, WithSnackbarProps {
 }
 
-interface AuthenticationSettingsState {
-}
-
-class AuthenticationSettings extends React.Component<AuthenticationSettings, AuthenticationSettingsState> {
+class AuthenticationSettings extends React.Component<AuthenticationSettingsProps> {
 
     render(): JSX.Element {
         return <div>
@@ -32,4 +24,3 @@ class AuthenticationSettings extends React.Component<AuthenticationSettings, Aut
 }
 
 export default withStyles(styles)(withRouter(withSnackbar(withAuthHandling(AuthenticationSettings))))
-
