@@ -220,7 +220,7 @@ export interface WithAuthHandling {
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const withAuthHandling = <P extends WithAuthHandling>(Component: React.ComponentType<P>) =>
-    class WithGoogleAuthHandler extends React.Component<Subtract<P, WithAuthHandling>> {
+    class WithTokenBasedAuthHandler extends React.Component<Subtract<P, WithAuthHandling>> {
 
         render(): JSX.Element {
             return <AuthHandling.Consumer>

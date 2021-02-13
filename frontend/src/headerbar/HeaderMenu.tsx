@@ -20,6 +20,8 @@ type HeaderMenuState = {
     anchorEl: null | HTMLElement;
     menuOpen: boolean;
     avatar_image: string | null;
+    is_signed_in: boolean;
+    is_approved: boolean;
 }
 
 class HeaderMenu extends React.Component<HeaderMenuProps, HeaderMenuState> {
@@ -34,17 +36,17 @@ class HeaderMenu extends React.Component<HeaderMenuProps, HeaderMenuState> {
         this.state = {
             anchorEl: null,
             menuOpen: false,
-            avatar_image: this.props.authHandling.user_information?.avatar_image || null,
+            avatar_image: props.authHandling.user_information?.avatar_image || null,
+            is_signed_in: props.authHandling.isSignedIn,
+            is_approved: (props.authHandling.user_information?.is_approved || false) && props.authHandling.isSignedIn,
         };
-
         this.fetch_avatar_image()
     }
 
     fetch_avatar_image(): void {
         if (this.state.avatar_image) {
             return
-        } else if (this.authHandling.isSignedIn) {
-            console.log(this.authHandling)
+        } else if (this.state.is_signed_in && this.state.is_approved) {
             this.api.get<UserAvatarResponse>("/user/avatar")
                 .then(user_avatar_response => {
                     if (user_avatar_response[0] === 200) {
@@ -115,10 +117,10 @@ class HeaderMenu extends React.Component<HeaderMenuProps, HeaderMenuState> {
                     keepMounted
                     open={this.state.menuOpen}
                     onClose={this.handleClose}>
-                    <MenuItem disabled={this.props.authHandling.isSignedIn} onClick={this.handleSignIn}>Sign in</MenuItem>
-                    <MenuItem disabled={!this.props.authHandling.isSignedIn} onClick={this.handleMyProfile}>Profile</MenuItem>
-                    <MenuItem disabled={!this.props.authHandling.isSignedIn} onClick={this.handleSignOut}>Sign out</MenuItem>
-                    <MenuItem onClick={this.handleAuthenticationSettings}>Authentication</MenuItem>
+                    <MenuItem disabled={this.state.is_signed_in} onClick={this.handleSignIn}>Sign in</MenuItem>
+                    <MenuItem disabled={!this.state.is_approved} onClick={this.handleMyProfile}>Profile</MenuItem>
+                    <MenuItem disabled={!this.state.is_signed_in} onClick={this.handleSignOut}>Sign out</MenuItem>
+                    <MenuItem disabled={!this.state.is_approved} onClick={this.handleAuthenticationSettings}>Authentication</MenuItem>
                 </Menu>
             </div>
         );
