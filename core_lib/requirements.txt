@@ -22,14 +22,16 @@ chardet==3.0.4
     #   requests
 dateparser==1.0.0
     # via -r requirements.in
-google-api-core[grpc]==1.25.1
+google-api-core[grpc]==1.26.0
     # via
     #   -r requirements.in
     #   google-cloud-core
     #   google-cloud-datastore
-google-auth==1.24.0
-    # via google-api-core
-google-cloud-core==1.5.0
+google-auth==1.26.1
+    # via
+    #   google-api-core
+    #   google-cloud-core
+google-cloud-core==1.6.0
     # via
     #   -r requirements.in
     #   google-cloud-datastore
@@ -45,7 +47,7 @@ idna==2.10
     # via
     #   requests
     #   yarl
-libcst==0.3.16
+libcst==0.3.17
     # via google-cloud-datastore
 lxml==4.6.2
     # via -r requirements.in
@@ -55,6 +57,8 @@ multidict==5.1.0
     #   yarl
 mypy-extensions==0.4.3
     # via typing-inspect
+packaging==20.9
+    # via google-api-core
 proto-plus==1.13.0
     # via google-cloud-datastore
 protobuf==3.14.0
@@ -70,6 +74,10 @@ pyasn1==0.4.8
     #   rsa
 pydantic==1.7.3
     # via -r requirements.in
+pyotp==2.6.0
+    # via -r requirements.in
+pyparsing==2.4.7
+    # via packaging
 python-dateutil==2.8.1
     # via dateparser
 pytz==2021.1
@@ -93,7 +101,7 @@ six==1.15.0
     #   grpcio
     #   protobuf
     #   python-dateutil
-soupsieve==2.1
+soupsieve==2.2
     # via beautifulsoup4
 typing-extensions==3.7.4.3
     # via

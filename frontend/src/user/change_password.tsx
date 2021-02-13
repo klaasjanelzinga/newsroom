@@ -66,27 +66,14 @@ class ChangePassword extends React.Component<ChangePasswordAttrs, ChangePassword
             const sign_in_result = await this.authHandling.change_password(
                 this.state.email_address, this.state.current_password, this.state.new_password, this.state.new_password_repeated
             )
-            if (!sign_in_result.success) {
-                this.setState({
-                    new_password: "",
-                    new_password_repeated: "",
-                    current_password: ""
-                })
-                this.props.enqueueSnackbar(`Changing of password failed: ${sign_in_result.reason || "Unknown"}`, {
-                    variant: 'warning',
+            if (sign_in_result.success) {
+                await this.authHandling.sign_out()
+                this.props.enqueueSnackbar(`Changing of password succeeded. Please sign in again`, {
+                    variant: 'info',
                     autoHideDuration: 3000,
                 });
-                return Promise.resolve()
+                this.props.history.push('/user/signin')
             }
-            if (this.authHandling.user_information?.is_approved) {
-                this.props.history.push('/')
-            } else {
-                this.props.history.push('/user/needs-approval')
-            }
-            this.props.enqueueSnackbar("Password changed", {
-                variant: 'info',
-                autoHideDuration: 3000,
-            });
         } catch (error) {
             this.props.enqueueSnackbar('Cannot sign in', {
                 variant: 'warning',

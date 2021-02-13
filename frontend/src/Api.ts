@@ -16,17 +16,9 @@ export class Api {
         this.authHandling = props.authHandling
     }
 
-    _headers_from(bearer_token: string| null): Headers {
-        const headers: HeadersInit = new Headers()
-        headers.set('Content-Type', 'application/json')
-        if (bearer_token) {
-            headers.set("Authorization", bearer_token)
-        }
-        return headers;
-    }
-
     async _parseResponse<T>(response: Response): Promise<T> {
         if (response.status === 401) {
+            await this.authHandling.sign_out()
             this.props.history.push(`/user/signin?redirect_to=${this.props.history.location.pathname}`);
             this.props.enqueueSnackbar('You need to signin again.', {
                 variant: 'warning',
@@ -46,21 +38,19 @@ export class Api {
     }
 
     async get<T>(endpoint: string): Promise<[number, T]> {
-        const bearer_token = this.authHandling.bearer_token()
         const url = `${config.apihost}${endpoint}`
         const request = new Request(url, {
             method: 'GET',
-            headers: this._headers_from(bearer_token)
+            headers: this.authHandling.secure_headers(),
         });
         const response = await fetch(request)
         return [response.status, await this._parseResponse(response)]
     }
 
     async post<T>(endpoint: string, body: string| null = null): Promise<[number, T]> {
-        const bearer_token = this.authHandling.bearer_token()
         const url = `${config.apihost}${endpoint}`
         const response = await fetch(url, {
-            headers: this._headers_from(bearer_token),
+            headers: this.authHandling.secure_headers(),
             method: "POST",
             body: body,
         })

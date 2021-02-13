@@ -22,6 +22,17 @@ export interface UserResponse {
     display_name: string | null;
     email_address: string;
     is_approved: boolean;
+    totp_enabled: boolean;
+}
+
+export interface ConfirmTotpResponse {
+    otp_confirmed: boolean;
+}
+
+export interface OTPRegistrationResponse {
+    generated_secret: string;
+    uri: string;
+    backup_codes: string[];
 }
 
 export interface ErrorResponse {

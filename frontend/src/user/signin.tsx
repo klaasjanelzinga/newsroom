@@ -63,7 +63,10 @@ class SignIn extends React.Component<SignInProps, SignInState> {
     async sign_in(): Promise<void> {
         try {
             const sign_in_result = await this.authHandling.sign_in(this.state.email_address, this.state.password)
-            if (!sign_in_result.success) {
+            if (sign_in_result.needs_otp) {
+                this.props.history.push('/user/totp-verification')
+            }
+            else if (!sign_in_result.success) {
                 this.setState({password: ""})
                 this.props.enqueueSnackbar(`Sign in failed: ${sign_in_result.reason || "Unknown"}`, {
                     variant: 'warning',
@@ -71,7 +74,7 @@ class SignIn extends React.Component<SignInProps, SignInState> {
                 });
                 return Promise.resolve()
             }
-            if (this.authHandling.user_information?.is_approved) {
+            else if (this.authHandling.user_information?.is_approved) {
                 this.props.history.push(this.redirect_to || '/')
             } else {
                 this.props.history.push('/user/needs-approval')

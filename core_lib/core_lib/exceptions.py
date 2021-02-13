@@ -10,6 +10,14 @@ class AuthorizationFailed(AuthorizationException):
     pass
 
 
+class TokenCouldNotBeVerified(AuthorizationException):
+    pass
+
+
+class BackupCodeNotValid(AuthorizationException):
+    pass
+
+
 class UserNameTaken(AuthorizationException):
     pass
 

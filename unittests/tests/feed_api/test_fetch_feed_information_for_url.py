@@ -12,10 +12,12 @@ from tests.mock_repositories import MockRepositories
 
 
 @pytest.mark.asyncio
-async def test_unsubscribed(faker: Faker, repositories: MockRepositories, user: User, feed: Feed, bearer_token: str):
+async def test_unsubscribed(faker: Faker, repositories: MockRepositories, user: User, feed: Feed, user_bearer_token):
     response_mock = MagicMock()
 
-    response = await fetch_feed_information_for_url(response=response_mock, url=feed.url, authorization=bearer_token)
+    response = await fetch_feed_information_for_url(
+        response=response_mock, url=feed.url, authorization=user_bearer_token
+    )
 
     assert response.feed.feed_id == feed.feed_id
     assert not response.user_is_subscribed
@@ -23,11 +25,13 @@ async def test_unsubscribed(faker: Faker, repositories: MockRepositories, user: 
 
 
 @pytest.mark.asyncio
-async def test_subscribed(faker: Faker, repositories: MockRepositories, user: User, feed: Feed, bearer_token: str):
+async def test_subscribed(faker: Faker, repositories: MockRepositories, user: User, feed: Feed, user_bearer_token):
     response_mock = MagicMock()
-    await subscribe_to_feed(feed_id=feed.feed_id, authorization=bearer_token)
+    await subscribe_to_feed(feed_id=feed.feed_id, authorization=user_bearer_token)
 
-    response = await fetch_feed_information_for_url(response=response_mock, url=feed.url, authorization=bearer_token)
+    response = await fetch_feed_information_for_url(
+        response=response_mock, url=feed.url, authorization=user_bearer_token
+    )
     assert response.user_is_subscribed
     assert response_mock.status_code == 200
 
@@ -71,7 +75,7 @@ def _assert_fetch_feed_information_response(
 
 
 @pytest.mark.asyncio
-async def test_parse_sample_rss_feeds(repositories: MockRepositories, faker: Faker, user: User, bearer_token: str):
+async def test_parse_sample_rss_feeds(repositories: MockRepositories, faker: Faker, user: User, user_bearer_token):
     response_mock = MagicMock()
 
     xml_test_files = [
@@ -86,7 +90,7 @@ async def test_parse_sample_rss_feeds(repositories: MockRepositories, faker: Fak
         repositories.reset()
         repositories.user_repository.upsert(user)
         response = await fetch_feed_information_for_url(
-            response=response_mock, url=test_url, authorization=bearer_token
+            response=response_mock, url=test_url, authorization=user_bearer_token
         )
         _assert_fetch_feed_information_response(
             response=response,
@@ -98,7 +102,7 @@ async def test_parse_sample_rss_feeds(repositories: MockRepositories, faker: Fak
 
 
 @pytest.mark.asyncio
-async def test_unknown_feed_with_html(faker: Faker, user: User, repositories: MockRepositories, bearer_token: str):
+async def test_unknown_feed_with_html(faker: Faker, user: User, repositories: MockRepositories, user_bearer_token):
 
     html_file = "sample-files/rss_feeds/pitchfork_best.html"
     xml_file = "sample-files/rss_feeds/pitchfork_best.xml"
@@ -106,7 +110,7 @@ async def test_unknown_feed_with_html(faker: Faker, user: User, repositories: Mo
     response_mock = MagicMock()
     url = faker.url()
 
-    response = await fetch_feed_information_for_url(response=response_mock, url=url, authorization=bearer_token)
+    response = await fetch_feed_information_for_url(response=response_mock, url=url, authorization=user_bearer_token)
     _assert_fetch_feed_information_response(
         response=response,
         response_mock=response_mock,
@@ -117,7 +121,7 @@ async def test_unknown_feed_with_html(faker: Faker, user: User, repositories: Mo
 
 
 @pytest.mark.asyncio
-async def test_atom_feed(faker: Faker, repositories: MockRepositories, user: User, bearer_token: str):
+async def test_atom_feed(faker: Faker, repositories: MockRepositories, user: User, user_bearer_token):
     response_mock = MagicMock()
 
     xml_test_files = [
@@ -126,7 +130,9 @@ async def test_atom_feed(faker: Faker, repositories: MockRepositories, user: Use
     repositories.mock_client_session_for_files(xml_test_files)
     test_url = faker.url()
 
-    response = await fetch_feed_information_for_url(response=response_mock, url=test_url, authorization=bearer_token)
+    response = await fetch_feed_information_for_url(
+        response=response_mock, url=test_url, authorization=user_bearer_token
+    )
     assert response_mock.status_code == 201
     assert response is not None
 
@@ -154,7 +160,7 @@ async def test_atom_feed(faker: Faker, repositories: MockRepositories, user: Use
 
 
 @pytest.mark.asyncio
-async def test_parse_edge_cases(faker: Faker, repositories: MockRepositories, user: User, bearer_token: str):
+async def test_parse_edge_cases(faker: Faker, repositories: MockRepositories, user: User, user_bearer_token):
     response_mock = MagicMock()
 
     xml_test_files = [
@@ -163,7 +169,9 @@ async def test_parse_edge_cases(faker: Faker, repositories: MockRepositories, us
     repositories.mock_client_session_for_files(xml_test_files)
     test_url = faker.url()
 
-    response = await fetch_feed_information_for_url(response=response_mock, url=test_url, authorization=bearer_token)
+    response = await fetch_feed_information_for_url(
+        response=response_mock, url=test_url, authorization=user_bearer_token
+    )
     assert response_mock.status_code == 201
     assert response is not None
 
