@@ -8,10 +8,13 @@ import dateparser
 import pytz
 from aiohttp import ClientSession, ClientError
 from bs4 import BeautifulSoup
+from google.api_core.exceptions import GoogleAPIError
 from lxml.etree import ElementBase, fromstring
 
-from core_lib.application_data import repositories
+from core_lib.application_data import repositories, html_feeds
+from core_lib.atom_feed import refresh_atom_feed
 from core_lib.feed_utils import upsert_new_items_for_feed
+from core_lib.html_feed import refresh_html_feed
 from core_lib.repositories import Feed, FeedItem, FeedSourceType, RefreshResult
 from core_lib.utils import now_in_utc, sanitize_link
 
@@ -104,17 +107,23 @@ async def refresh_rss_feed(session: ClientSession, feed: Feed) -> Optional[Refre
                 number_of_items = upsert_new_items_for_feed(feed, feed_from_rss, feed_items_from_rss)
 
                 return RefreshResult(feed=feed, number_of_items=number_of_items)
-    except (ClientError, TimeoutError):
-        log.error("Timeout occurred on feed %s", feed)
+    except (ClientError, TimeoutError, GoogleAPIError):
+        log.exception("Error while refreshing feed %s", feed)
         return None
 
 
-async def refresh_rss_feeds() -> int:
+async def refresh_all_feeds(include_fixed_feeds: bool = True) -> int:
     """ Refreshes all active feeds and returns the number of refreshed feeds. """
     client_session = repositories.client_session
     feeds = repositories.feed_repository.get_active_feeds()
     tasks = [
         refresh_rss_feed(client_session, feed) for feed in feeds if feed.feed_source_type == FeedSourceType.RSS.name
     ]
+    tasks.extend(
+        [refresh_atom_feed(client_session, feed) for feed in feeds if feed.feed_source_type == FeedSourceType.ATOM.name]
+    )
+    if include_fixed_feeds:
+        tasks.extend([refresh_html_feed(client_session, html_feed) for html_feed in html_feeds])
+
     await asyncio.gather(*tasks)
     return len(tasks)

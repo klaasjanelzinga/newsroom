@@ -1,9 +1,9 @@
 import pytest
 from faker import Faker
 
-from core_lib.atom_feed import refresh_atom_feeds
 from core_lib.feed import fetch_feed_information_for, subscribe_user_to_feed
 from core_lib.repositories import User
+from core_lib.rss_feed import refresh_all_feeds
 from tests.mock_repositories import MockRepositories
 
 
@@ -26,7 +26,7 @@ async def test_refresh_atom_feed(faker: Faker, repositories: MockRepositories, u
 
     # refresh the feed, with one new item.
     repositories.mock_client_session_for_files(["sample-files/atom/fetch_2.xml"])
-    await refresh_atom_feeds()
+    await refresh_all_feeds(False)
     assert repositories.feed_item_repository.count() == 2
     assert repositories.news_item_repository.count() == 2
     assert user.number_of_unread_items == 2

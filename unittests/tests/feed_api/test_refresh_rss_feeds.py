@@ -3,7 +3,7 @@ from faker import Faker
 
 from core_lib.feed import fetch_feed_information_for, subscribe_user_to_feed
 from core_lib.repositories import User
-from core_lib.rss_feed import refresh_rss_feeds
+from core_lib.rss_feed import refresh_all_feeds
 from tests.mock_repositories import MockRepositories
 
 
@@ -27,20 +27,20 @@ async def test_refresh_rss_feed(faker: Faker, repositories: MockRepositories, us
 
     # refresh the feed, with one new item.
     repositories.mock_client_session_for_files(["sample-files/rss_feeds/pitchfork_best_first_fetch.xml"])
-    await refresh_rss_feeds()
+    await refresh_all_feeds(False)
     assert repositories.feed_item_repository.count() == 2
     assert repositories.news_item_repository.count() == 2
     assert user.number_of_unread_items == 2
 
     # refresh the feed, with the next one, three new items.
     repositories.mock_client_session_for_files(["sample-files/rss_feeds/pitchfork_best_second_fetch.xml"])
-    await refresh_rss_feeds()
+    await refresh_all_feeds(False)
     assert repositories.news_item_repository.count() == 5
     assert repositories.feed_item_repository.count() == 5
 
     # refresh the feed, with the next one, all new items except the ones already present.
     repositories.mock_client_session_for_files(["sample-files/rss_feeds/pitchfork_best_third_fetch.xml"])
-    await refresh_rss_feeds()
+    await refresh_all_feeds(False)
     assert repositories.news_item_repository.count() == 25
     assert repositories.feed_item_repository.count() == 25
 
@@ -72,7 +72,7 @@ async def test_refresh_with_duplicate_titles(faker: Faker, repositories: MockRep
 
     # ----- Next run. The last item is added with a different url but with similar title.
     repositories.mock_client_session_for_files(["sample-files/rss_feeds/brakdag_update_1.xml"])
-    await refresh_rss_feeds()
+    await refresh_all_feeds(False)
     assert repositories.feed_item_repository.count() == 9
     assert repositories.news_item_repository.count() == 8  # Created an updated news-item
     assert user.number_of_unread_items == 8
@@ -89,14 +89,14 @@ async def test_refresh_with_duplicate_titles(faker: Faker, repositories: MockRep
 
     # ----- Next run. The last item is added with an identical link and identical title. Nothing happens.
     repositories.mock_client_session_for_files(["sample-files/rss_feeds/brakdag_update_2.xml"])
-    await refresh_rss_feeds()
+    await refresh_all_feeds(False)
     assert repositories.feed_item_repository.count() == 9
     assert repositories.news_item_repository.count() == 8
     assert user.number_of_unread_items == 8
 
     # ----- Next run. The item is added with similar title but with different link.
     repositories.mock_client_session_for_files(["sample-files/rss_feeds/brakdag_update_3.xml"])
-    await refresh_rss_feeds()
+    await refresh_all_feeds(False)
     assert repositories.feed_item_repository.count() == 10
     assert repositories.news_item_repository.count() == 8
     assert user.number_of_unread_items == 8

@@ -1,10 +1,10 @@
-import asyncio
 import logging
 from typing import Optional
 
 from aiohttp import ClientSession, ClientError
+from google.api_core.exceptions import GoogleAPIError
 
-from core_lib.application_data import repositories, html_feeds, html_feed_parsers
+from core_lib.application_data import repositories, html_feed_parsers
 from core_lib.feed_utils import (
     upsert_new_items_for_feed,
 )
@@ -22,13 +22,6 @@ async def refresh_html_feed(session: ClientSession, feed: Feed) -> Optional[Refr
                 feed_items = parser(feed, await html.text(encoding="utf-8"))
                 number_of_new_items = upsert_new_items_for_feed(feed, feed, feed_items)
         return RefreshResult(feed=feed, number_of_items=number_of_new_items)
-    except (ClientError, TimeoutError):
-        log.error("Timeout occurred on feed %s", feed)
+    except (ClientError, TimeoutError, GoogleAPIError):
+        log.exception("Error while refreshing feed %s", feed)
         return None
-
-
-async def refresh_html_feeds() -> int:
-    client_session = repositories.client_session
-    tasks = [refresh_html_feed(client_session, html_feed) for html_feed in html_feeds]
-    await asyncio.gather(*tasks)
-    return len(html_feeds)

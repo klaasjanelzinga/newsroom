@@ -1,4 +1,3 @@
-import asyncio
 import logging
 from datetime import datetime
 from typing import List, Optional
@@ -7,6 +6,7 @@ import aiohttp
 import dateparser
 import pytz
 from aiohttp import ClientSession
+from google.api_core.exceptions import GoogleAPIError
 from lxml.etree import fromstring, ElementBase
 
 from core_lib.application_data import repositories
@@ -81,17 +81,6 @@ async def refresh_atom_feed(session: ClientSession, feed: Feed) -> Optional[Refr
                 return RefreshResult(
                     feed=feed, number_of_items=upsert_new_items_for_feed(feed, feed_from_rss, feed_items_from_rss)
                 )
-    except (aiohttp.ClientError, TimeoutError):
-        log.error("Timeout occurred on feed %s", feed)
+    except (aiohttp.ClientError, TimeoutError, GoogleAPIError):
+        log.exception("Error while refreshing feed %s", feed)
         return None
-
-
-async def refresh_atom_feeds() -> int:
-    """ Refreshes all active feeds and returns the number of refreshed feeds. """
-    client_session = repositories.client_session
-    feeds = repositories.feed_repository.get_active_feeds()
-    tasks = [
-        refresh_atom_feed(client_session, feed) for feed in feeds if feed.feed_source_type == FeedSourceType.ATOM.name
-    ]
-    await asyncio.gather(*tasks)
-    return len(tasks)
