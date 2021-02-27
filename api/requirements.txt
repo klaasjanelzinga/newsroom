@@ -8,7 +8,7 @@
     # via -r requirements.in
 aiofiles==0.6.0
     # via -r requirements.in
-aiohttp==3.7.3
+aiohttp==3.7.4
     # via -r requirements.in
 async-timeout==3.0.1
     # via aiohttp
@@ -28,7 +28,7 @@ multidict==5.1.0
     # via
     #   aiohttp
     #   yarl
-pydantic==1.7.3
+pydantic==1.8
     # via
     #   -r requirements.in
     #   fastapi
@@ -37,8 +37,10 @@ pyjwt==2.0.1
 starlette==0.13.6
     # via fastapi
 typing-extensions==3.7.4.3
-    # via aiohttp
-uvicorn==0.13.3
+    # via
+    #   aiohttp
+    #   pydantic
+uvicorn==0.13.4
     # via -r requirements.in
 yarl==1.6.3
     # via aiohttp
