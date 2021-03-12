@@ -1,17 +1,17 @@
 import logging
 from typing import List, Optional
 
-from fastapi import APIRouter, Header, Response, HTTPException
+from fastapi import APIRouter, Header, HTTPException, Response
 from pydantic.main import BaseModel
-from starlette.status import HTTP_200_OK, HTTP_201_CREATED, HTTP_404_NOT_FOUND, HTTP_400_BAD_REQUEST
+from starlette.status import HTTP_200_OK, HTTP_201_CREATED, HTTP_400_BAD_REQUEST, HTTP_404_NOT_FOUND
 
 from api.api_application_data import security
 from api.api_utils import ErrorMessage
 from core_lib.application_data import repositories
 from core_lib.feed import (
+    NetworkingException,
     fetch_feed_information_for,
     subscribe_user_to_feed,
-    NetworkingException,
     unsubscribe_user_from_feed,
 )
 from core_lib.repositories import Feed, User

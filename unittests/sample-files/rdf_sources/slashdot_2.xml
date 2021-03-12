@@ -1,0 +1,622 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" media="screen" href="/~d/styles/rss1full.xsl"?><?xml-stylesheet type="text/css" media="screen" href="http://rss.slashdot.org/~d/styles/itemcontent.css"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://purl.org/rss/1.0/"
+         xmlns:admin="http://webns.net/mvcb/" xmlns:content="http://purl.org/rss/1.0/modules/content/"
+         xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+         xmlns:syn="http://purl.org/rss/1.0/modules/syndication/"
+         xmlns:taxo="http://purl.org/rss/1.0/modules/taxonomy/">
+
+    <channel rdf:about="https://slashdot.org/">
+        <title>Slashdot</title>
+        <link>https://slashdot.org/</link>
+        <description>News for nerds, stuff that matters</description>
+        <dc:language>en-us</dc:language>
+        <dc:rights>Copyright 1997-2016, SlashdotMedia. All Rights Reserved.</dc:rights>
+        <dc:date>2021-03-12T11:33:25+00:00</dc:date>
+        <dc:publisher>Dice</dc:publisher>
+        <dc:creator>help@slashdot.org</dc:creator>
+        <dc:subject>Technology</dc:subject>
+        <syn:updateBase>1970-01-01T00:00+00:00</syn:updateBase>
+        <syn:updateFrequency>1</syn:updateFrequency>
+        <syn:updatePeriod>hourly</syn:updatePeriod>
+        <items>
+            <rdf:Seq>
+                <rdf:li rdf:resource="https://tech.slashdot.org/story/21/03/11/2250247/automotive-startup-canoo-debuts-a-snub-nosed-electric-pickup?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed"/>
+                <rdf:li rdf:resource="https://hardware.slashdot.org/story/21/03/11/2215246/adobe-officially-releases-photoshop-for-apple-m1-says-its-50-faster?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed"/>
+                <rdf:li rdf:resource="https://news.slashdot.org/story/21/03/11/2148210/open-source-app-lets-anyone-create-a-virtual-army-of-hackintoshes?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed"/>
+                <rdf:li rdf:resource="https://hardware.slashdot.org/story/21/03/11/2138259/3d-printed-rock-pi-powered-screensaver-aquarium-is-serene-to-behold?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed"/>
+                <rdf:li rdf:resource="https://tech.slashdot.org/story/21/03/11/2132227/cryptominers-have-already-cracked-nvidias-rtx-3060-hash-rate-limiter?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed"/>
+                <rdf:li rdf:resource="https://science.slashdot.org/story/21/03/11/2127224/youtube-removed-30000-videos-with-covid-19-misinformation?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed"/>
+                <rdf:li rdf:resource="https://yro.slashdot.org/story/21/03/11/2118251/netflix-tests-cracking-down-on-password-sharing?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed"/>
+                <rdf:li rdf:resource="https://games.slashdot.org/story/21/03/11/2113200/robloxs-45-billion-ipo-values-user-created-game-platform-higher-than-ea?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed"/>
+                <rdf:li rdf:resource="https://tech.slashdot.org/story/21/03/11/2040204/google-relaunching-career-certificates-job-board-and-scholarship-program?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed"/>
+                <rdf:li rdf:resource="https://entertainment.slashdot.org/story/21/03/11/1929248/lg-is-cramming-ads-everywhere-it-can-on-its-tvs?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed"/>
+                <rdf:li rdf:resource="https://apple.slashdot.org/story/21/03/11/1849214/australia-extends-tech-giant-probe-to-google-and-apple-browser-domination?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed"/>
+                <rdf:li rdf:resource="https://tech.slashdot.org/story/21/03/11/1744228/google-maps-will-soon-let-you-draw-on-a-map-to-fix-it?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed"/>
+                <rdf:li rdf:resource="https://tech.slashdot.org/story/21/03/11/1713200/google-denies-data-centre-fire-caused-russia-outage?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed"/>
+            </rdf:Seq>
+        </items>
+        <image rdf:resource="https://a.fsdn.com/sd/topics/topicslashdot.gif"/>
+        <textinput rdf:resource="https://slashdot.org/search.pl"/>
+        <atom10:link xmlns:atom10="http://www.w3.org/2005/Atom" rel="self" type="application/rdf+xml"
+                     href="http://rss.slashdot.org/slashdot/slashdotMain"/>
+        <feedburner:info xmlns:feedburner="http://rssnamespace.org/feedburner/ext/1.0" uri="slashdot/slashdotmain"/>
+        <atom10:link xmlns:atom10="http://www.w3.org/2005/Atom" rel="hub" href="http://pubsubhubbub.appspot.com/"/>
+    </channel>
+    <image rdf:about="https://a.fsdn.com/sd/topics/topicslashdot.gif">
+        <title>Slashdot</title>
+        <url>https://a.fsdn.com/sd/topics/topicslashdot.gif</url>
+        <link>https://slashdot.org/</link>
+    </image>
+    <item rdf:about="https://tech.slashdot.org/story/21/03/11/2250247/automotive-startup-canoo-debuts-a-snub-nosed-electric-pickup?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+        <title>Automotive Startup Canoo Debuts a Snub-Nosed Electric Pickup</title>
+        <link>
+            https://tech.slashdot.org/story/21/03/11/2250247/automotive-startup-canoo-debuts-a-snub-nosed-electric-pickup?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed
+        </link>
+        <description>An anonymous reader quotes a report from Car and Driver: Canoo, an electric automotive startup
+            based in California, has expanded its lineup of forthcoming electric vehicles by revealing this snub-nosed
+            pickup. The pickup, which sports a design similar to Canoo's passenger van, will offer more than 200 miles
+            of range and as much as 600 horsepower and 550 pound-feet of torque with the dual-motor configuration; a
+            rear motor configuration will also be offered. That power and range, and a full six-to-eight-foot pickup
+            bed, all have to fit into a vehicle with a 112.2-inch wheelbase -- an inch shorter than the Tesla Model 3 --
+            and an overall length, at 184 inches, that makes it more than two feet shorter than the Ford Ranger pickup.
+
+            The pickup rides on Canoo's multi-purpose platform architecture and will be the third Canoo vehicle to do
+            so. [...] The new pickup emphasizes modularity and looks to maximize its utility. It has tables folding down
+            around the vehicle, various hidden storage areas, and numerous charging points on the exterior of the truck.
+            In a video exploring the ins and outs, Tony Aquila, executive chairman of Canoo, said that the goal was to
+            make something that was very functional and could also be personalized. On either side of the six-foot bed,
+            tables fold down to function as a workspace, and there is also a table that folds down from the front of the
+            truck. That table exposes a small storage area as well as various points to charge or power electronics. The
+            pickup bed can also be extended, as well as enclosed, to eight feet long to fit bigger items. Steps with
+            storage within them can be pulled out of the sides of the truck to make it easier to access anything on the
+            roof rack. And to answer the question any truck owner would ask, yes, there's a taillamp setup in the bed
+            extension, so it's okay to drive the truck with the bed extended to fit longer cargo.
+
+            The interior of the pickup, shown in the video, shows it fits two people, but Aquila said it could be
+            adapted for a three-person setup. Information such as speed and battery levels appear to be on a broad
+            screen just below the windshield. Canoo's pickup will be available for pre-order beginning in the second
+            quarter of this year, but production isn't slated to begin until 2023.&lt;p&gt;&lt;div
+            class="share_submission" style="position:relative;"&gt;
+            &lt;a class="slashpop"
+            href="http://twitter.com/home?status=Automotive+Startup+Canoo+Debuts+a+Snub-Nosed+Electric+Pickup%3A+https%3A%2F%2Fbit.ly%2F38ye3H7"&gt;&lt;img
+            src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+            &lt;a class="slashpop"
+            href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Ftech.slashdot.org%2Fstory%2F21%2F03%2F11%2F2250247%2Fautomotive-startup-canoo-debuts-a-snub-nosed-electric-pickup%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img
+            src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+            &lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a
+            href="https://tech.slashdot.org/story/21/03/11/2250247/automotive-startup-canoo-debuts-a-snub-nosed-electric-pickup?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read
+            more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe
+            src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=18439134&amp;amp;smallembed=1" style="height:
+            300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;
+        </description>
+        <dc:creator>BeauHD</dc:creator>
+        <dc:date>2021-03-12T03:30:00+00:00</dc:date>
+        <dc:subject>transportation</dc:subject>
+        <slash:department>another-Tesla-challenger-enters-the-arena</slash:department>
+        <slash:section>technology</slash:section>
+        <slash:comments>38</slash:comments>
+        <slash:hit_parade>38,38,34,30,7,4,2</slash:hit_parade>
+    </item>
+    <item rdf:about="https://hardware.slashdot.org/story/21/03/11/2215246/adobe-officially-releases-photoshop-for-apple-m1-says-its-50-faster?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+        <title>Adobe Officially Releases Photoshop For Apple M1, Says It's 50% Faster</title>
+        <link>
+            https://hardware.slashdot.org/story/21/03/11/2215246/adobe-officially-releases-photoshop-for-apple-m1-says-its-50-faster?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed
+        </link>
+        <description>Adobe today officially unveiled Photoshop for Apple's M1 chip, claiming it provides a 50%
+            performance boost compared to analogous Intel Macs. The Next Web reports: While Adobe has had a beta version
+            of Photoshop for M1 available since November, this is the first time it's been available widely. Previously
+            Apple users could run the Intel version through Apple's Rosetta technology, which didn't fully take
+            advantage of the new chip's power.
+
+            [According to Adobe:] "Our internal tests show a wide range of features running an average of 1.5X the speed
+            of similarly configured previous generation systems. Our tests covered a broad scope of activities,
+            including opening and saving files, running filters, and compute-heavy operations like Content-Aware Fill
+            and Select Subject, which all feel noticeably faster. Our early benchmarking also shows that some operations
+            are substantially faster with the new chip." Be warned that there are a couple of recent features missing on
+            the M1 version of the app, most notably inviting others to edit cloud documents and preset syncing.&lt;p&gt;&lt;div
+            class="share_submission" style="position:relative;"&gt;
+            &lt;a class="slashpop"
+            href="http://twitter.com/home?status=Adobe+Officially+Releases+Photoshop+For+Apple+M1%2C+Says+It's+50%25+Faster%3A+https%3A%2F%2Fbit.ly%2F3vgZth2"&gt;&lt;img
+            src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+            &lt;a class="slashpop"
+            href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fhardware.slashdot.org%2Fstory%2F21%2F03%2F11%2F2215246%2Fadobe-officially-releases-photoshop-for-apple-m1-says-its-50-faster%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img
+            src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+            &lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a
+            href="https://hardware.slashdot.org/story/21/03/11/2215246/adobe-officially-releases-photoshop-for-apple-m1-says-its-50-faster?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read
+            more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe
+            src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=18439070&amp;amp;smallembed=1" style="height:
+            300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;
+        </description>
+        <dc:creator>BeauHD</dc:creator>
+        <dc:date>2021-03-12T01:25:00+00:00</dc:date>
+        <dc:subject>mac</dc:subject>
+        <slash:department>significant-performance-gains</slash:department>
+        <slash:section>hardware</slash:section>
+        <slash:comments>73</slash:comments>
+        <slash:hit_parade>73,68,58,43,12,4,2</slash:hit_parade>
+    </item>
+    <item rdf:about="https://news.slashdot.org/story/21/03/11/2148210/open-source-app-lets-anyone-create-a-virtual-army-of-hackintoshes?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+        <title>Open-Source App Lets Anyone Create a Virtual Army of Hackintoshes</title>
+        <link>
+            https://news.slashdot.org/story/21/03/11/2148210/open-source-app-lets-anyone-create-a-virtual-army-of-hackintoshes?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed
+        </link>
+        <description>samleecole writes from a report via Motherboard: MacOS is generally intended as a desktop operating
+            system, and while it's a very functional operating system, Apple expects it to run on a single piece of
+            hardware. As any developer or infrastructure architect can tell you, virtualization is an impressive
+            technique that allows programmers and infrastructure pros to expand reach and scale things up far beyond a
+            single user. A Github project that has gotten a bit of attention in recent months aims to make MacOS
+            scalable in ways that it has basically never been. Its secret weapon is a serial code generator: Docker-OSX
+            has the ability to generate serial codes for unique pieces of MacOS hardware, and its main developer, an
+            open-source developer and security researcher who goes by the pseudonym Sick Codes, recently released a
+            standalone serial code generator that can replicate codes for nonexistent devices by the thousands. Just
+            type in a command, and it will set up a CSV file full of serial codes. "You can generate hundreds and
+            thousands of serial numbers, just like that," Sick Codes, who used a pseudonym due to the nature of his
+            work, said. "And it just generates a massive list." A valid serial code allows you to use Apple-based tools
+            such as iMessage, iCloud, and the App Store inside of MacOS. It's the confirmation that you're using
+            something seen as valid in the eyes of Apple. "I actually went through, and I've got like 15 iMac Pros in my
+            Apple account now, and it says that they're all valid for iMessage," the creator said.&lt;p&gt;&lt;div
+            class="share_submission" style="position:relative;"&gt;
+            &lt;a class="slashpop"
+            href="http://twitter.com/home?status=Open-Source+App+Lets+Anyone+Create+a+Virtual+Army+of+Hackintoshes%3A+https%3A%2F%2Fbit.ly%2F3ctVTYu"&gt;&lt;img
+            src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+            &lt;a class="slashpop"
+            href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fnews.slashdot.org%2Fstory%2F21%2F03%2F11%2F2148210%2Fopen-source-app-lets-anyone-create-a-virtual-army-of-hackintoshes%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img
+            src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+            &lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a
+            href="https://news.slashdot.org/story/21/03/11/2148210/open-source-app-lets-anyone-create-a-virtual-army-of-hackintoshes?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read
+            more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe
+            src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=18439012&amp;amp;smallembed=1" style="height:
+            300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;
+        </description>
+        <dc:creator>BeauHD</dc:creator>
+        <dc:date>2021-03-12T00:45:00+00:00</dc:date>
+        <dc:subject>opensource</dc:subject>
+        <slash:department>Mac-mimicking</slash:department>
+        <slash:section>news</slash:section>
+        <slash:comments>16</slash:comments>
+        <slash:hit_parade>16,16,14,14,5,2,2</slash:hit_parade>
+    </item>
+    <item rdf:about="https://hardware.slashdot.org/story/21/03/11/2138259/3d-printed-rock-pi-powered-screensaver-aquarium-is-serene-to-behold?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+        <title>3D-Printed, Rock Pi-Powered Screensaver Aquarium Is Serene To Behold</title>
+        <link>
+            https://hardware.slashdot.org/story/21/03/11/2138259/3d-printed-rock-pi-powered-screensaver-aquarium-is-serene-to-behold?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed
+        </link>
+        <description>MojoKid writes: Some may think it strange to design and build an entire PC and custom enclosure,
+            dedicated to running a 20-year-old screensaver, but retro computing fans and well-seasoned enthusiasts may
+            remember the SereneScreen Marine Aquarium. This classic screensaver from the late 90s was created by the
+            legendary artist of Defender of the Crown and more, Jim Sachs. SereneScreen's combination of beautiful fish
+            and technology is still mesmerizing, so why not build a miniature, 3D-printed aquarium and power it with a
+            single board computer like the Rock Pi X and a 1920X480 resolution IPS LCD display? That's just what product
+            developer Colton Westrate did.
+
+            Searching for an x86 PC in a Raspberry Pi-sized form factor, Westrate chose the Rock Pi X that purportedly
+            packs the perfunctory punch to push the Windows OS and aquarium screen saver's pulsating pixels. The Rock Pi
+            X is based on a circa 2016 Intel x5-Z8350 processor, which is a 2-watt, quad-core Cherry Trail Atom chip.
+            From there, with a little Fusion 360 parametric modeling, a clear acrylic napkin holder, and some serious
+            skills, Westrate created this adorable pint-sized digital fish tank. There's a full parts list and how-to
+            guide on HotHardware, along with links to the CAD files up on Thingiverse, so you can build yourself one
+            too, if you're feeling inspired.&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+            &lt;a class="slashpop"
+            href="http://twitter.com/home?status=3D-Printed%2C+Rock+Pi-Powered+Screensaver+Aquarium+Is+Serene+To+Behold%3A+https%3A%2F%2Fbit.ly%2F3ewU9jt"&gt;&lt;img
+            src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+            &lt;a class="slashpop"
+            href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fhardware.slashdot.org%2Fstory%2F21%2F03%2F11%2F2138259%2F3d-printed-rock-pi-powered-screensaver-aquarium-is-serene-to-behold%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img
+            src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+            &lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a
+            href="https://hardware.slashdot.org/story/21/03/11/2138259/3d-printed-rock-pi-powered-screensaver-aquarium-is-serene-to-behold?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read
+            more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe
+            src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=18438994&amp;amp;smallembed=1" style="height:
+            300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;
+        </description>
+        <dc:creator>BeauHD</dc:creator>
+        <dc:date>2021-03-12T00:02:00+00:00</dc:date>
+        <dc:subject>hardware</dc:subject>
+        <slash:department>DIY-friendly</slash:department>
+        <slash:section>hardware</slash:section>
+        <slash:comments>21</slash:comments>
+        <slash:hit_parade>21,19,14,12,4,1,0</slash:hit_parade>
+    </item>
+    <item rdf:about="https://tech.slashdot.org/story/21/03/11/2132227/cryptominers-have-already-cracked-nvidias-rtx-3060-hash-rate-limiter?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+        <title>Cryptominers Have Already Cracked Nvidia's RTX 3060 Hash Rate Limiter</title>
+        <link>
+            https://tech.slashdot.org/story/21/03/11/2132227/cryptominers-have-already-cracked-nvidias-rtx-3060-hash-rate-limiter?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed
+        </link>
+        <description>An anonymous reader quotes a report from TechRadar: When the GeForce RTX 3060 was launched on
+            February 25, Nvidia announced that the mining efficiency of the graphics card was deliberately being reduced
+            by around 50% in a bid to get more of the GPUs directly to gamers. However, this limitation appears to have
+            been quickly bypassed by Chinese cryptocurrency miners using customized mods. There was already concern
+            brewing about how well the limiter would stand against savvy miners, but Nvidia has been vocally confident
+            in the hash rate limit. A statement was given to PC Gamer regarding how difficult it would be to get around
+            the protections placed on the GPUs, claiming "End users cannot remove the hash limiter from the driver.
+            There is a secure handshake between the driver, the RTX 3060 silicon, and the BIOS (firmware) that prevents
+            removal of the hash rate limiter."
+
+            The NVIDIA GeForce RTX 3060 can deliver around 40-45 MH/s for standard performance but this dropped down to
+            20-25 MH/s if the GPU detected mining-related activity, providing the limiter is in place. A picture spotted
+            by I_Leak_VN reveals a Chinese mod developed to help miners unlock the full hash potential of the GeForce
+            RTX 3060 graphics card, with the image showing the Geforce RTX 3060 delivering 45 MH/s in Ethereum. The
+            hash-rate limiter mod has also been separately confirmed to work by a Vietnamese Facebook group, apparently
+            even capable of outputting 50 MH/s. So far, according to Wccftech, it appears that the cryptomining
+            algorithm in question is for Octopus, which is different than cryptocurrency than Ethereum, which the
+            hashrate limiter was designed to thwart. That means its possible that an updated driver could introduce a
+            limiter for that cryptocurrency as well, but as we explored earlier this month, Nvidia's efforts to thwart
+            cryptomining is likely fraught with legal issues that might prevent such an update.&lt;p&gt;&lt;div
+            class="share_submission" style="position:relative;"&gt;
+            &lt;a class="slashpop"
+            href="http://twitter.com/home?status=Cryptominers+Have+Already+Cracked+Nvidia's+RTX+3060+Hash+Rate+Limiter%3A+https%3A%2F%2Fbit.ly%2F2PQ6EMN"&gt;&lt;img
+            src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+            &lt;a class="slashpop"
+            href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Ftech.slashdot.org%2Fstory%2F21%2F03%2F11%2F2132227%2Fcryptominers-have-already-cracked-nvidias-rtx-3060-hash-rate-limiter%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img
+            src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+            &lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a
+            href="https://tech.slashdot.org/story/21/03/11/2132227/cryptominers-have-already-cracked-nvidias-rtx-3060-hash-rate-limiter?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read
+            more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe
+            src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=18438964&amp;amp;smallembed=1" style="height:
+            300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;
+        </description>
+        <dc:creator>BeauHD</dc:creator>
+        <dc:date>2021-03-11T23:20:00+00:00</dc:date>
+        <dc:subject>graphics</dc:subject>
+        <slash:department>bad-news-for-the-gaming-community</slash:department>
+        <slash:section>technology</slash:section>
+        <slash:comments>50</slash:comments>
+        <slash:hit_parade>50,48,42,29,8,2,2</slash:hit_parade>
+    </item>
+    <item rdf:about="https://science.slashdot.org/story/21/03/11/2127224/youtube-removed-30000-videos-with-covid-19-misinformation?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+        <title>YouTube Removed 30,000 Videos With COVID-19 Misinformation</title>
+        <link>
+            https://science.slashdot.org/story/21/03/11/2127224/youtube-removed-30000-videos-with-covid-19-misinformation?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed
+        </link>
+        <description>YouTube has taken down more than 30,000 videos that made misleading or false claims about COVID-19
+            vaccines over the last six months. Axios reports: YouTube first started including vaccination misinformation
+            in its COVID-19 medical misinformation policy in October 2020. Since February 2020, YouTube has taken down
+            more than 800,000 videos containing coronavirus misinformation. The videos are first flagged by either the
+            company's AI systems or human reviewers, then receive another level of review.
+
+            Videos that violate the vaccine policy, according to YouTube's rules, are those that contradict expert
+            consensus on the vaccines from health authorities or the World Health Organization. Accounts that violate
+            YouTube's rules are subject to a "strike" system, which can result in accounts being permanently banned.
+            "Platforms are eager to share data about the volume of misinformation they catch, and that transparency is
+            valuable," adds Axios. "But the most valuable data would tell us the extent of misinformation that isn't
+            caught."&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+            &lt;a class="slashpop"
+            href="http://twitter.com/home?status=YouTube+Removed+30%2C000+Videos+With+COVID-19+Misinformation%3A+https%3A%2F%2Fbit.ly%2F3vgN10U"&gt;&lt;img
+            src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+            &lt;a class="slashpop"
+            href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fscience.slashdot.org%2Fstory%2F21%2F03%2F11%2F2127224%2Fyoutube-removed-30000-videos-with-covid-19-misinformation%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img
+            src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+            &lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a
+            href="https://science.slashdot.org/story/21/03/11/2127224/youtube-removed-30000-videos-with-covid-19-misinformation?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read
+            more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe
+            src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=18438946&amp;amp;smallembed=1" style="height:
+            300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;
+        </description>
+        <dc:creator>BeauHD</dc:creator>
+        <dc:date>2021-03-11T22:40:00+00:00</dc:date>
+        <dc:subject>medicine</dc:subject>
+        <slash:department>vaccine-misinformation</slash:department>
+        <slash:section>science</slash:section>
+        <slash:comments>89</slash:comments>
+        <slash:hit_parade>89,75,64,56,16,5,3</slash:hit_parade>
+    </item>
+    <item rdf:about="https://yro.slashdot.org/story/21/03/11/2118251/netflix-tests-cracking-down-on-password-sharing?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+        <title>Netflix Tests Cracking Down On Password Sharing</title>
+        <link>
+            https://yro.slashdot.org/story/21/03/11/2118251/netflix-tests-cracking-down-on-password-sharing?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed
+        </link>
+        <description>Netflix is testing a new feature that could signal the start of an effort to crack down on password
+            sharing. Hollywood Reporter reports: Spotted by GammaWire, some viewers attempting to use somebody else's
+            account are now being stopped by a screen that says, "If you don't live with the owner of this account, you
+            need your own account to keep watching." Netflix confirmed the new feature, which is getting a limited
+            rollout at this time. "This test is designed to help ensure that people using Netflix accounts are
+            authorized to do so," a Netflix spokesperson said.
+
+            In order to continue watching, the viewer is given the option of either verifying their identity (with a
+            texted or emailed code to the account's owner), or opting to "verify later," which gives the viewer an
+            unspecified additional amount of time to continue watching and later confirm they are a valid account user.
+            A source familiar with the tests said the extent of the rollout varies from country to country, but noted
+            that one reason for the feature is a desire to help protect subscribers from security concerns that can
+            arise from unauthorized use of their account.&lt;p&gt;&lt;div class="share_submission"
+            style="position:relative;"&gt;
+            &lt;a class="slashpop"
+            href="http://twitter.com/home?status=Netflix+Tests+Cracking+Down+On+Password+Sharing%3A+https%3A%2F%2Fbit.ly%2F3vddyMq"&gt;&lt;img
+            src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+            &lt;a class="slashpop"
+            href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fyro.slashdot.org%2Fstory%2F21%2F03%2F11%2F2118251%2Fnetflix-tests-cracking-down-on-password-sharing%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img
+            src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+            &lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a
+            href="https://yro.slashdot.org/story/21/03/11/2118251/netflix-tests-cracking-down-on-password-sharing?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read
+            more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe
+            src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=18438924&amp;amp;smallembed=1" style="height:
+            300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;
+        </description>
+        <dc:creator>BeauHD</dc:creator>
+        <dc:date>2021-03-11T22:00:00+00:00</dc:date>
+        <dc:subject>piracy</dc:subject>
+        <slash:department>piracy-crackdown</slash:department>
+        <slash:section>yro</slash:section>
+        <slash:comments>57</slash:comments>
+        <slash:hit_parade>57,52,43,34,7,3,3</slash:hit_parade>
+    </item>
+    <item rdf:about="https://games.slashdot.org/story/21/03/11/2113200/robloxs-45-billion-ipo-values-user-created-game-platform-higher-than-ea?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+        <title>Roblox's $45 Billion IPO Values User-Created Game Platform Higher Than EA</title>
+        <link>
+            https://games.slashdot.org/story/21/03/11/2113200/robloxs-45-billion-ipo-values-user-created-game-platform-higher-than-ea?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed
+        </link>
+        <description>An anonymous reader quotes a report from Ars Technica: Yesterday, Roblox made good on its plans to
+            go public, with employees and previous investors selling hundreds of millions of shares in a direct listing
+            on the New York Stock Exchange. In a private funding round in January, those shares were worth $45. When the
+            market closed Wednesday, they were selling at $69.50, a price that valued Roblox Corp. as a whole at $45.3
+            billion (as of this writing, Roblox Corp.'s stock price peaked at $77.30 and currently sits at $72.72 in
+            Thursday morning trading).
+
+            How did this company, whose single title has become a game platform unto itself, become worth more than
+            major game publishers like Electronic Arts and Take-Two? To help answer that question, we put together this
+            deep dive into the numbers that are powering the Roblox revolution. They paint a picture of a company with
+            an extremely young and incredibly engaged user base that has ballooned during the 2020 pandemic lockdowns.
+            But Roblox is also a company that is struggling to convert its huge and growing annual revenues into
+            profitability. Here are the valuations of Roblox and how it compares to the other gaming companies:
+
+            Roblox
+            - Jan. 2017: $500 million
+            - July 2018: $2.3 billion
+            - Feb. 2020: $3.9 billion
+            - Jan. 2021: $29.5 billion
+            - March 10, 2021: $45.3 billion
+
+            Other gaming companies (current valuations)
+            - Ubisoft: $9.58 billion
+            - Take-Two: $19.43 billion
+            - Electronic Arts: $38.09 billion
+            - Roblox: $45.3 billion
+            - Activision: $72.23 billion
+            - Tencent: $843.86 billion
+
+            Visit Ars' article for the full deep dive into the numbers, which are sourced from SEC documents and
+            Roblox's own website.&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+            &lt;a class="slashpop"
+            href="http://twitter.com/home?status=Roblox's+%2445+Billion+IPO+Values+User-Created+Game+Platform+Higher+Than+EA%3A+https%3A%2F%2Fbit.ly%2F3vhURY4"&gt;&lt;img
+            src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+            &lt;a class="slashpop"
+            href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fgames.slashdot.org%2Fstory%2F21%2F03%2F11%2F2113200%2Frobloxs-45-billion-ipo-values-user-created-game-platform-higher-than-ea%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img
+            src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+            &lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a
+            href="https://games.slashdot.org/story/21/03/11/2113200/robloxs-45-billion-ipo-values-user-created-game-platform-higher-than-ea?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read
+            more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe
+            src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=18438908&amp;amp;smallembed=1" style="height:
+            300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;
+        </description>
+        <dc:creator>BeauHD</dc:creator>
+        <dc:date>2021-03-11T21:20:00+00:00</dc:date>
+        <dc:subject>business</dc:subject>
+        <slash:department>how-it-ranks</slash:department>
+        <slash:section>games</slash:section>
+        <slash:comments>53</slash:comments>
+        <slash:hit_parade>53,51,41,39,7,1,0</slash:hit_parade>
+    </item>
+    <item rdf:about="https://tech.slashdot.org/story/21/03/11/2040204/google-relaunching-career-certificates-job-board-and-scholarship-program?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+        <title>Google Relaunching Career Certificates, Job Board and Scholarship Program</title>
+        <link>
+            https://tech.slashdot.org/story/21/03/11/2040204/google-relaunching-career-certificates-job-board-and-scholarship-program?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed
+        </link>
+        <description>Google CEO Sundar Pichai has announced a new certificate program and other courses that will
+            provide a gateway to positions at companies like Anthem, Bayer, Deloitte, Verizon and SAP. From a report: In
+            a blog post, Pichai explained that on March 11, Coursera users will have access to a new Associate Android
+            Developer Certification course in addition to the three new certificates in user experience (UX) design,
+            project management and data analytics that have been available since September. "With more businesses
+            embracing digital ways of working, it's estimated that 50% of all employees will need reskilling by 2025. As
+            U.S. job growth returns with more people getting vaccinated, we are committed to ensuring that all Americans
+            have the skills they need to benefit from greater economic opportunity," Pichai wrote.
+
+            "To help, today we're announcing new efforts, including opening up enrollment for our latest career
+            certificates, expanding our employer consortium, and introducing new tools to improve the job search."
+            Google will be providing 100,000 scholarships for its Career Certificates program and said it has already
+            helped bring 170,000 Americans into the tech industry through their certificate platform. Once the program
+            is completed, students will gain access to a job board populated by companies like Accenture, Infosys,
+            Zennify, SiriusXM+ Pandora, and, of course, Google.&lt;p&gt;&lt;div class="share_submission"
+            style="position:relative;"&gt;
+            &lt;a class="slashpop"
+            href="http://twitter.com/home?status=Google+Relaunching+Career+Certificates%2C+Job+Board+and+Scholarship+Program%3A+https%3A%2F%2Fbit.ly%2F3qE0tbw"&gt;&lt;img
+            src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+            &lt;a class="slashpop"
+            href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Ftech.slashdot.org%2Fstory%2F21%2F03%2F11%2F2040204%2Fgoogle-relaunching-career-certificates-job-board-and-scholarship-program%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img
+            src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+            &lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a
+            href="https://tech.slashdot.org/story/21/03/11/2040204/google-relaunching-career-certificates-job-board-and-scholarship-program?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read
+            more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe
+            src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=18438830&amp;amp;smallembed=1" style="height:
+            300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;
+        </description>
+        <dc:creator>msmash</dc:creator>
+        <dc:date>2021-03-11T20:40:00+00:00</dc:date>
+        <dc:subject>google</dc:subject>
+        <slash:department>moving-forward</slash:department>
+        <slash:section>technology</slash:section>
+        <slash:comments>9</slash:comments>
+        <slash:hit_parade>9,8,5,4,1,0,0</slash:hit_parade>
+    </item>
+    <item rdf:about="https://entertainment.slashdot.org/story/21/03/11/1929248/lg-is-cramming-ads-everywhere-it-can-on-its-tvs?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+        <title>LG is Cramming Ads Everywhere It Can On its TVs</title>
+        <link>
+            https://entertainment.slashdot.org/story/21/03/11/1929248/lg-is-cramming-ads-everywhere-it-can-on-its-tvs?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed
+        </link>
+        <description>TV makers are leaving no stone -- or ad spot -- unturned. From a report: This afternoon, I was
+            updating the streaming apps on my 2020 LG CX OLED TV, something I do from time to time, but today was
+            different. Out of nowhere, I saw (and heard) an ad for Ace Hardware start playing in the lower-left corner.
+            It autoplayed with sound without any action on my part. Now I'm fully aware that it's not unusual to see ads
+            placed around a TV's home screen or main menu. LG, Samsung, Roku, Vizio, and others are all in on this game.
+            We live in an era when smart TVs can automatically recognize what you're watching, and TV makers are
+            building nice ad businesses for themselves with all of the data that gets funneled in.
+
+            But this felt pretty egregious even by today's standards. A random, full-on commercial just popping up in
+            LG's app store? Is there no escape from this stuff? We're just going to cram ads into every corner of a TV's
+            software, huh? Imagine if an autoplay ad started up while you were updating the apps on your smartphone.&lt;p&gt;&lt;div
+            class="share_submission" style="position:relative;"&gt;
+            &lt;a class="slashpop"
+            href="http://twitter.com/home?status=LG+is+Cramming+Ads+Everywhere+It+Can+On+its+TVs%3A+https%3A%2F%2Fbit.ly%2F30zrMsR"&gt;&lt;img
+            src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+            &lt;a class="slashpop"
+            href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fentertainment.slashdot.org%2Fstory%2F21%2F03%2F11%2F1929248%2Flg-is-cramming-ads-everywhere-it-can-on-its-tvs%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img
+            src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+            &lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a
+            href="https://entertainment.slashdot.org/story/21/03/11/1929248/lg-is-cramming-ads-everywhere-it-can-on-its-tvs?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read
+            more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe
+            src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=18438592&amp;amp;smallembed=1" style="height:
+            300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;
+        </description>
+        <dc:creator>msmash</dc:creator>
+        <dc:date>2021-03-11T19:29:00+00:00</dc:date>
+        <dc:subject>tv</dc:subject>
+        <slash:department>how-about-that</slash:department>
+        <slash:section>entertainment</slash:section>
+        <slash:comments>225</slash:comments>
+        <slash:hit_parade>225,220,204,172,27,17,13</slash:hit_parade>
+    </item>
+    <item rdf:about="https://apple.slashdot.org/story/21/03/11/1849214/australia-extends-tech-giant-probe-to-google-and-apple-browser-domination?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+        <title>Australia Extends Tech Giant Probe To Google and Apple Browser Domination</title>
+        <link>
+            https://apple.slashdot.org/story/21/03/11/1849214/australia-extends-tech-giant-probe-to-google-and-apple-browser-domination?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed
+        </link>
+        <description>With the News Media Bargaining Code out of the way, the Australian government has moved its tech
+            giant battle to the browser scene, keeping Google in its crosshairs while putting Apple under the
+            microscope. From a report: Led by the Australian Competition and Consumer Commission (ACCC), the new battle
+            is focused on "choice and competition in internet search and web browsers." The consumer watchdog on
+            Thursday put out a call for submissions, with a number of questions posed in a discussion paper , centred on
+            internet browser defaults. It claimed Apple's Safari is the most common browser used in Australia for
+            smartphones and tablets, accounting for 51% of use. This is followed by Chrome with 39%, Samsung Internet
+            with 7%, and with less than 1%, Mozilla Firefox. This shifts on desktop, with Chrome being the most used
+            browser with 62% market share, followed by Safari with 18%, Edge 9%, and Mozilla 6%.
+
+            The ACCC said it's concerned with the impact of pre-installation and default settings on consumer choice and
+            competition, particularly in relation to online search and browsers. It's also seeking views on supplier
+            behaviour and trends in search services, browsers, and operating systems, and device ecosystems that may
+            impact the supply of search and browsers to Australian consumers. It wants views also on the extent to which
+            existing consumer harm can arise from the design of defaults and other arrangements.&lt;p&gt;&lt;div
+            class="share_submission" style="position:relative;"&gt;
+            &lt;a class="slashpop"
+            href="http://twitter.com/home?status=Australia+Extends+Tech+Giant+Probe+To+Google+and+Apple+Browser+Domination%3A+https%3A%2F%2Fbit.ly%2F3bHCqEx"&gt;&lt;img
+            src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+            &lt;a class="slashpop"
+            href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fapple.slashdot.org%2Fstory%2F21%2F03%2F11%2F1849214%2Faustralia-extends-tech-giant-probe-to-google-and-apple-browser-domination%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img
+            src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+            &lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a
+            href="https://apple.slashdot.org/story/21/03/11/1849214/australia-extends-tech-giant-probe-to-google-and-apple-browser-domination?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read
+            more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe
+            src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=18438436&amp;amp;smallembed=1" style="height:
+            300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;
+        </description>
+        <dc:creator>msmash</dc:creator>
+        <dc:date>2021-03-11T18:49:00+00:00</dc:date>
+        <dc:subject>australia</dc:subject>
+        <slash:department>how-about-that</slash:department>
+        <slash:section>apple</slash:section>
+        <slash:comments>34</slash:comments>
+        <slash:hit_parade>34,34,31,27,6,3,0</slash:hit_parade>
+    </item>
+    <item rdf:about="https://tech.slashdot.org/story/21/03/11/1744228/google-maps-will-soon-let-you-draw-on-a-map-to-fix-it?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+        <title>Google Maps Will Soon Let You Draw on a Map To Fix It</title>
+        <link>
+            https://tech.slashdot.org/story/21/03/11/1744228/google-maps-will-soon-let-you-draw-on-a-map-to-fix-it?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed
+        </link>
+        <description>An anonymous reader shares a report: If you've ever been frustrated by a road simply not existing
+            on Google Maps, the company's now making it easier than ever to add it. Google will be updating its map
+            editing experience to allow users to add missing roads and realign, rename or delete incorrect ones. It
+            calls the experience "drawing," but it's closer to using the line tool in Microsoft Paint. The updated tool
+            should be "rolling out over the coming months in more than 80 countries," according to a blog post.
+            Currently, if you try to add a missing road, you can only drop a pin where the road should be and type in
+            the road's name to submit that information to Google. The new tool should make it easier to not only add
+            missing roads, but to make corrections such as fixing a road's name or its direction (for example, if the
+            road is one-way but Google Maps says it isn't).&lt;p&gt;&lt;div class="share_submission"
+            style="position:relative;"&gt;
+            &lt;a class="slashpop"
+            href="http://twitter.com/home?status=Google+Maps+Will+Soon+Let+You+Draw+on+a+Map+To+Fix+It%3A+https%3A%2F%2Fbit.ly%2F3laF8Wa"&gt;&lt;img
+            src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+            &lt;a class="slashpop"
+            href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Ftech.slashdot.org%2Fstory%2F21%2F03%2F11%2F1744228%2Fgoogle-maps-will-soon-let-you-draw-on-a-map-to-fix-it%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img
+            src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+            &lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a
+            href="https://tech.slashdot.org/story/21/03/11/1744228/google-maps-will-soon-let-you-draw-on-a-map-to-fix-it?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read
+            more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe
+            src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=18438248&amp;amp;smallembed=1" style="height:
+            300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;
+        </description>
+        <dc:creator>msmash</dc:creator>
+        <dc:date>2021-03-11T18:10:00+00:00</dc:date>
+        <dc:subject>google</dc:subject>
+        <slash:department>how-about-that</slash:department>
+        <slash:section>technology</slash:section>
+        <slash:comments>46</slash:comments>
+        <slash:hit_parade>46,44,42,38,6,1,1</slash:hit_parade>
+    </item>
+    <item rdf:about="https://tech.slashdot.org/story/21/03/11/1713200/google-denies-data-centre-fire-caused-russia-outage?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+        <title>Google Denies Data Centre Fire Caused Russia Outage</title>
+        <link>
+            https://tech.slashdot.org/story/21/03/11/1713200/google-denies-data-centre-fire-caused-russia-outage?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed
+        </link>
+        <description>Google has denied that recent problems with its services in Russia were the result of a fire at
+            cloud provider OVH data centres in Strasbourg. From a report: The Russian authorities had directly blamed
+            the blaze for disruptions to Google and YouTube. Google believes an unrelated networking issue was
+            responsible for the problems, which lasted for about two hours. It suggests it is a coincidence the two
+            events were in the same timeframe. In a statement Google said: "At 02:00 Pacific Time on 10 March we became
+            aware of an upstream network issue that partially impacted internet service for users in Russia. We believe
+            the cause of this incident was a misconfiguration of the routers at a local third-party internet service
+            provider. Following extensive investigation we have no evidence to indicate that the fire in OVHCloud's data
+            centre, or Google's own infrastructure, was the root cause of this incident." Russia's media watchdog the
+            Federal Service for Supervision in Telecom, IT and Mass Communications - also known as Roskomnadzor- told
+            news agency TASS that access to Google, YouTube and a number of other services were "caused by an accident
+            in a major European data centre in Strasbourg."&lt;p&gt;&lt;div class="share_submission"
+            style="position:relative;"&gt;
+            &lt;a class="slashpop"
+            href="http://twitter.com/home?status=Google+Denies+Data+Centre+Fire+Caused+Russia+Outage%3A+https%3A%2F%2Fbit.ly%2F3cqERdo"&gt;&lt;img
+            src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+            &lt;a class="slashpop"
+            href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Ftech.slashdot.org%2Fstory%2F21%2F03%2F11%2F1713200%2Fgoogle-denies-data-centre-fire-caused-russia-outage%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img
+            src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+            &lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a
+            href="https://tech.slashdot.org/story/21/03/11/1713200/google-denies-data-centre-fire-caused-russia-outage?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read
+            more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe
+            src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=18438142&amp;amp;smallembed=1" style="height:
+            300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;
+        </description>
+        <dc:creator>msmash</dc:creator>
+        <dc:date>2021-03-11T17:40:00+00:00</dc:date>
+        <dc:subject>google</dc:subject>
+        <slash:department>closer-look</slash:department>
+        <slash:section>technology</slash:section>
+        <slash:comments>5</slash:comments>
+        <slash:hit_parade>5,3,3,2,0,0,0</slash:hit_parade>
+    </item>
+    <textinput rdf:about="https://slashdot.org/search.pl">
+        <title>Search Slashdot</title>
+        <description>Search Slashdot stories</description>
+        <name>query</name>
+        <link>https://slashdot.org/search.pl</link>
+    </textinput>
+</rdf:RDF>

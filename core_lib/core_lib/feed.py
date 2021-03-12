@@ -1,15 +1,16 @@
-import logging
 from datetime import datetime, timedelta
+import logging
 from typing import Optional
 
-from aiohttp import ClientSession, ClientConnectorError
+from aiohttp import ClientConnectorError, ClientSession
 from lxml.etree import fromstring
 
 from core_lib.application_data import repositories
-from core_lib.atom_feed import is_atom_file, atom_document_to_feed_items, atom_document_to_feed
+from core_lib.atom_feed import atom_document_to_feed, atom_document_to_feed_items, is_atom_file
 from core_lib.feed_utils import news_items_from_feed_items, upsert_new_feed_items_for_feed
+from core_lib.rdf_feed import is_rdf_document, rdf_document_to_feed, rdf_document_to_feed_items
 from core_lib.repositories import Feed, Subscription, User
-from core_lib.rss_feed import rss_document_to_feed, rss_document_to_feed_items, is_rss_document, is_html_with_rss_ref
+from core_lib.rss_feed import is_html_with_rss_ref, is_rss_document, rss_document_to_feed, rss_document_to_feed_items
 
 log = logging.getLogger(__file__)
 
@@ -45,6 +46,13 @@ async def fetch_feed_information_for(
                     rss_document = fromstring(text)
                     feed = rss_document_to_feed(rss_ref if rss_ref is not None else url, rss_document)
                     feed_items = rss_document_to_feed_items(feed, rss_document)
+                    feed.number_of_items = upsert_new_feed_items_for_feed(feed, feed_items)
+                    repositories.feed_repository.upsert(feed)
+                    return feed
+                if is_rdf_document(text):
+                    rdf_document = fromstring(text)
+                    feed = rdf_document_to_feed(url, rdf_document)
+                    feed_items = rdf_document_to_feed_items(feed, rdf_document)
                     feed.number_of_items = upsert_new_feed_items_for_feed(feed, feed_items)
                     repositories.feed_repository.upsert(feed)
                     return feed

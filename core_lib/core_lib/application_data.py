@@ -6,10 +6,10 @@ from google.cloud import datastore
 
 from core_lib.gemeente_groningen import feed_gemeente_groningen, gemeente_groningen_parser
 from core_lib.repositories import (
-    FeedRepository,
-    SubscriptionRepository,
     FeedItemRepository,
+    FeedRepository,
     NewsItemRepository,
+    SubscriptionRepository,
     UserRepository,
 )
 
