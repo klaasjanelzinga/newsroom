@@ -1,13 +1,11 @@
 import logging
 from typing import Optional
 
-from aiohttp import ClientSession, ClientError
+from aiohttp import ClientError, ClientSession
 from google.api_core.exceptions import GoogleAPIError
 
-from core_lib.application_data import repositories, html_feed_parsers
-from core_lib.feed_utils import (
-    upsert_new_items_for_feed,
-)
+from core_lib.application_data import html_feed_parsers, repositories
+from core_lib.feed_utils import upsert_new_items_for_feed
 from core_lib.repositories import Feed, RefreshResult
 
 log = logging.getLogger(__file__)

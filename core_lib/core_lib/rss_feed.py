@@ -1,22 +1,23 @@
 import asyncio
+from datetime import datetime
 import logging
 import threading
-from datetime import datetime
-from typing import Optional, List
+from typing import List, Optional
 
-import dateparser
-import pytz
-from aiohttp import ClientSession, ClientError
+from aiohttp import ClientError, ClientSession
 from bs4 import BeautifulSoup
+import dateparser
 from google.api_core.exceptions import GoogleAPIError
 from lxml.etree import ElementBase, fromstring
+import pytz
 
-from core_lib.application_data import repositories, html_feeds
+from core_lib.application_data import html_feeds, repositories
 from core_lib.atom_feed import refresh_atom_feed
 from core_lib.feed_utils import upsert_new_items_for_feed
 from core_lib.html_feed import refresh_html_feed
+from core_lib.rdf_feed import refresh_rdf_feed
 from core_lib.repositories import Feed, FeedItem, FeedSourceType, RefreshResult
-from core_lib.utils import now_in_utc, sanitize_link
+from core_lib.utils import now_in_utc, parse_description, sanitize_link
 
 log = logging.getLogger(__file__)
 
@@ -37,7 +38,7 @@ def is_html_with_rss_ref(text: bytes) -> Optional[str]:
 def rss_document_to_feed(rss_url: str, tree: ElementBase) -> Feed:
     # required rss channel items
     title = tree.findtext("channel/title")
-    description = _parse_description(tree.findtext("channel/description"))
+    description = parse_description(tree.findtext("channel/description"))
     link = tree.findtext("channel/link")
     # optional rss channel items
     category = tree.find("channel/category")
@@ -71,14 +72,6 @@ def _parse_optional_rss_datetime(freely_formatted_datetime: Optional[str]) -> Op
     return in_this_tz.astimezone(tz=pytz.UTC)
 
 
-def _parse_description(description: Optional[str]) -> Optional[str]:
-    if description is None:
-        return None
-    if len(description) > 1400:
-        description = description[0:1400]
-    return description
-
-
 def rss_document_to_feed_items(feed: Feed, tree: ElementBase) -> List[FeedItem]:
     """ Creates a list of FeedItem objects from a xml tree for the feed. """
     item_elements = tree.findall("channel/item")
@@ -87,7 +80,7 @@ def rss_document_to_feed_items(feed: Feed, tree: ElementBase) -> List[FeedItem]:
             feed_id=feed.feed_id,
             title=item_element.findtext("title"),
             link=sanitize_link(item_element.findtext("link")),
-            description=_parse_description(item_element.findtext("description")),
+            description=parse_description(item_element.findtext("description")),
             last_seen=now_in_utc(),
             published=_parse_optional_rss_datetime(item_element.findtext("pubDate")),
             created_on=now_in_utc(),
@@ -97,7 +90,7 @@ def rss_document_to_feed_items(feed: Feed, tree: ElementBase) -> List[FeedItem]:
 
 
 async def refresh_rss_feed(session: ClientSession, feed: Feed) -> Optional[RefreshResult]:
-    log.info("Refreshing feed %s", feed)
+    log.info("Refreshing rss feed %s", feed)
     try:
         async with session.get(feed.url) as xml_response:
             with repositories.client.transaction():
@@ -121,6 +114,9 @@ async def refresh_all_feeds(include_fixed_feeds: bool = True) -> int:
     ]
     tasks.extend(
         [refresh_atom_feed(client_session, feed) for feed in feeds if feed.feed_source_type == FeedSourceType.ATOM.name]
+    )
+    tasks.extend(
+        [refresh_rdf_feed(client_session, feed) for feed in feeds if feed.feed_source_type == FeedSourceType.RDF.name]
     )
     if include_fixed_feeds:
         tasks.extend([refresh_html_feed(client_session, html_feed) for html_feed in html_feeds])

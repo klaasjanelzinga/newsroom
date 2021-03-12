@@ -1,22 +1,22 @@
+from base64 import b64decode
+from dataclasses import dataclass
 import hashlib
+from os import urandom
 import random
 import re
 import string
-from base64 import b64decode
-from dataclasses import dataclass
-from os import urandom
-from typing import Optional, List
+from typing import List, Optional
 
 import pyotp
 
 from core_lib import application_data
 from core_lib.exceptions import (
     AuthorizationFailed,
-    UserNameTaken,
-    PasswordsDoNotMatch,
-    IllegalPassword,
-    TokenCouldNotBeVerified,
     BackupCodeNotValid,
+    IllegalPassword,
+    PasswordsDoNotMatch,
+    TokenCouldNotBeVerified,
+    UserNameTaken,
 )
 from core_lib.repositories import User
 from core_lib.utils import bytes_to_str_base64

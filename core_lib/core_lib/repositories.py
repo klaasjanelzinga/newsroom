@@ -1,13 +1,13 @@
 import base64
-import enum
 from dataclasses import dataclass
 from datetime import datetime
-from typing import Optional, List, Iterator, Tuple, Any
+import enum
+from typing import Any, Iterator, List, Optional, Tuple
 from uuid import uuid4
 
-import pydantic
 from google.cloud import datastore
-from google.cloud.datastore import Client, Query, Key
+from google.cloud.datastore import Client, Key, Query
+import pydantic
 from pydantic import Field
 from pydantic.main import BaseModel
 
@@ -63,6 +63,7 @@ class FeedSourceType(enum.Enum):
     ATOM = 0
     RSS = 1
     HTML = 2
+    RDF = 3
 
 
 class Feed(BaseModel):  # pylint: disable=too-few-public-methods

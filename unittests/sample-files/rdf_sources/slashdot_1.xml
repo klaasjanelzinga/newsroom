@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" media="screen" href="/~d/styles/rss1full.xsl"?><?xml-stylesheet type="text/css" media="screen" href="http://rss.slashdot.org/~d/styles/itemcontent.css"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://purl.org/rss/1.0/"
+         xmlns:admin="http://webns.net/mvcb/" xmlns:content="http://purl.org/rss/1.0/modules/content/"
+         xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+         xmlns:syn="http://purl.org/rss/1.0/modules/syndication/"
+         xmlns:taxo="http://purl.org/rss/1.0/modules/taxonomy/">
+
+    <channel rdf:about="https://slashdot.org/">
+        <title>Slashdot</title>
+        <link>https://slashdot.org/</link>
+        <description>News for nerds, stuff that matters</description>
+        <dc:language>en-us</dc:language>
+        <dc:rights>Copyright 1997-2016, SlashdotMedia. All Rights Reserved.</dc:rights>
+        <dc:date>2021-03-12T11:33:25+00:00</dc:date>
+        <dc:publisher>Dice</dc:publisher>
+        <dc:creator>help@slashdot.org</dc:creator>
+        <dc:subject>Technology</dc:subject>
+        <syn:updateBase>1970-01-01T00:00+00:00</syn:updateBase>
+        <syn:updateFrequency>1</syn:updateFrequency>
+        <syn:updatePeriod>hourly</syn:updatePeriod>
+        <items>
+            <rdf:Seq>
+                <rdf:li rdf:resource="https://developers.slashdot.org/story/21/03/11/239233/uber-and-lyft-create-a-shared-database-of-drivers-banned-for-assault?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed"/>
+                <rdf:li rdf:resource="https://science.slashdot.org/story/21/03/11/236209/giant-gravitational-wave-detectors-could-hear-murmurs-from-across-universe?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed"/>
+            </rdf:Seq>
+        </items>
+        <image rdf:resource="https://a.fsdn.com/sd/topics/topicslashdot.gif"/>
+        <textinput rdf:resource="https://slashdot.org/search.pl"/>
+        <atom10:link xmlns:atom10="http://www.w3.org/2005/Atom" rel="self" type="application/rdf+xml"
+                     href="http://rss.slashdot.org/slashdot/slashdotMain"/>
+        <feedburner:info xmlns:feedburner="http://rssnamespace.org/feedburner/ext/1.0" uri="slashdot/slashdotmain"/>
+        <atom10:link xmlns:atom10="http://www.w3.org/2005/Atom" rel="hub" href="http://pubsubhubbub.appspot.com/"/>
+    </channel>
+    <image rdf:about="https://a.fsdn.com/sd/topics/topicslashdot.gif">
+        <title>Slashdot</title>
+        <url>https://a.fsdn.com/sd/topics/topicslashdot.gif</url>
+        <link>https://slashdot.org/</link>
+    </image>
+    <item rdf:about="https://developers.slashdot.org/story/21/03/11/239233/uber-and-lyft-create-a-shared-database-of-drivers-banned-for-assault?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+        <title>Uber and Lyft Create a Shared Database of Drivers Banned For Assault</title>
+        <link>
+            https://developers.slashdot.org/story/21/03/11/239233/uber-and-lyft-create-a-shared-database-of-drivers-banned-for-assault?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed
+        </link>
+        <description>Uber and Lyft will work together to share information on US drivers and delivery people accused of
+            physical and sexual assault to ensure those individuals are banned on both platforms, the two companies
+            announced on Thursday in separate blog posts. Engadget reports: HireRight, a company that specializes in
+            conducting background checks, will oversee the Industry Sharing Safety Program database. Other
+            transportation and delivery companies in the US will have the chance to contribute and access the database
+            as long as they adhere to the same data accuracy and privacy policies that Uber and Lyft must follow.
+
+            "We want to share this information with each other and hopefully in the near future with other companies, so
+            that our peers in this space can be informed and make decisions for their own platforms to keep those
+            platforms safe," Jennifer Brandenburger, Lyft's head of policy development, told NBC News. The database
+            won't include information on victims. Additionally, the incident that landed a driver in the database will
+            fall in broad categories.&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
+            &lt;a class="slashpop"
+            href="http://twitter.com/home?status=Uber+and+Lyft+Create+a+Shared+Database+of+Drivers+Banned+For+Assault%3A+https%3A%2F%2Fbit.ly%2F3ckllPU"&gt;&lt;img
+            src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+            &lt;a class="slashpop"
+            href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fdevelopers.slashdot.org%2Fstory%2F21%2F03%2F11%2F239233%2Fuber-and-lyft-create-a-shared-database-of-drivers-banned-for-assault%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img
+            src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+            &lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a
+            href="https://developers.slashdot.org/story/21/03/11/239233/uber-and-lyft-create-a-shared-database-of-drivers-banned-for-assault?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read
+            more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe
+            src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=18439178&amp;amp;smallembed=1" style="height:
+            300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;
+        </description>
+        <dc:creator>BeauHD</dc:creator>
+        <dc:date>2021-03-12T10:00:00+00:00</dc:date>
+        <dc:subject>database</dc:subject>
+        <slash:department>safety-first</slash:department>
+        <slash:section>developers</slash:section>
+        <slash:comments>21</slash:comments>
+        <slash:hit_parade>21,19,16,13,0,0,0</slash:hit_parade>
+    </item>
+    <item rdf:about="https://science.slashdot.org/story/21/03/11/236209/giant-gravitational-wave-detectors-could-hear-murmurs-from-across-universe?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed">
+        <title>Giant Gravitational Wave Detectors Could Hear Murmurs From Across Universe</title>
+        <link>
+            https://science.slashdot.org/story/21/03/11/236209/giant-gravitational-wave-detectors-could-hear-murmurs-from-across-universe?utm_source=rss1.0mainlinkanon&amp;utm_medium=feed
+        </link>
+        <description>sciencehabit writes: Just 5 years ago, physicists opened a new window on the universe when they
+            first detected gravitational waves, ripples in space itself set off when massive black holes or neutron
+            stars spiral together. Even as discoveries pour in, researchers are already planning bigger, more sensitive
+            detectors. And a Ford versus Ferrari kind of rivalry has emerged, with scientists in the United States
+            simply proposing detectors 10 times bigger than the ones they have now, and researchers in Europe pursuing a
+            more radical design that would combine six detectors in a single underground observatory. Researchers say
+            detectors 10 times more sensitive than the ones they have now could detect all black hole mergers within the
+            observable universe and spot hundreds of mergers of neutron stars, laying bare the nature of the ultradense
+            matter in neutron stars. But, it's early days for the U.S. project, which is called the Cosmic Explorer, and
+            the European project, which is known as the Einstein Telescope.&lt;p&gt;&lt;div class="share_submission"
+            style="position:relative;"&gt;
+            &lt;a class="slashpop"
+            href="http://twitter.com/home?status=Giant+Gravitational+Wave+Detectors+Could+Hear+Murmurs+From+Across+Universe%3A+https%3A%2F%2Fbit.ly%2F3rFQGCV"&gt;&lt;img
+            src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
+            &lt;a class="slashpop"
+            href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fscience.slashdot.org%2Fstory%2F21%2F03%2F11%2F236209%2Fgiant-gravitational-wave-detectors-could-hear-murmurs-from-across-universe%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img
+            src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+
+
+            &lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a
+            href="https://science.slashdot.org/story/21/03/11/236209/giant-gravitational-wave-detectors-could-hear-murmurs-from-across-universe?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read
+            more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe
+            src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=18439174&amp;amp;smallembed=1" style="height:
+            300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;
+        </description>
+        <dc:creator>BeauHD</dc:creator>
+        <dc:date>2021-03-12T07:00:00+00:00</dc:date>
+        <dc:subject>space</dc:subject>
+        <slash:department>what-to-expect</slash:department>
+        <slash:section>science</slash:section>
+        <slash:comments>2</slash:comments>
+        <slash:hit_parade>2,2,1,0,0,0,0</slash:hit_parade>
+    </item>
+    <textinput rdf:about="https://slashdot.org/search.pl">
+        <title>Search Slashdot</title>
+        <description>Search Slashdot stories</description>
+        <name>query</name>
+        <link>https://slashdot.org/search.pl</link>
+    </textinput>
+</rdf:RDF>

@@ -1,13 +1,13 @@
+from datetime import datetime, timedelta
 import difflib
 import re
-from datetime import datetime, timedelta
 from typing import List
 from urllib.parse import urlparse
 
 import pytz
 
 from core_lib.application_data import repositories
-from core_lib.repositories import Feed, FeedItem, User, NewsItem
+from core_lib.repositories import Feed, FeedItem, NewsItem, User
 from core_lib.utils import now_in_utc
 
 

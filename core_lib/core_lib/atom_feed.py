@@ -1,13 +1,13 @@
-import logging
 from datetime import datetime
+import logging
 from typing import List, Optional
 
 import aiohttp
-import dateparser
-import pytz
 from aiohttp import ClientSession
+import dateparser
 from google.api_core.exceptions import GoogleAPIError
-from lxml.etree import fromstring, ElementBase
+from lxml.etree import ElementBase, fromstring
+import pytz
 
 from core_lib.application_data import repositories
 from core_lib.feed_utils import upsert_new_items_for_feed

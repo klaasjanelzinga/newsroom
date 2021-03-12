@@ -1,6 +1,6 @@
 import enum
 import logging
-from typing import Optional, List
+from typing import List, Optional
 
 from fastapi import APIRouter, Header, HTTPException
 from pydantic.main import BaseModel
@@ -13,15 +13,15 @@ from core_lib.application_data import repositories
 from core_lib.exceptions import AuthorizationException, TokenCouldNotBeVerified
 from core_lib.repositories import User
 from core_lib.user import (
-    signup,
-    sign_in,
-    change_password,
-    update_user_profile,
     avatar_image_for_user,
-    start_registration_new_otp_for,
-    disable_otp_for,
-    totp_verification_for,
+    change_password,
     confirm_otp_for,
+    disable_otp_for,
+    sign_in,
+    signup,
+    start_registration_new_otp_for,
+    totp_verification_for,
+    update_user_profile,
     use_backup_code_for,
 )
 

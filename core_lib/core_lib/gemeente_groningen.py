@@ -1,5 +1,5 @@
-import re
 from datetime import datetime
+import re
 from typing import List
 
 from bs4 import BeautifulSoup, Tag
