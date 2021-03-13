@@ -1,8 +1,7 @@
 from fastapi import APIRouter
 from pydantic.main import BaseModel
 
-from core_lib.feed import delete_read_items, update_number_items_in_feeds
-from core_lib.rss_feed import refresh_all_feeds
+from core_lib.feed import delete_read_items, refresh_all_feeds, update_number_items_in_feeds
 
 maintenance_router = APIRouter()
 

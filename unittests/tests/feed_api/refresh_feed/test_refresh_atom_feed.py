@@ -1,9 +1,8 @@
 import pytest
 from faker import Faker
 
-from core_lib.feed import fetch_feed_information_for, subscribe_user_to_feed
+from core_lib.feed import fetch_feed_information_for, subscribe_user_to_feed, refresh_all_feeds
 from core_lib.repositories import User
-from core_lib.rss_feed import refresh_all_feeds
 from tests.mock_repositories import MockRepositories
 
 
@@ -13,20 +12,20 @@ async def test_refresh_atom_feed(faker: Faker, repositories: MockRepositories, u
     test_url = faker.url()
 
     # Find the unknown feed. Should fetch 1 feed item.
-    repositories.mock_client_session_for_files(["sample-files/rdf_sources/slashdot_1.xml"])
+    repositories.mock_client_session_for_files(["sample-files/atom/fetch_1.xml"])
     feed = await fetch_feed_information_for(repositories.client_session, test_url)
-    assert repositories.feed_item_repository.count() == 2
+    assert repositories.feed_item_repository.count() == 1
     assert feed is not None
 
     # subscribe the user, there should be 1 news_item for the user.
     user = subscribe_user_to_feed(user, feed)
     assert feed.feed_id in user.subscribed_to
-    assert repositories.news_item_repository.count() == 2
-    assert user.number_of_unread_items == 2
+    assert repositories.news_item_repository.count() == 1
+    assert user.number_of_unread_items == 1
 
     # refresh the feed, with one new item.
-    repositories.mock_client_session_for_files(["sample-files/rdf_sources/slashdot_2.xml"])
+    repositories.mock_client_session_for_files(["sample-files/atom/fetch_2.xml"])
     await refresh_all_feeds(False)
-    assert repositories.feed_item_repository.count() == 15
-    assert repositories.news_item_repository.count() == 15
-    assert user.number_of_unread_items == 15
+    assert repositories.feed_item_repository.count() == 2
+    assert repositories.news_item_repository.count() == 2
+    assert user.number_of_unread_items == 2

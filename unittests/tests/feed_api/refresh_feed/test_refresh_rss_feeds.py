@@ -1,9 +1,8 @@
 import pytest
 from faker import Faker
 
-from core_lib.feed import fetch_feed_information_for, subscribe_user_to_feed
+from core_lib.feed import fetch_feed_information_for, subscribe_user_to_feed, refresh_all_feeds
 from core_lib.repositories import User
-from core_lib.rss_feed import refresh_all_feeds
 from tests.mock_repositories import MockRepositories
 
 

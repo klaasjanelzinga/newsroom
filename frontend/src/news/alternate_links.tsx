@@ -1,5 +1,5 @@
 import * as React from "react";
-import {createStyles, WithStyles, withStyles} from "@material-ui/core";
+import {createStyles, Link, WithStyles, withStyles} from "@material-ui/core";
 import {NewsItem} from "../user/model";
 import Grid from "@material-ui/core/Grid";
 
@@ -30,10 +30,10 @@ class AlternateLinks extends React.Component<AlternateLinksProps> {
             const url = new URL(alternate_link)
             const domain = url.hostname
             return <Grid item xs={12} key={index}>
-                <a href={alternate_link} className={classes.linkText}>
+                <Link href={alternate_link} className={classes.linkText} target="_blank" rel="noopener">
                     <img src={newsItem.alternate_favicons[index]}  className={classes.domainIcon} alt={`[${domain}]`}/>
                     {newsItem.alternate_title_links[index]}
-                </a>
+                </Link>
             </Grid>
         })
     }

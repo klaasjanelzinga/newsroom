@@ -1,16 +1,24 @@
+import asyncio
 from datetime import datetime, timedelta
 import logging
-from typing import Optional
+from typing import List, Optional
 
 from aiohttp import ClientConnectorError, ClientSession
 from lxml.etree import fromstring
 
-from core_lib.application_data import repositories
-from core_lib.atom_feed import atom_document_to_feed, atom_document_to_feed_items, is_atom_file
+from core_lib.application_data import html_feeds, repositories
+from core_lib.atom_feed import atom_document_to_feed, atom_document_to_feed_items, is_atom_file, refresh_atom_feed
 from core_lib.feed_utils import news_items_from_feed_items, upsert_new_feed_items_for_feed
-from core_lib.rdf_feed import is_rdf_document, rdf_document_to_feed, rdf_document_to_feed_items
-from core_lib.repositories import Feed, Subscription, User
-from core_lib.rss_feed import is_html_with_rss_ref, is_rss_document, rss_document_to_feed, rss_document_to_feed_items
+from core_lib.html_feed import refresh_html_feed
+from core_lib.rdf_feed import is_rdf_document, rdf_document_to_feed, rdf_document_to_feed_items, refresh_rdf_feed
+from core_lib.repositories import Feed, FeedItem, FeedSourceType, Subscription, User
+from core_lib.rss_feed import (
+    is_html_with_rss_ref,
+    is_rss_document,
+    refresh_rss_feed,
+    rss_document_to_feed,
+    rss_document_to_feed_items,
+)
 
 log = logging.getLogger(__file__)
 
@@ -34,6 +42,8 @@ async def fetch_feed_information_for(
     :return: A feed object or None if no feed found.
     """
     try:
+        feed: Optional[Feed] = None
+        feed_items: List[FeedItem] = []
         async with session.get(url, headers={"accept-encoding": "gzip"}) as response:
             with repositories.client.transaction():
                 text = await response.read()
@@ -46,24 +56,18 @@ async def fetch_feed_information_for(
                     rss_document = fromstring(text)
                     feed = rss_document_to_feed(rss_ref if rss_ref is not None else url, rss_document)
                     feed_items = rss_document_to_feed_items(feed, rss_document)
-                    feed.number_of_items = upsert_new_feed_items_for_feed(feed, feed_items)
-                    repositories.feed_repository.upsert(feed)
-                    return feed
-                if is_rdf_document(text):
+                elif is_rdf_document(text):
                     rdf_document = fromstring(text)
                     feed = rdf_document_to_feed(url, rdf_document)
                     feed_items = rdf_document_to_feed_items(feed, rdf_document)
-                    feed.number_of_items = upsert_new_feed_items_for_feed(feed, feed_items)
-                    repositories.feed_repository.upsert(feed)
-                    return feed
-                if is_atom_file(text):
+                elif is_atom_file(text):
                     atom_document = fromstring(text)
                     feed = atom_document_to_feed(url, atom_document)
                     feed_items = atom_document_to_feed_items(feed, atom_document)
-                    feed.number_of_items = upsert_new_feed_items_for_feed(feed, feed_items)
-                    feed = repositories.feed_repository.upsert(feed)
-                    return feed
-        return None
+        if feed is not None:
+            feed.number_of_items = upsert_new_feed_items_for_feed(feed, feed_items)
+            feed = repositories.feed_repository.upsert(feed)
+        return feed
     except ClientConnectorError as cce:
         raise NetworkingException(f"Url {url} not reachable. Details: {cce.__str__()}") from cce
 
@@ -118,3 +122,23 @@ def update_number_items_in_feeds() -> None:
     for feed in repositories.feed_repository.all_feeds():
         feed.number_of_items = repositories.feed_item_repository.count_all_for_feed(feed)
         repositories.feed_repository.upsert(feed)
+
+
+async def refresh_all_feeds(include_fixed_feeds: bool = True) -> int:
+    """ Refreshes all active feeds and returns the number of refreshed feeds. """
+    client_session = repositories.client_session
+    feeds = repositories.feed_repository.get_active_feeds()
+    tasks = [
+        refresh_rss_feed(client_session, feed) for feed in feeds if feed.feed_source_type == FeedSourceType.RSS.name
+    ]
+    tasks.extend(
+        [refresh_atom_feed(client_session, feed) for feed in feeds if feed.feed_source_type == FeedSourceType.ATOM.name]
+    )
+    tasks.extend(
+        [refresh_rdf_feed(client_session, feed) for feed in feeds if feed.feed_source_type == FeedSourceType.RDF.name]
+    )
+    if include_fixed_feeds:
+        tasks.extend([refresh_html_feed(client_session, html_feed) for html_feed in html_feeds])
+
+    await asyncio.gather(*tasks)
+    return len(tasks)

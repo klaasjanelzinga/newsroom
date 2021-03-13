@@ -45,6 +45,11 @@ async def test_enable_totp(
     assert user.pending_backup_codes is not None
     assert user.pending_otp_hash is not None
 
+    # Confirm with wrong TOTP code ------------------------------------------------------
+    verification_code = f"1{pyotp.TOTP(totp_response.generated_secret).now()}"
+    response = await confirm_totp(TOTPVerificationRequest(totp_value=verification_code), user_bearer_token)
+    assert not response.otp_confirmed
+
     # Confirm with TOTP code ------------------------------------------------------------
     verification_code = pyotp.TOTP(totp_response.generated_secret).now()
     confirmation_result = await confirm_totp(TOTPVerificationRequest(totp_value=verification_code), user_bearer_token)
@@ -115,3 +120,31 @@ async def test_backup_codes(repositories: MockRepositories, user: User, user_pas
             UseTOTPBackupRequest(totp_backup_code=backup_code), authorization=f"Bearer {response.token}"
         )
     assert http_exception.value.status_code == 401
+
+
+@pytest.mark.asyncio
+async def test_sign_in_with_totp_code(totp_user: User, totp_user_password: str, totp_bearer_token: str):
+    user_sign_in_request = UserSignInRequest(email_address=totp_user.email_address, password=totp_user_password)
+    response = await sign_in_user(user_sign_in_request)
+    assert response.sign_in_state == SignInState.REQUIRES_OTP
+    assert response.token is not None
+    response = await totp_verification(
+        TOTPVerificationRequest(totp_value=pyotp.TOTP(totp_user.otp_hash).now()), authorization=totp_bearer_token
+    )
+    assert response.token is not None
+    assert response.sign_in_state == SignInState.SIGNED_IN
+
+
+@pytest.mark.asyncio
+async def test_sign_in_with_wrong_totp_code(totp_user: User, totp_user_password: str, totp_bearer_token: str):
+    user_sign_in_request = UserSignInRequest(email_address=totp_user.email_address, password=totp_user_password)
+    response = await sign_in_user(user_sign_in_request)
+    assert response.sign_in_state == SignInState.REQUIRES_OTP
+    assert response.token is not None
+    with pytest.raises(HTTPException) as http_exception:
+        await totp_verification(
+            TOTPVerificationRequest(totp_value=f"0{pyotp.TOTP(totp_user.otp_hash).now()}"),
+            authorization=totp_bearer_token,
+        )
+    assert http_exception.value.status_code == 401
+    assert http_exception.value.detail == "Unauthorized"
