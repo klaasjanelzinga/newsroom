@@ -115,6 +115,7 @@ domain_to_favicon_map = {
     "www.tivolivredenburg.nl": "https://www.tivolivredenburg.nl/wp-content/themes/tivolivredenburg/favicon.ico",
     "www.vera-groningen.nl": "https://www.vera-groningen.nl/vera/assets/img/favicon.png",
     "www.desmaakvanstad.nl": "https://www.desmaakvanstad.nl/wp-content/uploads/2017/08/cropped-FAVICON-1.jpg",
+    "www.focusgroningen.nl": "https://www.focusgroningen.nl/wp-content/uploads/2013/10/fffff1.png",
     "campus.groningen.nl": "https://campus.groningen.nl/img/favicons/campus-groningen/favicon-32x32.png",
     "gemeente.groningen.nl": "https://gemeente.groningen.nl/sites/all/themes/custom/groningen/favicon.ico",
 }
