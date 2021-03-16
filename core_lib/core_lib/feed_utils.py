@@ -117,6 +117,7 @@ domain_to_favicon_map = {
     "www.desmaakvanstad.nl": "https://www.desmaakvanstad.nl/wp-content/uploads/2017/08/cropped-FAVICON-1.jpg",
     "www.focusgroningen.nl": "https://www.focusgroningen.nl/wp-content/uploads/2013/10/fffff1.png",
     "campus.groningen.nl": "https://campus.groningen.nl/img/favicons/campus-groningen/favicon-32x32.png",
+    "www.paradiso.nl": "https://www.paradiso.nl/favicon-theme-default.png",
     "forum.manjaro.org": "https://forum.manjaro.org/uploads/default/optimized/1X/d75b86ee0d230b116a650e11d0ca7a0b8472a4a8_2_32x32.svg",
     "gemeente.groningen.nl": "https://gemeente.groningen.nl/sites/all/themes/custom/groningen/favicon.ico",
 }
