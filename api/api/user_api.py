@@ -10,7 +10,7 @@ from api.api_application_data import security
 from api.api_utils import ErrorMessage
 from api.security import TokenVerifier
 from core_lib.application_data import repositories
-from core_lib.exceptions import AuthorizationException, TokenCouldNotBeVerified, IllegalPassword, PasswordsDoNotMatch
+from core_lib.exceptions import AuthorizationException, IllegalPassword, PasswordsDoNotMatch, TokenCouldNotBeVerified
 from core_lib.repositories import User
 from core_lib.user import (
     avatar_image_for_user,
