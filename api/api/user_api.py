@@ -10,7 +10,7 @@ from api.api_application_data import security
 from api.api_utils import ErrorMessage
 from api.security import TokenVerifier
 from core_lib.application_data import repositories
-from core_lib.exceptions import AuthorizationException, TokenCouldNotBeVerified
+from core_lib.exceptions import AuthorizationException, TokenCouldNotBeVerified, IllegalPassword, PasswordsDoNotMatch
 from core_lib.repositories import User
 from core_lib.user import (
     avatar_image_for_user,
@@ -71,6 +71,11 @@ class UserChangePasswordRequest(BaseModel):
     current_password: str
     new_password: str
     new_password_repeated: str
+
+
+class UserChangePasswordResponse(BaseModel):
+    success: bool
+    message: Optional[str]
 
 
 class UpdateUserProfileRequest(BaseModel):
@@ -135,12 +140,13 @@ async def sign_up_user(user_sign_up_request: UserSignUpRequest) -> UserSignInRes
     "/user/change_password",
     tags=["user"],
     responses={
+        status.HTTP_200_OK: {"model": UserChangePasswordResponse},
         status.HTTP_401_UNAUTHORIZED: {"model": ErrorMessage},
     },
 )
 async def change_password_user(
     user_change_password_request: UserChangePasswordRequest, authorization: Optional[str] = Header(None)
-) -> None:
+) -> UserChangePasswordResponse:
     """
     Change the password for the user.
     """
@@ -152,6 +158,11 @@ async def change_password_user(
             new_password=user_change_password_request.new_password,
             new_password_repeated=user_change_password_request.new_password_repeated,
         )
+        return UserChangePasswordResponse(success=True)
+    except IllegalPassword as illegal_password:
+        return UserChangePasswordResponse(success=False, message=illegal_password.__str__())
+    except PasswordsDoNotMatch as no_match:
+        return UserChangePasswordResponse(success=False, message=no_match.__str__())
     except AuthorizationException as authorization_exception:
         raise HTTPException(status_code=401, detail=authorization_exception.__str__()) from authorization_exception
 

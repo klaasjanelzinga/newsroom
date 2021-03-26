@@ -1,15 +1,15 @@
-import * as React from "react";
-import {createStyles, WithStyles, withStyles} from "@material-ui/core";
-import {NewsItem} from "../user/model";
-import NewsItemNode, {NewsItemControl, NewsItemDynamicFetchControl} from "./news_item";
-import {debounce} from "ts-debounce";
-import DoneAllIcon from '@material-ui/icons/DoneAll'
-import {Api} from "../Api";
-import {withSnackbar, WithSnackbarProps} from "notistack";
-import {RouteComponentProps} from "react-router";
-import {withRouter} from "react-router-dom";
-import Typography from "@material-ui/core/Typography";
-import {WithAuthHandling, withAuthHandling} from "../WithAuthHandling";
+import * as React from "react"
+import { createStyles, WithStyles, withStyles } from "@material-ui/core"
+import { NewsItem } from "../user/model"
+import NewsItemNode, { NewsItemControl, NewsItemDynamicFetchControl } from "./news_item"
+import { debounce } from "ts-debounce"
+import DoneAllIcon from "@material-ui/icons/DoneAll"
+import { Api } from "../Api"
+import { withSnackbar, WithSnackbarProps } from "notistack"
+import { RouteComponentProps } from "react-router"
+import { withRouter } from "react-router-dom"
+import Typography from "@material-ui/core/Typography"
+import { WithAuthHandling, withAuthHandling } from "../WithAuthHandling"
 
 const styles = createStyles({
     newsItems: {
@@ -30,23 +30,22 @@ const styles = createStyles({
 })
 
 interface NewsItemsProps extends WithAuthHandling, RouteComponentProps, WithSnackbarProps, WithStyles<typeof styles> {
-    newsItems: NewsItem[];
-    monitorScroll: boolean;
-    needMoreItems: () => void;
-    refreshRequested: () => void;
+    newsItems: NewsItem[]
+    monitorScroll: boolean
+    needMoreItems: () => void
+    refreshRequested: () => void
 
-    registerNewsItemsControl: (newsItemsCtrl: NewsItemsControl) => void;
-    markAsRead: (count: number) => void;
-    markAllAsRead: () => void;
+    registerNewsItemsControl: (newsItemsCtrl: NewsItemsControl) => void
+    markAsRead: (count: number) => void
+    markAllAsRead: () => void
 }
 
 export interface NewsItemsControl {
-    goToNextItem: () => void;
-    goToPreviousItem: () => void;
+    goToNextItem: () => void
+    goToPreviousItem: () => void
 }
 
 class NewsItemsNode extends React.Component<NewsItemsProps> implements NewsItemsControl {
-
     onScrollDebounced: () => void
     scrollEventClients: NewsItemControl[] = []
     dynamicFetchClients: NewsItemDynamicFetchControl[] = []
@@ -54,9 +53,9 @@ class NewsItemsNode extends React.Component<NewsItemsProps> implements NewsItems
     allDoneElement: Element | null = null
 
     constructor(props: NewsItemsProps) {
-        super(props);
+        super(props)
         this.api = new Api(props)
-        this.onScrollDebounced = debounce(this.onScroll, 200);
+        this.onScrollDebounced = debounce(this.onScroll, 200)
 
         this.props.registerNewsItemsControl(this)
     }
@@ -70,32 +69,33 @@ class NewsItemsNode extends React.Component<NewsItemsProps> implements NewsItems
     }
 
     onScroll = (): void => {
-        this.scrollEventClients.forEach(client => client.scrollEvent())
+        this.scrollEventClients.forEach((client) => client.scrollEvent())
 
         // Mark news-items that have isRead as is_read at the server.
         const newsItemIds = this.scrollEventClients
-            .filter(client => client.isRead())
-            .filter(client => !client.isReadStateIsSent())
-            .map(client => {
+            .filter((client) => client.isRead())
+            .filter((client) => !client.isReadStateIsSent())
+            .map((client) => {
                 client.setIsReadStateIsSent(true)
                 return client.newsItemId()
             })
         if (newsItemIds.length > 0) {
             this.props.markAsRead(newsItemIds.length)
-            this.api.post("/news-items/mark-as-read", JSON.stringify({news_item_ids: newsItemIds}))
-                .catch(reason => console.error(reason))
+            console.log("Would have marked it ", newsItemIds)
+            // this.api
+            //     .post("/news-items/mark-as-read", JSON.stringify({ news_item_ids: newsItemIds }))
+            //     .catch((reason) => console.error(reason))
         }
 
         // count all items that are scrolled out of view. Signal more items required if unread count is to low.
-        const numberOfUnread = this.dynamicFetchClients.filter(client => !client.isOutOfView()).length
+        const numberOfUnread = this.dynamicFetchClients.filter((client) => !client.isOutOfView()).length
         if (numberOfUnread < 12) {
             this.props.needMoreItems()
         }
     }
 
     registerForScrollEvents = (name: NewsItemControl): void => {
-        if (this.props.monitorScroll)
-            this.scrollEventClients.push(name)
+        if (this.props.monitorScroll) this.scrollEventClients.push(name)
     }
 
     registerForDynamicFetch = (client: NewsItemDynamicFetchControl): void => {
@@ -115,18 +115,18 @@ class NewsItemsNode extends React.Component<NewsItemsProps> implements NewsItems
     }
 
     openCurrentItem(): void {
-        const element = this.scrollEventClients.slice().find(client => client.reportYPosition() > 100)
+        const element = this.scrollEventClients.slice().find((client) => client.reportYPosition() > 100)
         element?.openLink()
     }
 
     markAllAsRead(): void {
-        this.scrollEventClients.forEach(client => client.markAsRead())
+        this.scrollEventClients.forEach((client) => client.markAsRead())
         this.onScroll()
         this.props.markAllAsRead()
     }
 
     goToNextItem(): void {
-        const element = this.scrollEventClients.find(client => client.reportYPosition() > 170)
+        const element = this.scrollEventClients.find((client) => client.reportYPosition() > 170)
         element?.scrollToTop()
         if (!element) {
             this.markAllAsRead()
@@ -135,28 +135,38 @@ class NewsItemsNode extends React.Component<NewsItemsProps> implements NewsItems
     }
 
     goToPreviousItem(): void {
-        const element = this.scrollEventClients.slice().reverse().find(client => client.reportYPosition() < 40)
+        const element = this.scrollEventClients
+            .slice()
+            .reverse()
+            .find((client) => client.reportYPosition() < 40)
         element?.scrollToTop()
     }
 
     render(): JSX.Element {
-        const {classes} = this.props
-        return <div className={classes.newsItems} onScroll={this.onScrollDebounced}>
-            {this.props.newsItems.length === 0 && <div className={classes.noNews}>
-                <Typography variant="h6">
-                    No news found !
-                </Typography>
-            </div>}
-            {this.props.newsItems.length > 0 && this.props.newsItems.map(newsItem =>
-                <NewsItemNode key={newsItem.news_item_id}
-                              scrollEventRegistry={this.registerForScrollEvents}
-                              dynamicFetchRegistry={this.registerForDynamicFetch}
-                              newsItem={newsItem}/>
-            )}
-            {this.props.newsItems.length > 0 && <div className={classes.scrollFiller}>
-                <DoneAllIcon ref={(t) => this.allDoneElement = t} className={classes.scrollFillerIcon}/>
-            </div>}
-        </div>
+        const { classes } = this.props
+        return (
+            <div className={classes.newsItems} onScroll={this.onScrollDebounced}>
+                {this.props.newsItems.length === 0 && (
+                    <div className={classes.noNews}>
+                        <Typography variant="h6">No news found !</Typography>
+                    </div>
+                )}
+                {this.props.newsItems.length > 0 &&
+                    this.props.newsItems.map((newsItem) => (
+                        <NewsItemNode
+                            key={newsItem.news_item_id}
+                            scrollEventRegistry={this.registerForScrollEvents}
+                            dynamicFetchRegistry={this.registerForDynamicFetch}
+                            newsItem={newsItem}
+                        />
+                    ))}
+                {this.props.newsItems.length > 0 && (
+                    <div className={classes.scrollFiller}>
+                        <DoneAllIcon ref={(t) => (this.allDoneElement = t)} className={classes.scrollFillerIcon} />
+                    </div>
+                )}
+            </div>
+        )
     }
 }
 

@@ -28,3 +28,4 @@ class PasswordsDoNotMatch(AuthorizationException):
 
 class IllegalPassword(AuthorizationException):
     pass
+

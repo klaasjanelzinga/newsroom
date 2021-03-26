@@ -65,16 +65,15 @@ async def test_change_password_weak_passwords(
     approved_up_bearer_token: str,
 ):
     for weak_password in ["shortie", "nocaps(@#*$&9879", "NOLOWER293874@(#*&$", "NoSDigits(@#*&$", "NoSpecials2897365"]:
-        with pytest.raises(HTTPException) as http_exception:
-            request = UserChangePasswordRequest(
-                email_address=approved_up_user.email_address,
-                current_password=approved_up_user_password,
-                new_password=weak_password,
-                new_password_repeated=weak_password,
-            )
-            await change_password_user(request, authorization=approved_up_bearer_token)
-        assert http_exception.value.status_code == 401
-        assert http_exception.value.detail.startswith("Password must")
+        request = UserChangePasswordRequest(
+            email_address=approved_up_user.email_address,
+            current_password=approved_up_user_password,
+            new_password=weak_password,
+            new_password_repeated=weak_password,
+        )
+        response = await change_password_user(request, authorization=approved_up_bearer_token)
+        assert not response.success
+        assert response.message.startswith("Password must")
 
 
 @pytest.mark.asyncio
@@ -92,7 +91,6 @@ async def test_change_password_non_matching_passwords(
         new_password=new_password,
         new_password_repeated=f"non-{new_password}",
     )
-    with pytest.raises(HTTPException) as http_exception:
-        await change_password_user(request, authorization=approved_up_bearer_token)
-    assert http_exception is not None
-    assert http_exception.value.detail == "Passwords do not match"
+    response = await change_password_user(request, authorization=approved_up_bearer_token)
+    assert not response.success
+    assert response.message == "Passwords do not match"
