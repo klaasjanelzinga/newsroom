@@ -81,10 +81,9 @@ class NewsItemsNode extends React.Component<NewsItemsProps> implements NewsItems
             })
         if (newsItemIds.length > 0) {
             this.props.markAsRead(newsItemIds.length)
-            console.log("Would have marked it ", newsItemIds)
-            // this.api
-            //     .post("/news-items/mark-as-read", JSON.stringify({ news_item_ids: newsItemIds }))
-            //     .catch((reason) => console.error(reason))
+            this.api
+                .post("/news-items/mark-as-read", JSON.stringify({ news_item_ids: newsItemIds }))
+                .catch((reason) => console.error(reason))
         }
 
         // count all items that are scrolled out of view. Signal more items required if unread count is to low.
