@@ -1,36 +1,34 @@
-import {Avatar, createStyles, IconButton, Menu, MenuItem, WithStyles} from '@material-ui/core';
-import {withStyles} from '@material-ui/core/styles';
-import {AccountCircle} from '@material-ui/icons';
-import React from 'react';
-import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {TokenBasedAuthenticator, withAuthHandling, WithAuthHandling} from "../WithAuthHandling";
-import {Api} from "../Api";
-import {withSnackbar, WithSnackbarProps} from "notistack";
+import { Avatar, createStyles, IconButton, Menu, MenuItem, WithStyles } from "@material-ui/core"
+import { withStyles } from "@material-ui/core/styles"
+import { AccountCircle } from "@material-ui/icons"
+import React from "react"
+import { RouteComponentProps, withRouter } from "react-router-dom"
+import { TokenBasedAuthenticator, withAuthHandling, WithAuthHandling } from "../WithAuthHandling"
+import { Api } from "../Api"
+import { withSnackbar, WithSnackbarProps } from "notistack"
 
-const styles = createStyles({});
+const styles = createStyles({})
 
 interface UserAvatarResponse {
-    avatar_image: string | null;
+    avatar_image: string | null
 }
 
-interface HeaderMenuProps extends RouteComponentProps, WithAuthHandling, WithSnackbarProps, WithStyles<typeof styles> {
-}
+interface HeaderMenuProps extends RouteComponentProps, WithAuthHandling, WithSnackbarProps, WithStyles<typeof styles> {}
 
 type HeaderMenuState = {
-    anchorEl: null | HTMLElement;
-    menuOpen: boolean;
-    avatar_image: string | null;
-    is_signed_in: boolean;
-    is_approved: boolean;
+    anchorEl: null | HTMLElement
+    menuOpen: boolean
+    avatar_image: string | null
+    is_signed_in: boolean
+    is_approved: boolean
 }
 
 class HeaderMenu extends React.Component<HeaderMenuProps, HeaderMenuState> {
-
     api: Api
     authHandling: TokenBasedAuthenticator
 
     constructor(props: HeaderMenuProps) {
-        super(props);
+        super(props)
         this.api = new Api(props)
         this.authHandling = props.authHandling
         this.state = {
@@ -39,7 +37,7 @@ class HeaderMenu extends React.Component<HeaderMenuProps, HeaderMenuState> {
             avatar_image: props.authHandling.user_information?.avatar_image || null,
             is_signed_in: props.authHandling.isSignedIn,
             is_approved: (props.authHandling.user_information?.is_approved || false) && props.authHandling.isSignedIn,
-        };
+        }
         this.fetch_avatar_image()
     }
 
@@ -47,14 +45,15 @@ class HeaderMenu extends React.Component<HeaderMenuProps, HeaderMenuState> {
         if (this.state.avatar_image) {
             return
         } else if (this.state.is_signed_in && this.state.is_approved) {
-            this.api.get<UserAvatarResponse>("/user/avatar")
-                .then(user_avatar_response => {
+            this.api
+                .get<UserAvatarResponse>("/user/avatar")
+                .then((user_avatar_response) => {
                     if (user_avatar_response[0] === 200) {
-                        this.setState({avatar_image: user_avatar_response[1].avatar_image})
+                        this.setState({ avatar_image: user_avatar_response[1].avatar_image })
                         this.props.authHandling.update_avatar_image(user_avatar_response[1].avatar_image)
                     }
                 })
-                .catch(reason => console.log(reason))
+                .catch((reason) => console.log(reason))
         }
     }
 
@@ -62,40 +61,44 @@ class HeaderMenu extends React.Component<HeaderMenuProps, HeaderMenuState> {
         this.setState({
             anchorEl: event.currentTarget,
             menuOpen: true,
-        });
+        })
     }
 
     handleClose = (): void => {
         this.setState({
             menuOpen: false,
             anchorEl: null,
-        });
+        })
     }
 
     handleSignIn = (): void => {
-        this.handleClose();
-        this.props.history.push('/user/signin');
+        this.handleClose()
+        this.props.history.push("/user/signin")
     }
 
     handleSignOut = (): void => {
-        this.handleClose();
-        this.props.history.push('/user/signout');
+        this.handleClose()
+        this.props.history.push("/user/signout")
     }
 
     handleMyProfile = (): void => {
-        this.handleClose();
-        this.props.history.push('/user/profile');
+        this.handleClose()
+        this.props.history.push("/user/profile")
     }
 
     handleAuthenticationSettings = (): void => {
-        this.handleClose();
-        this.props.history.push('/user/authentication-settings');
+        this.handleClose()
+        this.props.history.push("/user/authentication-settings")
     }
 
     accountAvatar = (): JSX.Element => {
         if (this.state.avatar_image) {
-            return <Avatar src={this.state.avatar_image}
-                           alt={this.props.authHandling.user_information?.display_name || "?"}/>
+            return (
+                <Avatar
+                    src={this.state.avatar_image}
+                    alt={this.props.authHandling.user_information?.display_name || "?"}
+                />
+            )
         }
         return <AccountCircle />
     }
@@ -108,7 +111,8 @@ class HeaderMenu extends React.Component<HeaderMenuProps, HeaderMenuState> {
                     aria-controls="menu-appbar"
                     aria-haspopup="true"
                     onClick={this.handleMenu}
-                    color="inherit">
+                    color="inherit"
+                >
                     {this.accountAvatar()}
                 </IconButton>
                 <Menu
@@ -116,14 +120,23 @@ class HeaderMenu extends React.Component<HeaderMenuProps, HeaderMenuState> {
                     anchorEl={this.state.anchorEl}
                     keepMounted
                     open={this.state.menuOpen}
-                    onClose={this.handleClose}>
-                    <MenuItem disabled={this.state.is_signed_in} onClick={this.handleSignIn}>Sign in</MenuItem>
-                    <MenuItem disabled={!this.state.is_approved} onClick={this.handleMyProfile}>Profile</MenuItem>
-                    <MenuItem disabled={!this.state.is_signed_in} onClick={this.handleSignOut}>Sign out</MenuItem>
-                    <MenuItem disabled={!this.state.is_approved} onClick={this.handleAuthenticationSettings}>Authentication</MenuItem>
+                    onClose={this.handleClose}
+                >
+                    <MenuItem disabled={this.state.is_signed_in} onClick={this.handleSignIn}>
+                        Sign in
+                    </MenuItem>
+                    <MenuItem disabled={!this.state.is_approved} onClick={this.handleMyProfile}>
+                        Profile
+                    </MenuItem>
+                    <MenuItem disabled={!this.state.is_signed_in} onClick={this.handleSignOut}>
+                        Sign out
+                    </MenuItem>
+                    <MenuItem disabled={!this.state.is_approved} onClick={this.handleAuthenticationSettings}>
+                        Authentication
+                    </MenuItem>
                 </Menu>
             </div>
-        );
+        )
     }
 }
 

@@ -53,7 +53,19 @@ integration-tests-down:
 	(cd integration && docker-compose down)
 
 up: 
-	docker-compose up --build
+	docker-compose up --build --detach
+
+down:
+	docker-compose down
+
+logs:
+	docker-compose logs -f
+
+es-lint:
+	docker-compose run --entrypoint "npm run lint" frontend
+
+restart-frontend:
+	docker-compose restart frontend
 
 before-commit: flakes tests build-docker-images integration-tests
 

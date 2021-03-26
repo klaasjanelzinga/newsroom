@@ -1,23 +1,23 @@
-import * as React from 'react'
-import {withSnackbar, WithSnackbarProps} from "notistack";
-import {Api} from "../../Api";
-import {RouteComponentProps, withRouter} from "react-router-dom";
-import {Button, createStyles, Typography, WithStyles} from "@material-ui/core";
-import Grid from "@material-ui/core/Grid";
-import TextField from "@material-ui/core/TextField";
-import {InsertLink} from "@material-ui/icons";
-import {GetFeedsResponse} from "../model";
+import * as React from "react"
+import { withSnackbar, WithSnackbarProps } from "notistack"
+import { Api } from "../../Api"
+import { RouteComponentProps, withRouter } from "react-router-dom"
+import { Button, createStyles, Typography, WithStyles } from "@material-ui/core"
+import Grid from "@material-ui/core/Grid"
+import TextField from "@material-ui/core/TextField"
+import { InsertLink } from "@material-ui/icons"
+import { GetFeedsResponse } from "../model"
 import ImageAndTitle from "./feed_image_and_title"
-import SubscribeUnsubscribeButton from "./subscribe_unsubscribe_button";
-import withStyles from "@material-ui/core/styles/withStyles";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import {withAuthHandling, WithAuthHandling} from "../../WithAuthHandling";
+import SubscribeUnsubscribeButton from "./subscribe_unsubscribe_button"
+import withStyles from "@material-ui/core/styles/withStyles"
+import CircularProgress from "@material-ui/core/CircularProgress"
+import { withAuthHandling, WithAuthHandling } from "../../WithAuthHandling"
 
 interface NewRssFeedState {
-    newURL: string;
-    foundFeed: GetFeedsResponse | null;
-    possibleError: string | null;
-    isLoading: boolean;
+    newURL: string
+    foundFeed: GetFeedsResponse | null
+    possibleError: string | null
+    isLoading: boolean
 }
 
 const styles = createStyles({
@@ -39,15 +39,14 @@ const styles = createStyles({
     subscribeButton: {
         marginTop: "10px",
     },
-});
+})
 
 interface NewRssFeedProps extends WithAuthHandling, RouteComponentProps, WithSnackbarProps, WithStyles<typeof styles> {
-    subscribe_callback: (feed: GetFeedsResponse) => void;
-    unsubscribe_callback: (feed: GetFeedsResponse) => void;
+    subscribe_callback: (feed: GetFeedsResponse) => void
+    unsubscribe_callback: (feed: GetFeedsResponse) => void
 }
 
 class NewRssFeed extends React.Component<NewRssFeedProps, NewRssFeedState> {
-
     api: Api
     state: NewRssFeedState = {
         newURL: "",
@@ -57,23 +56,24 @@ class NewRssFeed extends React.Component<NewRssFeedProps, NewRssFeedState> {
     }
 
     constructor(props: NewRssFeedProps) {
-        super(props);
+        super(props)
 
         this.api = new Api(props)
     }
 
     checkNewRssURL = (): void => {
-        this.setState({isLoading: true, foundFeed: null, possibleError: null})
+        this.setState({ isLoading: true, foundFeed: null, possibleError: null })
         setInterval(() => {
             if (this.state.isLoading)
-                this.setState({possibleError: "Be patient, some feeds take a long time to load ..."})
+                this.setState({ possibleError: "Be patient, some feeds take a long time to load ..." })
         }, 5000)
-        this.api.post<GetFeedsResponse>(`/feeds/for_url?url=${this.state.newURL}`)
-            .then(for_url_response => {
-                this.setState({foundFeed: for_url_response[1], possibleError: null})
+        this.api
+            .post<GetFeedsResponse>(`/feeds/for_url?url=${this.state.newURL}`)
+            .then((for_url_response) => {
+                this.setState({ foundFeed: for_url_response[1], possibleError: null })
             })
-            .catch((reason: Error) => this.setState({possibleError: reason?.message}))
-            .finally(() => this.setState({isLoading:false}))
+            .catch((reason: Error) => this.setState({ possibleError: reason?.message }))
+            .finally(() => this.setState({ isLoading: false }))
     }
 
     isValidURL(url: string): boolean {
@@ -89,8 +89,8 @@ class NewRssFeed extends React.Component<NewRssFeedProps, NewRssFeedState> {
             this.setState({
                 foundFeed: {
                     feed: feedResponse.feed,
-                    user_is_subscribed: true
-                }
+                    user_is_subscribed: true,
+                },
             })
         }
     }
@@ -101,59 +101,72 @@ class NewRssFeed extends React.Component<NewRssFeedProps, NewRssFeedState> {
             this.setState({
                 foundFeed: {
                     feed: feedResponse.feed,
-                    user_is_subscribed: false
-                }
+                    user_is_subscribed: false,
+                },
             })
         }
     }
 
     render(): JSX.Element {
-        const {classes} = this.props
-        return <Grid container>
+        const { classes } = this.props
+        return (
             <Grid container>
-                <Grid item xs={9}>
-                    <TextField
-                        required
-                        id="url"
-                        name="url"
-                        label="Add new RSS-Feed url"
-                        fullWidth
-                        onChange={(event): void => this.setState({newURL: event.currentTarget.value})}
-                    />
+                <Grid container>
+                    <Grid item xs={9}>
+                        <TextField
+                            required
+                            id="url"
+                            name="url"
+                            label="Add new RSS-Feed url"
+                            fullWidth
+                            onChange={(event): void => this.setState({ newURL: event.currentTarget.value })}
+                        />
+                    </Grid>
+                    {this.state.isLoading && <CircularProgress />}
+                    {!this.state.isLoading && (
+                        <Grid item xs={2}>
+                            <Button
+                                variant="contained"
+                                size="small"
+                                disabled={this.isValidURL(this.state.newURL) !== true}
+                                className={classes.button}
+                                onClick={this.checkNewRssURL}
+                            >
+                                <InsertLink />
+                                Check
+                            </Button>
+                        </Grid>
+                    )}
                 </Grid>
-                {this.state.isLoading && <CircularProgress />}
-                {!this.state.isLoading && <Grid item xs={2}>
-                    <Button variant="contained"
-                            size="small"
-                            disabled={this.isValidURL(this.state.newURL) !== true}
-                            className={classes.button}
-                            onClick={this.checkNewRssURL}>
-                        <InsertLink/>
-                        Check
-                    </Button>
-                </Grid>}
+
+                {this.state.possibleError && (
+                    <Grid container className={classes.errorPanel}>
+                        <Grid item xs={8}>
+                            <Typography variant="subtitle1">Something went wrong with {this.state.newURL}.</Typography>
+                            <Typography variant="subtitle2">{this.state.possibleError}</Typography>
+                        </Grid>
+                    </Grid>
+                )}
+
+                {this.state.foundFeed && (
+                    <Grid container className={classes.foundPanel}>
+                        <Grid item xs={12} className={classes.foundPanelItem}>
+                            <ImageAndTitle feed={this.state.foundFeed.feed} />
+                        </Grid>
+                        <Grid item xs={12} className={classes.foundPanelItem}>
+                            {this.state.foundFeed.feed.description}
+                        </Grid>
+                        <Grid item xs={2} className={classes.foundPanelItem}>
+                            <SubscribeUnsubscribeButton
+                                feedResponse={this.state.foundFeed}
+                                subscribe_callback={(feedResponse): void => this.subscribeTo(feedResponse)}
+                                unsubscribe_callback={(feedResponse): void => this.unsubscribeFrom(feedResponse)}
+                            />
+                        </Grid>
+                    </Grid>
+                )}
             </Grid>
-
-            {this.state.possibleError && <Grid container className={classes.errorPanel}>
-                <Grid item xs={8}>
-                    <Typography variant="subtitle1">Something went wrong with {this.state.newURL}.</Typography>
-                    <Typography variant="subtitle2">{this.state.possibleError}</Typography>
-                </Grid>
-            </Grid> }
-
-            {this.state.foundFeed && <Grid container className={classes.foundPanel}>
-
-                <Grid item xs={12} className={classes.foundPanelItem}>
-                    <ImageAndTitle feed={this.state.foundFeed.feed} />
-                </Grid>
-                <Grid item xs={12} className={classes.foundPanelItem}>{this.state.foundFeed.feed.description}</Grid>
-                <Grid item xs={2} className={classes.foundPanelItem}>
-                    <SubscribeUnsubscribeButton feedResponse={this.state.foundFeed}
-                                                subscribe_callback={(feedResponse): void => this.subscribeTo(feedResponse)}
-                                                unsubscribe_callback={(feedResponse): void => this.unsubscribeFrom(feedResponse)} />
-                </Grid>
-            </Grid>}
-        </Grid>
+        )
     }
 }
 
