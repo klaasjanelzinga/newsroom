@@ -47,7 +47,7 @@ const styles = createStyles({
 })
 
 export interface NewsItemControl {
-    scrollEvent: () => void
+    scrollEvent: (top_threshold: number) => void
     openLink: () => void
     markAsRead: () => void
     isRead: () => boolean
@@ -124,11 +124,10 @@ class NewsItemNode extends React.Component<NewsItemProps> implements NewsItemCon
         this.setState({ isReadStateIsSent: newValue })
     }
 
-    scrollEvent = (): void => {
+    scrollEvent = (top_threshold: number): void => {
         if (this.element) {
             const rect = this.element.getBoundingClientRect()
-            console.log("rect", rect.bottom)
-            if (rect.bottom < 60) {
+            if (rect.bottom < top_threshold) {
                 this.markAsRead()
             }
         }
