@@ -110,7 +110,7 @@ def news_items_from_feed_items(feed_items: List[FeedItem], feed: Feed, user: Use
 domain_to_favicon_map = {
     "www.sikkom.nl": "https://www.sikkom.nl/wp-content/themes/sikkom-v3/img/favicon.ico",
     "www.gic.nl": "https://www.gic.nl/img/favicon.ico",
-    "www.rtvnoord.nl": "https://www.rtvnoord.nl/Content/Images/noord/favicon.ico",
+    "www.rtvnoord.nl": "https://www.rtvnoord.nl/Content/Images/noord/touch-icon-iphone.png",
     "www.filtergroningen.nl": "https://i1.wp.com/www.filtergroningen.nl/wp-content/uploads/2017/03/favicon.png?fit=32%2C32&#038;ssl=1",
     "www.tivolivredenburg.nl": "https://www.tivolivredenburg.nl/wp-content/themes/tivolivredenburg/favicon.ico",
     "www.vera-groningen.nl": "https://www.vera-groningen.nl/vera/assets/img/favicon.png",
