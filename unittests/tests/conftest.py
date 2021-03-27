@@ -1,8 +1,10 @@
 from typing import List
+from unittest.mock import Mock
 
 import pytest
 from faker import Faker
 
+import core_lib.app_config
 from api.security import TokenVerifier
 from core_lib import application_data
 from core_lib.application_data import Repositories, repositories
@@ -17,10 +19,8 @@ from core_lib.utils import bytes_to_str_base64
 from tests.mock_repositories import MockRepositories
 
 application_data.repositories = MockRepositories()
-application_data.token_secret_key = "junit-secret"
 
-if application_data.repositories is None:
-    print("Oeps")
+core_lib.app_config.AppConfig.token_secret_key = Mock(return_value="junit-test-token")
 
 
 def feed_factory(faker: Faker) -> Feed:

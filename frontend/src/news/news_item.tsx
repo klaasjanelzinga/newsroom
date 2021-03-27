@@ -153,7 +153,9 @@ class NewsItemNode extends React.Component<NewsItemProps> implements NewsItemCon
             <Grid
                 container
                 className={this.state.isRead ? classes.cardRead : classes.card}
-                ref={(t) => (this.element = t)}
+                ref={(t): void => {
+                    this.element = t
+                }}
             >
                 <Grid item xs={12} className={classes.cardTitle}>
                     <Link href={newsItem.link} className={classes.titleLink} target="_blank" rel="noopener">
