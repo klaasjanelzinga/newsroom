@@ -51,6 +51,7 @@ class NewsItemsNode extends React.Component<NewsItemsProps> implements NewsItems
     dynamicFetchClients: NewsItemDynamicFetchControl[] = []
     api: Api
     allDoneElement: Element | null = null
+    news_items_container: number | null = null
 
     constructor(props: NewsItemsProps) {
         super(props)
@@ -69,7 +70,7 @@ class NewsItemsNode extends React.Component<NewsItemsProps> implements NewsItems
     }
 
     onScroll = (): void => {
-        this.scrollEventClients.forEach((client) => client.scrollEvent())
+        this.scrollEventClients.forEach((client) => client.scrollEvent(this.news_items_container || 80))
 
         // Mark news-items that have isRead as is_read at the server.
         const newsItemIds = this.scrollEventClients
@@ -144,7 +145,15 @@ class NewsItemsNode extends React.Component<NewsItemsProps> implements NewsItems
     render(): JSX.Element {
         const { classes } = this.props
         return (
-            <div className={classes.newsItems} onScroll={this.onScrollDebounced}>
+            <div
+                className={classes.newsItems}
+                onScroll={this.onScrollDebounced}
+                ref={(t): void => {
+                    if (t) {
+                        this.news_items_container = t.getBoundingClientRect().top
+                    }
+                }}
+            >
                 {this.props.newsItems.length === 0 && (
                     <div className={classes.noNews}>
                         <Typography variant="h6">No news found !</Typography>
