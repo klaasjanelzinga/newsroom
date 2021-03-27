@@ -8,13 +8,13 @@
     # via -r requirements.in
 aiofiles==0.6.0
     # via -r requirements.in
-aiohttp==3.7.4
+aiohttp==3.7.4.post0
     # via -r requirements.in
 async-timeout==3.0.1
     # via aiohttp
 attrs==20.3.0
     # via aiohttp
-chardet==3.0.4
+chardet==4.0.0
     # via aiohttp
 click==7.1.2
     # via uvicorn
@@ -28,7 +28,7 @@ multidict==5.1.0
     # via
     #   aiohttp
     #   yarl
-pydantic==1.8
+pydantic==1.8.1
     # via
     #   -r requirements.in
     #   fastapi

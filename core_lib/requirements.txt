@@ -4,7 +4,7 @@
 #
 #    pip-compile requirements.in
 #
-aiohttp==3.7.4
+aiohttp==3.7.4.post0
     # via -r requirements.in
 async-timeout==3.0.1
     # via aiohttp
@@ -15,19 +15,21 @@ beautifulsoup4==4.9.3
 cachetools==4.2.1
     # via google-auth
 certifi==2020.12.5
-    # via requests
-chardet==3.0.4
+    # via
+    #   requests
+    #   sentry-sdk
+chardet==4.0.0
     # via
     #   aiohttp
     #   requests
 dateparser==1.0.0
     # via -r requirements.in
-google-api-core[grpc]==1.26.0
+google-api-core[grpc]==1.26.2
     # via
     #   -r requirements.in
     #   google-cloud-core
     #   google-cloud-datastore
-google-auth==1.27.0
+google-auth==1.28.0
     # via
     #   google-api-core
     #   google-cloud-core
@@ -39,7 +41,7 @@ google-cloud-datastore==2.1.0
     # via -r requirements.in
 googleapis-common-protos==1.53.0
     # via google-api-core
-grpcio==1.36.0
+grpcio==1.36.1
     # via
     #   -r requirements.in
     #   google-api-core
@@ -59,9 +61,9 @@ mypy-extensions==0.4.3
     # via typing-inspect
 packaging==20.9
     # via google-api-core
-proto-plus==1.14.2
+proto-plus==1.18.1
     # via google-cloud-datastore
-protobuf==3.15.3
+protobuf==3.15.6
     # via
     #   google-api-core
     #   googleapis-common-protos
@@ -72,7 +74,7 @@ pyasn1==0.4.8
     # via
     #   pyasn1-modules
     #   rsa
-pydantic==1.8
+pydantic==1.8.1
     # via -r requirements.in
 pyotp==2.6.0
     # via -r requirements.in
@@ -87,12 +89,14 @@ pytz==2021.1
     #   tzlocal
 pyyaml==5.4.1
     # via libcst
-regex==2020.11.13
+regex==2021.3.17
     # via dateparser
 requests==2.25.1
     # via google-api-core
 rsa==4.7.2
     # via google-auth
+sentry-sdk==1.0.0
+    # via -r requirements.in
 six==1.15.0
     # via
     #   google-api-core
@@ -101,7 +105,7 @@ six==1.15.0
     #   grpcio
     #   protobuf
     #   python-dateutil
-soupsieve==2.2
+soupsieve==2.2.1
     # via beautifulsoup4
 typing-extensions==3.7.4.3
     # via
@@ -113,8 +117,10 @@ typing-inspect==0.6.0
     # via libcst
 tzlocal==2.1
     # via dateparser
-urllib3==1.26.3
-    # via requests
+urllib3==1.26.4
+    # via
+    #   requests
+    #   sentry-sdk
 yarl==1.6.3
     # via aiohttp
 

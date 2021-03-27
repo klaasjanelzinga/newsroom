@@ -6,7 +6,7 @@ from fastapi import HTTPException
 
 from api.feed_api import get_all_feeds
 from api.user_api import sign_in_user, UserSignInRequest
-from core_lib.application_data import token_secret_key
+from core_lib.app_config import AppConfig
 from core_lib.repositories import User
 from tests.mock_repositories import MockRepositories
 
@@ -79,7 +79,7 @@ async def test_sign_in_tampered_token(
             "user_id": decoded.get("user_id"),
             "exp": datetime.utcnow() + timedelta(days=7),
         },
-        f"wrong-{token_secret_key}",
+        f"wrong-{AppConfig.token_secret_key()}",
         algorithm="HS256",
     )
     with pytest.raises(HTTPException) as http_exception:

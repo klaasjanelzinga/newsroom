@@ -7,3 +7,5 @@ aiohttp
 aiofiles
 pydantic
 pyjwt
+
+sentry-sdk

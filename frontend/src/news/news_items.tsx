@@ -161,7 +161,12 @@ class NewsItemsNode extends React.Component<NewsItemsProps> implements NewsItems
                     ))}
                 {this.props.newsItems.length > 0 && (
                     <div className={classes.scrollFiller}>
-                        <DoneAllIcon ref={(t) => (this.allDoneElement = t)} className={classes.scrollFillerIcon} />
+                        <DoneAllIcon
+                            ref={(t): void => {
+                                this.allDoneElement = t
+                            }}
+                            className={classes.scrollFillerIcon}
+                        />
                     </div>
                 )}
             </div>
