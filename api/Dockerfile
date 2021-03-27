@@ -13,6 +13,7 @@ RUN cd core_lib && pip install -r requirements.txt
 RUN cd api && pip install -r requirements.txt
 
 ENV TOKEN_SECRET=$TOKEN_SECRET
+ENV SENTRY_DSN=$SENTRY_DSN
 
 VOLUME [ "/usr/src/app" ]
 
