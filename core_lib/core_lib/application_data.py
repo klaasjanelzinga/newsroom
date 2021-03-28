@@ -9,6 +9,7 @@ from core_lib.repositories import (
     FeedItemRepository,
     FeedRepository,
     NewsItemRepository,
+    SavedNewsItemRepository,
     SubscriptionRepository,
     UserRepository,
 )
@@ -27,6 +28,7 @@ class Repositories:
         self.client = datastore.Client()
         self.user_repository = UserRepository(self.client)
         self.news_item_repository = NewsItemRepository(self.client)
+        self.saved_news_item_repository = SavedNewsItemRepository(self.client)
         self.feed_item_repository = FeedItemRepository(self.client)
         self.feed_repository = FeedRepository(self.client)
         self.subscription_repository = SubscriptionRepository(self.client)

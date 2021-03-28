@@ -1,7 +1,7 @@
 import * as React from "react"
 import { createStyles, Link, WithStyles, withStyles } from "@material-ui/core"
-import { NewsItem } from "../user/model"
 import Grid from "@material-ui/core/Grid"
+import { NewsItem } from "../news_room_api/news_item_api"
 
 const styles = createStyles({
     domainIcon: {

@@ -1,6 +1,5 @@
 import * as React from "react"
 import { createStyles, WithStyles, withStyles } from "@material-ui/core"
-import { NewsItem } from "../user/model"
 import NewsItemNode, { NewsItemControl, NewsItemDynamicFetchControl } from "./news_item"
 import { debounce } from "ts-debounce"
 import DoneAllIcon from "@material-ui/icons/DoneAll"
@@ -10,6 +9,7 @@ import { RouteComponentProps } from "react-router"
 import { withRouter } from "react-router-dom"
 import Typography from "@material-ui/core/Typography"
 import { WithAuthHandling, withAuthHandling } from "../WithAuthHandling"
+import { NewsItem } from "../news_room_api/news_item_api"
 
 const styles = createStyles({
     newsItems: {

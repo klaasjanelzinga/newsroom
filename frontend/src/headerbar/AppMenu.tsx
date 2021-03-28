@@ -43,6 +43,11 @@ class AppMenu extends React.Component<RouteComponentProps, AppMenuState> {
         this.props.history.push("/read-news")
     }
 
+    handleSavedItems = (): void => {
+        this.handleClose()
+        this.props.history.push("/saved-news")
+    }
+
     render(): JSX.Element {
         return (
             <div>
@@ -63,6 +68,7 @@ class AppMenu extends React.Component<RouteComponentProps, AppMenuState> {
                     onClose={this.handleClose}
                 >
                     <MenuItem onClick={this.handleNews}>News</MenuItem>
+                    <MenuItem onClick={this.handleSavedItems}>Saved news</MenuItem>
                     <MenuItem onClick={this.handleReadNews}>Old news</MenuItem>
                     <MenuItem onClick={this.handleManageSubscriptions}>Manage subscriptions</MenuItem>
                 </Menu>

@@ -5,12 +5,12 @@ import { withStyles } from "@material-ui/core/styles"
 import HeaderBar from "../headerbar/HeaderBar"
 import Header from "../user/header"
 import { withSnackbar, WithSnackbarProps } from "notistack"
-import { GetNewsItemsResponse, GetReadNewsItemsResponse, NewsItem } from "../user/model"
 import { Api } from "../Api"
 import NewsItems, { NewsItemsControl } from "./news_items"
 import NewsBar from "./news_bar"
 import LinearProgress from "@material-ui/core/LinearProgress"
 import { WithAuthHandling, withAuthHandling } from "../WithAuthHandling"
+import { GetNewsItemsResponse, GetReadNewsItemsResponse, NewsItem } from "../news_room_api/news_item_api"
 
 const styles = createStyles({
     newsRoot: {

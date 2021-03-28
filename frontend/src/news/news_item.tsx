@@ -1,10 +1,18 @@
 import * as React from "react"
-import { createStyles, Link, Typography, WithStyles, withStyles } from "@material-ui/core"
-import { NewsItem } from "../user/model"
+import { Button, createStyles, Link, Typography, WithStyles, withStyles } from "@material-ui/core"
 import Grid from "@material-ui/core/Grid"
 import Checkbox from "@material-ui/core/Checkbox"
 import FormControlLabel from "@material-ui/core/FormControlLabel"
 import AlternateLinks from "./alternate_links"
+import { NewsItem } from "../news_room_api/news_item_api"
+import RefreshIcon from "@material-ui/icons/Refresh"
+import { Star, StarBorderRounded, StarHalfOutlined, StarOutline, StarOutlined, StarSharp } from "@material-ui/icons"
+import { Api } from "../Api"
+import { withAuthHandling, WithAuthHandling } from "../WithAuthHandling"
+import { RouteComponentProps } from "react-router"
+import { withSnackbar, WithSnackbarProps } from "notistack"
+import { withRouter } from "react-router-dom"
+import { UpsertSavedNewsItemResponse } from "../news_room_api/saved_news_api"
 
 const styles = createStyles({
     header: {
@@ -44,6 +52,10 @@ const styles = createStyles({
     },
 
     itemControlBar: {},
+    savedIcon: {
+        color: "orange",
+    },
+    notSavedIcon: {},
 })
 
 export interface NewsItemControl {
@@ -62,7 +74,7 @@ export interface NewsItemDynamicFetchControl {
     isOutOfView: () => boolean
 }
 
-interface NewsItemProps extends WithStyles<typeof styles> {
+interface NewsItemProps extends WithAuthHandling, RouteComponentProps, WithSnackbarProps, WithStyles<typeof styles> {
     newsItem: NewsItem
     scrollEventRegistry: (newsItemControll: NewsItemControl) => void
     dynamicFetchRegistry: (newsItemDynamicFetchControl: NewsItemDynamicFetchControl) => void
@@ -71,6 +83,8 @@ interface NewsItemProps extends WithStyles<typeof styles> {
 interface NewsItemState {
     keepUnread: boolean
     isRead: boolean
+    isSaved: boolean
+    saved_news_item_id: string | null
     isReadStateIsSent: boolean
 }
 
@@ -79,8 +93,11 @@ class NewsItemNode extends React.Component<NewsItemProps> implements NewsItemCon
     state: NewsItemState = {
         keepUnread: false,
         isRead: false,
+        isSaved: this.props.newsItem.is_saved,
+        saved_news_item_id: this.props.newsItem.saved_news_item_id,
         isReadStateIsSent: false,
     }
+    api: Api
 
     constructor(props: NewsItemProps) {
         super(props)
@@ -88,6 +105,7 @@ class NewsItemNode extends React.Component<NewsItemProps> implements NewsItemCon
         this.props.scrollEventRegistry(this)
         this.props.dynamicFetchRegistry(this)
         this.state.isRead = props.newsItem.is_read
+        this.api = new Api(this.props)
     }
 
     isOutOfView(): boolean {
@@ -139,6 +157,25 @@ class NewsItemNode extends React.Component<NewsItemProps> implements NewsItemCon
         }
     }
 
+    toggleSavedItem(): void {
+        if (this.props.newsItem.is_saved) {
+            this.api
+                .delete(`/saved-news/${this.state.saved_news_item_id}`, JSON.stringify({}))
+                .catch((reason) => console.error(reason))
+        } else {
+            this.api
+                .post<UpsertSavedNewsItemResponse>(
+                    "/saved-news",
+                    JSON.stringify({ news_item_id: this.props.newsItem.news_item_id })
+                )
+                .then((response) => this.setState({ saved_news_item_id: response[1].saved_news_item_id }))
+                .catch((reason) => console.error(reason))
+        }
+
+        this.props.newsItem.is_saved = !this.props.newsItem.is_saved
+        this.setState({ isSaved: !this.state.isSaved })
+    }
+
     openLink(): void {
         document.open(this.props.newsItem.link, "_blank", "noopener")
     }
@@ -171,6 +208,9 @@ class NewsItemNode extends React.Component<NewsItemProps> implements NewsItemCon
                     </Typography>
                 </Grid>
                 <Grid item md={4} xs={12} className={classes.itemControlBar}>
+                    <Button size="small" variant="text" onClick={() => this.toggleSavedItem()}>
+                        <StarBorderRounded className={this.state.isSaved ? classes.savedIcon : classes.notSavedIcon} />
+                    </Button>
                     <FormControlLabel
                         control={
                             <Checkbox
@@ -192,4 +232,4 @@ class NewsItemNode extends React.Component<NewsItemProps> implements NewsItemCon
     }
 }
 
-export default withStyles(styles)(NewsItemNode)
+export default withStyles(styles)(withRouter(withSnackbar(withAuthHandling(NewsItemNode))))

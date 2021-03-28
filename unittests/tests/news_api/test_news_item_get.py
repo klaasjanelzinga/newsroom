@@ -1,33 +1,19 @@
 from random import choice
-from unittest.mock import MagicMock
 
 import pytest
 from faker import Faker
-from fastapi import Response
 
-from api.feed_api import subscribe_to_feed, fetch_feed_information_for_url
 from api.news_item_api import news_items, read_news_items, mark_as_read, MarkAsReadRequest
+from core_lib.repositories import User
 from tests.mock_repositories import MockRepositories
 
 
 @pytest.mark.asyncio
-async def test_get_news_items(repositories: MockRepositories, faker: Faker, user_bearer_token):
-    test_url = faker.url()
-
-    # Find the unknown feed. Should fetch 1 feed item.
-    repositories.mock_client_session_for_files(["sample-files/rss_feeds/pitchfork_best.xml"])
-    response = MagicMock(Response)
-    feed_response = await fetch_feed_information_for_url(response, test_url, authorization=user_bearer_token)
-    feed = feed_response.feed
-    assert repositories.feed_item_repository.count() == 25
-    assert feed_response is not None
-
-    # subscribe the user, there should be 20 news-items
-    response = await subscribe_to_feed(feed.feed_id, authorization=user_bearer_token)
-    assert repositories.news_item_repository.count() == 25
+async def test_get_news_items(
+    repositories: MockRepositories, faker: Faker, user_with_subscription_to_feed: User, user_bearer_token: str
+):
 
     # Nothing is read, all is unread.
-    just_some_news_item = None
     unread_response = await news_items(fetch_offset=None, authorization=user_bearer_token)
     assert unread_response.number_of_unread_items == 25
     assert len(unread_response.news_items) == 25
