@@ -1,9 +1,8 @@
-import { NewsItem } from "./news_item_api"
-
-export interface SavedNews {
+export interface SavedNewsItem {
     saved_news_item_id: string
     feed_id: string
     feed_item_id: string
+    news_item_id: string
 
     published: string
     title: string
@@ -17,22 +16,14 @@ export interface SavedNews {
     favicon: string
 
     is_read: boolean
+    is_saved: boolean
 }
 
 export interface UpsertSavedNewsItemResponse {
     saved_news_item_id: string
 }
 
-export class SavedNewsApi {
-    saved_news(): NewsItem[] {
-        return []
-    }
-
-    delete_saved_news_items(saved_news_item_ids: string[]): void {
-        // pass
-    }
-
-    save_news_item(news_item_id: string): void {
-        // pass
-    }
+export interface ScrollableItemsResponse<T> {
+    token: string
+    items: [T]
 }

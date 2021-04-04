@@ -3,7 +3,7 @@ import { createStyles, WithStyles, withStyles } from "@material-ui/core"
 import "./App.css"
 import { withSnackbar, WithSnackbarProps } from "notistack"
 import { RouteComponentProps } from "react-router"
-import News, { NewsVariant } from "./news/news"
+import News from "./news/unread_news/news"
 import { withRouter } from "react-router-dom"
 import { WithAuthHandling, withAuthHandling } from "./WithAuthHandling"
 
@@ -15,7 +15,7 @@ class App extends React.Component<AppProps> {
     render(): JSX.Element {
         return (
             <div>
-                <News variant={NewsVariant.NEWS} />
+                <News />
             </div>
         )
     }

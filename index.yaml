@@ -7,3 +7,9 @@ indexes:
   - name: published
     direction: desc
 
+- kind: SavedNewsItem
+  properties:
+  - name: user_id
+  - name: saved_on
+    direction: desc
+

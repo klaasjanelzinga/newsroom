@@ -15,7 +15,9 @@ const styles = createStyles({
 })
 
 interface AlternateLinksProps extends WithStyles<typeof styles> {
-    newsItem: NewsItem
+    alternate_links: string[]
+    alternate_favicons: string[]
+    alternate_title_links: string[]
 }
 
 class AlternateLinks extends React.Component<AlternateLinksProps> {
@@ -23,19 +25,18 @@ class AlternateLinks extends React.Component<AlternateLinksProps> {
 
     render(): JSX.Element[] {
         const { classes } = this.props
-        const newsItem = this.props.newsItem
-        return newsItem.alternate_links.map((alternate_link, index) => {
+        return this.props.alternate_links.map((alternate_link, index) => {
             const url = new URL(alternate_link)
             const domain = url.hostname
             return (
                 <Grid item xs={12} key={index}>
                     <Link href={alternate_link} className={classes.linkText} target="_blank" rel="noopener">
                         <img
-                            src={newsItem.alternate_favicons[index]}
+                            src={this.props.alternate_favicons[index]}
                             className={classes.domainIcon}
                             alt={`[${domain}]`}
                         />
-                        {newsItem.alternate_title_links[index]}
+                        {this.props.alternate_title_links[index]}
                     </Link>
                 </Grid>
             )

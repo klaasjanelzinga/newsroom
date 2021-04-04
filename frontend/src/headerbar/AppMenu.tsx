@@ -40,7 +40,7 @@ class AppMenu extends React.Component<RouteComponentProps, AppMenuState> {
 
     handleReadNews = (): void => {
         this.handleClose()
-        this.props.history.push("/read-news")
+        this.props.history.push("/old-news")
     }
 
     handleSavedItems = (): void => {

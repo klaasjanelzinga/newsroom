@@ -1,4 +1,5 @@
 import React from "react"
+
 import { SnackbarProvider } from "notistack"
 import { BrowserRouter as Router, Route } from "react-router-dom"
 import ReactDOM from "react-dom"
@@ -11,10 +12,10 @@ import SignUp from "./user/signup"
 import TOTPVerification from "./user/totp_verification"
 import AuthenticationSettings from "./user/authentication_settings"
 import NeedsApproval from "./user/needs-approval"
-import SavedNews from "./news/saved_news"
+import SavedNews from "./news/saved_news/saved_news"
 import * as serviceWorker from "./serviceWorker"
 import ManageSubscriptions from "./user/manage_subscriptions/manage_subscriptions"
-import ReadNews from "./ReadNews"
+import OldNews from "./news/old_news/old_news"
 import { TokenBasedAuthenticator } from "./WithAuthHandling"
 
 export const AuthHandling = React.createContext(new TokenBasedAuthenticator())
@@ -23,7 +24,7 @@ ReactDOM.render(
     <Router>
         <SnackbarProvider maxSnack={3} autoHideDuration={2000} anchorOrigin={{ vertical: "top", horizontal: "right" }}>
             <Route exact path="/" component={App} />
-            <Route exact path="/read-news" component={ReadNews} />
+            <Route exact path="/old-news" component={OldNews} />
             <Route exact path="/saved-news" component={SavedNews} />
             <Route exact path="/user/signin" component={SignIn} />
             <Route exact path="/user/signout" component={SignOut} />

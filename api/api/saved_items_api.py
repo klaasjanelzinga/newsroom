@@ -28,23 +28,28 @@ class SaveNewsItemResponse(BaseModel):
     saved_news_item_id: str
 
 
+class ScrollableResult(BaseModel):
+    token: str
+    items: List
+
+
 @saved_news_router.get(
     "/saved-news",
     tags=["saved-news"],
-    response_model=SavedNewsItemsResponse,
+    response_model=ScrollableResult,
     responses={
-        HTTP_200_OK: {"model": SavedNewsItemsResponse, "description": "List is complete"},
+        HTTP_200_OK: {"model": ScrollableResult, "description": "List is complete"},
     },
 )
 async def get_saved_news_items(
     fetch_offset: str = None, authorization: Optional[str] = Header(None)
-) -> SavedNewsItemsResponse:
+) -> ScrollableResult:
     user = await security.get_approved_user(authorization)
 
     cursor = bytes(fetch_offset, "utf-8") if fetch_offset is not None else None
     token, result = fetch_saved_news_item_for_user(user=user, cursor=cursor)
 
-    return SavedNewsItemsResponse(saved_news=result, token=token)
+    return ScrollableResult(items=result, token=token)
 
 
 @saved_news_router.post(
