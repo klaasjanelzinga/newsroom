@@ -13,7 +13,7 @@ import NewsItemView from "./news_item_view"
 import NewsBar from "../news_bar"
 import { GetNewsItemsResponse, NewsItem } from "../../news_room_api/news_item_api"
 import { Observable } from "rxjs"
-import { ReactComponentElement } from "react"
+import { debounce, debounceTime } from "rxjs/operators"
 
 const styles = createStyles({
     newsRoot: {
@@ -93,7 +93,7 @@ class News extends React.Component<NewsProps, NewsState> {
 
     on_scroll(on_scroll$: Observable<Event>): void {
         /* Mark scrolled out of view items as read */
-        on_scroll$.subscribe(() => {
+        on_scroll$.pipe(debounceTime(1000)).subscribe(() => {
             /* -- get news items ids and post to api */
             const news_item_ids = this.scrollable_view_items
                 .filter((item) => item.keep_unread && !item.keep_unread())

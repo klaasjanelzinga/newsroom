@@ -62,15 +62,15 @@ async def test_save_fetch_and_remove_from_saved(
 
     get_response = await get_saved_news_items(None, user_bearer_token)
     assert get_response.token is not None
-    assert len(get_response.saved_news) == 1
+    assert len(get_response.items) == 1
     assert repositories.saved_news_item_repository.count() == 1
-    assert get_response.saved_news[0].saved_news_item_id == saved_news_item_id
+    assert get_response.items[0].saved_news_item_id == saved_news_item_id
 
     await delete_saved_news_item(saved_news_item_id, user_bearer_token)
 
     get_response = await get_saved_news_items(None, user_bearer_token)
     assert get_response.token is not None
-    assert len(get_response.saved_news) == 0
+    assert len(get_response.items) == 0
     assert repositories.saved_news_item_repository.count() == 0
     assert not repositories.news_item_repository.fetch_by_id(news_item_id).is_saved
     assert repositories.news_item_repository.fetch_by_id(news_item_id).saved_news_item_id is None
