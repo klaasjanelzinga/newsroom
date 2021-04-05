@@ -1,13 +1,19 @@
 from typing import List
-from unittest.mock import Mock
-
+from unittest.mock import Mock, MagicMock
 import pytest
 from faker import Faker
+from starlette.responses import Response
 
 import core_lib.app_config
 from api.security import TokenVerifier
 from core_lib import application_data
-from core_lib.application_data import Repositories, repositories
+from core_lib.application_data import Repositories
+from tests.mock_repositories import MockRepositories
+
+application_data.repositories = MockRepositories()
+core_lib.app_config.AppConfig.token_secret_key = Mock(return_value="junit-test-token")
+
+from api.feed_api import fetch_feed_information_for_url, subscribe_to_feed
 from core_lib.repositories import (
     User,
     Feed,
@@ -16,11 +22,6 @@ from core_lib.repositories import (
 )
 from core_lib.user import _generate_salt, _generate_hash
 from core_lib.utils import bytes_to_str_base64
-from tests.mock_repositories import MockRepositories
-
-application_data.repositories = MockRepositories()
-
-core_lib.app_config.AppConfig.token_secret_key = Mock(return_value="junit-test-token")
 
 
 def feed_factory(faker: Faker) -> Feed:
@@ -110,3 +111,24 @@ def subscription(repositories: Repositories, user: User, feed: Feed) -> Subscrip
     repositories.feed_repository.upsert(feed)
     repositories.user_repository.upsert(user)
     return repositories.subscription_repository.upsert(Subscription(user_id=user.user_id, feed_id=feed.feed_id))
+
+
+@pytest.fixture
+async def user_with_subscription_to_feed(
+    repositories: MockRepositories, faker: Faker, user: User, user_bearer_token: str
+) -> User:
+    test_url = faker.url()
+
+    # Find the unknown feed. Should fetch 1 feed item.
+    repositories.mock_client_session_for_files(["sample-files/rss_feeds/pitchfork_best.xml"])
+    response = MagicMock(Response)
+    feed_response = await fetch_feed_information_for_url(response, test_url, authorization=user_bearer_token)
+    feed = feed_response.feed
+    assert repositories.feed_item_repository.count() == 25
+    assert feed_response is not None
+
+    # subscribe the user, there should be 25 news-items
+    await subscribe_to_feed(feed.feed_id, authorization=user_bearer_token)
+    assert repositories.news_item_repository.count() == 25
+
+    return user

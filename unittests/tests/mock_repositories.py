@@ -6,7 +6,7 @@ from aiohttp import ClientSession, ClientResponse
 from google.cloud.datastore import Client
 
 from core_lib.gemeente_groningen import feed_gemeente_groningen
-from core_lib.repositories import Feed, Subscription, User, FeedItem, NewsItem, Avatar
+from core_lib.repositories import Feed, Subscription, User, FeedItem, NewsItem, Avatar, SavedNewsItem
 
 logging.basicConfig(level=logging.INFO)
 log = logging.getLogger(__file__)
@@ -98,6 +98,11 @@ class NewsItemRepository:
     def count(self) -> int:
         return len(self.store)
 
+    def fetch_by_id(self, news_item_id: str) -> NewsItem:
+        if news_item_id not in self.store:
+            raise Exception()
+        return self.store[news_item_id]
+
     def fetch_all_non_read_for_feed(self, feed: Feed, user: User) -> List[NewsItem]:
         return [
             news_item
@@ -109,6 +114,10 @@ class NewsItemRepository:
         for news_item in news_items:
             self.store[news_item.news_item_id] = news_item
         return news_items
+
+    def upsert(self, news_item: NewsItem) -> NewsItem:
+        self.store[news_item.news_item_id] = news_item
+        return news_item
 
     def delete_user_feed(self, user: User, feed: Feed) -> int:
         keys = [
@@ -138,6 +147,32 @@ class NewsItemRepository:
         for key in news_item_ids:
             if self.store[key].user_id == user.user_id:
                 self.store[key].is_read = True
+
+
+class SavedNewsItemRepository:
+    def __init__(self):
+        self.store: Dict[str, SavedNewsItem] = {}
+
+    def reset(self):
+        self.store = {}
+
+    def count(self) -> int:
+        return len(self.store)
+
+    def upsert(self, saved_news_item: SavedNewsItem) -> SavedNewsItem:
+        self.store[saved_news_item.saved_news_item_id] = saved_news_item
+        return saved_news_item
+
+    def fetch_items(
+        self, user: User, cursor: Optional[bytes], limit: Optional[int] = 15
+    ) -> Tuple[str, List[SavedNewsItem]]:
+        return "token", [saved_item for saved_item in self.store.values() if saved_item.user_id == user.user_id]
+
+    def delete_saved_news_item(self, saved_news_item_id: str, user: User) -> None:
+        del self.store[saved_news_item_id]
+
+    def fetch_by_id(self, saved_news_item_id: str) -> Optional[SavedNewsItem]:
+        return self.store.get(saved_news_item_id)
 
 
 class UserRepository:
@@ -186,6 +221,7 @@ class MockRepositories:
         self.client = MagicMock(Client)
         self.user_repository = UserRepository()
         self.news_item_repository = NewsItemRepository()
+        self.saved_news_item_repository = SavedNewsItemRepository()
         self.feed_item_repository = FeedItemRepository()
         self.feed_repository = FeedRepository()
         self.subscription_repository = SubscriptionRepository()
@@ -212,6 +248,7 @@ class MockRepositories:
     def reset(self):
         self.user_repository.reset()
         self.news_item_repository.reset()
+        self.saved_news_item_repository.reset()
         self.feed_repository.reset()
         self.feed_item_repository.reset()
         self.subscription_repository.reset()

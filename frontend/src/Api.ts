@@ -54,4 +54,14 @@ export class Api {
         })
         return [response.status, await this._parseResponse(response)]
     }
+
+    async delete<T>(endpoint: string, body: string | null = null): Promise<[number, T]> {
+        const url = `${config.apihost}${endpoint}`
+        const response = await fetch(url, {
+            headers: this.authHandling.secure_headers(),
+            method: "DELETE",
+            body: body,
+        })
+        return [response.status, await this._parseResponse(response)]
+    }
 }

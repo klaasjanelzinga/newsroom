@@ -121,6 +121,8 @@ class NewsItem(BaseModel):  # pylint: disable=too-few-public-methods
 
     created_on: datetime = now_in_utc()
     is_read: bool = False
+    is_saved: bool = False
+    saved_news_item_id: Optional[str] = None
 
     def append_alternate(self, link: str, title: str, icon_link: str) -> None:
         """ Append an alternate source for the news. Only appended if not yet present. """
@@ -129,6 +131,65 @@ class NewsItem(BaseModel):  # pylint: disable=too-few-public-methods
             self.alternate_title_links.append(title)
             self.alternate_links.append(link)
             self.alternate_favicons.append(icon_link)
+
+
+class SavedNewsItem(BaseModel):
+    saved_news_item_id: str = Field(default_factory=uuid4_str)
+
+    feed_id: str
+    user_id: str
+    feed_item_id: str
+    news_item_id: str
+
+    feed_title: str
+    title: str
+    description: str
+    link: str
+    published: datetime
+    alternate_links: List[str] = Field(default_factory=list)
+    alternate_title_links: List[str] = Field(default_factory=list)
+    alternate_favicons: List[str] = Field(default_factory=list)
+    favicon: Optional[str]
+
+    created_on: datetime
+    saved_on: datetime = now_in_utc()
+
+
+class SavedNewsItemRepository:
+    def __init__(self, client: Client):
+        self.client = client
+
+    def fetch_items(
+        self, user: User, cursor: Optional[bytes], limit: Optional[int] = 15
+    ) -> Tuple[str, List[SavedNewsItem]]:
+        google_cursor = create_cursor(earlier_cursor=cursor)
+        if google_cursor is not None and google_cursor.decode("utf-8") == "DONE":
+            return base64.encodebytes(b"DONE").decode("utf-8"), []
+        query = self.client.query(kind="SavedNewsItem")
+        query.add_filter("user_id", "=", user.user_id)
+        query.order = ["-saved_on"]
+
+        token, entities = token_and_entities_for_query(cursor=google_cursor, query=query, limit=limit)
+        return token, [SavedNewsItem.parse_obj(entity) for entity in entities]
+
+    def upsert(self, saved_news_item: SavedNewsItem) -> SavedNewsItem:
+        entity = datastore.Entity(self.client.key("SavedNewsItem", saved_news_item.saved_news_item_id))
+        entity.update(saved_news_item.dict())
+        self.client.put(entity)
+        return SavedNewsItem.parse_obj(entity)
+
+    def delete_saved_news_item(self, saved_news_item_id: str, user: User) -> None:
+        key = self.client.key("SavedNewsItem", saved_news_item_id)
+        data = self.client.get(key)
+        if data["user_id"] == user.user_id:
+            self.client.delete(data)
+
+    def fetch_by_id(self, saved_news_item_id: str) -> Optional[SavedNewsItem]:
+        key = self.client.key("SavedNewsItem", saved_news_item_id)
+        data = self.client.get(key)
+        if data is None:
+            return None
+        return SavedNewsItem.parse_obj(data)
 
 
 class FeedRepository:
@@ -239,6 +300,12 @@ class NewsItemRepository:
         self.client.put_multi(entities)
         return [NewsItem.parse_obj(entity) for entity in entities]
 
+    def upsert(self, news_item: NewsItem) -> NewsItem:
+        entity = datastore.Entity(self.client.key("NewsItem", news_item.news_item_id))
+        entity.update(news_item.dict())
+        self.client.put(entity)
+        return NewsItem.parse_obj(entity)
+
     def delete_user_feed(self, user: User, feed: Feed) -> int:
         query = self.client.query(kind="NewsItem")
         query.add_filter("user_id", "=", user.user_id)
@@ -273,6 +340,13 @@ class NewsItemRepository:
 
         token, entities = token_and_entities_for_query(cursor=google_cursor, query=query, limit=limit)
         return token, [NewsItem.parse_obj(entity) for entity in entities]
+
+    def fetch_by_id(self, news_item_id: str) -> Optional[NewsItem]:
+        key = self.client.key("NewsItem", news_item_id)
+        data = self.client.get(key)
+        if data is None:
+            return None
+        return NewsItem.parse_obj(data)
 
     def fetch_all_non_read_for_feed(self, feed: Feed, user: User) -> List[NewsItem]:
         query = self.client.query(kind="NewsItem")
