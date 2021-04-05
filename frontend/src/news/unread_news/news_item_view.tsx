@@ -12,7 +12,7 @@ import { RouteComponentProps } from "react-router"
 import { withSnackbar, WithSnackbarProps } from "notistack"
 import { withRouter } from "react-router-dom"
 import { UpsertSavedNewsItemResponse } from "../../news_room_api/saved_news_api"
-import { ScrollableItem } from "../scrollable_items"
+import { MarkAsReadItem, ScrollableItem } from "../scrollable_items"
 
 const styles = createStyles({
     header: {
@@ -65,25 +65,24 @@ interface NewsItemViewProps
         WithStyles<typeof styles> {
     news_item: NewsItem
     register_scrollable_item: (scrollable_item: ScrollableItem) => void
+    register_mark_as_read_item?: (mark_as_read_item: MarkAsReadItem) => void
 }
 
 interface NewsItemViewState {
     is_read: boolean
     is_saved: boolean
     saved_news_item_id: string | null
-    is_read_state_sent: boolean
     news_item: NewsItem
     keep_unread: boolean
 }
 
-class NewsItemView extends React.Component<NewsItemViewProps> implements ScrollableItem {
+class NewsItemView extends React.Component<NewsItemViewProps> implements ScrollableItem, MarkAsReadItem {
     element: Element | null = null
     state: NewsItemViewState = {
         is_read: false,
         keep_unread: false,
         is_saved: this.props.news_item.is_saved,
         saved_news_item_id: this.props.news_item.saved_news_item_id,
-        is_read_state_sent: false,
         news_item: this.props.news_item,
     }
 
@@ -93,13 +92,36 @@ class NewsItemView extends React.Component<NewsItemViewProps> implements Scrolla
         super(props)
         this.api = new Api(this.props)
         this.props.register_scrollable_item(this)
+        if (this.props.register_mark_as_read_item) {
+            this.props.register_mark_as_read_item(this)
+        }
     }
 
-    /* Scrollable Item methods */
-    is_below_view(): boolean {
-        return false
+    /**********
+     * MarkAsReadItem methods
+     **********/
+    must_be_marked_as_read(): MarkAsReadItem | null {
+        if (this.state.is_read || this.state.keep_unread) {
+            return null
+        }
+        if (this.scrolled_out_of_view()) {
+            return this
+        }
+        return null
     }
 
+    confirm_marked_as_read(): void {
+        this.props.news_item.is_read = true
+        this.setState({ is_read: true })
+    }
+
+    item_id(): string {
+        return this.props.news_item.news_item_id
+    }
+
+    /**********
+     * ScrollableItem methods
+     ***********/
     reportYPosition(): number {
         return this.element?.getBoundingClientRect().y || -1
     }
@@ -117,18 +139,6 @@ class NewsItemView extends React.Component<NewsItemViewProps> implements Scrolla
             return this.element.getBoundingClientRect().y < 10
         }
         return false
-    }
-
-    item_id(): string {
-        return this.props.news_item.news_item_id
-    }
-
-    out_of_view_scroll_confirmed(): void {
-        this.setState({ is_read: true })
-    }
-
-    keep_unread(): boolean {
-        return this.state.keep_unread
     }
 
     toggle_saved_item(): void {

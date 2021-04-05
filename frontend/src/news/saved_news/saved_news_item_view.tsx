@@ -33,7 +33,7 @@ const styles = createStyles({
     },
     cardTitle: {
         paddingTop: "3px",
-        paddingBNottom: "4px",
+        paddingBottom: "4px",
     },
     titleLink: {
         "&:visited": {
@@ -85,11 +85,6 @@ class SavedNewsItemView extends React.Component<SavedNewsItemProps, SavedNewsIte
     }
 
     /* Scrollable Item methods */
-
-    is_below_view(): boolean {
-        return false
-    }
-
     reportYPosition(): number {
         return this.element?.getBoundingClientRect().y || -1
     }
@@ -98,19 +93,8 @@ class SavedNewsItemView extends React.Component<SavedNewsItemProps, SavedNewsIte
         this.element?.scrollIntoView()
     }
 
-    open_item() {
+    open_item(): void {
         document.open(this.props.saved_news_item.link, "_blank", "noopener")
-    }
-
-    scrolled_out_of_view(): boolean {
-        if (this.element) {
-            return this.element.getBoundingClientRect().y < 0
-        }
-        return false
-    }
-
-    item_id(): string {
-        return this.props.saved_news_item.saved_news_item_id
     }
 
     toggleSavedItem(): void {
@@ -159,7 +143,7 @@ class SavedNewsItemView extends React.Component<SavedNewsItemProps, SavedNewsIte
                     </Typography>
                 </Grid>
                 <Grid item md={4} xs={12} className={classes.itemControlBar}>
-                    <Button size="small" variant="text" onClick={() => this.toggleSavedItem()}>
+                    <Button size="small" variant="text" onClick={(): void => this.toggleSavedItem()}>
                         <StarBorderRounded className={this.state.is_saved ? classes.savedIcon : classes.notSavedIcon} />
                     </Button>
                 </Grid>

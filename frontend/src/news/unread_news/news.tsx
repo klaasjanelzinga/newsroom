@@ -8,12 +8,12 @@ import HeaderBar from "../../headerbar/HeaderBar"
 import Header from "../../user/header"
 import LinearProgress from "@material-ui/core/LinearProgress"
 import { Api } from "../../Api"
-import ScrollableItems, { ItemControl, ScrollableItem } from "../scrollable_items"
+import ScrollableItems, { ItemControl, MarkAsReadItem, ScrollableItem } from "../scrollable_items"
 import NewsItemView from "./news_item_view"
 import NewsBar from "../news_bar"
 import { GetNewsItemsResponse, NewsItem } from "../../news_room_api/news_item_api"
 import { Observable } from "rxjs"
-import { debounce, debounceTime } from "rxjs/operators"
+import { debounceTime } from "rxjs/operators"
 
 const styles = createStyles({
     newsRoot: {
@@ -41,7 +41,7 @@ class News extends React.Component<NewsProps, NewsState> {
     token: string | null = null
     item_control: ItemControl | null = null
     scrollable_view_items: ScrollableItem[] = []
-    is_loading = false
+    mark_as_read_items: MarkAsReadItem[] = []
     no_more_items = false
 
     state: NewsState = {
@@ -62,11 +62,11 @@ class News extends React.Component<NewsProps, NewsState> {
     }
 
     fetch_news_items(): void {
-        if (this.is_loading || this.no_more_items) {
+        if (this.state.is_loading || this.no_more_items) {
             return
         }
 
-        this.is_loading = true
+        this.setState({ is_loading: true })
         const endpoint_with_token = this.token ? `/news-items?fetch_offset=${this.token}` : "/news-items"
         this.api
             .get<GetNewsItemsResponse>(endpoint_with_token)
@@ -81,46 +81,34 @@ class News extends React.Component<NewsProps, NewsState> {
             })
             .catch((reason: Error) => this.setState({ error: reason.message }))
             .finally(() => {
-                this.is_loading = false
+                this.setState({ is_loading: false })
             })
     }
 
     refresh(): void {
         this.setState({ news_items: [] })
         this.token = null
+        this.no_more_items = false
         this.fetch_news_items()
     }
 
     on_scroll(on_scroll$: Observable<Event>): void {
         /* Mark scrolled out of view items as read */
-        on_scroll$.pipe(debounceTime(1000)).subscribe(() => {
-            /* -- get news items ids and post to api */
-            const news_item_ids = this.scrollable_view_items
-                .filter((item) => item.keep_unread && !item.keep_unread())
-                .filter((item) => item.scrolled_out_of_view())
-                .map((item) => this.state.news_items.find((news_item) => news_item.news_item_id === item.item_id()))
-                .filter((item) => item && !item.is_read)
-                .map((item) => item?.news_item_id)
-            if (news_item_ids.length > 0) {
+        on_scroll$.pipe(debounceTime(1000)).subscribe((): void => {
+            const mark_as_read_items = this.mark_as_read_items
+                .map((mark_as_read) => mark_as_read.must_be_marked_as_read())
+                .filter((mark_as_read) => mark_as_read != null)
+            if (mark_as_read_items.length > 0) {
                 this.api
-                    .post("/news-items/mark-as-read", JSON.stringify({ news_item_ids: news_item_ids }))
+                    .post(
+                        "/news-items/mark-as-read",
+                        JSON.stringify({ news_item_ids: mark_as_read_items.map((item) => item?.item_id()) })
+                    )
                     .then(() => {
-                        /* Mark items as read in news_items. */
-                        this.state.news_items
-                            .filter((item) => news_item_ids.includes(item.news_item_id))
-                            .forEach((item) => (item.is_read = true))
+                        mark_as_read_items.forEach((item) => item?.confirm_marked_as_read())
                         this.setState({
-                            number_of_unread_items: this.state.number_of_unread_items - news_item_ids.length,
+                            number_of_unread_items: this.state.number_of_unread_items - mark_as_read_items.length,
                         })
-
-                        /* Mark scrollable item as confirmed out of view */
-                        this.scrollable_view_items
-                            .filter((item) => news_item_ids.includes(item.item_id()))
-                            .forEach((item) => {
-                                if (item.out_of_view_scroll_confirmed) {
-                                    item.out_of_view_scroll_confirmed()
-                                }
-                            })
                     })
                     .catch((reason) => console.error(reason))
             }
@@ -137,6 +125,10 @@ class News extends React.Component<NewsProps, NewsState> {
 
     register_scrollable_item(scrollable_item: ScrollableItem): void {
         this.scrollable_view_items.push(scrollable_item)
+    }
+
+    register_mark_as_read(mark_as_read_item: MarkAsReadItem): void {
+        this.mark_as_read_items.push(mark_as_read_item)
     }
 
     render(): JSX.Element {
@@ -160,6 +152,7 @@ class News extends React.Component<NewsProps, NewsState> {
                         }}
                         scrollable_items={(): ScrollableItem[] => this.scrollable_view_items}
                         refresh={(): void => this.refresh()}
+                        is_loading={this.state.is_loading}
                         on_scroll={(on_scroll$: Observable<Event>): void => this.on_scroll(on_scroll$)}
                     >
                         {this.state.news_items.map((news_item) => {
@@ -167,6 +160,7 @@ class News extends React.Component<NewsProps, NewsState> {
                                 <NewsItemView
                                     key={news_item.news_item_id}
                                     news_item={news_item}
+                                    register_mark_as_read_item={(item): void => this.register_mark_as_read(item)}
                                     register_scrollable_item={(item): void => this.register_scrollable_item(item)}
                                 />
                             )

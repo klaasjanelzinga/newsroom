@@ -40,7 +40,6 @@ class OldNews extends React.Component<OldNewsProps, OldNewsState> {
     token: string | null = null
     item_control: ItemControl | null = null
     scrollable_view_items: ScrollableItem[] = []
-    is_loading = false
     no_more_items = false
 
     state: OldNewsState = {
@@ -61,11 +60,11 @@ class OldNews extends React.Component<OldNewsProps, OldNewsState> {
     }
 
     fetch_news_items(): void {
-        if (this.is_loading || this.no_more_items) {
+        if (this.state.is_loading || this.no_more_items) {
             return
         }
 
-        this.is_loading = true
+        this.setState({ is_loading: true })
         const endpoint_with_token = this.token ? `/news-items/read?fetch_offset=${this.token}` : "/news-items"
         this.api
             .get<GetNewsItemsResponse>(endpoint_with_token)
@@ -80,7 +79,7 @@ class OldNews extends React.Component<OldNewsProps, OldNewsState> {
             })
             .catch((reason: Error) => this.setState({ error: reason.message }))
             .finally(() => {
-                this.is_loading = false
+                this.setState({ is_loading: false })
             })
     }
 
@@ -125,6 +124,7 @@ class OldNews extends React.Component<OldNewsProps, OldNewsState> {
                         }}
                         scrollable_items={(): ScrollableItem[] => this.scrollable_view_items}
                         refresh={(): void => this.refresh()}
+                        is_loading={this.state.is_loading}
                         on_scroll={(on_scroll$: Observable<Event>): void => this.on_scroll(on_scroll$)}
                     >
                         {this.state.news_items.map((news_item) => {

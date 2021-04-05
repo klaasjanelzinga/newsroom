@@ -1,13 +1,12 @@
 import * as React from "react"
 import { createStyles, WithStyles, withStyles } from "@material-ui/core"
-import DoneAllIcon from "@material-ui/icons/DoneAll"
 import { withSnackbar, WithSnackbarProps } from "notistack"
 import { RouteComponentProps } from "react-router"
 import { withRouter } from "react-router-dom"
-import Typography from "@material-ui/core/Typography"
 import { WithAuthHandling, withAuthHandling } from "../WithAuthHandling"
 import { fromEvent, Observable } from "rxjs"
 import { debounceTime, filter } from "rxjs/operators"
+import LinearProgress from "@material-ui/core/LinearProgress"
 
 const styles = createStyles({
     newsItems: {
@@ -25,17 +24,21 @@ const styles = createStyles({
         height: 160,
         width: 100,
     },
+    endImage: {
+        width: "100%",
+    },
 })
 
 export interface ScrollableItem {
     reportYPosition: () => number
-    is_below_view: () => boolean | null
-    scrolled_out_of_view: () => boolean
     scroll_to_top: () => void
     open_item: () => void
+}
+
+export interface MarkAsReadItem {
+    must_be_marked_as_read: () => MarkAsReadItem | null
+    confirm_marked_as_read: () => void
     item_id: () => string
-    out_of_view_scroll_confirmed?: () => void
-    keep_unread?: () => boolean
 }
 
 interface ScrollableItemsProps
@@ -47,6 +50,7 @@ interface ScrollableItemsProps
     scrollable_items: () => ScrollableItem[]
     refresh: () => void
     on_scroll?: (on_scroll$: Observable<Event>) => void
+    is_loading: boolean
 }
 
 export interface ItemControl {
@@ -123,17 +127,22 @@ class ScrollableItems extends React.Component<ScrollableItemsProps> implements I
                     this.items_container = t
                 }}
             >
-                {children?.length === 0 && (
-                    <div className={classes.noNews}>
-                        <Typography variant="h6">Nothing here</Typography>
-                    </div>
+                {!this.props.is_loading && (
+                    <span>
+                        {children?.length === 0 && (
+                            <div className={classes.noNews}>
+                                <img src={"/nothing-here.gif"} alt={"Nothing here..."} />
+                            </div>
+                        )}
+                        {this.props.children}
+                        {children?.length > 0 && (
+                            <div className={classes.scrollFiller}>
+                                <img className={classes.endImage} src={"/thats-all-folks.gif"} alt={"That was all"} />
+                            </div>
+                        )}
+                    </span>
                 )}
-                {this.props.children}
-                {children?.length > 0 && (
-                    <div className={classes.scrollFiller}>
-                        <DoneAllIcon className={classes.scrollFillerIcon} />
-                    </div>
-                )}
+                {this.props.is_loading && <LinearProgress />}
             </div>
         )
     }

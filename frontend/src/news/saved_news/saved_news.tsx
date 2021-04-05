@@ -30,7 +30,6 @@ interface SavedNewsProps extends RouteComponentProps, WithAuthHandling, WithSnac
 interface SavedNewsState {
     saved_news_items: SavedNewsItem[]
     is_loading: boolean
-    is_loading_more_items: boolean
     no_more_items: boolean
     error: string | null
 }
@@ -44,7 +43,6 @@ class SavedNews extends React.Component<SavedNewsProps, SavedNewsState> {
     state: SavedNewsState = {
         saved_news_items: [],
         is_loading: false,
-        is_loading_more_items: false,
         no_more_items: false,
         error: null,
     }
@@ -60,6 +58,11 @@ class SavedNews extends React.Component<SavedNewsProps, SavedNewsState> {
     }
 
     fetch_saved_news_items(): void {
+        if (this.state.is_loading) {
+            return
+        }
+        this.setState({ is_loading: true })
+
         const endpoint = "/saved-news"
         const endpoint_with_token = this.token ? `${endpoint}?fetch_offset=${this.token}` : endpoint
         this.api
@@ -74,7 +77,7 @@ class SavedNews extends React.Component<SavedNewsProps, SavedNewsState> {
             })
             .catch((reason: Error) => this.setState({ error: reason.message }))
             .finally(() => {
-                this.setState({ is_loading: false, is_loading_more_items: false })
+                this.setState({ is_loading: false })
             })
     }
 
@@ -107,6 +110,7 @@ class SavedNews extends React.Component<SavedNewsProps, SavedNewsState> {
                             registerItemControl={(control: ItemControl): void => {
                                 this.item_control = control
                             }}
+                            is_loading={this.state.is_loading}
                             scrollable_items={(): ScrollableItem[] => this.scrollable_view_items}
                             refresh={(): void => this.refresh()}
                         >
