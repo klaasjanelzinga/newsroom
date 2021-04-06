@@ -30,6 +30,7 @@ const styles = createStyles({
     },
     nothingHereImage: {
         width: "63%",
+        marginBottom: "1200px",
     },
 })
 
@@ -140,12 +141,14 @@ class ScrollableItems extends React.Component<ScrollableItemsProps> implements I
                                     src={"/nothing-here.gif"}
                                     alt={"Nothing here..."}
                                 />
+                                <div>.</div>
                             </div>
                         )}
                         {this.props.children}
                         {children?.length > 0 && (
                             <div className={classes.scrollFiller}>
                                 <img className={classes.endImage} src={"/thats-all-folks.gif"} alt={"That was all"} />
+                                <div>.</div>
                             </div>
                         )}
                     </span>
