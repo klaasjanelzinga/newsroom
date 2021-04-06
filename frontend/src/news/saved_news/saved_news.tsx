@@ -54,6 +54,7 @@ class SavedNews extends React.Component<SavedNewsProps, SavedNewsState> {
     }
 
     componentDidMount(): void {
+        this.setState({ is_loading: true })
         this.fetch_saved_news_items()
     }
 
@@ -61,7 +62,6 @@ class SavedNews extends React.Component<SavedNewsProps, SavedNewsState> {
         if (this.state.is_loading) {
             return
         }
-        this.setState({ is_loading: true })
 
         const endpoint = "/saved-news"
         const endpoint_with_token = this.token ? `${endpoint}?fetch_offset=${this.token}` : endpoint
@@ -82,7 +82,7 @@ class SavedNews extends React.Component<SavedNewsProps, SavedNewsState> {
     }
 
     refresh(): void {
-        this.setState({ saved_news_items: [] })
+        this.setState({ saved_news_items: [], is_loading: true })
         this.token = null
         this.fetch_saved_news_items()
     }

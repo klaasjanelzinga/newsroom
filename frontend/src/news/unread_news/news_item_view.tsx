@@ -81,7 +81,7 @@ class NewsItemView extends React.Component<NewsItemViewProps> implements Scrolla
     state: NewsItemViewState = {
         is_read: false,
         keep_unread: false,
-        is_saved: this.props.news_item.is_saved,
+        is_saved: false,
         saved_news_item_id: this.props.news_item.saved_news_item_id,
         news_item: this.props.news_item,
     }
@@ -95,6 +95,16 @@ class NewsItemView extends React.Component<NewsItemViewProps> implements Scrolla
         if (this.props.register_mark_as_read_item) {
             this.props.register_mark_as_read_item(this)
         }
+
+        console.log("Constructing")
+    }
+
+    componentDidMount() {
+        this.setState({
+            is_saved: this.props.news_item.is_saved,
+            is_read: this.props.news_item.is_read,
+            news_item: this.props.news_item,
+        })
     }
 
     /**********

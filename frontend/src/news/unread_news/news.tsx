@@ -58,6 +58,7 @@ class News extends React.Component<NewsProps, NewsState> {
     }
 
     componentDidMount(): void {
+        this.setState({ is_loading: true })
         this.fetch_news_items()
     }
 
@@ -66,7 +67,6 @@ class News extends React.Component<NewsProps, NewsState> {
             return
         }
 
-        this.setState({ is_loading: true })
         const endpoint_with_token = this.token ? `/news-items?fetch_offset=${this.token}` : "/news-items"
         this.api
             .get<GetNewsItemsResponse>(endpoint_with_token)
@@ -86,7 +86,7 @@ class News extends React.Component<NewsProps, NewsState> {
     }
 
     refresh(): void {
-        this.setState({ news_items: [] })
+        this.setState({ news_items: [], is_loading: true })
         this.token = null
         this.no_more_items = false
         this.fetch_news_items()

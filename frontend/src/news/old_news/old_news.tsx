@@ -56,6 +56,7 @@ class OldNews extends React.Component<OldNewsProps, OldNewsState> {
     }
 
     componentDidMount(): void {
+        this.setState({ is_loading: true })
         this.fetch_news_items()
     }
 
@@ -64,7 +65,6 @@ class OldNews extends React.Component<OldNewsProps, OldNewsState> {
             return
         }
 
-        this.setState({ is_loading: true })
         const endpoint_with_token = this.token ? `/news-items/read?fetch_offset=${this.token}` : "/news-items"
         this.api
             .get<GetNewsItemsResponse>(endpoint_with_token)
@@ -84,7 +84,7 @@ class OldNews extends React.Component<OldNewsProps, OldNewsState> {
     }
 
     refresh(): void {
-        this.setState({ news_items: [] })
+        this.setState({ news_items: [], is_loading: true })
         this.token = null
         this.fetch_news_items()
     }
