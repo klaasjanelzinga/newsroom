@@ -42,18 +42,14 @@ upgrade-requirements:
 	(cd core_lib && pip-compile --upgrade requirements.in > requirements.txt)
 	(cd unittests && pip-compile --upgrade requirements.in > requirements.txt)
 
-
 build-docker-images:
 	scripts/build-docker-images.sh
 
-integration-tests:
-	(cd integration && docker-compose up --exit-code-from integration_test integration_test)
-
-integration-tests-down:
-	(cd integration && docker-compose down)
-
-up: 
+up-build:
 	docker-compose up --build --detach
+
+up:
+	docker-compose up --detach
 
 down:
 	docker-compose down

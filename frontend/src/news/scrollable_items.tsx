@@ -70,7 +70,6 @@ class ScrollableItems extends React.Component<ScrollableItemsProps> implements I
     constructor(props: ScrollableItemsProps) {
         super(props)
         this.props.registerItemControl(this)
-        console.log("Constructing scrollable_items")
     }
 
     componentDidMount(): void {

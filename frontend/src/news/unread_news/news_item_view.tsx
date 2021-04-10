@@ -95,8 +95,6 @@ class NewsItemView extends React.Component<NewsItemViewProps> implements Scrolla
         if (this.props.register_mark_as_read_item) {
             this.props.register_mark_as_read_item(this)
         }
-
-        console.log("Constructing")
     }
 
     componentDidMount() {
@@ -146,7 +144,7 @@ class NewsItemView extends React.Component<NewsItemViewProps> implements Scrolla
 
     scrolled_out_of_view(): boolean {
         if (this.element) {
-            return this.element.getBoundingClientRect().y < 10
+            return this.element.getBoundingClientRect().bottom < 150
         }
         return false
     }
