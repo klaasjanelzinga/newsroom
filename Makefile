@@ -1,19 +1,22 @@
 # -------------------------------------------------------
 # Commands for starting and stopping the application
 init-data-directory:
-	mkdir -p data/redis data/mongodb
+	mkdir -p infra/data/redis infra/data/mongodb
 
-up-build: init-data-directory
-	docker-compose up --build --detach
+build:
+	docker-compose --env-file etc/dev.env build
 
 up: init-data-directory
-	docker-compose up --detach
+	docker-compose --env-file etc/dev.env up
 
 down: init-data-directory
-	docker-compose down
+	docker-compose --env-file etc/dev.env down
 
 logs:
 	docker-compose logs -f
+
+mongo: init-data-directory
+	docker-compose --env-file etc/dev.env up mongo
 
 restart-frontend:
 	docker-compose restart frontend
@@ -33,6 +36,14 @@ upgrade-requirements:
 	(cd cron && pip-compile --upgrade requirements.in > requirements.txt)
 	(cd core_lib && pip-compile --upgrade requirements.in > requirements.txt)
 	(cd unittests && pip-compile --upgrade requirements.in > requirements.txt)
+
+# -------------------------------------------------------
+# Test application
+cron-refresh-feeds:
+	curl localhost:5002/maintenance/refresh-feeds
+
+cron-delete-read-items:
+	curl localhost:5002/maintenance/delete-read-items
 
 # -------------------------------------------------------
 # Code maintenance
@@ -74,8 +85,3 @@ es-lint:
 
 before-commit: flakes tests build-docker-images integration-tests
 
-cron-refresh-feeds:
-	curl localhost:9090/maintenance/refresh-feeds
-
-cron-delete-read-items:
-	curl localhost:9090/maintenance/delete-read-items

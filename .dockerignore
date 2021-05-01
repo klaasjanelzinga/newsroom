@@ -27,4 +27,4 @@ services
 static
 tests
 frontend/node_modules
-data
+infra/data

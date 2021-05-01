@@ -120,18 +120,17 @@ async def sign_up_user(user_sign_up_request: UserSignUpRequest) -> UserSignInRes
     Sign up the user.
     """
     try:
-        with repositories.client.transaction():
-            user = signup(
-                email_address=user_sign_up_request.email_address,
-                password=user_sign_up_request.password,
-                password_repeated=user_sign_up_request.password_repeated,
-            )
-            token = TokenVerifier.create_token(user)
-            return UserSignInResponse(
-                token=token,
-                sign_in_state=SignInState.SIGNED_IN,
-                user=user_to_user_response(user),
-            )
+        user = signup(
+            email_address=user_sign_up_request.email_address,
+            password=user_sign_up_request.password,
+            password_repeated=user_sign_up_request.password_repeated,
+        )
+        token = TokenVerifier.create_token(user)
+        return UserSignInResponse(
+            token=token,
+            sign_in_state=SignInState.SIGNED_IN,
+            user=user_to_user_response(user),
+        )
     except AuthorizationException as authorization_exception:
         raise HTTPException(status_code=401, detail=authorization_exception.__str__()) from authorization_exception
 

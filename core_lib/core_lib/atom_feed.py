@@ -5,7 +5,6 @@ from typing import List, Optional
 import aiohttp
 from aiohttp import ClientSession
 import dateparser
-from google.api_core.exceptions import GoogleAPIError
 from lxml.etree import ElementBase, fromstring
 import pytz
 
@@ -81,6 +80,6 @@ async def refresh_atom_feed(session: ClientSession, feed: Feed) -> Optional[Refr
                 return RefreshResult(
                     feed=feed, number_of_items=upsert_new_items_for_feed(feed, feed_from_rss, feed_items_from_rss)
                 )
-    except (aiohttp.ClientError, TimeoutError, GoogleAPIError):
+    except (aiohttp.ClientError, TimeoutError):
         log.exception("Error while refreshing feed %s", feed)
         return None

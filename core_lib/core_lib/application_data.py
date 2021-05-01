@@ -2,8 +2,9 @@ import logging
 import os
 
 from aiohttp import ClientSession, ClientTimeout
-from google.cloud import datastore
+from pymongo import MongoClient
 
+from core_lib.app_config import AppConfig
 from core_lib.gemeente_groningen import feed_gemeente_groningen, gemeente_groningen_parser
 from core_lib.repositories import (
     FeedItemRepository,
@@ -25,7 +26,8 @@ class Repositories:
 
     def __init__(self) -> None:
         log.info("Initializing repositories.")
-        self.client = datastore.Client()
+        self.client = MongoClient(AppConfig.mongodb_url())
+        self.database = self.client.get_database(AppConfig.mongo_db())
         self.user_repository = UserRepository(self.client)
         self.news_item_repository = NewsItemRepository(self.client)
         self.saved_news_item_repository = SavedNewsItemRepository(self.client)

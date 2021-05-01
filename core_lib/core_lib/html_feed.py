@@ -2,7 +2,6 @@ import logging
 from typing import Optional
 
 from aiohttp import ClientError, ClientSession
-from google.api_core.exceptions import GoogleAPIError
 
 from core_lib.application_data import html_feed_parsers, repositories
 from core_lib.feed_utils import upsert_new_items_for_feed
@@ -20,6 +19,6 @@ async def refresh_html_feed(session: ClientSession, feed: Feed) -> Optional[Refr
                 feed_items = parser(feed, await html.text(encoding="utf-8"))
                 number_of_new_items = upsert_new_items_for_feed(feed, feed, feed_items)
         return RefreshResult(feed=feed, number_of_items=number_of_new_items)
-    except (ClientError, TimeoutError, GoogleAPIError):
+    except (ClientError, TimeoutError):
         log.exception("Error while refreshing feed %s", feed)
         return None

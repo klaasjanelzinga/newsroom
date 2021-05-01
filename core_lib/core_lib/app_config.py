@@ -1,15 +1,14 @@
 from enum import Enum
 from os import getenv
+from urllib.parse import quote_plus
 
 
 class Environment(Enum):
-    LOCALHOST = "LOCALHOST"
-    PRODUCTION = "PRODUCTION"
+    LOCALHOST = "localhost"
+    PRODUCTION = "production"
 
 
 class AppConfig:
-
-    _environment: Environment = Environment(getenv("ENVIRONMENT", "LOCALHOST"))
 
     @staticmethod
     def _required_env(variable_name: str) -> str:
@@ -20,11 +19,11 @@ class AppConfig:
 
     @staticmethod
     def is_production() -> bool:
-        return AppConfig._environment == Environment.PRODUCTION
+        return AppConfig.environment() == Environment.PRODUCTION
 
     @staticmethod
     def is_localhost() -> bool:
-        return AppConfig._environment == Environment.LOCALHOST
+        return AppConfig.environment() == Environment.LOCALHOST
 
     @staticmethod
     def sentry_dsn() -> str:
@@ -36,4 +35,16 @@ class AppConfig:
 
     @staticmethod
     def environment() -> str:
-        return AppConfig._environment.value
+        return AppConfig._required_env("ENVIRONMENT")
+
+    @staticmethod
+    def mongodb_url() -> str:
+        mongo_user = AppConfig._required_env("MONGO_USER")
+        mongo_pass = AppConfig._required_env("MONGO_PASS")
+        mongo_host = AppConfig._required_env("MONGO_HOST")
+        mongo_port = AppConfig._required_env("MONGO_PORT")
+        return f"mongodb://{quote_plus(mongo_user)}:{quote_plus(mongo_pass)}@{mongo_host}:{mongo_port}/"
+
+    @staticmethod
+    def mongo_db() -> str:
+        return AppConfig._required_env("MONGO_DB")
