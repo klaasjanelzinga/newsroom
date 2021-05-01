@@ -1,1 +1,2 @@
 dev.env filter=git-crypt diff=git-crypt
+etc/dev.env filter=git-crypt diff=git-crypt
