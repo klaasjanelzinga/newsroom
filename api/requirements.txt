@@ -34,7 +34,7 @@ pydantic==1.8.1
     # via
     #   -r requirements.in
     #   fastapi
-pyjwt==2.0.1
+pyjwt==2.1.0
     # via -r requirements.in
 sentry-sdk==1.0.0
     # via -r requirements.in

@@ -18,7 +18,7 @@ app = FastAPI()
 
 
 origins = [
-    "http://localhost:4000",
+    "http://localhost:5000",
     "https://newsroom.n-kj.nl",
 ]
 

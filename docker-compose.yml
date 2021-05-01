@@ -1,44 +1,40 @@
 version: '3.3'
 
 services:
-  api:
-    build:
-      context: .
-      dockerfile: api/Dockerfile
-    environment:
-      PORT: 8080
-      ENVIRONMENT: LOCALHOST
-      GOOGLE_APPLICATION_CREDENTIALS: /usr/src/app/secrets/google-appengine-credentials.json
-    ports:
-      - 9080:8080
-    volumes:
-      - .:/usr/src/app
-    command: api/entrypoint-dev.sh
+#  Application
 
-  cron:
+#  Infrastructure
+  redis:
     build:
-      context: .
-      dockerfile: cron/Dockerfile
-    environment:
-      PORT: 8080
-      ENVIRONMENT: LOCALHOST
-      GOOGLE_APPLICATION_CREDENTIALS: /usr/src/app/secrets/google-appengine-credentials.json
+      context: redis
+      dockerfile: Dockerfile
     ports:
-      - 9090:8080
+      - "5010:6379"
     volumes:
-      - .:/usr/src/app
-    command: cron/entrypoint-dev.sh
+      - ./data/redis:/data
 
-  frontend:
-    build:
-      dockerfile: frontend/Dockerfile
-      context: .
-    tty: true
-    environment:
-      PORT: 3000
+  mongo:
+    image: mongo:4.4-bionic
     ports:
-      - 4000:3000
+      - "5011:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
     volumes:
-      - ./frontend:/usr/src/app
-    command: sh -c "cd /usr/src/app && cp src/Config.localhost.js src/Config.js && npm ci && npm start && wait $$"
+      - ./data/mongodb:/data/db
 
+  mongo-express:
+    image: mongo-express:0.54
+    ports:
+      - "5012:8081"
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      ME_CONFIG_BASICAUTH_USERNAME: ''
+      ME_CONFIG_BASICAUTH_PASSWORD: ''
+      ME_CONFIG_MONGODB_ENABLE_ADMIN: 'true'
+      ME_CONFIG_MONGODB_PORT: "27017"
+      ME_CONFIG_MONGODB_SERVER: 'mongo'
+      ME_CONFIG_OPTIONS_EDITORTHEME: 'default'
+      ME_CONFIG_REQUEST_SIZE: '100kb'
+      ME_CONFIG_SITE_BASEURL: '/'

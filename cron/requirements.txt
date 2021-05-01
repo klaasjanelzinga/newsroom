@@ -40,10 +40,5 @@ typing-extensions==3.7.4.3
     #   pydantic
 uvicorn==0.13.4
     # via -r requirements.in
-wheel==0.36.2
-    # via -r requirements.in
 yarl==1.6.3
     # via aiohttp
-
-# The following packages are considered to be unsafe in a requirements file:
-# setuptools

@@ -1,3 +1,41 @@
+# -------------------------------------------------------
+# Commands for starting and stopping the application
+init-data-directory:
+	mkdir -p data/redis data/mongodb
+
+up-build: init-data-directory
+	docker-compose up --build --detach
+
+up: init-data-directory
+	docker-compose up --detach
+
+down: init-data-directory
+	docker-compose down
+
+logs:
+	docker-compose logs -f
+
+restart-frontend:
+	docker-compose restart frontend
+
+# -------------------------------------------------------
+# Dependency management
+requirements:
+	(pip install -r requirements.txt)
+	(cd api && pip install -r requirements.txt)
+	(cd cron && pip install -r requirements.txt)
+	(cd core_lib && pip install -r requirements.txt)
+	(cd unittests && pip install -r requirements.txt)
+
+upgrade-requirements:
+	(pip-compile --upgrade requirements.in > requirements.txt)
+	(cd api && pip-compile --upgrade requirements.in > requirements.txt)
+	(cd cron && pip-compile --upgrade requirements.in > requirements.txt)
+	(cd core_lib && pip-compile --upgrade requirements.in > requirements.txt)
+	(cd unittests && pip-compile --upgrade requirements.in > requirements.txt)
+
+# -------------------------------------------------------
+# Code maintenance
 black:
 	black core_lib/core_lib api/api cron/cron unittests/tests
 
@@ -28,40 +66,11 @@ flake8:
 tests:
 	(cd unittests && export unit_tests=1 && pytest --cov core_lib --cov api --cov cron --cov-report=html tests)
 
-requirements:
-	(pip install -r requirements.txt)
-	(cd api && pip install -r requirements.txt)
-	(cd cron && pip install -r requirements.txt)
-	(cd core_lib && pip install -r requirements.txt)
-	(cd unittests && pip install -r requirements.txt)
-
-upgrade-requirements:
-	(pip-compile --upgrade requirements.in > requirements.txt)
-	(cd api && pip-compile --upgrade requirements.in > requirements.txt)
-	(cd cron && pip-compile --upgrade requirements.in > requirements.txt)
-	(cd core_lib && pip-compile --upgrade requirements.in > requirements.txt)
-	(cd unittests && pip-compile --upgrade requirements.in > requirements.txt)
-
 build-docker-images:
 	scripts/build-docker-images.sh
 
-up-build:
-	docker-compose up --build --detach
-
-up:
-	docker-compose up --detach
-
-down:
-	docker-compose down
-
-logs:
-	docker-compose logs -f
-
 es-lint:
 	docker-compose run --entrypoint "npm run lint" frontend
-
-restart-frontend:
-	docker-compose restart frontend
 
 before-commit: flakes tests build-docker-images integration-tests
 
