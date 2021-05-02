@@ -36,7 +36,7 @@ def _generate_hash(password: str, salt: bytes) -> bytes:
 
 
 def _validate_password(password: str) -> None:
-    """ Raises IllegalPassword if the password is not valid (too short etc). """
+    """Raises IllegalPassword if the password is not valid (too short etc)."""
     if len(password) < 8:
         raise IllegalPassword("Password must be longer than 8 characters.")
     if not contains_digits_re.search(password):
@@ -49,7 +49,7 @@ def _validate_password(password: str) -> None:
         raise IllegalPassword("Password must contain special characters.")
 
 
-def sign_in(email_address: str, password: str) -> User:
+async def sign_in(email_address: str, password: str) -> User:
     """
     Checks if the user checks out. Password is ok and the user is present if this function succeeds.
 
@@ -57,12 +57,12 @@ def sign_in(email_address: str, password: str) -> User:
     :param password: The password of the user.
     :raises AuthorizationFailed: if the user is not found or the password does not match the records.
     """
-    return verify_password(email_address, password)
+    return await verify_password(email_address, password)
 
 
-def verify_password(email_address: str, password: str) -> User:
-    """ Verifies if the password is  correct. """
-    user = application_data.repositories.user_repository.fetch_user_by_email(email_address)
+async def verify_password(email_address: str, password: str) -> User:
+    """Verifies if the password is  correct. Raises exception if not."""
+    user = await application_data.repositories.user_repository.fetch_user_by_email(email_address)
     if user is None:
         raise AuthorizationFailed()
     salt = b64decode(bytes(user.password_salt, "utf-8"))
@@ -72,7 +72,9 @@ def verify_password(email_address: str, password: str) -> User:
     return user
 
 
-def change_password(email_address: str, current_password: str, new_password: str, new_password_repeated: str) -> User:
+async def change_password(
+    email_address: str, current_password: str, new_password: str, new_password_repeated: str
+) -> User:
     """
     Changes the password for the user with name name.
 
@@ -81,7 +83,7 @@ def change_password(email_address: str, current_password: str, new_password: str
     :raises AuthorizationFailed: if the old password cannot be used to authenticate.
     """
     _validate_password(new_password)
-    user = verify_password(email_address, current_password)
+    user = await verify_password(email_address, current_password)
     salt = _generate_salt()
 
     password_hash = _generate_hash(new_password, salt)
@@ -91,10 +93,10 @@ def change_password(email_address: str, current_password: str, new_password: str
 
     user.password_hash = bytes_to_str_base64(password_hash)
     user.password_salt = bytes_to_str_base64(salt)
-    return user
+    return await application_data.repositories.user_repository.upsert(user)
 
 
-def signup(email_address: str, password: str, password_repeated: str) -> User:
+async def signup(email_address: str, password: str, password_repeated: str) -> User:
     """
     Creates the user.
 
@@ -107,7 +109,7 @@ def signup(email_address: str, password: str, password_repeated: str) -> User:
     :raises IllegalPassword: if the password is not valid.
     """
     _validate_password(password)
-    existing_user = application_data.repositories.user_repository.fetch_user_by_email(email_address)
+    existing_user = await application_data.repositories.user_repository.fetch_user_by_email(email_address)
     if existing_user is not None:
         raise UserNameTaken()
 
@@ -122,23 +124,23 @@ def signup(email_address: str, password: str, password_repeated: str) -> User:
         password_salt=bytes_to_str_base64(salt),
         is_approved=False,
     )
-    return application_data.repositories.user_repository.upsert(user)
+    return await application_data.repositories.user_repository.upsert(user)
 
 
-def update_user_profile(
+async def update_user_profile(
     user: User, display_name: Optional[str], avatar_image: Optional[str], avatar_action: str
 ) -> User:
-    """ Update profile and avatar. Return the updated user. """
+    """Update profile and avatar. Return the updated user."""
     user.display_name = display_name
     if avatar_action == "delete":
-        application_data.repositories.user_repository.update_avatar(user, None)
+        await application_data.repositories.user_repository.update_avatar(user, None)
     if avatar_image is not None:
-        application_data.repositories.user_repository.update_avatar(user, avatar_image)
-    return application_data.repositories.user_repository.upsert(user)
+        await application_data.repositories.user_repository.update_avatar(user, avatar_image)
+    return await application_data.repositories.user_repository.upsert(user)
 
 
-def avatar_image_for_user(user: User) -> Optional[str]:
-    avatar = application_data.repositories.user_repository.fetch_avatar_for_user(user)
+async def avatar_image_for_user(user: User) -> Optional[str]:
+    avatar = await application_data.repositories.user_repository.fetch_avatar_for_user(user)
     if avatar is None:
         return None
     return avatar.image
@@ -156,8 +158,8 @@ class OtpRegistrationResult:
     user: User
 
 
-def start_registration_new_otp_for(user: User) -> OtpRegistrationResult:
-    """ Start OTP registration process for the TOTP, returning the secret and a uri for generating a qr-code."""
+async def start_registration_new_otp_for(user: User) -> OtpRegistrationResult:
+    """Start OTP registration process for the TOTP, returning the secret and a uri for generating a qr-code."""
     generated_secret = pyotp.random_base32()
 
     user.pending_otp_hash = generated_secret
@@ -166,14 +168,14 @@ def start_registration_new_otp_for(user: User) -> OtpRegistrationResult:
         name=user.display_name or user.email_address, issuer_name="Newsroom"
     )
 
-    application_data.repositories.user_repository.upsert(user)
+    await application_data.repositories.user_repository.upsert(user)
     return OtpRegistrationResult(
         generated_secret=generated_secret, uri=uri, user=user, backup_codes=user.pending_backup_codes
     )
 
 
 def disable_otp_for(user: User) -> User:
-    """ Disables the OTP for the user. """
+    """Disables the OTP for the user."""
     user.pending_otp_hash = None
     user.pending_backup_codes = []
     user.otp_hash = None
@@ -183,8 +185,8 @@ def disable_otp_for(user: User) -> User:
     return user
 
 
-def confirm_otp_for(user: User, totp_value: str) -> User:
-    """ Confirms the generated secret for the user by submitting a totp-value. """
+async def confirm_otp_for(user: User, totp_value: str) -> User:
+    """Confirms the generated secret for the user by submitting a totp-value."""
     if user.pending_otp_hash is None:
         raise TokenCouldNotBeVerified("Token could not be verified")
 
@@ -196,24 +198,24 @@ def confirm_otp_for(user: User, totp_value: str) -> User:
     user.otp_backup_codes = user.pending_backup_codes
     user.pending_otp_hash = None
     user.pending_backup_codes = []
-    user = application_data.repositories.user_repository.upsert(user)
+    user = await application_data.repositories.user_repository.upsert(user)
     return user
 
 
 def totp_verification_for(user: User, totp_value: str) -> User:
-    """ Verifies the totp value for the user. """
+    """Verifies the totp value for the user."""
     if user.otp_hash is None:
         raise TokenCouldNotBeVerified("Token could not be verified")
 
     totp = pyotp.TOTP(user.otp_hash)
-    if not totp.verify(totp_value, valid_window=5):
+    if not totp.verify(totp_value, valid_window=1):
         raise TokenCouldNotBeVerified("Token could not be verified")
     return user
 
 
-def use_backup_code_for(user: User, backup_code: str) -> User:
-    """ Uses the backup code for the user. """
+async def use_backup_code_for(user: User, backup_code: str) -> User:
+    """Uses the backup code for the user."""
     if backup_code not in user.otp_backup_codes:
         raise BackupCodeNotValid()
     user.otp_backup_codes = [code for code in user.otp_backup_codes if code != backup_code]
-    return application_data.repositories.user_repository.upsert(user)
+    return await application_data.repositories.user_repository.upsert(user)

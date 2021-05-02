@@ -5,7 +5,7 @@ from core_lib.repositories import SavedNewsItem, User
 
 
 def save_news_item_from_news_item(news_item_id: str, user: User) -> SavedNewsItem:
-    """ Saves the news item for the user. """
+    """Saves the news item for the user."""
     news_item = repositories.news_item_repository.fetch_by_id(news_item_id)
     if news_item is None:
         raise Exception("News item not found")

@@ -38,7 +38,8 @@ interface NewsState {
 
 class News extends React.Component<NewsProps, NewsState> {
     api: Api
-    token: string | null = null
+    fetch_offset = 0
+    fetch_limit = 30
     item_control: ItemControl | null = null
     scrollable_view_items: ScrollableItem[] = []
     mark_as_read_items: MarkAsReadItem[] = []
@@ -67,12 +68,12 @@ class News extends React.Component<NewsProps, NewsState> {
             return
         }
 
-        const endpoint_with_token = this.token ? `/news-items?fetch_offset=${this.token}` : "/news-items"
+        const endpoint_with_token = `/news-items?fetch_offset=${this.fetch_offset}&fetch_limit=${this.fetch_limit}`
         this.api
             .get<GetNewsItemsResponse>(endpoint_with_token)
             .then((newsItems) => {
-                this.token = newsItems[1].token
-                this.no_more_items = atob(this.token) === "DONE"
+                this.fetch_offset += this.fetch_limit
+                this.no_more_items = newsItems[1].news_items.length < this.fetch_limit
                 this.setState({
                     news_items: this.state.news_items.concat(newsItems[1].news_items),
                     number_of_unread_items: newsItems[1].number_of_unread_items,
@@ -87,7 +88,7 @@ class News extends React.Component<NewsProps, NewsState> {
 
     refresh(): void {
         this.setState({ news_items: [], is_loading: true })
-        this.token = null
+        this.fetch_offset = 0
         this.no_more_items = false
         this.fetch_news_items()
     }

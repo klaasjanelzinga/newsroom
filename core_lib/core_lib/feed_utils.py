@@ -1,13 +1,13 @@
-from datetime import datetime, timedelta
 import difflib
 import re
+from datetime import datetime, timedelta
 from typing import List
 from urllib.parse import urlparse
 
 import pytz
 
 from core_lib.application_data import repositories
-from core_lib.repositories import Feed, FeedItem, NewsItem, User
+from core_lib.repositories import Feed, FeedItem, NewsItem, User, FeedSourceType
 from core_lib.utils import now_in_utc
 
 
@@ -144,3 +144,19 @@ def news_item_from_feed_item(feed_item: FeedItem, feed: Feed, user: User) -> New
         favicon=determine_favicon_link(feed_item, feed),
         created_on=now_in_utc(),
     )
+
+
+async def upsert_gemeente_groningen_feed() -> None:
+    feed = Feed(
+        url="https://gemeente.groningen.nl/actueel/nieuws",
+        title="Gemeente Groningen - algemeen nieuws",
+        description="Algemeen nieuws van de gemeente.",
+        feed_source_type=FeedSourceType.GEMEENTE_GRONINGEN.name,
+        link="https://gemeente.groningen.nl/actueel/nieuws",
+        image_url="https://gemeente.groningen.nl/sites/default/files/Logo-gemeente-Groningen---rood-zwart.png",
+        image_link="https://gemeente.groningen.nl",
+        image_title="Gemeente Groningen",
+    )
+    repo_feed = await repositories.feed_repository.find_by_url(feed.url)
+    if repo_feed is None:
+        await repositories.feed_repository.upsert(feed)

@@ -43,7 +43,7 @@ def rdf_document_to_feed(rss_url: str, tree: ElementBase) -> Feed:
 
 
 def rdf_document_to_feed_items(feed: Feed, tree: ElementBase) -> List[FeedItem]:
-    """ Creates a list of FeedItem objects from a xml tree for the feed. """
+    """Creates a list of FeedItem objects from a xml tree for the feed."""
     item_elements = tree.findall("{*}item")
     return [
         FeedItem(

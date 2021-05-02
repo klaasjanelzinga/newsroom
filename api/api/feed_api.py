@@ -1,6 +1,7 @@
 import logging
 from typing import List, Optional
 
+from bson import ObjectId
 from fastapi import APIRouter, Header, HTTPException, Response
 from pydantic.main import BaseModel
 from starlette.status import HTTP_200_OK, HTTP_201_CREATED, HTTP_400_BAD_REQUEST, HTTP_404_NOT_FOUND
@@ -23,6 +24,12 @@ logger = logging.getLogger(__name__)
 class FeedWithSubscriptionInformationResponse(BaseModel):
     feed: Feed
     user_is_subscribed: bool
+
+    class Config:
+        allow_population_by_field_name = True
+        arbitrary_types_allowed = True
+        by_alias = False
+        json_encoders = {ObjectId: str}
 
 
 @feed_router.post(
@@ -73,7 +80,7 @@ async def get_all_feeds(
 ) -> List[FeedWithSubscriptionInformationResponse]:
     user = await security.get_approved_user(authorization)
     subscribed_feed_ids = user.subscribed_to
-    feeds = repositories.feed_repository.all_feeds()
+    feeds = await repositories.feed_repository.all_feeds(user)
     return [
         FeedWithSubscriptionInformationResponse(feed=feed, user_is_subscribed=feed.feed_id in subscribed_feed_ids)
         for feed in feeds
@@ -89,8 +96,8 @@ async def subscribe_to_feed(feed_id: str, authorization: Optional[str] = Header(
     :param authorization: Token of the user.
     """
     user = await security.get_approved_user(authorization)
-    feed = repositories.feed_repository.get(feed_id)
-    user = subscribe_user_to_feed(user=user, feed=feed)
+    feed = await repositories.feed_repository.get(user, feed_id)
+    user = await subscribe_user_to_feed(user=user, feed=feed)
     return user
 
 

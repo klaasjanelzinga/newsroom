@@ -14,7 +14,6 @@ log = logging.getLogger(__name__)
 
 
 class NewsItemListResponse(BaseModel):
-    token: str
     news_items: List[NewsItem]
     number_of_unread_items: int
 
@@ -30,13 +29,15 @@ class ReadNewsItemListResponse(BaseModel):
     response_model=NewsItemListResponse,
     responses={HTTP_200_OK: {"model": NewsItemListResponse, "description": "List is complete"}},
 )
-async def news_items(fetch_offset: str = None, authorization: Optional[str] = Header(None)) -> NewsItemListResponse:
-    """ Fetch the next set of news items. """
+async def news_items(
+    fetch_offset: int, fetch_limit: int = 30, authorization: Optional[str] = Header(None)
+) -> NewsItemListResponse:
+    """Fetch the next set of news items."""
+    fetch_limit = min(fetch_limit, 80)
     user = await security.get_approved_user(authorization)
-    cursor = bytes(fetch_offset, "utf-8") if fetch_offset is not None else None
-    token, result = repositories.news_item_repository.fetch_items(user=user, cursor=cursor, limit=30)
+    result = await repositories.news_item_repository.fetch_items(user=user, offset=fetch_offset, limit=fetch_limit)
 
-    return NewsItemListResponse(token=token, news_items=result, number_of_unread_items=user.number_of_unread_items)
+    return NewsItemListResponse(news_items=result, number_of_unread_items=user.number_of_unread_items)
 
 
 @news_router.get(
@@ -48,7 +49,7 @@ async def news_items(fetch_offset: str = None, authorization: Optional[str] = He
 async def read_news_items(
     fetch_offset: str = None, authorization: Optional[str] = Header(None)
 ) -> ReadNewsItemListResponse:
-    """ Fetch the next set of news items. """
+    """Fetch the next set of news items."""
     user = await security.get_approved_user(authorization)
     cursor = bytes(fetch_offset, "utf-8") if fetch_offset is not None else None
     token, result = repositories.news_item_repository.fetch_read_items(user=user, cursor=cursor, limit=30)

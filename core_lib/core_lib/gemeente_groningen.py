@@ -4,7 +4,7 @@ from typing import List
 
 from bs4 import BeautifulSoup, Tag
 
-from core_lib.repositories import Feed, FeedItem, FeedSourceType
+from core_lib.repositories import Feed, FeedItem, FeedSourceType, User
 from core_lib.utils import now_in_utc
 
 
@@ -23,19 +23,6 @@ def _link(article_tag: Tag) -> str:
 
 def _title(article_tag: Tag) -> str:
     return _sanitize_text(article_tag.find("div").find("h2").find("a").text)
-
-
-feed_gemeente_groningen = Feed(
-    feed_id="40cba0bd-5636-47ca-bfe0-0ce468d1fcda",
-    url="https://gemeente.groningen.nl/actueel/nieuws",
-    title="Gemeente Groningen - algemeen nieuws",
-    description="Algemeen nieuws van de gemeente.",
-    feed_source_type=FeedSourceType.HTML.name,
-    link="https://gemeente.groningen.nl/actueel/nieuws",
-    image_url="https://gemeente.groningen.nl/sites/default/files/Logo-gemeente-Groningen---rood-zwart.png",
-    image_link="https://gemeente.groningen.nl",
-    image_title="Gemeente Groningen",
-)
 
 
 def gemeente_groningen_parser(feed: Feed, html_source: str) -> List[FeedItem]:

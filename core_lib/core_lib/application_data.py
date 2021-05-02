@@ -2,16 +2,14 @@ import logging
 import os
 
 from aiohttp import ClientSession, ClientTimeout
-from pymongo import MongoClient
+from motor.motor_asyncio import AsyncIOMotorClient
 
 from core_lib.app_config import AppConfig
-from core_lib.gemeente_groningen import feed_gemeente_groningen, gemeente_groningen_parser
 from core_lib.repositories import (
     FeedItemRepository,
     FeedRepository,
     NewsItemRepository,
     SavedNewsItemRepository,
-    SubscriptionRepository,
     UserRepository,
 )
 
@@ -26,20 +24,15 @@ class Repositories:
 
     def __init__(self) -> None:
         log.info("Initializing repositories.")
-        self.client = MongoClient(AppConfig.mongodb_url())
+        self.client = AsyncIOMotorClient(AppConfig.mongodb_url())
         self.database = self.client.get_database(AppConfig.mongo_db())
-        self.user_repository = UserRepository(self.client)
-        self.news_item_repository = NewsItemRepository(self.client)
-        self.saved_news_item_repository = SavedNewsItemRepository(self.client)
-        self.feed_item_repository = FeedItemRepository(self.client)
-        self.feed_repository = FeedRepository(self.client)
-        self.subscription_repository = SubscriptionRepository(self.client)
+        self.user_repository = UserRepository(self.database)
+        self.news_item_repository = NewsItemRepository(self.database)
+        self.saved_news_item_repository = SavedNewsItemRepository(self.database)
+        self.feed_item_repository = FeedItemRepository(self.database)
+        self.feed_repository = FeedRepository(self.database)
         timeout = ClientTimeout(total=290)
         self.client_session = ClientSession(timeout=timeout)
 
 
 repositories: Repositories = Repositories() if Repositories.not_in_unit_tests() else None  # type: ignore
-html_feeds = [feed_gemeente_groningen]
-html_feed_parsers = {
-    feed_gemeente_groningen.feed_id: gemeente_groningen_parser,
-}

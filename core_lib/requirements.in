@@ -1,6 +1,6 @@
 aiohttp
 
-pymongo
+motor
 
 pydantic
 lxml

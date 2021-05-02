@@ -1,5 +1,6 @@
 from enum import Enum
 from os import getenv
+from typing import Optional
 from urllib.parse import quote_plus
 
 
@@ -9,7 +10,6 @@ class Environment(Enum):
 
 
 class AppConfig:
-
     @staticmethod
     def _required_env(variable_name: str) -> str:
         value = getenv(variable_name)
@@ -26,8 +26,12 @@ class AppConfig:
         return AppConfig.environment() == Environment.LOCALHOST
 
     @staticmethod
-    def sentry_dsn() -> str:
-        return AppConfig._required_env("SENTRY_DSN")
+    def sentry_dsn_api() -> Optional[str]:
+        return getenv("SENTRY_DSN_API")
+
+    @staticmethod
+    def sentry_dsn_cron() -> Optional[str]:
+        return getenv("SENTRY_DSN_CRON")
 
     @staticmethod
     def token_secret_key() -> str:
@@ -43,7 +47,8 @@ class AppConfig:
         mongo_pass = AppConfig._required_env("MONGO_PASS")
         mongo_host = AppConfig._required_env("MONGO_HOST")
         mongo_port = AppConfig._required_env("MONGO_PORT")
-        return f"mongodb://{quote_plus(mongo_user)}:{quote_plus(mongo_pass)}@{mongo_host}:{mongo_port}/"
+        mongo_db = AppConfig.mongo_db()
+        return f"mongodb://{quote_plus(mongo_user)}:{quote_plus(mongo_pass)}@{mongo_host}:{mongo_port}/{mongo_db}"
 
     @staticmethod
     def mongo_db() -> str:

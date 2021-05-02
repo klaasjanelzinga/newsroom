@@ -4,7 +4,7 @@ export interface GetFeedsResponse {
 }
 
 export interface Feed {
-    feed_id: string
+    _id: string
     url: string
     title: string
     description: string

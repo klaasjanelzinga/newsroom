@@ -6,15 +6,16 @@ from typing import Any, Iterator, List, Optional, Tuple
 from uuid import uuid4
 
 import pydantic
+from bson import ObjectId
 from pydantic import Field
 from pydantic.main import BaseModel
-from pymongo.database import Database
+from motor.motor_asyncio import AsyncIOMotorDatabase
 
 from core_lib.utils import now_in_utc
 
 
-def uuid4_str() -> str:
-    return uuid4().__str__()
+def uuid4_str() -> ObjectId:
+    return ObjectId()
 
 
 def create_cursor(earlier_cursor: Optional[bytes]) -> Optional[bytes]:
@@ -22,7 +23,7 @@ def create_cursor(earlier_cursor: Optional[bytes]) -> Optional[bytes]:
 
 
 def token_and_entities_for_query(query: Any, cursor: Optional[bytes], limit: Optional[int]) -> Tuple[str, Any]:
-    pass
+    raise Exception()
     # query_iter = query.fetch(start_cursor=cursor, limit=limit)
     #
     # page = next(query_iter.pages)
@@ -39,13 +40,29 @@ class QueryResult:
     token: bytes
 
 
+class PyObjectId(ObjectId):
+    @classmethod
+    def __get_validators__(cls):
+        yield cls.validate
+
+    @classmethod
+    def validate(cls, v):
+        if not ObjectId.is_valid(v):
+            raise ValueError("Invalid objectid")
+        return ObjectId(v)
+
+    @classmethod
+    def __modify_schema__(cls, field_schema):
+        field_schema.update(type="string")
+
+
 class Avatar(BaseModel):
-    user_id: str
+    user_id: PyObjectId = Field(default_factory=uuid4_str, alias="_id")
     image: str
 
 
 class User(BaseModel):  # pylint: disable=too-few-public-methods
-    user_id: str = Field(default_factory=uuid4_str)
+    user_id: PyObjectId = Field(default_factory=uuid4_str, alias="_id")
     email_address: str
     display_name: Optional[str]
     password_hash: str
@@ -55,19 +72,19 @@ class User(BaseModel):  # pylint: disable=too-few-public-methods
     pending_otp_hash: Optional[str]
     pending_backup_codes: List[str] = Field(default_factory=list)
     is_approved: bool
-    subscribed_to: List[str] = []
+    subscribed_to: List[PyObjectId] = []
     number_of_unread_items: int = 0
 
 
 class FeedSourceType(enum.Enum):
     ATOM = 0
     RSS = 1
-    HTML = 2
+    GEMEENTE_GRONINGEN = 2
     RDF = 3
 
 
 class Feed(BaseModel):  # pylint: disable=too-few-public-methods
-    feed_id: str = Field(default_factory=uuid4_str)
+    feed_id: PyObjectId = Field(default_factory=uuid4_str, alias="_id")
     url: str
     title: str
     link: str
@@ -86,14 +103,14 @@ class Feed(BaseModel):  # pylint: disable=too-few-public-methods
 
 
 class Subscription(BaseModel):  # pylint: disable=too-few-public-methods
-    subscription_id: str = Field(default_factory=uuid4_str)
-    feed_id: str
-    user_id: str
+    subscription_id: PyObjectId = Field(default_factory=uuid4_str, alias="_id")
+    feed_id: PyObjectId
+    user_id: PyObjectId
 
 
 class FeedItem(BaseModel):  # pylint: disable=too-few-public-methods
-    feed_item_id: str = Field(default_factory=uuid4_str)
-    feed_id: str
+    feed_item_id: PyObjectId = Field(default_factory=uuid4_str, alias="_id")
+    feed_id: PyObjectId
 
     title: str
     link: str
@@ -104,7 +121,7 @@ class FeedItem(BaseModel):  # pylint: disable=too-few-public-methods
 
 
 class NewsItem(BaseModel):  # pylint: disable=too-few-public-methods
-    news_item_id: str = Field(default_factory=uuid4_str)
+    news_item_id: str = Field(default_factory=uuid4_str, alias="_id")
     feed_id: str
     user_id: str
     feed_item_id: str
@@ -125,7 +142,7 @@ class NewsItem(BaseModel):  # pylint: disable=too-few-public-methods
     saved_news_item_id: Optional[str] = None
 
     def append_alternate(self, link: str, title: str, icon_link: str) -> None:
-        """ Append an alternate source for the news. Only appended if not yet present. """
+        """Append an alternate source for the news. Only appended if not yet present."""
         if link not in self.alternate_links:
             self.title = f"[Updated] {self.title}" if not self.title.startswith("[Updated] ") else self.title
             self.alternate_title_links.append(title)
@@ -134,7 +151,7 @@ class NewsItem(BaseModel):  # pylint: disable=too-few-public-methods
 
 
 class SavedNewsItem(BaseModel):
-    saved_news_item_id: str = Field(default_factory=uuid4_str)
+    saved_news_item_id: str = Field(default_factory=uuid4_str, alias="_id")
 
     feed_id: str
     user_id: str
@@ -156,13 +173,13 @@ class SavedNewsItem(BaseModel):
 
 
 class SavedNewsItemRepository:
-    def __init__(self, database: Database):
+    def __init__(self, database: AsyncIOMotorDatabase):
         self.database = database
 
     def fetch_items(
         self, user: User, cursor: Optional[bytes], limit: Optional[int] = 15
     ) -> Tuple[str, List[SavedNewsItem]]:
-        pass
+        raise Exception()
         # google_cursor = create_cursor(earlier_cursor=cursor)
         # if google_cursor is not None and google_cursor.decode("utf-8") == "DONE":
         #     return base64.encodebytes(b"DONE").decode("utf-8"), []
@@ -178,17 +195,17 @@ class SavedNewsItemRepository:
         # entity.update(saved_news_item.dict())
         # self.client.put(entity)
         # return SavedNewsItem.parse_obj(entity)
-        pass
+        raise Exception()
 
     def delete_saved_news_item(self, saved_news_item_id: str, user: User) -> None:
-        pass
+        raise Exception()
         # key = self.client.key("SavedNewsItem", saved_news_item_id)
         # data = self.client.get(key)
         # if data["user_id"] == user.user_id:
         #     self.client.delete(data)
 
     def fetch_by_id(self, saved_news_item_id: str) -> Optional[SavedNewsItem]:
-        pass
+        raise Exception()
         # key = self.client.key("SavedNewsItem", saved_news_item_id)
         # data = self.client.get(key)
         # if data is None:
@@ -197,44 +214,37 @@ class SavedNewsItemRepository:
 
 
 class FeedRepository:
-    def __init__(self, database: Database):
-        self.database = database
+    def __init__(self, database: AsyncIOMotorDatabase):
+        self.feeds = database["feeds"]
 
-    def find_by_url(self, url: str) -> Optional[Feed]:
-        pass
-        # """ Find the Feed entity for the url. """
-        # query = self.client.query(kind="Feed")
-        # query.add_filter("url", "=", url.rstrip("/"))
-        # result = list(query.fetch())
-        # if not result:
-        #     return None
-        # return Feed.parse_obj(result[0])
+    async def find_by_url(self, url: str) -> Optional[Feed]:
+        result = await self.feeds.find_one({"url": url})
+        if result is None:
+            return None
+        return Feed.parse_obj(result)
 
     def upsert(self, feed: Feed) -> Feed:
-        """ Upsert a feed into the repository. """
-        pass
+        """Upsert a feed into the repository."""
+        raise Exception()
         # entity = datastore.Entity(self.client.key("Feed", feed.feed_id))
         # entity.update(feed.dict())
         # self.client.put(entity)
         # return Feed.parse_obj(entity)
 
-    def all_feeds(self) -> List[Feed]:
-        """ Retrieve all the feeds in the system. """
-        pass
-        # return [Feed.parse_obj(result) for result in query.fetch()]
-        # query = self.client.query(kind="Feed")
+    async def all_feeds(self, user: User) -> List[Feed]:
+        """Retrieve all the feeds in the system for the current user."""
+        result = self.feeds.find({"user_id": user.user_id})
+        return [Feed.parse_obj(feed) async for feed in result]
 
-    def get(self, feed_id: str) -> Feed:
-        pass
-        # key = self.client.key("Feed", feed_id)
-        # data = self.client.get(key)
-        # if data is None:
-        #     raise Exception(f"Feed with id {feed_id} not found.")
-        # return Feed.parse_obj(data)
+    async def get(self, user: User, feed_id: str) -> Feed:
+        result = await self.feeds.find_one({"_id": ObjectId(feed_id), "user_id": user.user_id})
+        if result is None:
+            raise Exception(f"Feed with id {feed_id} not found.")
+        return Feed.parse_obj(result)
 
     def get_active_feeds(self) -> List[Feed]:
-        """ Find the Feed entities that are actively used. """
-        pass
+        """Find the Feed entities that are actively used."""
+        raise Exception()
         # query = self.client.query(kind="Feed")
         # query.add_filter("number_of_subscriptions", ">", 0)
         # result = list(query.fetch())
@@ -243,44 +253,22 @@ class FeedRepository:
         # return [Feed.parse_obj(entity) for entity in result]
 
 
-class SubscriptionRepository:
-    def __init__(self, database: Database):
-        self.database = database
-
-    def upsert(self, subscription: Subscription) -> Subscription:
-        pass
-        # entity = datastore.Entity(self.client.key("Subscription", subscription.subscription_id))
-        # entity.update(subscription.dict())
-        # self.client.put(entity)
-        # return Subscription.parse_obj(entity)
-
-    def delete_user_feed(self, user: User, feed: Feed) -> None:
-        pass
-        # query = self.client.query(kind="Subscription")
-        # query.add_filter("user_id", "=", user.user_id)
-        # query.add_filter("feed_id", "=", feed.feed_id)
-        # query.keys_only()
-        # self.client.delete_multi([entity.key for entity in query.fetch()])
-
-
 class FeedItemRepository:
-    def __init__(self, database: Database):
-        self.database = database
+    def __init__(self, database: AsyncIOMotorDatabase):
+        self.feed_items = database["feed_items"]
 
-    def fetch_all_for_feed(self, feed: Feed) -> List[FeedItem]:
-        pass
-        # query = self.client.query(kind="FeedItem")
-        # query.add_filter("feed_id", "=", feed.feed_id)
-        # return [FeedItem.parse_obj(feed_item) for feed_item in query.fetch()]
+    async def fetch_all_for_feed(self, feed: Feed) -> List[FeedItem]:
+        result = self.feed_items.find({"feed_id": feed.feed_id})
+        return [FeedItem.parse_obj(feed_item) async for feed_item in result]
 
     def count_all_for_feed(self, feed: Feed) -> int:
-        pass
+        raise Exception()
         # query = self.client.query(kind="FeedItem")
         # query.add_filter("feed_id", "=", feed.feed_id)
         # return sum(1 for _ in query.fetch())
 
     def upsert_many(self, feed_items: List[FeedItem]) -> List[FeedItem]:
-        pass
+        raise Exception()
         # entities = []
         # for feed_item in feed_items:
         #     entity = datastore.Entity(self.client.key("FeedItem", feed_item.feed_item_id))
@@ -291,23 +279,24 @@ class FeedItemRepository:
         # return [FeedItem.parse_obj(entity) for entity in entities]
 
     def fetch_all_last_seen_before(self, before: datetime) -> List[str]:
-        pass
+        raise Exception()
         # query = self.client.query(kind="FeedItem")
         # query.add_filter("last_seen", "<", before)
         # query.keys_only()
         # return [entity.key for entity in query.fetch()]
 
     def delete_keys(self, keys: List) -> None:
-        pass
+        raise Exception()
         # self.client.delete_multi(keys)
 
 
 class NewsItemRepository:
-    def __init__(self, database: Database):
+    def __init__(self, database: AsyncIOMotorDatabase):
         self.database = database
+        self.news_items = database["news_items"]
 
     def upsert_many(self, news_items: List[NewsItem]) -> List[NewsItem]:
-        pass
+        raise Exception()
         # entities = []
         # for news_item in news_items:
         #     entity = datastore.Entity(self.client.key("NewsItem", news_item.news_item_id))
@@ -318,14 +307,14 @@ class NewsItemRepository:
         # return [NewsItem.parse_obj(entity) for entity in entities]
 
     def upsert(self, news_item: NewsItem) -> NewsItem:
-        pass
+        raise Exception()
         # entity = datastore.Entity(self.client.key("NewsItem", news_item.news_item_id))
         # entity.update(news_item.dict())
         # self.client.put(entity)
         # return NewsItem.parse_obj(entity)
 
     def delete_user_feed(self, user: User, feed: Feed) -> int:
-        pass
+        raise Exception()
         # query = self.client.query(kind="NewsItem")
         # query.add_filter("user_id", "=", user.user_id)
         # query.add_filter("feed_id", "=", feed.feed_id)
@@ -334,23 +323,14 @@ class NewsItemRepository:
         # self.client.delete_multi(entities)
         # return len(entities)
 
-    def fetch_items(self, user: User, cursor: Optional[bytes], limit: Optional[int] = 15) -> Tuple[str, List[NewsItem]]:
-        pass
-        # google_cursor = create_cursor(earlier_cursor=cursor)
-        # if google_cursor is not None and google_cursor.decode("utf-8") == "DONE":
-        #     return base64.encodebytes(b"DONE").decode("utf-8"), []
-        # query = self.client.query(kind="NewsItem")
-        # query.add_filter("user_id", "=", user.user_id)
-        # query.add_filter("is_read", "=", False)
-        # query.order = ["-published"]
-        #
-        # token, entities = token_and_entities_for_query(cursor=google_cursor, query=query, limit=limit)
-        # return token, [NewsItem.parse_obj(entity) for entity in entities]
+    async def fetch_items(self, user: User, offset: int, limit: int) -> List[NewsItem]:
+        result = self.news_items.find({"user_id": user.user_id, "is_read": False}).skip(offset).limit(limit)
+        return [NewsItem.parse_obj(item) async for item in result]
 
     def fetch_read_items(
         self, user: User, cursor: Optional[bytes], limit: Optional[int] = 15
     ) -> Tuple[str, List[NewsItem]]:
-        pass
+        raise Exception()
         # google_cursor = create_cursor(earlier_cursor=cursor)
         # if google_cursor is not None and google_cursor.decode("utf-8") == "DONE":
         #     return base64.encodebytes(b"DONE").decode("utf-8"), []
@@ -363,7 +343,7 @@ class NewsItemRepository:
         # return token, [NewsItem.parse_obj(entity) for entity in entities]
 
     def fetch_by_id(self, news_item_id: str) -> Optional[NewsItem]:
-        pass
+        raise Exception()
         # key = self.client.key("NewsItem", news_item_id)
         # data = self.client.get(key)
         # if data is None:
@@ -371,7 +351,7 @@ class NewsItemRepository:
         # return NewsItem.parse_obj(data)
 
     def fetch_all_non_read_for_feed(self, feed: Feed, user: User) -> List[NewsItem]:
-        pass
+        raise Exception()
         # query = self.client.query(kind="NewsItem")
         # query.add_filter("feed_id", "=", feed.feed_id)
         # query.add_filter("is_read", "=", False)
@@ -379,7 +359,7 @@ class NewsItemRepository:
         # return [NewsItem.parse_obj(news_item) for news_item in query.fetch()]
 
     def mark_items_as_read(self, user: User, news_item_ids: List[str]) -> None:
-        pass
+        raise Exception()
         # keys = [self.client.key("NewsItem", key) for key in news_item_ids]
         # entities = self.client.get_multi(keys)
         # for entity in entities:
@@ -388,7 +368,7 @@ class NewsItemRepository:
         # self.client.put_multi(entities)
 
     def filter_feed_item_keys_that_are_read(self, feed_item_keys: List) -> List:
-        pass
+        raise Exception()
         # result = []
         # for feed_item_key in feed_item_keys:
         #     query = self.client.query(kind="NewsItem")
@@ -401,7 +381,7 @@ class NewsItemRepository:
         # return result
 
     def delete_with_feed_item_keys(self, feed_item_keys: List) -> None:
-        pass
+        raise Exception()
         # for feed_item_id in feed_item_keys:
         #     query = self.client.query(kind="NewsItem")
         #     query.add_filter("feed_item_id", "=", feed_item_id.name)
@@ -410,27 +390,23 @@ class NewsItemRepository:
 
 
 class UserRepository:
-    def __init__(self, database: Database):
-        self.database = database
+    def __init__(self, database: AsyncIOMotorDatabase):
+        self.users = database["users"]
+        self.avatars = database["avatars"]
+        self.feeds = database["feeds"]
 
-    def fetch_user_by_email(self, email_address: str) -> Optional[User]:
-        pass
-        # query = self.client.query(kind="User")
-        # query.add_filter("email_address", "=", email_address)
-        # result = list(query.fetch())
-        # if not result:
-        #     return None
-        # return User.parse_obj(result[0])
+    async def fetch_user_by_email(self, email_address: str) -> Optional[User]:
+        result = await self.users.find_one({"email_address": email_address})
+        if result is None:
+            return None
+        return User.parse_obj(result)
 
-    def upsert(self, user: User) -> User:
-        pass
-        # entity = datastore.Entity(self.client.key("User", user.user_id))
-        # entity.update(user.dict())
-        # self.client.put(entity)
-        # return User.parse_obj(entity)
+    async def upsert(self, user: User) -> User:
+        await self.users.replace_one({"_id": user.user_id}, user.dict(by_alias=True), True)
+        return user
 
     def upsert_many(self, users: List[User]) -> List[User]:
-        pass
+        raise Exception()
         # entities = []
         # for user in users:
         #     entity = datastore.Entity(self.client.key("User", user.user_id))
@@ -441,31 +417,27 @@ class UserRepository:
         # return [User.parse_obj(entity) for entity in entities]
 
     def fetch_subscribed_to(self, feed: Feed) -> List[User]:
-        pass
+        raise Exception()
         # query = self.client.query(kind="User")
         # result = list(query.fetch())
         # if not result:
         #     return []
         # return [User.parse_obj(entity) for entity in result if feed.feed_id in entity["subscribed_to"]]
 
-    def update_avatar(self, user: User, avatar_image: Optional[str]) -> Optional[Avatar]:
-        pass
-        # entity = datastore.Entity(self.client.key("Avatar", user.user_id), exclude_from_indexes=["image"])
-        # if avatar_image is None:
-        #     self.client.delete(entity)
-        #     return None
-        # avatar = Avatar(user_id=user.user_id, image=avatar_image)
-        # entity.update(avatar.dict())
-        # self.client.put(entity)
-        # return Avatar.parse_obj(entity)
+    async def update_avatar(self, user: User, avatar_image: Optional[str]) -> Optional[Avatar]:
+        if avatar_image is None:
+            self.avatars.delete_many({"_id": user.user_id})
+            return None
+        avatar = Avatar(image=avatar_image)
+        avatar.user_id = user.user_id
+        await self.avatars.replace_one({"_id": user.user_id}, avatar.dict(by_alias=True), True)
+        return avatar
 
-    def fetch_avatar_for_user(self, user: User) -> Optional[Avatar]:
-        pass
-        # key = self.client.key("Avatar", user.user_id)
-        # data = self.client.get(key)
-        # if data is None:
-        #     return None
-        # return Avatar.parse_obj(data)
+    async def fetch_avatar_for_user(self, user: User) -> Optional[Avatar]:
+        avatar = await self.avatars.find_one({"_id": user.user_id})
+        if avatar is None:
+            return None
+        return Avatar.parse_obj(avatar)
 
 
 class RefreshResult(pydantic.main.BaseModel):

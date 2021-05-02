@@ -8,10 +8,17 @@ mongo -- "$MONGO_INITDB_DATABASE" <<EOF
     admin.auth(rootUser, rootPassword);
 
     use newsroom
-    use admin
 
     var user = '$MONGO_USER';
     var password = '$MONGO_PASS';
+    var database = '$MONGO_DB';
     db.createUser({user: user, pwd: password, roles: ["readWrite"]});
+
+    db.grantRolesToUser(
+      user,
+      [
+        { role: "readWrite", db: database }
+      ]
+    )
 
 EOF

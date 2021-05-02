@@ -89,12 +89,12 @@ class ManageSubscriptions extends React.Component<ManageSubscriptionsProps, Mang
 
     subscribeTo(feedForUser: GetFeedsResponse): void {
         this.api
-            .post<SubscribeResponse>(`/feeds/${feedForUser.feed.feed_id}/subscribe`)
+            .post<SubscribeResponse>(`/feeds/${feedForUser.feed._id}/subscribe`)
             .then(() => {
                 this.showNotification("Subscribed")
                 this.setState({
                     feedsForUser: this.state.feedsForUser.map((feed) => {
-                        if (feed.feed.feed_id === feedForUser.feed.feed_id) {
+                        if (feed.feed._id === feedForUser.feed._id) {
                             feed.user_is_subscribed = true
                         }
                         return feed
@@ -106,12 +106,12 @@ class ManageSubscriptions extends React.Component<ManageSubscriptionsProps, Mang
 
     unsubscribeFrom(feedForUser: GetFeedsResponse): void {
         this.api
-            .post<SubscribeResponse>(`/feeds/${feedForUser.feed.feed_id}/unsubscribe`)
+            .post<SubscribeResponse>(`/feeds/${feedForUser.feed._id}/unsubscribe`)
             .then(() => {
                 this.showNotification("Unsubscribed")
                 this.setState({
                     feedsForUser: this.state.feedsForUser.map((feed) => {
-                        if (feed.feed.feed_id === feedForUser.feed.feed_id) {
+                        if (feed.feed._id === feedForUser.feed._id) {
                             feed.user_is_subscribed = false
                         }
                         return feed
@@ -162,7 +162,7 @@ class ManageSubscriptions extends React.Component<ManageSubscriptionsProps, Mang
                                         </TableHead>
                                         <TableBody>
                                             {this.state.feedsForUser.map((feedForUser) => (
-                                                <TableRow key={feedForUser.feed.feed_id}>
+                                                <TableRow key={feedForUser.feed._id}>
                                                     <TableCell>
                                                         <SubscribeUnsubscribeButton
                                                             feedResponse={feedForUser}

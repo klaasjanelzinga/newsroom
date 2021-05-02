@@ -5,8 +5,10 @@ from typing import List, Optional
 
 from aiohttp import ClientConnectorError, ClientSession
 from lxml.etree import fromstring
+from pymongo import ReadPreference, WriteConcern
+from pymongo.read_concern import ReadConcern
 
-from core_lib.application_data import html_feeds, repositories
+from core_lib.application_data import repositories
 from core_lib.atom_feed import atom_document_to_feed, atom_document_to_feed_items, is_atom_file, refresh_atom_feed
 from core_lib.feed_utils import news_items_from_feed_items, upsert_new_feed_items_for_feed
 from core_lib.html_feed import refresh_html_feed
@@ -72,23 +74,22 @@ async def fetch_feed_information_for(
         raise NetworkingException(f"Url {url} not reachable. Details: {cce.__str__()}") from cce
 
 
-def subscribe_user_to_feed(
+async def subscribe_user_to_feed(
     user: User,
     feed: Feed,
 ) -> User:
-    with repositories.client.transaction():
-        if feed.feed_id not in user.subscribed_to:
+
+    async with await repositories.client.start_session() as session:
+        async with session.start_transaction():
             user.subscribed_to.append(feed.feed_id)
-            subscription = Subscription(feed_id=feed.feed_id, user_id=user.user_id)
             feed.number_of_subscriptions = feed.number_of_subscriptions + 1
-            feed_items = repositories.feed_item_repository.fetch_all_for_feed(feed)
+            feed_items = await repositories.feed_item_repository.fetch_all_for_feed(feed)
             news_items = news_items_from_feed_items(feed_items, feed, user)
             user.number_of_unread_items += len(news_items)
 
-            repositories.subscription_repository.upsert(subscription)
-            repositories.user_repository.upsert(user)
-            repositories.feed_repository.upsert(feed)
-            repositories.news_item_repository.upsert_many(news_items)
+            await repositories.user_repository.upsert(user)
+            await repositories.feed_repository.upsert(feed)
+            await repositories.news_item_repository.upsert_many(news_items)
     return user
 
 
@@ -125,7 +126,7 @@ def update_number_items_in_feeds() -> None:
 
 
 async def refresh_all_feeds(include_fixed_feeds: bool = True) -> int:
-    """ Refreshes all active feeds and returns the number of refreshed feeds. """
+    """Refreshes all active feeds and returns the number of refreshed feeds."""
     client_session = repositories.client_session
     feeds = repositories.feed_repository.get_active_feeds()
     tasks = [
@@ -137,8 +138,13 @@ async def refresh_all_feeds(include_fixed_feeds: bool = True) -> int:
     tasks.extend(
         [refresh_rdf_feed(client_session, feed) for feed in feeds if feed.feed_source_type == FeedSourceType.RDF.name]
     )
-    if include_fixed_feeds:
-        tasks.extend([refresh_html_feed(client_session, html_feed) for html_feed in html_feeds])
+    tasks.extend(
+        [
+            refresh_html_feed(client_session, feed)
+            for feed in feeds
+            if feed.feed_source_type == FeedSourceType.GEMEENTE_GRONINGEN.name
+        ]
+    )
 
     await asyncio.gather(*tasks)
     return len(tasks)

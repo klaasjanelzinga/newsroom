@@ -9,6 +9,12 @@ build:
 up: init-data-directory
 	docker-compose --env-file etc/dev.env up
 
+up-infra: init-data-directory
+	docker-compose --env-file etc/dev.env up mongo mongo-express redis
+
+up-frontend: init-data-directory
+	docker-compose --env-file etc/dev.env up frontend
+
 down: init-data-directory
 	docker-compose --env-file etc/dev.env down
 

@@ -58,7 +58,7 @@ LOCALE_LOCK = threading.Lock()
 
 
 def _parse_optional_rss_datetime(freely_formatted_datetime: Optional[str]) -> Optional[datetime]:
-    """ Sun, 19 May 2002 15:21:36 GMT parsing to datetime. """
+    """Sun, 19 May 2002 15:21:36 GMT parsing to datetime."""
     if freely_formatted_datetime is None:
         return None
     in_this_tz = dateparser.parse(freely_formatted_datetime, languages=["en"])
@@ -68,7 +68,7 @@ def _parse_optional_rss_datetime(freely_formatted_datetime: Optional[str]) -> Op
 
 
 def rss_document_to_feed_items(feed: Feed, tree: ElementBase) -> List[FeedItem]:
-    """ Creates a list of FeedItem objects from a xml tree for the feed. """
+    """Creates a list of FeedItem objects from a xml tree for the feed."""
     item_elements = tree.findall("channel/item")
     return [
         FeedItem(

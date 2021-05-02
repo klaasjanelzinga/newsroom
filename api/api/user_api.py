@@ -9,8 +9,13 @@ from starlette import status
 from api.api_application_data import security
 from api.api_utils import ErrorMessage
 from api.security import TokenVerifier
-from core_lib.application_data import repositories
-from core_lib.exceptions import AuthorizationException, IllegalPassword, PasswordsDoNotMatch, TokenCouldNotBeVerified
+from core_lib.exceptions import (
+    AuthorizationException,
+    IllegalPassword,
+    PasswordsDoNotMatch,
+    TokenCouldNotBeVerified,
+    UserNameTaken,
+)
 from core_lib.repositories import User
 from core_lib.user import (
     avatar_image_for_user,
@@ -120,7 +125,7 @@ async def sign_up_user(user_sign_up_request: UserSignUpRequest) -> UserSignInRes
     Sign up the user.
     """
     try:
-        user = signup(
+        user = await signup(
             email_address=user_sign_up_request.email_address,
             password=user_sign_up_request.password,
             password_repeated=user_sign_up_request.password_repeated,
@@ -131,6 +136,8 @@ async def sign_up_user(user_sign_up_request: UserSignUpRequest) -> UserSignInRes
             sign_in_state=SignInState.SIGNED_IN,
             user=user_to_user_response(user),
         )
+    except UserNameTaken:
+        raise HTTPException(status_code=401, detail="Username is not valid. It already exists")
     except AuthorizationException as authorization_exception:
         raise HTTPException(status_code=401, detail=authorization_exception.__str__()) from authorization_exception
 
@@ -151,7 +158,7 @@ async def change_password_user(
     """
     try:
         await security.get_approved_user(authorization)
-        change_password(
+        await change_password(
             email_address=user_change_password_request.email_address,
             current_password=user_change_password_request.current_password,
             new_password=user_change_password_request.new_password,
@@ -180,7 +187,7 @@ async def change_password_user(
 )
 async def sign_in_user(user_sign_in_request: UserSignInRequest) -> UserSignInResponse:
     try:
-        user = sign_in(email_address=user_sign_in_request.email_address, password=user_sign_in_request.password)
+        user = await sign_in(email_address=user_sign_in_request.email_address, password=user_sign_in_request.password)
         token = TokenVerifier.create_token(user, token_verified=False)
         return UserSignInResponse(
             token=token,
@@ -207,7 +214,7 @@ async def update_profile(
 ) -> UserResponse:
     try:
         user = await security.get_approved_user(authorization)
-        user = update_user_profile(
+        user = await update_user_profile(
             user,
             update_profile_request.display_name,
             avatar_image=update_profile_request.avatar_image,
@@ -226,7 +233,7 @@ async def update_profile(
 async def fetch_avatar_image(authorization: Optional[str] = Header(None)) -> UserAvatarResponse:
     try:
         user = await security.get_approved_user(authorization)
-        return UserAvatarResponse(avatar_image=avatar_image_for_user(user))
+        return UserAvatarResponse(avatar_image=await avatar_image_for_user(user))
     except AuthorizationException as authorization_exception:
         raise HTTPException(status_code=401) from authorization_exception
 
@@ -239,7 +246,7 @@ async def fetch_avatar_image(authorization: Optional[str] = Header(None)) -> Use
 async def start_totp_registration(authorization: Optional[str] = Header(None)) -> OTPRegistrationResponse:
     try:
         user = await security.get_approved_user(authorization)
-        otp_result = start_registration_new_otp_for(user)
+        otp_result = await start_registration_new_otp_for(user)
         return OTPRegistrationResponse(
             generated_secret=otp_result.generated_secret,
             uri=otp_result.uri,
@@ -280,7 +287,7 @@ async def confirm_totp(
 ) -> ConfirmTotpResponse:
     try:
         user = await security.get_approved_user(authorization)
-        confirm_otp_for(user, otp_login_request.totp_value)
+        await confirm_otp_for(user, otp_login_request.totp_value)
         return ConfirmTotpResponse(otp_confirmed=True)
     except TokenCouldNotBeVerified:
         return ConfirmTotpResponse(otp_confirmed=False)
@@ -312,7 +319,7 @@ async def use_totp_backup_code(
 ) -> UserSignInResponse:
     try:
         user = await security.get_approved_user(authorization, check_totp=False)
-        user = use_backup_code_for(user, backup_request.totp_backup_code)
+        user = await use_backup_code_for(user, backup_request.totp_backup_code)
         token = TokenVerifier.create_token(user, token_verified=True)
         return UserSignInResponse(
             token=token,
