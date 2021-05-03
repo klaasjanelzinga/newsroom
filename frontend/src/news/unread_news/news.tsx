@@ -159,7 +159,7 @@ class News extends React.Component<NewsProps, NewsState> {
                         {this.state.news_items.map((news_item) => {
                             return (
                                 <NewsItemView
-                                    key={news_item.news_item_id}
+                                    key={news_item._id}
                                     news_item={news_item}
                                     register_mark_as_read_item={(item): void => this.register_mark_as_read(item)}
                                     register_scrollable_item={(item): void => this.register_scrollable_item(item)}

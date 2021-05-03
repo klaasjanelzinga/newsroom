@@ -97,7 +97,7 @@ class NewsItemView extends React.Component<NewsItemViewProps> implements Scrolla
         }
     }
 
-    componentDidMount() {
+    componentDidMount(): void {
         this.setState({
             is_saved: this.props.news_item.is_saved,
             is_read: this.props.news_item.is_read,
@@ -124,7 +124,7 @@ class NewsItemView extends React.Component<NewsItemViewProps> implements Scrolla
     }
 
     item_id(): string {
-        return this.props.news_item.news_item_id
+        return this.props.news_item._id
     }
 
     /**********
@@ -158,7 +158,7 @@ class NewsItemView extends React.Component<NewsItemViewProps> implements Scrolla
             this.api
                 .post<UpsertSavedNewsItemResponse>(
                     "/saved-news",
-                    JSON.stringify({ news_item_id: this.props.news_item.news_item_id })
+                    JSON.stringify({ news_item_id: this.props.news_item._id })
                 )
                 .then((response) => this.setState({ saved_news_item_id: response[1].saved_news_item_id }))
                 .catch((reason) => console.error(reason))

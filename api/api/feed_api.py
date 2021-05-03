@@ -7,7 +7,7 @@ from pydantic.main import BaseModel
 from starlette.status import HTTP_200_OK, HTTP_201_CREATED, HTTP_400_BAD_REQUEST, HTTP_404_NOT_FOUND
 
 from api.api_application_data import security
-from api.api_utils import ErrorMessage
+from api.api_utils import ErrorMessage, EmptyResult, ok
 from core_lib.application_data import repositories
 from core_lib.feed import (
     NetworkingException,
@@ -15,18 +15,10 @@ from core_lib.feed import (
     subscribe_user_to_feed,
     unsubscribe_user_from_feed,
 )
-from core_lib.repositories import Feed, User
+from core_lib.repositories import Feed
 
 feed_router = APIRouter()
 logger = logging.getLogger(__name__)
-
-
-class EmptyResult(BaseModel):
-    result: bool
-
-
-def ok() -> EmptyResult:
-    return EmptyResult(result=True)
 
 
 class FeedWithSubscriptionInformationResponse(BaseModel):
@@ -64,7 +56,7 @@ async def fetch_feed_information_for_url(
     and create a new Feed Entity. Return this entity.
     """
     user = await security.get_approved_user(authorization)
-    feed = repositories.feed_repository.find_by_url(url)
+    feed = await repositories.feed_repository.find_by_url(url)
     if feed is not None:
         response.status_code = HTTP_200_OK
         return FeedWithSubscriptionInformationResponse(feed=feed, user_is_subscribed=feed.feed_id in user.subscribed_to)

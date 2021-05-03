@@ -1,11 +1,13 @@
 import logging
 from typing import List, Optional
 
+from bson import ObjectId
 from fastapi import APIRouter, Header
 from pydantic.main import BaseModel
 from starlette.status import HTTP_200_OK
 
 from api.api_application_data import security
+from api.api_utils import EmptyResult, ok
 from core_lib.application_data import repositories
 from core_lib.repositories import NewsItem
 
@@ -17,10 +19,21 @@ class NewsItemListResponse(BaseModel):
     news_items: List[NewsItem]
     number_of_unread_items: int
 
+    class Config:
+        allow_population_by_field_name = True
+        arbitrary_types_allowed = True
+        by_alias = False
+        json_encoders = {ObjectId: str}
+
 
 class ReadNewsItemListResponse(BaseModel):
-    token: str
     news_items: List[NewsItem]
+
+    class Config:
+        allow_population_by_field_name = True
+        arbitrary_types_allowed = True
+        by_alias = False
+        json_encoders = {ObjectId: str}
 
 
 @news_router.get(
@@ -47,14 +60,14 @@ async def news_items(
     responses={HTTP_200_OK: {"model": ReadNewsItemListResponse, "description": "List is complete"}},
 )
 async def read_news_items(
-    fetch_offset: str = None, authorization: Optional[str] = Header(None)
+    fetch_offset: int, fetch_limit: int = 30, authorization: Optional[str] = Header(None)
 ) -> ReadNewsItemListResponse:
     """Fetch the next set of news items."""
+    fetch_limit = min(fetch_limit, 80)
     user = await security.get_approved_user(authorization)
-    cursor = bytes(fetch_offset, "utf-8") if fetch_offset is not None else None
-    token, result = repositories.news_item_repository.fetch_read_items(user=user, cursor=cursor, limit=30)
+    result = await repositories.news_item_repository.fetch_read_items(user=user, offset=fetch_offset, limit=fetch_limit)
 
-    return ReadNewsItemListResponse(token=token, news_items=result)
+    return ReadNewsItemListResponse(news_items=result)
 
 
 class MarkAsReadRequest(BaseModel):
@@ -62,8 +75,13 @@ class MarkAsReadRequest(BaseModel):
 
 
 @news_router.post("/news-items/mark-as-read", tags=["news-items"])
-async def mark_as_read(mark_as_read_request: MarkAsReadRequest, authorization: Optional[str] = Header("")) -> None:
+async def mark_as_read(
+    mark_as_read_request: MarkAsReadRequest, authorization: Optional[str] = Header("")
+) -> EmptyResult:
     user = await security.get_approved_user(authorization)
-    repositories.news_item_repository.mark_items_as_read(user=user, news_item_ids=mark_as_read_request.news_item_ids)
+    await repositories.news_item_repository.mark_items_as_read(
+        user=user, news_item_ids=mark_as_read_request.news_item_ids
+    )
     user.number_of_unread_items = max(0, user.number_of_unread_items - len(mark_as_read_request.news_item_ids))
-    repositories.user_repository.upsert(user)
+    await repositories.user_repository.upsert(user)
+    return ok()

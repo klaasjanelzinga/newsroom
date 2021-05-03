@@ -47,28 +47,27 @@ async def fetch_feed_information_for(
         feed: Optional[Feed] = None
         feed_items: List[FeedItem] = []
         async with session.get(url, headers={"accept-encoding": "gzip"}) as response:
-            with repositories.client.transaction():
-                text = await response.read()
-                rss_ref = is_html_with_rss_ref(text)
-                if rss_ref is not None:
-                    async with session.get(rss_ref) as xml_response:
-                        text = await xml_response.read()
+            text = await response.read()
+            rss_ref = is_html_with_rss_ref(text)
+            if rss_ref is not None:
+                async with session.get(rss_ref) as xml_response:
+                    text = await xml_response.read()
 
-                if is_rss_document(text):
-                    rss_document = fromstring(text)
-                    feed = rss_document_to_feed(rss_ref if rss_ref is not None else url, rss_document)
-                    feed_items = rss_document_to_feed_items(feed, rss_document)
-                elif is_rdf_document(text):
-                    rdf_document = fromstring(text)
-                    feed = rdf_document_to_feed(url, rdf_document)
-                    feed_items = rdf_document_to_feed_items(feed, rdf_document)
-                elif is_atom_file(text):
-                    atom_document = fromstring(text)
-                    feed = atom_document_to_feed(url, atom_document)
-                    feed_items = atom_document_to_feed_items(feed, atom_document)
+            if is_rss_document(text):
+                rss_document = fromstring(text)
+                feed = rss_document_to_feed(rss_ref if rss_ref is not None else url, rss_document)
+                feed_items = rss_document_to_feed_items(feed, rss_document)
+            elif is_rdf_document(text):
+                rdf_document = fromstring(text)
+                feed = rdf_document_to_feed(url, rdf_document)
+                feed_items = rdf_document_to_feed_items(feed, rdf_document)
+            elif is_atom_file(text):
+                atom_document = fromstring(text)
+                feed = atom_document_to_feed(url, atom_document)
+                feed_items = atom_document_to_feed_items(feed, atom_document)
         if feed is not None:
-            feed.number_of_items = upsert_new_feed_items_for_feed(feed, feed_items)
-            feed = repositories.feed_repository.upsert(feed)
+            feed.number_of_items = await upsert_new_feed_items_for_feed(feed, feed_items)
+            feed = await repositories.feed_repository.upsert(feed)
         return feed
     except ClientConnectorError as cce:
         raise NetworkingException(f"Url {url} not reachable. Details: {cce.__str__()}") from cce

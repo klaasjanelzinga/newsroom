@@ -37,7 +37,8 @@ interface OldNewsState {
 
 class OldNews extends React.Component<OldNewsProps, OldNewsState> {
     api: Api
-    token: string | null = null
+    offset = 0
+    limit = 30
     item_control: ItemControl | null = null
     scrollable_view_items: ScrollableItem[] = []
     no_more_items = false
@@ -65,12 +66,12 @@ class OldNews extends React.Component<OldNewsProps, OldNewsState> {
             return
         }
 
-        const endpoint_with_token = this.token ? `/news-items/read?fetch_offset=${this.token}` : "/news-items"
+        const endpoint = `/news-items/read?fetch_offset=${this.offset}&fetch_limit=${this.limit}`
         this.api
-            .get<GetNewsItemsResponse>(endpoint_with_token)
+            .get<GetNewsItemsResponse>(endpoint)
             .then((newsItems) => {
-                this.token = newsItems[1].token
-                this.no_more_items = atob(this.token) === "DONE"
+                this.offset += newsItems[1].news_items.length
+                this.no_more_items = newsItems[1].news_items.length === this.limit
                 this.setState({
                     news_items: this.state.news_items.concat(newsItems[1].news_items),
                     number_of_unread_items: newsItems[1].number_of_unread_items,
@@ -85,7 +86,7 @@ class OldNews extends React.Component<OldNewsProps, OldNewsState> {
 
     refresh(): void {
         this.setState({ news_items: [], is_loading: true })
-        this.token = null
+        this.offset = 0
         this.fetch_news_items()
     }
 
@@ -130,7 +131,7 @@ class OldNews extends React.Component<OldNewsProps, OldNewsState> {
                         {this.state.news_items.map((news_item) => {
                             return (
                                 <NewsItemView
-                                    key={news_item.news_item_id}
+                                    key={news_item._id}
                                     news_item={news_item}
                                     register_scrollable_item={(item): void => this.register_scrollable_item(item)}
                                 />

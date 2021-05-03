@@ -24,14 +24,14 @@ def item_is_still_relevant(item: FeedItem) -> bool:
         return item.created_on > (datetime.now() - timedelta(hours=18))
 
 
-def upsert_new_feed_items_for_feed(feed: Feed, feed_items: List[FeedItem]) -> int:
+async def upsert_new_feed_items_for_feed(feed: Feed, feed_items: List[FeedItem]) -> int:
     current_feed_item_links = [
-        feed_item.link for feed_item in repositories.feed_item_repository.fetch_all_for_feed(feed)
+        feed_item.link for feed_item in await repositories.feed_item_repository.fetch_all_for_feed(feed)
     ]
     new_feed_items = [
         new_feed_item for new_feed_item in feed_items if new_feed_item.link not in current_feed_item_links
     ]
-    repositories.feed_item_repository.upsert_many(new_feed_items)
+    await repositories.feed_item_repository.upsert_many(new_feed_items)
     return len(new_feed_items)
 
 
