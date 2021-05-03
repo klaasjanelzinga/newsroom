@@ -223,21 +223,18 @@ class FeedRepository:
             return None
         return Feed.parse_obj(result)
 
-    def upsert(self, feed: Feed) -> Feed:
+    async def upsert(self, feed: Feed) -> Feed:
         """Upsert a feed into the repository."""
-        raise Exception()
-        # entity = datastore.Entity(self.client.key("Feed", feed.feed_id))
-        # entity.update(feed.dict())
-        # self.client.put(entity)
-        # return Feed.parse_obj(entity)
+        await self.feeds.replace_one({"_id": feed.feed_id}, feed.dict(by_alias=True))
+        return feed
 
     async def all_feeds(self, user: User) -> List[Feed]:
         """Retrieve all the feeds in the system for the current user."""
-        result = self.feeds.find({"user_id": user.user_id})
+        result = self.feeds.find({})
         return [Feed.parse_obj(feed) async for feed in result]
 
-    async def get(self, user: User, feed_id: str) -> Feed:
-        result = await self.feeds.find_one({"_id": ObjectId(feed_id), "user_id": user.user_id})
+    async def get(self, feed_id: str) -> Feed:
+        result = await self.feeds.find_one({"_id": ObjectId(feed_id)})
         if result is None:
             raise Exception(f"Feed with id {feed_id} not found.")
         return Feed.parse_obj(result)
@@ -313,15 +310,9 @@ class NewsItemRepository:
         # self.client.put(entity)
         # return NewsItem.parse_obj(entity)
 
-    def delete_user_feed(self, user: User, feed: Feed) -> int:
-        raise Exception()
-        # query = self.client.query(kind="NewsItem")
-        # query.add_filter("user_id", "=", user.user_id)
-        # query.add_filter("feed_id", "=", feed.feed_id)
-        # query.keys_only()
-        # entities = [entity.key for entity in query.fetch()]
-        # self.client.delete_multi(entities)
-        # return len(entities)
+    async def delete_user_feed(self, user: User, feed: Feed) -> int:
+        result = await self.news_items.delete_many({"user_id": user.user_id, "feed_id": feed.feed_id})
+        return result.deleted_count
 
     async def fetch_items(self, user: User, offset: int, limit: int) -> List[NewsItem]:
         result = self.news_items.find({"user_id": user.user_id, "is_read": False}).skip(offset).limit(limit)

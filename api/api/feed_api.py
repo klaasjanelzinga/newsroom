@@ -21,6 +21,14 @@ feed_router = APIRouter()
 logger = logging.getLogger(__name__)
 
 
+class EmptyResult(BaseModel):
+    result: bool
+
+
+def ok() -> EmptyResult:
+    return EmptyResult(result=True)
+
+
 class FeedWithSubscriptionInformationResponse(BaseModel):
     feed: Feed
     user_is_subscribed: bool
@@ -88,7 +96,7 @@ async def get_all_feeds(
 
 
 @feed_router.post("/feeds/{feed_id}/subscribe", tags=["feed"])
-async def subscribe_to_feed(feed_id: str, authorization: Optional[str] = Header(None)) -> User:
+async def subscribe_to_feed(feed_id: str, authorization: Optional[str] = Header(None)) -> EmptyResult:
     """
     Subscribe the user to the feed with feed_id. If the user is already subscribed, nothing is done.
 
@@ -96,13 +104,13 @@ async def subscribe_to_feed(feed_id: str, authorization: Optional[str] = Header(
     :param authorization: Token of the user.
     """
     user = await security.get_approved_user(authorization)
-    feed = await repositories.feed_repository.get(user, feed_id)
-    user = await subscribe_user_to_feed(user=user, feed=feed)
-    return user
+    feed = await repositories.feed_repository.get(feed_id)
+    await subscribe_user_to_feed(user=user, feed=feed)
+    return ok()
 
 
 @feed_router.post("/feeds/{feed_id}/unsubscribe", tags=["feed"])
-async def unsubscribe_from_feed(feed_id: str, authorization: Optional[str] = Header(None)) -> User:
+async def unsubscribe_from_feed(feed_id: str, authorization: Optional[str] = Header(None)) -> EmptyResult:
     """
     Unsubscribe the user from the feed with feed_id. If the user is not subscribed, noting is done.
 
@@ -110,6 +118,6 @@ async def unsubscribe_from_feed(feed_id: str, authorization: Optional[str] = Hea
     :param authorization: Token of the user.
     """
     user = await security.get_approved_user(authorization)
-    feed = repositories.feed_repository.get(feed_id)
-    user = unsubscribe_user_from_feed(user=user, feed=feed)
-    return user
+    feed = await repositories.feed_repository.get(feed_id)
+    await unsubscribe_user_from_feed(user=user, feed=feed)
+    return ok()

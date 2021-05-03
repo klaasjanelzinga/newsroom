@@ -93,18 +93,18 @@ async def subscribe_user_to_feed(
     return user
 
 
-def unsubscribe_user_from_feed(user: User, feed: Feed) -> User:
-    with repositories.client.transaction():
-        if feed.feed_id in user.subscribed_to:
-            user.subscribed_to.remove(feed.feed_id)
+async def unsubscribe_user_from_feed(user: User, feed: Feed) -> User:
+    async with await repositories.client.start_session() as session:
+        async with session.start_transaction():
+            if feed.feed_id in user.subscribed_to:
+                user.subscribed_to.remove(feed.feed_id)
 
-            news_items_deleted = repositories.news_item_repository.delete_user_feed(user=user, feed=feed)
-            repositories.subscription_repository.delete_user_feed(user=user, feed=feed)
-            feed.number_of_subscriptions = max(0, feed.number_of_subscriptions - 1)
-            user.number_of_unread_items = max(0, user.number_of_unread_items - news_items_deleted)
+                news_items_deleted = await repositories.news_item_repository.delete_user_feed(user=user, feed=feed)
+                feed.number_of_subscriptions = max(0, feed.number_of_subscriptions - 1)
+                user.number_of_unread_items = max(0, user.number_of_unread_items - news_items_deleted)
 
-            repositories.feed_repository.upsert(feed)
-            repositories.user_repository.upsert(user)
+                await repositories.feed_repository.upsert(feed)
+                await repositories.user_repository.upsert(user)
     return user
 
 
