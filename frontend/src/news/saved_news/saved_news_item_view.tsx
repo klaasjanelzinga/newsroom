@@ -73,7 +73,7 @@ class SavedNewsItemView extends React.Component<SavedNewsItemProps, SavedNewsIte
     element: HTMLDivElement | null = null
     state: SavedNewsItemState = {
         is_saved: true,
-        saved_news_item_id: this.props.saved_news_item.saved_news_item_id,
+        saved_news_item_id: this.props.saved_news_item._id,
     }
     api: Api
 
@@ -100,7 +100,7 @@ class SavedNewsItemView extends React.Component<SavedNewsItemProps, SavedNewsIte
     toggleSavedItem(): void {
         if (this.state.is_saved) {
             this.api
-                .delete(`/saved-news/${this.props.saved_news_item.saved_news_item_id}`, JSON.stringify({}))
+                .delete(`/saved-news/${this.props.saved_news_item._id}`, JSON.stringify({}))
                 .catch((reason) => console.error(reason))
         } else {
             this.api

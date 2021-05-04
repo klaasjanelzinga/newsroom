@@ -1,5 +1,5 @@
 export interface SavedNewsItem {
-    saved_news_item_id: string
+    _id: string
     feed_id: string
     feed_item_id: string
     news_item_id: string
@@ -24,6 +24,5 @@ export interface UpsertSavedNewsItemResponse {
 }
 
 export interface ScrollableItemsResponse<T> {
-    token: string
     items: [T]
 }

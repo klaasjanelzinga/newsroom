@@ -132,8 +132,6 @@ class ChangeTotp extends React.Component<ChangeTotpAttrs, ChangeTotpState> {
         const { classes } = this.props
         return (
             <div>
-                <HeaderBar />
-
                 <div className={classes.cards}>
                     <Card className={classes.card}>
                         <CardContent>

@@ -68,6 +68,8 @@ class News extends React.Component<NewsProps, NewsState> {
             return
         }
 
+        this.setState({ error: null })
+
         const endpoint_with_token = `/news-items?fetch_offset=${this.fetch_offset}&fetch_limit=${this.fetch_limit}`
         this.api
             .get<GetNewsItemsResponse>(endpoint_with_token)

@@ -140,7 +140,7 @@ class NewsItem(BaseModel):  # pylint: disable=too-few-public-methods
     created_on: datetime = now_in_utc()
     is_read: bool = False
     is_saved: bool = False
-    saved_news_item_id: Optional[str] = None
+    saved_news_item_id: Optional[PyObjectId] = None
 
     def append_alternate(self, link: str, title: str, icon_link: str) -> None:
         """Append an alternate source for the news. Only appended if not yet present."""
@@ -152,12 +152,12 @@ class NewsItem(BaseModel):  # pylint: disable=too-few-public-methods
 
 
 class SavedNewsItem(BaseModel):
-    saved_news_item_id: str = Field(default_factory=uuid4_str, alias="_id")
+    saved_news_item_id: PyObjectId = Field(default_factory=uuid4_str, alias="_id")
 
-    feed_id: str
-    user_id: str
-    feed_item_id: str
-    news_item_id: str
+    feed_id: PyObjectId
+    user_id: PyObjectId
+    feed_item_id: PyObjectId
+    news_item_id: PyObjectId
 
     feed_title: str
     title: str
@@ -175,43 +175,26 @@ class SavedNewsItem(BaseModel):
 
 class SavedNewsItemRepository:
     def __init__(self, database: AsyncIOMotorDatabase):
-        self.database = database
+        self.saved_items_collection = database["saved_items"]
 
-    def fetch_items(
-        self, user: User, cursor: Optional[bytes], limit: Optional[int] = 15
-    ) -> Tuple[str, List[SavedNewsItem]]:
-        raise Exception()
-        # google_cursor = create_cursor(earlier_cursor=cursor)
-        # if google_cursor is not None and google_cursor.decode("utf-8") == "DONE":
-        #     return base64.encodebytes(b"DONE").decode("utf-8"), []
-        # query = self.client.query(kind="SavedNewsItem")
-        # query.add_filter("user_id", "=", user.user_id)
-        # query.order = ["-saved_on"]
-        #
-        # token, entities = token_and_entities_for_query(cursor=google_cursor, query=query, limit=limit)
-        # return token, [SavedNewsItem.parse_obj(entity) for entity in entities]
+    async def fetch_items(self, user: User, offset: int, limit: int) -> List[SavedNewsItem]:
+        result = (self.saved_items_collection.find({"user_id": user.user_id}, sort=[('saved_on', DESCENDING)])
+                  .skip(offset)
+                  .limit(limit))
+        return [SavedNewsItem.parse_obj(item) async for item in result]
 
-    def upsert(self, saved_news_item: SavedNewsItem) -> SavedNewsItem:
-        # entity = datastore.Entity(self.client.key("SavedNewsItem", saved_news_item.saved_news_item_id))
-        # entity.update(saved_news_item.dict())
-        # self.client.put(entity)
-        # return SavedNewsItem.parse_obj(entity)
-        raise Exception()
+    async def upsert(self, saved_news_item: SavedNewsItem) -> SavedNewsItem:
+        self.saved_items_collection.replace_one({"_id": saved_news_item.saved_news_item_id}, saved_news_item.dict(by_alias=True), True)
+        return saved_news_item
 
-    def delete_saved_news_item(self, saved_news_item_id: str, user: User) -> None:
-        raise Exception()
-        # key = self.client.key("SavedNewsItem", saved_news_item_id)
-        # data = self.client.get(key)
-        # if data["user_id"] == user.user_id:
-        #     self.client.delete(data)
+    async def delete_saved_news_item(self, saved_news_item_id: str, user: User) -> None:
+        await self.saved_items_collection.delete_one({"_id": ObjectId(saved_news_item_id), "user_id": user.user_id})
 
-    def fetch_by_id(self, saved_news_item_id: str) -> Optional[SavedNewsItem]:
-        raise Exception()
-        # key = self.client.key("SavedNewsItem", saved_news_item_id)
-        # data = self.client.get(key)
-        # if data is None:
-        #     return None
-        # return SavedNewsItem.parse_obj(data)
+    async def fetch_by_id(self, saved_news_item_id: str) -> Optional[SavedNewsItem]:
+        result = await self.saved_items_collection.find_one({"_id": ObjectId(saved_news_item_id)})
+        if result is None:
+            return None
+        return SavedNewsItem.parse_obj(result)
 
 
 class FeedRepository:
@@ -302,12 +285,9 @@ class NewsItemRepository:
             await self.news_item_collection.bulk_write(replace_requests)
         return news_items
 
-    def upsert(self, news_item: NewsItem) -> NewsItem:
-        raise Exception()
-        # entity = datastore.Entity(self.client.key("NewsItem", news_item.news_item_id))
-        # entity.update(news_item.dict())
-        # self.client.put(entity)
-        # return NewsItem.parse_obj(entity)
+    async def upsert(self, news_item: NewsItem) -> NewsItem:
+        await self.news_item_collection.replace_one({"_id": news_item.news_item_id}, news_item.dict(by_alias=True), True)
+        return news_item
 
     async def delete_user_feed(self, user: User, feed: Feed) -> int:
         result = await self.news_item_collection.delete_many({"user_id": user.user_id, "feed_id": feed.feed_id})
@@ -315,9 +295,10 @@ class NewsItemRepository:
 
     async def fetch_items(self, user: User, offset: int, limit: int) -> List[NewsItem]:
         result = (
-            self.news_item_collection.find({"user_id": user.user_id, "is_read": False}, sort=[('published', DESCENDING)])
-            .skip(offset)
-            .limit(limit)
+            self.news_item_collection.find({"user_id": user.user_id, "is_read": False},
+                                           sort=[('published', DESCENDING)])
+                .skip(offset)
+                .limit(limit)
         )
 
         return [NewsItem.parse_obj(item) async for item in result]
@@ -325,8 +306,8 @@ class NewsItemRepository:
     async def fetch_read_items(self, user: User, offset: int, limit: int) -> List[NewsItem]:
         result = (
             self.news_item_collection.find({"user_id": user.user_id, "is_read": True}, sort=[('published', ASCENDING)])
-            .skip(offset)
-            .limit(limit)
+                .skip(offset)
+                .limit(limit)
         )
         return [NewsItem.parse_obj(item) async for item in result]
         # google_cursor = create_cursor(earlier_cursor=cursor)
@@ -340,13 +321,11 @@ class NewsItemRepository:
         # token, entities = token_and_entities_for_query(cursor=google_cursor, query=query, limit=limit)
         # return token, [NewsItem.parse_obj(entity) for entity in entities]
 
-    def fetch_by_id(self, news_item_id: str) -> Optional[NewsItem]:
-        raise Exception()
-        # key = self.client.key("NewsItem", news_item_id)
-        # data = self.client.get(key)
-        # if data is None:
-        #     return None
-        # return NewsItem.parse_obj(data)
+    async def fetch_by_id(self, news_item_id: str) -> Optional[NewsItem]:
+        result = await self.news_item_collection.find_one({"_id": ObjectId(news_item_id)})
+        if result is None:
+            return None
+        return NewsItem.parse_obj(result)
 
     def fetch_all_non_read_for_feed(self, feed: Feed, user: User) -> List[NewsItem]:
         raise Exception()

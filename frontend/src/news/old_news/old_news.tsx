@@ -65,6 +65,7 @@ class OldNews extends React.Component<OldNewsProps, OldNewsState> {
         if (this.state.is_loading || this.no_more_items) {
             return
         }
+        this.setState({ error: null })
 
         const endpoint = `/news-items/read?fetch_offset=${this.offset}&fetch_limit=${this.limit}`
         this.api
