@@ -1,15 +1,14 @@
 import base64
+import enum
 from dataclasses import dataclass
 from datetime import datetime
-import enum
-from typing import Any, Iterator, List, Optional, Tuple
-from uuid import uuid4
+from typing import Iterator, List, Optional
 
 import pydantic
 from bson import ObjectId
+from motor.motor_asyncio import AsyncIOMotorDatabase
 from pydantic import Field
 from pydantic.main import BaseModel
-from motor.motor_asyncio import AsyncIOMotorDatabase
 from pymongo import ReplaceOne, DESCENDING, ASCENDING
 
 from core_lib.utils import now_in_utc
@@ -21,18 +20,6 @@ def uuid4_str() -> ObjectId:
 
 def create_cursor(earlier_cursor: Optional[bytes]) -> Optional[bytes]:
     return base64.decodebytes(earlier_cursor) if earlier_cursor is not None else None
-
-
-def token_and_entities_for_query(query: Any, cursor: Optional[bytes], limit: Optional[int]) -> Tuple[str, Any]:
-    raise Exception()
-    # query_iter = query.fetch(start_cursor=cursor, limit=limit)
-    #
-    # page = next(query_iter.pages)
-    # next_cursor = query_iter.next_page_token
-    # next_cursor_encoded = (
-    #     base64.encodebytes(next_cursor) if next_cursor is not None else base64.encodebytes(bytes("DONE", "UTF-8"))
-    # )
-    # return next_cursor_encoded.decode("utf-8"), page
 
 
 @dataclass
@@ -224,15 +211,10 @@ class FeedRepository:
             raise Exception(f"Feed with id {feed_id} not found.")
         return Feed.parse_obj(result)
 
-    def get_active_feeds(self) -> List[Feed]:
+    async def get_active_feeds(self) -> List[Feed]:
         """Find the Feed entities that are actively used."""
-        raise Exception()
-        # query = self.client.query(kind="Feed")
-        # query.add_filter("number_of_subscriptions", ">", 0)
-        # result = list(query.fetch())
-        # if not result:
-        #     return []
-        # return [Feed.parse_obj(entity) for entity in result]
+        result = self.feeds_collection.find({"number_of_subscriptions": {"$gt": 0}})
+        return [Feed.parse_obj(feed) async for feed in result]
 
 
 class FeedItemRepository:
@@ -310,16 +292,6 @@ class NewsItemRepository:
                 .limit(limit)
         )
         return [NewsItem.parse_obj(item) async for item in result]
-        # google_cursor = create_cursor(earlier_cursor=cursor)
-        # if google_cursor is not None and google_cursor.decode("utf-8") == "DONE":
-        #     return base64.encodebytes(b"DONE").decode("utf-8"), []
-        # query = self.client.query(kind="NewsItem")
-        # query.add_filter("user_id", "=", user.user_id)
-        # query.add_filter("is_read", "=", True)
-        # query.order = ["-published"]
-        #
-        # token, entities = token_and_entities_for_query(cursor=google_cursor, query=query, limit=limit)
-        # return token, [NewsItem.parse_obj(entity) for entity in entities]
 
     async def fetch_by_id(self, news_item_id: str) -> Optional[NewsItem]:
         result = await self.news_item_collection.find_one({"_id": ObjectId(news_item_id)})
@@ -327,13 +299,9 @@ class NewsItemRepository:
             return None
         return NewsItem.parse_obj(result)
 
-    def fetch_all_non_read_for_feed(self, feed: Feed, user: User) -> List[NewsItem]:
-        raise Exception()
-        # query = self.client.query(kind="NewsItem")
-        # query.add_filter("feed_id", "=", feed.feed_id)
-        # query.add_filter("is_read", "=", False)
-        # query.add_filter("user_id", "=", user.user_id)
-        # return [NewsItem.parse_obj(news_item) for news_item in query.fetch()]
+    async def fetch_all_non_read_for_feed(self, feed: Feed, user: User) -> List[NewsItem]:
+        result = self.news_item_collection.find({"feed_id": feed.feed_id, "is_read": False, "user_id": user.user_id})
+        return [NewsItem.parse_obj(item) async for item in result]
 
     async def mark_items_as_read(self, user: User, news_item_ids: List[str]) -> None:
         await self.news_item_collection.update_many(
@@ -365,38 +333,33 @@ class NewsItemRepository:
 
 class UserRepository:
     def __init__(self, database: AsyncIOMotorDatabase):
-        self.users = database["users"]
+        self.users_collection = database["users"]
         self.avatars = database["avatars"]
         self.feeds = database["feeds"]
 
     async def fetch_user_by_email(self, email_address: str) -> Optional[User]:
-        result = await self.users.find_one({"email_address": email_address})
+        result = await self.users_collection.find_one({"email_address": email_address})
         if result is None:
             return None
         return User.parse_obj(result)
 
     async def upsert(self, user: User) -> User:
-        await self.users.replace_one({"_id": user.user_id}, user.dict(by_alias=True), True)
+        await self.users_collection.replace_one({"_id": user.user_id}, user.dict(by_alias=True), True)
         return user
 
-    def upsert_many(self, users: List[User]) -> List[User]:
-        raise Exception()
-        # entities = []
-        # for user in users:
-        #     entity = datastore.Entity(self.client.key("User", user.user_id))
-        #     entity.update(user.dict())
-        #     entities.append(entity)
-        #
-        # self.client.put_multi(entities)
-        # return [User.parse_obj(entity) for entity in entities]
+    async def upsert_many(self, users: List[User]) -> List[User]:
+        if len(users) > 0:
+            replace_requests = [
+                ReplaceOne({"_id": user.user_id}, user.dict(by_alias=True), True)
+                for user in users
+            ]
+            await self.users_collection.bulk_write(replace_requests)
+        return users
 
-    def fetch_subscribed_to(self, feed: Feed) -> List[User]:
-        raise Exception()
-        # query = self.client.query(kind="User")
-        # result = list(query.fetch())
-        # if not result:
-        #     return []
-        # return [User.parse_obj(entity) for entity in result if feed.feed_id in entity["subscribed_to"]]
+    async def fetch_subscribed_to(self, feed: Feed) -> List[User]:
+        result = self.users_collection.find()
+        users = [User.parse_obj(user) async for user in result]
+        return [user for user in users if feed.feed_id in user.subscribed_to]
 
     async def update_avatar(self, user: User, avatar_image: Optional[str]) -> Optional[Avatar]:
         if avatar_image is None:

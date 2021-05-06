@@ -1,5 +1,6 @@
 from typing import List, Optional
 
+from bson import ObjectId
 from fastapi import APIRouter, Header
 from pydantic.main import BaseModel
 from starlette.status import HTTP_200_OK
@@ -17,7 +18,12 @@ saved_news_router = APIRouter()
 
 class SavedNewsItemsResponse(BaseModel):
     saved_news: List[SavedNewsItem]
-    token: str
+
+    class Config:
+        allow_population_by_field_name = True
+        arbitrary_types_allowed = True
+        by_alias = False
+        json_encoders = {ObjectId: str}
 
 
 class SaveNewsItemRequest(BaseModel):
@@ -29,8 +35,13 @@ class SaveNewsItemResponse(BaseModel):
 
 
 class ScrollableResult(BaseModel):
-    token: str
     items: List
+
+    class Config:
+        allow_population_by_field_name = True
+        arbitrary_types_allowed = True
+        by_alias = False
+        json_encoders = {ObjectId: str}
 
 
 @saved_news_router.get(
@@ -41,15 +52,13 @@ class ScrollableResult(BaseModel):
         HTTP_200_OK: {"model": ScrollableResult, "description": "List is complete"},
     },
 )
-async def get_saved_news_items(
-    fetch_offset: str = None, authorization: Optional[str] = Header(None)
-) -> ScrollableResult:
+async def get_saved_news_items(fetch_offset: int, fetch_limit: int, authorization: Optional[str] = Header(None)) -> ScrollableResult:
     user = await security.get_approved_user(authorization)
+    limit = min(fetch_limit, 30)
 
-    cursor = bytes(fetch_offset, "utf-8") if fetch_offset is not None else None
-    token, result = fetch_saved_news_item_for_user(user=user, cursor=cursor)
+    result = await fetch_saved_news_item_for_user(user=user, offset=fetch_offset, limit=limit)
 
-    return ScrollableResult(items=result, token=token)
+    return ScrollableResult(items=result)
 
 
 @saved_news_router.post(
@@ -62,8 +71,8 @@ async def save_news_item(
     save_news_request: SaveNewsItemRequest, authorization: Optional[str] = Header(None)
 ) -> SaveNewsItemResponse:
     user = await security.get_approved_user(authorization)
-    saved_news_item = save_news_item_from_news_item(save_news_request.news_item_id, user)
-    return SaveNewsItemResponse(saved_news_item_id=saved_news_item.saved_news_item_id)
+    saved_news_item = await save_news_item_from_news_item(save_news_request.news_item_id, user)
+    return SaveNewsItemResponse(saved_news_item_id=saved_news_item.saved_news_item_id.__str__())
 
 
 @saved_news_router.delete(
@@ -73,4 +82,4 @@ async def save_news_item(
 )
 async def delete_saved_news_item(saved_news_item_id: str, authorization: Optional[str] = Header(None)) -> None:
     user = await security.get_approved_user(authorization)
-    delete_saved_news_item_with_id(saved_news_item_id, user)
+    await delete_saved_news_item_with_id(saved_news_item_id, user)

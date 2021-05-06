@@ -127,7 +127,7 @@ def update_number_items_in_feeds() -> None:
 async def refresh_all_feeds(include_fixed_feeds: bool = True) -> int:
     """Refreshes all active feeds and returns the number of refreshed feeds."""
     client_session = repositories.client_session
-    feeds = repositories.feed_repository.get_active_feeds()
+    feeds = await repositories.feed_repository.get_active_feeds()
     tasks = [
         refresh_rss_feed(client_session, feed) for feed in feeds if feed.feed_source_type == FeedSourceType.RSS.name
     ]

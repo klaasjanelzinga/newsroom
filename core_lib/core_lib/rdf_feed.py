@@ -63,13 +63,15 @@ async def refresh_rdf_feed(session: ClientSession, feed: Feed) -> Optional[Refre
     log.info("Refreshing rdf feed %s", feed)
     try:
         async with session.get(feed.url) as xml_response:
-            with repositories.client.transaction():
-                rdf_document = fromstring(await xml_response.read())
-                feed_from_rss = rdf_document_to_feed(feed.url, rdf_document)
-                feed_items_from_rss = rdf_document_to_feed_items(feed, rdf_document)
-                number_of_items = upsert_new_items_for_feed(feed, feed_from_rss, feed_items_from_rss)
+            rdf_document = fromstring(await xml_response.read())
+            feed_from_rss = rdf_document_to_feed(feed.url, rdf_document)
+            feed_items_from_rss = rdf_document_to_feed_items(feed, rdf_document)
 
-                return RefreshResult(feed=feed, number_of_items=number_of_items)
+            async with await repositories.client.start_session() as mongo_session:
+                async with mongo_session.start_transaction():
+                    number_of_items = upsert_new_items_for_feed(feed, feed_from_rss, feed_items_from_rss)
+            return RefreshResult(feed=feed, number_of_items=number_of_items)
+
     except (ClientError, TimeoutError):
         log.exception("Error while refreshing feed %s", feed)
         return None
