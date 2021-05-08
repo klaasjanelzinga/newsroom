@@ -7,13 +7,13 @@ from fastapi import HTTPException
 from api.feed_api import get_all_feeds
 from api.user_api import sign_in_user, UserSignInRequest
 from core_lib.app_config import AppConfig
+from core_lib.application_data import Repositories
 from core_lib.repositories import User
-from tests.mock_repositories import MockRepositories
 
 
 @pytest.mark.asyncio
 async def test_sign_in(
-    repositories: MockRepositories,
+    repositories: Repositories,
     signed_up_user: User,
     signed_up_user_email_address: str,
     signed_up_user_password: str,
@@ -27,7 +27,7 @@ async def test_sign_in(
 
 @pytest.mark.asyncio
 async def test_sign_in_wrong_password(
-    repositories: MockRepositories, signed_up_user: User, signed_up_user_email_address: str, signed_up_user_password
+    repositories: Repositories, signed_up_user: User, signed_up_user_email_address: str, signed_up_user_password
 ):
     with pytest.raises(HTTPException) as http_exception:
         user_sign_in_request = UserSignInRequest(
@@ -40,7 +40,7 @@ async def test_sign_in_wrong_password(
 
 @pytest.mark.asyncio
 async def test_sign_in_wrong_user(
-    repositories: MockRepositories,
+    repositories: Repositories,
     signed_up_user: User,
     signed_up_user_email_address: str,
     signed_up_user_password: str,
@@ -56,7 +56,7 @@ async def test_sign_in_wrong_user(
 
 @pytest.mark.asyncio
 async def test_sign_in_tampered_token(
-    repositories: MockRepositories,
+    repositories: Repositories,
     approved_up_user: User,
     approved_up_user_email_address: str,
     approved_up_user_password: str,

@@ -3,12 +3,12 @@ from faker import Faker
 from fastapi import HTTPException
 
 from api.user_api import sign_up_user, UserSignUpRequest
+from core_lib.application_data import Repositories
 from core_lib.repositories import User
-from tests.mock_repositories import MockRepositories
 
 
 @pytest.mark.asyncio
-async def test_signup_new_user(faker: Faker, repositories: MockRepositories):
+async def test_signup_new_user(faker: Faker, repositories: Repositories):
     email_address = faker.email()
     password = faker.password(length=16, special_chars=True, digits=True, upper_case=True, lower_case=True)
 
@@ -16,14 +16,14 @@ async def test_signup_new_user(faker: Faker, repositories: MockRepositories):
     response = await sign_up_user(request)
     assert response is not None
     assert response.token is not None
-    assert repositories.user_repository.count() == 1
+    assert await repositories.user_repository.count({}) == 1
 
 
 @pytest.mark.asyncio
 async def test_signup_existing_user(
-    repositories: MockRepositories, signed_up_user: User, signed_up_user_email_address, signed_up_user_password
+    repositories: Repositories, signed_up_user: User, signed_up_user_email_address, signed_up_user_password
 ):
-    assert repositories.user_repository.count() == 1
+    assert await repositories.user_repository.count({}) == 1
     with pytest.raises(HTTPException) as http_exception:
         request = UserSignUpRequest(
             email_address=signed_up_user_email_address,
@@ -35,7 +35,7 @@ async def test_signup_existing_user(
 
 
 @pytest.mark.asyncio
-async def test_signup_non_matching_passwords(repositories: MockRepositories, faker: Faker):
+async def test_signup_non_matching_passwords(repositories: Repositories, faker: Faker):
     email_address = faker.email()
     password = faker.password(length=16, special_chars=True, digits=True, upper_case=True, lower_case=True)
 
@@ -50,7 +50,7 @@ async def test_signup_non_matching_passwords(repositories: MockRepositories, fak
 
 
 @pytest.mark.asyncio
-async def test_password_strength(repositories: MockRepositories, faker: Faker()):
+async def test_password_strength(repositories: Repositories, faker: Faker()):
     user_email_address = faker.email()
     with pytest.raises(HTTPException) as http_exception:
         password = "shortie"

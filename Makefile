@@ -27,6 +27,12 @@ mongo: init-data-directory
 restart-frontend:
 	docker-compose restart frontend
 
+run-tests-in-docker:
+	docker-compose --env-file etc/test.env -f docker-compose-test.yml up -d mongo 
+	sleep 10
+	docker-compose --env-file etc/test.env -f docker-compose-test.yml up --exit-code-from unittests
+	docker-compose -f docker-compose-test.yml down
+
 # -------------------------------------------------------
 # Dependency management
 requirements:

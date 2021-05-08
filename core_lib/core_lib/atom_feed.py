@@ -33,7 +33,7 @@ def atom_document_to_feed(atom_url: str, tree: ElementBase) -> Feed:
         link=link,
         description=description,
         category=category,
-        feed_source_type=FeedSourceType.ATOM.name,
+        feed_source_type=FeedSourceType.ATOM,
     )
 
 
@@ -76,9 +76,9 @@ async def refresh_atom_feed(session: ClientSession, feed: Feed) -> Optional[Refr
             feed_from_rss = atom_document_to_feed(feed.url, atom_document)
             feed_items_from_rss = atom_document_to_feed_items(feed, atom_document)
 
-            async with await repositories.client.start_session() as mongo_session:
+            async with await repositories().mongo_client.start_session() as mongo_session:
                 async with mongo_session.start_transaction():
-                    number_of_items = upsert_new_items_for_feed(feed, feed_from_rss, feed_items_from_rss)
+                    number_of_items = await upsert_new_items_for_feed(feed, feed_from_rss, feed_items_from_rss)
             return RefreshResult(feed=feed, number_of_items=number_of_items)
     except (aiohttp.ClientError, TimeoutError):
         log.exception("Error while refreshing feed %s", feed)

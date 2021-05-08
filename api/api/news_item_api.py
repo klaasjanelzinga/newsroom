@@ -7,7 +7,7 @@ from pydantic.main import BaseModel
 from starlette.status import HTTP_200_OK
 
 from api.api_application_data import security
-from api.api_utils import EmptyResult, ok
+from api.api_utils import EmptyResult, ok_result
 from core_lib.application_data import repositories
 from core_lib.repositories import NewsItem
 
@@ -47,8 +47,8 @@ async def news_items(
 ) -> NewsItemListResponse:
     """Fetch the next set of news items."""
     fetch_limit = min(fetch_limit, 80)
-    user = await security.get_approved_user(authorization)
-    result = await repositories.news_item_repository.fetch_items(user=user, offset=fetch_offset, limit=fetch_limit)
+    user = await security().get_approved_user(authorization)
+    result = await repositories().news_item_repository.fetch_items(user=user, offset=fetch_offset, limit=fetch_limit)
 
     return NewsItemListResponse(news_items=result, number_of_unread_items=user.number_of_unread_items)
 
@@ -64,8 +64,10 @@ async def read_news_items(
 ) -> ReadNewsItemListResponse:
     """Fetch the next set of news items."""
     fetch_limit = min(fetch_limit, 80)
-    user = await security.get_approved_user(authorization)
-    result = await repositories.news_item_repository.fetch_read_items(user=user, offset=fetch_offset, limit=fetch_limit)
+    user = await security().get_approved_user(authorization)
+    result = await repositories().news_item_repository.fetch_read_items(
+        user=user, offset=fetch_offset, limit=fetch_limit
+    )
 
     return ReadNewsItemListResponse(news_items=result)
 
@@ -78,10 +80,10 @@ class MarkAsReadRequest(BaseModel):
 async def mark_as_read(
     mark_as_read_request: MarkAsReadRequest, authorization: Optional[str] = Header("")
 ) -> EmptyResult:
-    user = await security.get_approved_user(authorization)
-    await repositories.news_item_repository.mark_items_as_read(
+    user = await security().get_approved_user(authorization)
+    await repositories().news_item_repository.mark_items_as_read(
         user=user, news_item_ids=mark_as_read_request.news_item_ids
     )
     user.number_of_unread_items = max(0, user.number_of_unread_items - len(mark_as_read_request.news_item_ids))
-    await repositories.user_repository.upsert(user)
-    return ok()
+    await repositories().user_repository.upsert(user)
+    return ok_result()

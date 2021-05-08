@@ -6,17 +6,18 @@ from faker import Faker
 from lxml.etree import parse
 
 from api.feed_api import FeedWithSubscriptionInformationResponse, fetch_feed_information_for_url
+from core_lib.application_data import Repositories
 from core_lib.repositories import FeedItem, User
 from core_lib.utils import sanitize_link
-from tests.mock_repositories import MockRepositories
+from tests.conftest import ClientSessionMocker, clean_data_repositories
 
 
-def _assert_fetch_feed_information_response(
+async def _assert_fetch_feed_information_response(
     response: FeedWithSubscriptionInformationResponse,
     response_mock: MagicMock,
     expected_url: str,
     xml_test_file: str,
-    repositories: MockRepositories,
+    repositories: Repositories,
 ):
     assert not response.user_is_subscribed
     assert response_mock.status_code == 201
@@ -31,8 +32,8 @@ def _assert_fetch_feed_information_response(
         assert response.feed.image_url == xml_element.find("channel/image/url").text
         assert response.feed.image_link == xml_element.find("channel/image/link").text
         assert response.feed.image_title == xml_element.find("channel/image/title").text
-    assert repositories.feed_repository.count() == 1
-    item: FeedItem = choice(repositories.feed_item_repository.fetch_all_for_feed(response.feed))
+    assert await repositories.feed_repository.count({}) == 1
+    item: FeedItem = choice(await repositories.feed_item_repository.fetch_all_for_feed(response.feed))
     xml_item = [
         element
         for element in xml_element.findall("channel/item")
@@ -50,7 +51,9 @@ def _assert_fetch_feed_information_response(
 
 
 @pytest.mark.asyncio
-async def test_parse_sample_rss_feeds(repositories: MockRepositories, faker: Faker, user: User, user_bearer_token):
+async def test_parse_sample_rss_feeds(
+    repositories: Repositories, client_session_mocker: ClientSessionMocker, faker: Faker, user: User, user_bearer_token
+):
     response_mock = MagicMock()
 
     xml_test_files = [
@@ -58,16 +61,16 @@ async def test_parse_sample_rss_feeds(repositories: MockRepositories, faker: Fak
         "sample-files/rss_feeds/ars_technica.xml",
         "sample-files/rss_feeds/pitchfork_best.xml",
     ]
-    repositories.mock_client_session_for_files(xml_test_files)
+    client_session_mocker.setup_client_session_for(xml_test_files)
     test_url = faker.url()
 
     for xml_test_file in xml_test_files:
-        repositories.reset()
-        repositories.user_repository.upsert(user)
+        clean_data_repositories(repositories)
+
         response = await fetch_feed_information_for_url(
             response=response_mock, url=test_url, authorization=user_bearer_token
         )
-        _assert_fetch_feed_information_response(
+        await _assert_fetch_feed_information_response(
             response=response,
             response_mock=response_mock,
             expected_url=test_url,
@@ -77,16 +80,22 @@ async def test_parse_sample_rss_feeds(repositories: MockRepositories, faker: Fak
 
 
 @pytest.mark.asyncio
-async def test_unknown_feed_with_html(faker: Faker, user: User, repositories: MockRepositories, user_bearer_token):
+async def test_unknown_feed_with_html(
+    faker: Faker,
+    user: User,
+    repositories: Repositories,
+    client_session_mocker: ClientSessionMocker,
+    user_bearer_token: str,
+):
 
     html_file = "sample-files/rss_feeds/pitchfork_best.html"
     xml_file = "sample-files/rss_feeds/pitchfork_best.xml"
-    repositories.mock_client_session_for_files([html_file, xml_file])
+    client_session_mocker.setup_client_session_for([html_file, xml_file])
     response_mock = MagicMock()
     url = faker.url()
 
     response = await fetch_feed_information_for_url(response=response_mock, url=url, authorization=user_bearer_token)
-    _assert_fetch_feed_information_response(
+    await _assert_fetch_feed_information_response(
         response=response,
         response_mock=response_mock,
         expected_url="https://pitchfork.com/rss/reviews/best/albums",

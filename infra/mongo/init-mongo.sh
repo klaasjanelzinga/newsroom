@@ -7,11 +7,25 @@ mongo -- "$MONGO_INITDB_DATABASE" <<EOF
     var admin = db.getSiblingDB('admin');
     admin.auth(rootUser, rootPassword);
 
-    use newsroom
-
     var user = '$MONGO_USER';
     var password = '$MONGO_PASS';
     var database = '$MONGO_DB';
+
+    use newsroom
+    db.createUser({user: user, pwd: password, roles: ["readWrite"]});
+
+    db.grantRolesToUser(
+      user,
+      [
+        { role: "readWrite", db: database }
+      ]
+    )
+
+    var user = '$MONGO_TEST_USER';
+    var password = '$MONGO_TEST_PASS';
+    var database = '$MONGO_TEST_DB';
+
+    use newsroom-test
     db.createUser({user: user, pwd: password, roles: ["readWrite"]});
 
     db.grantRolesToUser(

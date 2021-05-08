@@ -1,4 +1,11 @@
-from api.security import Security
-from core_lib.application_data import repositories
+from typing import Optional
 
-security = Security(user_repository=repositories.user_repository)
+from api.security import Security
+
+_security: Optional[Security] = None
+
+
+def security() -> Security:
+    if _security is None:
+        raise Exception("Initialization error")
+    return _security

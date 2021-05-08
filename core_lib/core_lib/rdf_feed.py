@@ -1,7 +1,7 @@
 import logging
 from typing import List, Optional
 
-from aiohttp import ClientSession, ClientError
+from aiohttp import ClientError, ClientSession
 from lxml.etree import ElementBase, fromstring
 
 from core_lib.application_data import repositories
@@ -34,7 +34,7 @@ def rdf_document_to_feed(rss_url: str, tree: ElementBase) -> Feed:
         title=title,
         description=description,
         link=link,
-        feed_source_type=FeedSourceType.RDF.name,
+        feed_source_type=FeedSourceType.RDF,
         category=category.text if category is not None else None,
         image_url=image_url if image_url is not None else None,
         image_title=None,
@@ -67,9 +67,9 @@ async def refresh_rdf_feed(session: ClientSession, feed: Feed) -> Optional[Refre
             feed_from_rss = rdf_document_to_feed(feed.url, rdf_document)
             feed_items_from_rss = rdf_document_to_feed_items(feed, rdf_document)
 
-            async with await repositories.client.start_session() as mongo_session:
+            async with await repositories().mongo_client.start_session() as mongo_session:
                 async with mongo_session.start_transaction():
-                    number_of_items = upsert_new_items_for_feed(feed, feed_from_rss, feed_items_from_rss)
+                    number_of_items = await upsert_new_items_for_feed(feed, feed_from_rss, feed_items_from_rss)
             return RefreshResult(feed=feed, number_of_items=number_of_items)
 
     except (ClientError, TimeoutError):

@@ -1,25 +1,21 @@
-import base64
-import enum
 from dataclasses import dataclass
 from datetime import datetime
-from typing import Iterator, List, Optional
+import enum
+from typing import Any, Dict, Iterator, List, Optional
 
-import pydantic
 from bson import ObjectId
 from motor.motor_asyncio import AsyncIOMotorDatabase
+import pydantic
 from pydantic import Field
 from pydantic.main import BaseModel
-from pymongo import ReplaceOne, DESCENDING, ASCENDING
+from pymongo import ASCENDING, DESCENDING, ReplaceOne
+import pytz
 
 from core_lib.utils import now_in_utc
 
 
 def uuid4_str() -> ObjectId:
     return ObjectId()
-
-
-def create_cursor(earlier_cursor: Optional[bytes]) -> Optional[bytes]:
-    return base64.decodebytes(earlier_cursor) if earlier_cursor is not None else None
 
 
 @dataclass
@@ -30,17 +26,17 @@ class QueryResult:
 
 class PyObjectId(ObjectId):
     @classmethod
-    def __get_validators__(cls):
+    def __get_validators__(cls) -> ObjectId:
         yield cls.validate
 
     @classmethod
-    def validate(cls, v):
-        if not ObjectId.is_valid(v):
+    def validate(cls, value: Any) -> ObjectId:
+        if not ObjectId.is_valid(value):
             raise ValueError("Invalid objectid")
-        return ObjectId(v)
+        return ObjectId(value)
 
     @classmethod
-    def __modify_schema__(cls, field_schema):
+    def __modify_schema__(cls, field_schema: Any) -> None:
         field_schema.update(type="string")
 
 
@@ -64,11 +60,11 @@ class User(BaseModel):  # pylint: disable=too-few-public-methods
     number_of_unread_items: int = 0
 
 
-class FeedSourceType(enum.Enum):
-    ATOM = 0
-    RSS = 1
-    GEMEENTE_GRONINGEN = 2
-    RDF = 3
+class FeedSourceType(str, enum.Enum):
+    ATOM = "ATOM FEED"
+    RSS = "RSS FEED"
+    GEMEENTE_GRONINGEN = "GEMEENTE GRONINGEN FEED"
+    RDF = "RDF FEED"
 
 
 class Feed(BaseModel):  # pylint: disable=too-few-public-methods
@@ -76,7 +72,7 @@ class Feed(BaseModel):  # pylint: disable=too-few-public-methods
     url: str
     title: str
     link: str
-    feed_source_type: str = FeedSourceType.RSS.name
+    feed_source_type: FeedSourceType = FeedSourceType.RSS
     number_of_subscriptions: int = 0
     number_of_items: int = 0
 
@@ -88,12 +84,6 @@ class Feed(BaseModel):  # pylint: disable=too-few-public-methods
 
     last_fetched: Optional[datetime]
     last_published: Optional[datetime]
-
-
-class Subscription(BaseModel):  # pylint: disable=too-few-public-methods
-    subscription_id: PyObjectId = Field(default_factory=uuid4_str, alias="_id")
-    feed_id: PyObjectId
-    user_id: PyObjectId
 
 
 class FeedItem(BaseModel):  # pylint: disable=too-few-public-methods
@@ -127,6 +117,7 @@ class NewsItem(BaseModel):  # pylint: disable=too-few-public-methods
     created_on: datetime = now_in_utc()
     is_read: bool = False
     is_saved: bool = False
+    is_read_on: Optional[datetime] = None
     saved_news_item_id: Optional[PyObjectId] = None
 
     def append_alternate(self, link: str, title: str, icon_link: str) -> None:
@@ -164,14 +155,22 @@ class SavedNewsItemRepository:
     def __init__(self, database: AsyncIOMotorDatabase):
         self.saved_items_collection = database["saved_items"]
 
+    async def count(self, search_filter: Dict[str, Any]) -> int:
+        """Count the number of documents in the collection."""
+        return await self.saved_items_collection.count_documents(search_filter)
+
     async def fetch_items(self, user: User, offset: int, limit: int) -> List[SavedNewsItem]:
-        result = (self.saved_items_collection.find({"user_id": user.user_id}, sort=[('saved_on', DESCENDING)])
-                  .skip(offset)
-                  .limit(limit))
+        result = (
+            self.saved_items_collection.find({"user_id": user.user_id}, sort=[("saved_on", DESCENDING)])
+            .skip(offset)
+            .limit(limit)
+        )
         return [SavedNewsItem.parse_obj(item) async for item in result]
 
     async def upsert(self, saved_news_item: SavedNewsItem) -> SavedNewsItem:
-        self.saved_items_collection.replace_one({"_id": saved_news_item.saved_news_item_id}, saved_news_item.dict(by_alias=True), True)
+        await self.saved_items_collection.replace_one(
+            {"_id": saved_news_item.saved_news_item_id}, saved_news_item.dict(by_alias=True), True
+        )
         return saved_news_item
 
     async def delete_saved_news_item(self, saved_news_item_id: str, user: User) -> None:
@@ -186,7 +185,11 @@ class SavedNewsItemRepository:
 
 class FeedRepository:
     def __init__(self, database: AsyncIOMotorDatabase):
-        self.feeds_collection = database["feeds"]
+        self.feeds_collection = database.get_collection("feeds")
+
+    async def count(self, search_filter: Dict[str, Any]) -> int:
+        """Count the number of documents in the collection."""
+        return await self.feeds_collection.count_documents(search_filter)
 
     async def find_by_url(self, url: str) -> Optional[Feed]:
         """Check if a feed already exists by looking at the URL."""
@@ -200,8 +203,15 @@ class FeedRepository:
         await self.feeds_collection.replace_one({"_id": feed.feed_id}, feed.dict(by_alias=True), True)
         return feed
 
-    async def all_feeds(self, user: User) -> List[Feed]:
-        """Retrieve all the feeds in the system for the current user."""
+    async def upsert_many(self, feeds: List[Feed]) -> List[Feed]:
+        """Upsert feeds."""
+        if len(feeds) > 0:
+            requests = [ReplaceOne({"_id": feed.feed_id}, feed.dict(by_alias=True), True) for feed in feeds]
+            await self.feeds_collection.bulk_write(requests)
+        return feeds
+
+    async def all_feeds(self) -> List[Feed]:
+        """Retrieve all the feeds in the system."""
         result = self.feeds_collection.find({})
         return [Feed.parse_obj(feed) async for feed in result]
 
@@ -219,17 +229,18 @@ class FeedRepository:
 
 class FeedItemRepository:
     def __init__(self, database: AsyncIOMotorDatabase):
-        self.feed_items = database["feed_items"]
+        self.feed_items_collection = database["feed_items"]
+
+    async def count(self, search_filter: Dict[str, Any]) -> int:
+        """Count the number of documents in the collection."""
+        return await self.feed_items_collection.count_documents(search_filter)
 
     async def fetch_all_for_feed(self, feed: Feed) -> List[FeedItem]:
-        result = self.feed_items.find({"feed_id": feed.feed_id})
+        result = self.feed_items_collection.find({"feed_id": feed.feed_id})
         return [FeedItem.parse_obj(feed_item) async for feed_item in result]
 
-    def count_all_for_feed(self, feed: Feed) -> int:
-        raise Exception()
-        # query = self.client.query(kind="FeedItem")
-        # query.add_filter("feed_id", "=", feed.feed_id)
-        # return sum(1 for _ in query.fetch())
+    async def count_all_for_feed(self, feed: Feed) -> int:
+        return await self.feed_items_collection.count_documents({"feed_id": feed.feed_id})
 
     async def upsert_many(self, feed_items: List[FeedItem]) -> List[FeedItem]:
         """Upsert feed items."""
@@ -238,25 +249,22 @@ class FeedItemRepository:
                 ReplaceOne({"_id": feed_item.feed_item_id}, feed_item.dict(by_alias=True), True)
                 for feed_item in feed_items
             ]
-            await self.feed_items.bulk_write(requests)
+            await self.feed_items_collection.bulk_write(requests)
         return feed_items
 
-    def fetch_all_last_seen_before(self, before: datetime) -> List[str]:
-        raise Exception()
-        # query = self.client.query(kind="FeedItem")
-        # query.add_filter("last_seen", "<", before)
-        # query.keys_only()
-        # return [entity.key for entity in query.fetch()]
-
-    def delete_keys(self, keys: List) -> None:
-        raise Exception()
-        # self.client.delete_multi(keys)
+    async def delete_older_than(self, before: datetime) -> int:
+        response = await self.feed_items_collection.delete_many({"last_seen": {"$lt": before}})
+        return response.deleted_count
 
 
 class NewsItemRepository:
     def __init__(self, database: AsyncIOMotorDatabase):
         self.database = database
         self.news_item_collection = database["news_items"]
+
+    async def count(self, search_filter: Dict[str, Any]) -> int:
+        """Count the number of documents in the collection."""
+        return await self.news_item_collection.count_documents(search_filter)
 
     async def upsert_many(self, news_items: List[NewsItem]) -> List[NewsItem]:
         if len(news_items) > 0:
@@ -268,7 +276,9 @@ class NewsItemRepository:
         return news_items
 
     async def upsert(self, news_item: NewsItem) -> NewsItem:
-        await self.news_item_collection.replace_one({"_id": news_item.news_item_id}, news_item.dict(by_alias=True), True)
+        await self.news_item_collection.replace_one(
+            {"_id": news_item.news_item_id}, news_item.dict(by_alias=True), True
+        )
         return news_item
 
     async def delete_user_feed(self, user: User, feed: Feed) -> int:
@@ -277,19 +287,20 @@ class NewsItemRepository:
 
     async def fetch_items(self, user: User, offset: int, limit: int) -> List[NewsItem]:
         result = (
-            self.news_item_collection.find({"user_id": user.user_id, "is_read": False},
-                                           sort=[('published', DESCENDING)])
-                .skip(offset)
-                .limit(limit)
+            self.news_item_collection.find(
+                {"user_id": user.user_id, "is_read": False}, sort=[("published", DESCENDING)]
+            )
+            .skip(offset)
+            .limit(limit)
         )
 
         return [NewsItem.parse_obj(item) async for item in result]
 
     async def fetch_read_items(self, user: User, offset: int, limit: int) -> List[NewsItem]:
         result = (
-            self.news_item_collection.find({"user_id": user.user_id, "is_read": True}, sort=[('published', ASCENDING)])
-                .skip(offset)
-                .limit(limit)
+            self.news_item_collection.find({"user_id": user.user_id, "is_read": True}, sort=[("published", ASCENDING)])
+            .skip(offset)
+            .limit(limit)
         )
         return [NewsItem.parse_obj(item) async for item in result]
 
@@ -306,29 +317,12 @@ class NewsItemRepository:
     async def mark_items_as_read(self, user: User, news_item_ids: List[str]) -> None:
         await self.news_item_collection.update_many(
             {"_id": {"$in": [PyObjectId(news_item_id) for news_item_id in news_item_ids]}, "user_id": user.user_id},
-            {"$set": {"is_read": True}},
+            {"$set": {"is_read": True, "is_read_on": datetime.now(tz=pytz.utc)}},
         )
 
-    def filter_feed_item_keys_that_are_read(self, feed_item_keys: List) -> List:
-        raise Exception()
-        # result = []
-        # for feed_item_key in feed_item_keys:
-        #     query = self.client.query(kind="NewsItem")
-        #     query.add_filter("feed_item_id", "=", feed_item_key.name)
-        #     query.add_filter("is_read", "=", False)
-        #     query.keys_only()
-        #     number_hits = len(list(query.fetch()))
-        #     if number_hits == 0:
-        #         result.append(feed_item_key)
-        # return result
-
-    def delete_with_feed_item_keys(self, feed_item_keys: List) -> None:
-        raise Exception()
-        # for feed_item_id in feed_item_keys:
-        #     query = self.client.query(kind="NewsItem")
-        #     query.add_filter("feed_item_id", "=", feed_item_id.name)
-        #     query.keys_only()
-        #     self.client.delete_multi([entity.key for entity in query.fetch()])
+    async def delete_read_items_older_than(self, before: datetime) -> int:
+        result = await self.news_item_collection.delete_many({"is_read": True, "is_read_on": {"$lt": before}})
+        return result.deleted_count
 
 
 class UserRepository:
@@ -336,6 +330,10 @@ class UserRepository:
         self.users_collection = database["users"]
         self.avatars = database["avatars"]
         self.feeds = database["feeds"]
+
+    async def count(self, search_filter: Dict[str, Any]) -> int:
+        """Count the number of documents in the collection."""
+        return await self.users_collection.count_documents(search_filter)
 
     async def fetch_user_by_email(self, email_address: str) -> Optional[User]:
         result = await self.users_collection.find_one({"email_address": email_address})
@@ -349,10 +347,7 @@ class UserRepository:
 
     async def upsert_many(self, users: List[User]) -> List[User]:
         if len(users) > 0:
-            replace_requests = [
-                ReplaceOne({"_id": user.user_id}, user.dict(by_alias=True), True)
-                for user in users
-            ]
+            replace_requests = [ReplaceOne({"_id": user.user_id}, user.dict(by_alias=True), True) for user in users]
             await self.users_collection.bulk_write(replace_requests)
         return users
 

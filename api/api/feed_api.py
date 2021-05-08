@@ -7,7 +7,7 @@ from pydantic.main import BaseModel
 from starlette.status import HTTP_200_OK, HTTP_201_CREATED, HTTP_400_BAD_REQUEST, HTTP_404_NOT_FOUND
 
 from api.api_application_data import security
-from api.api_utils import ErrorMessage, EmptyResult, ok
+from api.api_utils import EmptyResult, ErrorMessage, ok_result
 from core_lib.application_data import repositories
 from core_lib.feed import (
     NetworkingException,
@@ -55,15 +55,15 @@ async def fetch_feed_information_for_url(
     If the feed is known in the system (by url), return this information. If the feed is unknown retrieve the url
     and create a new Feed Entity. Return this entity.
     """
-    user = await security.get_approved_user(authorization)
-    feed = await repositories.feed_repository.find_by_url(url)
+    user = await security().get_approved_user(authorization)
+    feed = await repositories().feed_repository.find_by_url(url)
     if feed is not None:
         response.status_code = HTTP_200_OK
         return FeedWithSubscriptionInformationResponse(feed=feed, user_is_subscribed=feed.feed_id in user.subscribed_to)
 
     # find location, and store information.
     try:
-        feed = await fetch_feed_information_for(session=repositories.client_session, url=url)
+        feed = await fetch_feed_information_for(session=repositories().client_session, url=url)
         if feed is None:
             raise HTTPException(status_code=HTTP_404_NOT_FOUND, detail=f"No feed with url {url} found")
         response.status_code = HTTP_201_CREATED
@@ -78,9 +78,9 @@ async def fetch_feed_information_for_url(
 async def get_all_feeds(
     authorization: Optional[str] = Header(None),
 ) -> List[FeedWithSubscriptionInformationResponse]:
-    user = await security.get_approved_user(authorization)
+    user = await security().get_approved_user(authorization)
     subscribed_feed_ids = user.subscribed_to
-    feeds = await repositories.feed_repository.all_feeds(user)
+    feeds = await repositories().feed_repository.all_feeds()
     return [
         FeedWithSubscriptionInformationResponse(feed=feed, user_is_subscribed=feed.feed_id in subscribed_feed_ids)
         for feed in feeds
@@ -95,10 +95,10 @@ async def subscribe_to_feed(feed_id: str, authorization: Optional[str] = Header(
     :param feed_id: id of the feed.
     :param authorization: Token of the user.
     """
-    user = await security.get_approved_user(authorization)
-    feed = await repositories.feed_repository.get(feed_id)
+    user = await security().get_approved_user(authorization)
+    feed = await repositories().feed_repository.get(feed_id)
     await subscribe_user_to_feed(user=user, feed=feed)
-    return ok()
+    return ok_result()
 
 
 @feed_router.post("/feeds/{feed_id}/unsubscribe", tags=["feed"])
@@ -109,7 +109,7 @@ async def unsubscribe_from_feed(feed_id: str, authorization: Optional[str] = Hea
     :param feed_id: id of the feed.
     :param authorization: Token of the user.
     """
-    user = await security.get_approved_user(authorization)
-    feed = await repositories.feed_repository.get(feed_id)
+    user = await security().get_approved_user(authorization)
+    feed = await repositories().feed_repository.get(feed_id)
     await unsubscribe_user_from_feed(user=user, feed=feed)
-    return ok()
+    return ok_result()

@@ -46,7 +46,7 @@ def rss_document_to_feed(rss_url: str, tree: ElementBase) -> Feed:
         title=title,
         description=description,
         link=link,
-        feed_source_type=FeedSourceType.RSS.name,
+        feed_source_type=FeedSourceType.RSS,
         category=category.text if category is not None else None,
         image_url=image_url.text if image_url is not None else None,
         image_title=image_title.text if image_title is not None else None,
@@ -92,7 +92,7 @@ async def refresh_rss_feed(session: ClientSession, feed: Feed) -> Optional[Refre
             feed_from_rss = rss_document_to_feed(feed.url, rss_document)
             feed_items_from_rss = rss_document_to_feed_items(feed, rss_document)
 
-            async with await repositories.client.start_session() as mongo_session:
+            async with await repositories().mongo_client.start_session() as mongo_session:
                 async with mongo_session.start_transaction():
                     number_of_items = await upsert_new_items_for_feed(feed, feed_from_rss, feed_items_from_rss)
 

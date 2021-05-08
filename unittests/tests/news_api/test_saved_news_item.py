@@ -4,29 +4,26 @@ import pytest
 
 from api.news_item_api import news_items
 from api.saved_items_api import save_news_item, SaveNewsItemRequest, get_saved_news_items, delete_saved_news_item
+from core_lib.application_data import Repositories
 from core_lib.repositories import User, SavedNewsItem
-from tests.mock_repositories import MockRepositories
 
 
 @pytest.mark.asyncio
-async def test_save_news_item(
-    repositories: MockRepositories, user_with_subscription_to_feed: User, user_bearer_token: str
-):
-    unread_response = await news_items(fetch_offset=None, authorization=user_bearer_token)
+async def test_save_news_item(repositories: Repositories, user_with_subscription_to_feed: User, user_bearer_token: str):
+    unread_response = await news_items(fetch_offset=0, authorization=user_bearer_token)
     just_some_news_item = choice(unread_response.news_items)
 
     response = await save_news_item(
-        SaveNewsItemRequest(news_item_id=just_some_news_item.news_item_id), authorization=user_bearer_token
+        SaveNewsItemRequest(news_item_id=just_some_news_item.news_item_id.__str__()), authorization=user_bearer_token
     )
     assert response is not None
-    assert repositories.saved_news_item_repository.count() == 1
-    saved_item: SavedNewsItem = repositories.saved_news_item_repository.store.get(response.saved_news_item_id)
+    assert await repositories.saved_news_item_repository.count({}) == 1
+    saved_item: SavedNewsItem = await repositories.saved_news_item_repository.fetch_by_id(response.saved_news_item_id)
 
-    assert repositories.news_item_repository.fetch_by_id(just_some_news_item.news_item_id).is_saved
+    assert (await repositories.news_item_repository.fetch_by_id(just_some_news_item.news_item_id)).is_saved
     assert (
-        repositories.news_item_repository.fetch_by_id(just_some_news_item.news_item_id).saved_news_item_id
-        == saved_item.saved_news_item_id
-    )
+        await repositories.news_item_repository.fetch_by_id(just_some_news_item.news_item_id)
+    ).saved_news_item_id == saved_item.saved_news_item_id
 
     assert just_some_news_item.feed_id == saved_item.feed_id
     assert just_some_news_item.user_id == user_with_subscription_to_feed.user_id
@@ -45,32 +42,30 @@ async def test_save_news_item(
 
 @pytest.mark.asyncio
 async def test_save_fetch_and_remove_from_saved(
-    repositories: MockRepositories, user_with_subscription_to_feed: User, user_bearer_token: str
+    repositories: Repositories, user_with_subscription_to_feed: User, user_bearer_token: str
 ):
-    unread_response = await news_items(fetch_offset=None, authorization=user_bearer_token)
+    unread_response = await news_items(fetch_offset=0, authorization=user_bearer_token)
     just_some_news_item = choice(unread_response.news_items)
     news_item_id = just_some_news_item.news_item_id
 
     response = await save_news_item(
-        save_news_request=SaveNewsItemRequest(news_item_id=just_some_news_item.news_item_id),
+        save_news_request=SaveNewsItemRequest(news_item_id=just_some_news_item.news_item_id.__str__()),
         authorization=user_bearer_token,
     )
     assert response is not None
     saved_news_item_id = response.saved_news_item_id
-    assert repositories.news_item_repository.fetch_by_id(news_item_id).is_saved
-    assert repositories.news_item_repository.fetch_by_id(news_item_id).saved_news_item_id is not None
+    assert (await repositories.news_item_repository.fetch_by_id(news_item_id)).is_saved
+    assert (await repositories.news_item_repository.fetch_by_id(news_item_id)).saved_news_item_id is not None
 
-    get_response = await get_saved_news_items(None, user_bearer_token)
-    assert get_response.token is not None
+    get_response = await get_saved_news_items(fetch_offset=0, fetch_limit=30, authorization=user_bearer_token)
     assert len(get_response.items) == 1
-    assert repositories.saved_news_item_repository.count() == 1
-    assert get_response.items[0].saved_news_item_id == saved_news_item_id
+    assert await repositories.saved_news_item_repository.count({}) == 1
+    assert get_response.items[0].saved_news_item_id.__str__() == saved_news_item_id
 
     await delete_saved_news_item(saved_news_item_id, user_bearer_token)
 
-    get_response = await get_saved_news_items(None, user_bearer_token)
-    assert get_response.token is not None
+    get_response = await get_saved_news_items(fetch_offset=0, fetch_limit=30, authorization=user_bearer_token)
     assert len(get_response.items) == 0
-    assert repositories.saved_news_item_repository.count() == 0
-    assert not repositories.news_item_repository.fetch_by_id(news_item_id).is_saved
-    assert repositories.news_item_repository.fetch_by_id(news_item_id).saved_news_item_id is None
+    assert await repositories.saved_news_item_repository.count({}) == 0
+    assert not (await repositories.news_item_repository.fetch_by_id(news_item_id)).is_saved
+    assert (await repositories.news_item_repository.fetch_by_id(news_item_id)).saved_news_item_id is None

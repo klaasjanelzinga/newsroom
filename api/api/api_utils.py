@@ -9,5 +9,5 @@ class EmptyResult(BaseModel):
     result: bool
 
 
-def ok() -> EmptyResult:
+def ok_result() -> EmptyResult:
     return EmptyResult(result=True)

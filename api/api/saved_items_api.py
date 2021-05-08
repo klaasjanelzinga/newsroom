@@ -52,8 +52,10 @@ class ScrollableResult(BaseModel):
         HTTP_200_OK: {"model": ScrollableResult, "description": "List is complete"},
     },
 )
-async def get_saved_news_items(fetch_offset: int, fetch_limit: int, authorization: Optional[str] = Header(None)) -> ScrollableResult:
-    user = await security.get_approved_user(authorization)
+async def get_saved_news_items(
+    fetch_offset: int, fetch_limit: int, authorization: Optional[str] = Header(None)
+) -> ScrollableResult:
+    user = await security().get_approved_user(authorization)
     limit = min(fetch_limit, 30)
 
     result = await fetch_saved_news_item_for_user(user=user, offset=fetch_offset, limit=limit)
@@ -70,7 +72,7 @@ async def get_saved_news_items(fetch_offset: int, fetch_limit: int, authorizatio
 async def save_news_item(
     save_news_request: SaveNewsItemRequest, authorization: Optional[str] = Header(None)
 ) -> SaveNewsItemResponse:
-    user = await security.get_approved_user(authorization)
+    user = await security().get_approved_user(authorization)
     saved_news_item = await save_news_item_from_news_item(save_news_request.news_item_id, user)
     return SaveNewsItemResponse(saved_news_item_id=saved_news_item.saved_news_item_id.__str__())
 
@@ -81,5 +83,5 @@ async def save_news_item(
     responses={HTTP_200_OK: {"model": SaveNewsItemResponse, "Description": "News Item successfully saved"}},
 )
 async def delete_saved_news_item(saved_news_item_id: str, authorization: Optional[str] = Header(None)) -> None:
-    user = await security.get_approved_user(authorization)
+    user = await security().get_approved_user(authorization)
     await delete_saved_news_item_with_id(saved_news_item_id, user)

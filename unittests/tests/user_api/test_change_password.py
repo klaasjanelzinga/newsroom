@@ -3,13 +3,13 @@ from faker import Faker
 from fastapi import HTTPException
 
 from api.user_api import UserChangePasswordRequest, change_password_user, UserSignInRequest, sign_in_user
+from core_lib.application_data import Repositories
 from core_lib.repositories import User
-from tests.mock_repositories import MockRepositories
 
 
 @pytest.mark.asyncio
 async def test_change_password(
-    repositories: MockRepositories,
+    repositories: Repositories,
     faker: Faker,
     approved_up_user: User,
     approved_up_user_password: str,
@@ -40,7 +40,7 @@ async def test_change_password(
 
 @pytest.mark.asyncio
 async def test_change_password_non_existing_user(
-    repositories: MockRepositories,
+    repositories: Repositories,
     approved_up_user: User,
     approved_up_user_password: str,
     approved_up_bearer_token: str,
@@ -59,7 +59,7 @@ async def test_change_password_non_existing_user(
 
 @pytest.mark.asyncio
 async def test_change_password_weak_passwords(
-    repositories: MockRepositories,
+    repositories: Repositories,
     approved_up_user: User,
     approved_up_user_password: str,
     approved_up_bearer_token: str,
@@ -78,7 +78,7 @@ async def test_change_password_weak_passwords(
 
 @pytest.mark.asyncio
 async def test_change_password_non_matching_passwords(
-    repositories: MockRepositories,
+    repositories: Repositories,
     faker: Faker,
     approved_up_user: User,
     approved_up_user_password: str,

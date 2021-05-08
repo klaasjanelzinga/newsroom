@@ -18,13 +18,13 @@ from api.user_api import (
     use_totp_backup_code,
     UseTOTPBackupRequest,
 )
+from core_lib.application_data import Repositories
 from core_lib.repositories import User
-from tests.mock_repositories import MockRepositories
 
 
 @pytest.mark.asyncio
 async def test_enable_totp(
-    repositories: MockRepositories, faker: Faker, user: User, user_password: str, user_bearer_token
+    repositories: Repositories, faker: Faker, user: User, user_password: str, user_bearer_token: str
 ):
     # Sign does not need OTP
     user_sign_in_request = UserSignInRequest(email_address=user.email_address, password=user_password)
@@ -40,7 +40,7 @@ async def test_enable_totp(
     assert len(totp_response.backup_codes) > 5
     assert totp_response.generated_secret is not None
 
-    user = repositories.user_repository.fetch_user_by_email(user.email_address)
+    user = await repositories.user_repository.fetch_user_by_email(user.email_address)
 
     assert user.pending_backup_codes is not None
     assert user.pending_otp_hash is not None
@@ -54,6 +54,7 @@ async def test_enable_totp(
     verification_code = pyotp.TOTP(totp_response.generated_secret).now()
     confirmation_result = await confirm_totp(TOTPVerificationRequest(totp_value=verification_code), user_bearer_token)
     assert confirmation_result.otp_confirmed
+    user = await repositories.user_repository.fetch_user_by_email(user.email_address)
 
     assert user.pending_backup_codes == []
     assert user.pending_otp_hash is None
@@ -90,7 +91,7 @@ async def test_enable_totp(
 
 
 @pytest.mark.asyncio
-async def test_backup_codes(repositories: MockRepositories, user: User, user_password: str, user_bearer_token: str):
+async def test_backup_codes(repositories: Repositories, user: User, user_password: str, user_bearer_token: str):
     # Start registration for TOTP
     totp_response = await start_totp_registration(authorization=user_bearer_token)
     assert len(totp_response.backup_codes) > 5
