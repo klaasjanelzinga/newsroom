@@ -13,7 +13,7 @@ jobs:
       - name: Login docker
         env:
           SUPER_SECRET: ${{secrets.GH_PACKAGES_PAT}}
-        run: echo $SUPER_SECRET | docker login https://docker.pkg.github.com -u klaasjanelzinga@me.com --password-stdin
+        run: echo $SUPER_SECRET | docker login https://ghcr.io -u klaasjanelzinga@me.com --password-stdin
       - name: Build the python docker image
         run: scripts/build-docker-images.sh --version $GITHUB_SHA
       - name: Decrypt the test env file
