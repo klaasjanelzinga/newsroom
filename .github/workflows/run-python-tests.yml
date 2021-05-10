@@ -10,15 +10,15 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v1
-      - name: debug
-        env:
-          SUPER_SECRET: ${{ secrets.MY_SECRET}}
-        run: echo "Hallo secr ${SUPER_SECRET}"
       - name: Login docker
-        run: echo $GH_PACKAGES_PAT | docker login https://docker.pkg.github.com -u klaasjanelzinga@me.com --password-stdin
+        env:
+          SUPER_SECRET: ${{secrets.GH_PACKAGES_PAT}}
+        run: echo $SUPER_SECRET | docker login https://docker.pkg.github.com -u klaasjanelzinga@me.com --password-stdin
       - name: Build the python docker image
         run: scripts/build-docker-images.sh --version $GITHUB_SHA
       - name: Decrypt the test env file
+        env:
+          TEST_ENV_KEY: ${{secrets.TEST_ENV_KEY}}
         run: scripts/decrypt-test-env-file.sh
       - name: Verify the build
         run: make run-tests-in-docker
