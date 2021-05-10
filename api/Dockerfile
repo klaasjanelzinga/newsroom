@@ -15,7 +15,6 @@ RUN cd api && pip install -r requirements.txt
 ENV TOKEN_SECRET=$TOKEN_SECRET
 ENV SENTRY_DSN=$SENTRY_DSN
 
-LABEL org.opencontainers.image.source="https://github.com/klaasjanelzinga/newsrooom"
 VOLUME [ "/usr/src/app" ]
 
 CMD ["api/entrypoint.sh"]

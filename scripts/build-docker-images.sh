@@ -28,11 +28,12 @@ echo "Build python base-image"
 echo "Building app containers"
 for service in unittests cron api frontend
 do
+  ghcrio_image_name=ghcr.io/klaasjanelzinga/${application}/${service}
   set +e
-  docker pull https://docker.pkg.github.com/klaasjanelzinga/${application}/${service}:latest
+  docker pull ${ghcrio_image_name}:latest
   set -e
-  (cd $script_dir/.. && docker build --cache-from ghcr.io/klaasjanelzinga/${application}/${service}:latest -t ${application}/${service}:$VERSION -f ${service}/Dockerfile .)
+  (cd $script_dir/.. && docker build --cache-from ${ghcrio_image_name}:latest -t ${application}/${service}:$VERSION -f ${service}/Dockerfile .)
   docker tag ${application}/${service}:$VERSION ${application}/${service}:latest
-  docker tag ${application}/${service}:$VERSION docker.pkg.github.com/klaasjanelzinga/${application}/${service}:$VERSION
-  docker push docker.pkg.github.com/klaasjanelzinga/${application}/${service}:$VERSION
+  docker tag ${application}/${service}:$VERSION ${ghcrio_image_name}:$VERSION
+  docker push ${ghcrio_image_name}:$VERSION
 done
