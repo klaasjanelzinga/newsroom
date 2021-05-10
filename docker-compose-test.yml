@@ -7,7 +7,7 @@ services:
     depends_on:
       - mongo
     env_file:
-      - etc/test.env
+      - secrets/test.env
     volumes:
       - .:/usr/src/app
 
@@ -17,7 +17,7 @@ services:
       context: infra/mongo
       dockerfile: Dockerfile
     env_file:
-      - etc/test.env
+      - secrets/test.env
     environment:
       MONGO_INITDB_ROOT_USERNAME: $MONGO_ROOT_USER
       MONGO_INITDB_ROOT_PASSWORD: $MONGO_ROOT_PASS

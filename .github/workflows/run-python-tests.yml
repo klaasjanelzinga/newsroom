@@ -12,5 +12,7 @@ jobs:
         uses: actions/checkout@v1
       - name: Build the python docker image
         run: scripts/build-docker-images.sh --version $GITHUB_SHA
+      - name: Decrypt the test env file
+        run: scripts/decrypt-test-env-file.sh
       - name: Verify the build
         run: make run-tests-in-docker
