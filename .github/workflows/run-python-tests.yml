@@ -11,7 +11,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
       - name: debug
-        run: echo "Hallo secr $MY_SECRET"
+        env:
+          SUPER_SECRET: ${{ secrets.MY_SECRET}}
+        run: echo "Hallo secr ${SUPER_SECRET}"
       - name: Login docker
         run: echo $GH_PACKAGES_PAT | docker login https://docker.pkg.github.com -u klaasjanelzinga@me.com --password-stdin
       - name: Build the python docker image
