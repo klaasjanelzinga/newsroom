@@ -10,8 +10,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v1
+      - name: debug
+        run: echo "Hallo secr: $MYSECRET"
       - name: Login docker
-        run: echo $GH_PACKAGES_PAT | docker login ghcr.io -u klaasjanelzinga@me.com --password-stdin
+        run: echo $GH_PACKAGES_PAT | docker login https://docker.pkg.github.com -u klaasjanelzinga@me.com --password-stdin
       - name: Build the python docker image
         run: scripts/build-docker-images.sh --version $GITHUB_SHA
       - name: Decrypt the test env file
