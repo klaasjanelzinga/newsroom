@@ -16,6 +16,7 @@ RUN npm install
 RUN npm install -g serve
 RUN npm run-script build
 
+LABEL org.opencontainers.image.source="https://github.com/klaasjanelzinga/newsrooom"
 VOLUME [ "/usr/src/app" ]
 
 CMD serve -s build

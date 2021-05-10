@@ -17,5 +17,6 @@ COPY unittests /usr/src/app/unittests
 RUN make requirements
 
 VOLUME [ "/usr/src/app" ]
+LABEL org.opencontainers.image.source="https://github.com/klaasjanelzinga/newsrooom
 
 CMD ["unittests/entrypoint.sh"]

@@ -14,6 +14,7 @@ RUN cd cron && pip install -r requirements.txt
 
 ENV SENTRY_DSN=$SENTRY_DSN
 
+LABEL org.opencontainers.image.source="https://github.com/klaasjanelzinga/newsrooom"
 VOLUME [ "/usr/src/app" ]
 
 CMD ["cron/entrypoint.sh"]
