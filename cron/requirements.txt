@@ -28,7 +28,7 @@ multidict==5.1.0
     # via
     #   aiohttp
     #   yarl
-pydantic==1.8.1
+pydantic==1.8.2
     # via
     #   -r requirements.in
     #   fastapi
