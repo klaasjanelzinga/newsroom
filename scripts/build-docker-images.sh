@@ -43,5 +43,5 @@ infra_dir=${script_dir}/../infra
 (cd $infra_dir/nginx && docker build -t ghcr.io/klaasjanelzinga/${application}/nginx:$VERSION .)
 (cd $infra_dir/mongo && docker build -t ghcr.io/klaasjanelzinga/${application}/mongo:$VERSION .)
 
-docker push ghcr.io/klaasjanelzinga/${application}/nginx
-docker push ghcr.io/klaasjanelzinga/${application}/mongo
+docker push ghcr.io/klaasjanelzinga/${application}/nginx:$VERSION
+docker push ghcr.io/klaasjanelzinga/${application}/mongo:$VERSION
