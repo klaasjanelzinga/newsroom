@@ -1,0 +1,41 @@
+version: '3.3'
+
+services:
+  api:
+    image: ghcr.io/klaasjanelzinga/newsrooom/api:ae9ce978a0263f4a1d5a6c6535c950ae4c8cae7d
+    env_file:
+      - etc/dev.env
+
+  cron:
+    image: ghcr.io/klaasjanelzinga/newsrooom/cron:ae9ce978a0263f4a1d5a6c6535c950ae4c8cae7d
+    env_file:
+      - etc/dev.env
+
+  frontend:
+    image: ghcr.io/klaasjanelzinga/newsrooom/frontend:ae9ce978a0263f4a1d5a6c6535c950ae4c8cae7d
+    tty: true
+    environment:
+      PORT: 3000
+
+  nginx:
+    image: ghcr.io/klaasjanelzinga/newsrooom/nginx:ae9ce978a0263f4a1d5a6c6535c950ae4c8cae7d
+#    build:
+#      context: infra/nginx
+    ports:
+      - "80:80"
+
+  mongo:
+    image: ghcr.io/klaasjanelzinga/newsrooom/mongo:ae9ce978a0263f4a1d5a6c6535c950ae4c8cae7d
+#    build:
+#      context: infra/mongo
+#      dockerfile: Dockerfile
+    env_file:
+      - etc/dev.env
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: $MONGO_ROOT_USER
+      MONGO_INITDB_ROOT_PASSWORD: $MONGO_ROOT_PASS
+      MONGO_INITDB_USERNAME: $MONGO_USER
+      MONGO_INITDB_PASSWORD: $MONGO_PASS
+      MONGO_INITDB_DATABASE: $MONGO_DB
+    volumes:
+      - ./infra/data/mongodb-live:/data/db

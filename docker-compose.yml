@@ -34,7 +34,7 @@ services:
     environment:
       PORT: 3000
     ports:
-      - 5000:3000
+      - "5000:3000"
     volumes:
       - ./frontend:/usr/src/app
     command: sh -c "cd /usr/src/app && cp src/Config.localhost.js src/Config.js && npm ci && npm start && wait $$"
