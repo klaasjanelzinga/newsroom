@@ -28,6 +28,7 @@ restart-frontend:
 	docker-compose restart frontend
 
 run-tests-in-docker:
+	(cd images/python-base && docker build -t newsrooom/python-base:latest .)
 	docker-compose --env-file secrets/test.env -f docker-compose-test.yml up --remove-orphans --exit-code-from unittests
 	docker-compose --env-file secrets/test.env -f docker-compose-test.yml down --remove-orphans
 
