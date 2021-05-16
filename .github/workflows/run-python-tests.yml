@@ -1,6 +1,7 @@
 name: Run tests
 on:
   push:
+    branches: '**'
 jobs:
   build:
     name: make-docker-image-and-test

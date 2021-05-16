@@ -17,13 +17,6 @@ services:
     environment:
       PORT: 3000
 
-  nginx:
-    image: ghcr.io/klaasjanelzinga/newsrooom/nginx:ee08907b391731bd46bdfd95e91cc4d393b6e361
-#    build:
-#      context: infra/nginx
-    ports:
-      - "80:80"
-
   mongo:
     image: ghcr.io/klaasjanelzinga/newsrooom/mongo:ee08907b391731bd46bdfd95e91cc4d393b6e361
 #    build:
