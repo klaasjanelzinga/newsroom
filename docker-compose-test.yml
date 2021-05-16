@@ -3,7 +3,9 @@ version: '3.3'
 services:
 # --- Unittests ---
   unittests:
-    image: newsrooom/unittests:$GITHUB_SHA
+    build:
+      context: .
+      dockerfile: unittests/Dockerfile
     depends_on:
       - mongo
     env_file:

@@ -28,8 +28,8 @@ restart-frontend:
 	docker-compose restart frontend
 
 run-tests-in-docker:
-	docker-compose --env-file secrets/test.env -f docker-compose-test.yml up --exit-code-from unittests
-	docker-compose --env-file secrets/test.env -f docker-compose-test.yml down
+	docker-compose --remove-orphans --env-file secrets/test.env -f docker-compose-test.yml up --exit-code-from unittests
+	docker-compose --remove-orphans --env-file secrets/test.env -f docker-compose-test.yml down
 
 # -------------------------------------------------------
 # Dependency management

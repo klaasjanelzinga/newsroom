@@ -2,33 +2,32 @@ version: '3.3'
 
 services:
   api:
-    image: ghcr.io/klaasjanelzinga/newsrooom/api:ae9ce978a0263f4a1d5a6c6535c950ae4c8cae7d
+    image: ghcr.io/klaasjanelzinga/newsrooom/api:ee08907b391731bd46bdfd95e91cc4d393b6e361
     env_file:
       - etc/dev.env
 
   cron:
-    image: ghcr.io/klaasjanelzinga/newsrooom/cron:ae9ce978a0263f4a1d5a6c6535c950ae4c8cae7d
+    image: ghcr.io/klaasjanelzinga/newsrooom/cron:ee08907b391731bd46bdfd95e91cc4d393b6e361
     env_file:
       - etc/dev.env
 
   frontend:
-    image: ghcr.io/klaasjanelzinga/newsrooom/frontend:ae9ce978a0263f4a1d5a6c6535c950ae4c8cae7d
+    image: ghcr.io/klaasjanelzinga/newsrooom/frontend:ee08907b391731bd46bdfd95e91cc4d393b6e361
     tty: true
     environment:
       PORT: 3000
 
   nginx:
-    image: ghcr.io/klaasjanelzinga/newsrooom/nginx:ae9ce978a0263f4a1d5a6c6535c950ae4c8cae7d
+    image: ghcr.io/klaasjanelzinga/newsrooom/nginx:ee08907b391731bd46bdfd95e91cc4d393b6e361
 #    build:
 #      context: infra/nginx
     ports:
       - "80:80"
 
   mongo:
-    image: ghcr.io/klaasjanelzinga/newsrooom/mongo:ae9ce978a0263f4a1d5a6c6535c950ae4c8cae7d
+    image: ghcr.io/klaasjanelzinga/newsrooom/mongo:ee08907b391731bd46bdfd95e91cc4d393b6e361
 #    build:
 #      context: infra/mongo
-#      dockerfile: Dockerfile
     env_file:
       - etc/dev.env
     environment:
