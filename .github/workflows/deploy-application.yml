@@ -22,4 +22,4 @@ jobs:
           SUPER_SECRET: ${{secrets.GH_PACKAGES_PAT}}
         run: echo $SUPER_SECRET | docker login https://ghcr.io -u klaasjanelzinga@me.com --password-stdin
       - name: Build and push the python docker image
-        run: scripts/build-docker-images.sh --version $GITHUB_REF
+        run: scripts/build-docker-images.sh --version "${GITHUB_REF#refs/*/}"
