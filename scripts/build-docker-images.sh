@@ -26,22 +26,20 @@ echo "Build python base-image"
 (cd $script_dir/../images/python-base && docker build -t ${application}/python-base:latest .)
 
 echo "Building app containers"
-for service in unittests cron api frontend
+for service in cron api frontend
 do
   ghcrio_image_name=ghcr.io/klaasjanelzinga/${application}/${service}
   set +e
   docker pull ${ghcrio_image_name}:latest
   set -e
-  (cd $script_dir/.. && docker build --cache-from ${ghcrio_image_name}:latest -t ${application}/${service}:$VERSION -f ${service}/Dockerfile .)
-  docker tag ${application}/${service}:$VERSION ${application}/${service}:latest
-  docker tag ${application}/${service}:$VERSION ${ghcrio_image_name}:$VERSION
+  (cd $script_dir/.. && docker build --cache-from ${ghcrio_image_name}:latest -t ${ghcrio_image_name}:$VERSION -f ${service}/Dockerfile .)
+  docker tag ${ghcrio_image_name}:$VERSION ${ghcrio_image_name}:latest
   docker push ${ghcrio_image_name}:$VERSION
+  docker push ${ghcrio_image_name}:latest
 done
 
 echo "Building infra containers"
 infra_dir=${script_dir}/../infra
-(cd $infra_dir/nginx && docker build -t ghcr.io/klaasjanelzinga/${application}/nginx:$VERSION .)
 (cd $infra_dir/mongo && docker build -t ghcr.io/klaasjanelzinga/${application}/mongo:$VERSION .)
 
-docker push ghcr.io/klaasjanelzinga/${application}/nginx:$VERSION
 docker push ghcr.io/klaasjanelzinga/${application}/mongo:$VERSION
