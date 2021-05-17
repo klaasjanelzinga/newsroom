@@ -3,6 +3,8 @@ version: '3.3'
 services:
   api:
     image: ghcr.io/klaasjanelzinga/newsrooom/api:${VERSION}
+    depends_on:
+      - mongo
     ports:
       - "127.0.0.1:9001:5001"
     env_file:
@@ -10,6 +12,8 @@ services:
 
   cron:
     image: ghcr.io/klaasjanelzinga/newsrooom/cron:${VERSION}
+    depends_on:
+      - mongo
     ports:
       - "127.0.0.1:9002:5002"
     env_file:
@@ -17,6 +21,8 @@ services:
 
   frontend:
     image: ghcr.io/klaasjanelzinga/newsrooom/frontend:${VERSION}
+    depends_on:
+      - api
     tty: true
     env_file:
       - etc/production.env
@@ -40,6 +46,8 @@ services:
 
   mongo-express:
     image: mongo-express:0.54
+    depends_on:
+      - mongo
     ports:
       - "127.0.0.1:9012:8081"
     env_file:
