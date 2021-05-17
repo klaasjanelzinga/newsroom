@@ -49,6 +49,12 @@ upgrade-requirements:
 	(cd unittests && pip-compile --upgrade requirements.in > requirements.txt)
 
 # -------------------------------------------------------
+# Devops
+devops-mongo-express:
+	ssh -L 5901:127.0.0.1:9012 test.n-kj.nl
+
+
+# -------------------------------------------------------
 # Test application
 cron-refresh-feeds:
 	curl localhost:5002/maintenance/refresh-feeds
