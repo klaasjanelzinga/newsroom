@@ -7,3 +7,4 @@ target_host=test.n-kj.nl
 
 scp $project_dir/etc/production.env scp://$target_host//usr/newsroom/etc/production.env
 scp $project_dir/docker-compose-live.yml scp://$target_host//usr/newsroom/
+scp $project_dir/Makefile scp://$target_host//usr/newsroom/

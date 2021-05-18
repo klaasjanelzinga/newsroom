@@ -36,3 +36,4 @@ docker-compose -f docker-compose-live.yml --env-file etc/production.env pull
 docker-compose -f docker-compose-live.yml --env-file etc/production.env up --detach
 
 sudo certbot --nginx
+https://www.liquidweb.com/kb/set-firewall-using-iptables-ubuntu-16-04/
