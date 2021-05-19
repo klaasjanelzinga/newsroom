@@ -10,10 +10,10 @@ project_dir="$(cd "${script_dir}"/.. && pwd )"
 cd "$project_dir" || (echo "project_dir not found" && exit 1)
 mkdir -p secrets
 
-if [ -z "$DEPLOYER_KEY" ]
+if [ -z "$TEST_ENV_KEY" ]
 then
     echo "password not set"
     exit 1
 fi
-gpg --quiet --batch --yes --decrypt --passphrase="$DEPLOYER_KEY" --output $project_dir/secrets/deployer.json $project_dir/etc/deployer.json.gpg
+gpg --quiet --batch --yes --decrypt --passphrase="$TEST_ENV_KEY" --output $project_dir/secrets/test.env $project_dir/etc/test.env.gpg
 exit $?

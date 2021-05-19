@@ -1,16 +1,15 @@
 version: '3.3'
 
 services:
+# --- Application ---
   api:
     build:
       context: .
       dockerfile: api/Dockerfile
-    environment:
-      PORT: 8080
-      ENVIRONMENT: LOCALHOST
-      GOOGLE_APPLICATION_CREDENTIALS: /usr/src/app/secrets/google-appengine-credentials.json
+    env_file:
+      - etc/dev.env
     ports:
-      - 9080:8080
+      - "5001:5001"
     volumes:
       - .:/usr/src/app
     command: api/entrypoint-dev.sh
@@ -19,12 +18,10 @@ services:
     build:
       context: .
       dockerfile: cron/Dockerfile
-    environment:
-      PORT: 8080
-      ENVIRONMENT: LOCALHOST
-      GOOGLE_APPLICATION_CREDENTIALS: /usr/src/app/secrets/google-appengine-credentials.json
+    env_file:
+      - etc/dev.env
     ports:
-      - 9090:8080
+      - "5002:5002"
     volumes:
       - .:/usr/src/app
     command: cron/entrypoint-dev.sh
@@ -37,8 +34,54 @@ services:
     environment:
       PORT: 3000
     ports:
-      - 4000:3000
+      - "5000:3000"
     volumes:
       - ./frontend:/usr/src/app
     command: sh -c "cd /usr/src/app && cp src/Config.localhost.js src/Config.js && npm ci && npm start && wait $$"
 
+# --- Infrastructure ---
+  redis:
+    build:
+      context: infra/redis
+      dockerfile: Dockerfile
+    ports:
+      - "5010:6379"
+    volumes:
+      - ./infra/data/redis:/data
+
+  mongo:
+    build:
+      context: infra/mongo
+      dockerfile: Dockerfile
+    ports:
+      - "5011:27017"
+    env_file:
+      - etc/dev.env
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: $MONGO_ROOT_USER
+      MONGO_INITDB_ROOT_PASSWORD: $MONGO_ROOT_PASS
+      MONGO_INITDB_USERNAME: $MONGO_USER
+      MONGO_INITDB_PASSWORD: $MONGO_PASS
+      MONGO_INITDB_DATABASE: $MONGO_DB
+    volumes:
+      - ./infra/data/mongodb:/data/db
+      - ./infra/mongo/init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh
+      - ./infra/mongo/mongo.conf:/etc/mongo.conf
+
+  mongo-express:
+    image: mongo-express:0.54
+    ports:
+      - "5012:8081"
+    env_file:
+      - etc/dev.env
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: $MONGO_ROOT_USER
+      ME_CONFIG_MONGODB_ADMINPASSWORD: $MONGO_ROOT_PASS
+      ME_CONFIG_BASICAUTH_USERNAME: ''
+      ME_CONFIG_BASICAUTH_PASSWORD: ''
+      ME_CONFIG_MONGODB_ENABLE_ADMIN: 'true'
+      ME_CONFIG_MONGODB_PORT: $MONGO_PORT
+      ME_CONFIG_MONGODB_SERVER: $MONGO_HOST
+      ME_CONFIG_OPTIONS_EDITORTHEME: 'default'
+      ME_CONFIG_REQUEST_SIZE: '100kb'
+      ME_CONFIG_SITE_BASEURL: '/'

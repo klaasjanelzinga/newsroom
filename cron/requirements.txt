@@ -6,19 +6,19 @@
 #
 -e file:../core_lib
     # via -r requirements.in
-aiofiles==0.6.0
+aiofiles==0.7.0
     # via -r requirements.in
 aiohttp==3.7.4.post0
     # via -r requirements.in
 async-timeout==3.0.1
     # via aiohttp
-attrs==20.3.0
+attrs==21.2.0
     # via aiohttp
 chardet==4.0.0
     # via aiohttp
 click==7.1.2
     # via uvicorn
-fastapi==0.63.0
+fastapi==0.65.1
     # via -r requirements.in
 h11==0.12.0
     # via uvicorn
@@ -28,22 +28,17 @@ multidict==5.1.0
     # via
     #   aiohttp
     #   yarl
-pydantic==1.8.1
+pydantic==1.8.2
     # via
     #   -r requirements.in
     #   fastapi
-starlette==0.13.6
+starlette==0.14.2
     # via fastapi
-typing-extensions==3.7.4.3
+typing-extensions==3.10.0.0
     # via
     #   aiohttp
     #   pydantic
 uvicorn==0.13.4
     # via -r requirements.in
-wheel==0.36.2
-    # via -r requirements.in
 yarl==1.6.3
     # via aiohttp
-
-# The following packages are considered to be unsafe in a requirements file:
-# setuptools

@@ -1,9 +1,6 @@
 aiohttp
 
-google-api-core
-google-cloud-core
-google-cloud-datastore
-grpcio
+motor
 
 pydantic
 lxml

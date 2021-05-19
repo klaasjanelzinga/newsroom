@@ -6,7 +6,6 @@ from typing import List, Optional
 from aiohttp import ClientError, ClientSession
 from bs4 import BeautifulSoup
 import dateparser
-from google.api_core.exceptions import GoogleAPIError
 from lxml.etree import ElementBase, fromstring
 import pytz
 
@@ -47,7 +46,7 @@ def rss_document_to_feed(rss_url: str, tree: ElementBase) -> Feed:
         title=title,
         description=description,
         link=link,
-        feed_source_type=FeedSourceType.RSS.name,
+        feed_source_type=FeedSourceType.RSS,
         category=category.text if category is not None else None,
         image_url=image_url.text if image_url is not None else None,
         image_title=image_title.text if image_title is not None else None,
@@ -59,7 +58,7 @@ LOCALE_LOCK = threading.Lock()
 
 
 def _parse_optional_rss_datetime(freely_formatted_datetime: Optional[str]) -> Optional[datetime]:
-    """ Sun, 19 May 2002 15:21:36 GMT parsing to datetime. """
+    """Sun, 19 May 2002 15:21:36 GMT parsing to datetime."""
     if freely_formatted_datetime is None:
         return None
     in_this_tz = dateparser.parse(freely_formatted_datetime, languages=["en"])
@@ -69,7 +68,7 @@ def _parse_optional_rss_datetime(freely_formatted_datetime: Optional[str]) -> Op
 
 
 def rss_document_to_feed_items(feed: Feed, tree: ElementBase) -> List[FeedItem]:
-    """ Creates a list of FeedItem objects from a xml tree for the feed. """
+    """Creates a list of FeedItem objects from a xml tree for the feed."""
     item_elements = tree.findall("channel/item")
     return [
         FeedItem(
@@ -89,13 +88,15 @@ async def refresh_rss_feed(session: ClientSession, feed: Feed) -> Optional[Refre
     log.info("Refreshing rss feed %s", feed)
     try:
         async with session.get(feed.url) as xml_response:
-            with repositories.client.transaction():
-                rss_document = fromstring(await xml_response.read())
-                feed_from_rss = rss_document_to_feed(feed.url, rss_document)
-                feed_items_from_rss = rss_document_to_feed_items(feed, rss_document)
-                number_of_items = upsert_new_items_for_feed(feed, feed_from_rss, feed_items_from_rss)
+            rss_document = fromstring(await xml_response.read())
+            feed_from_rss = rss_document_to_feed(feed.url, rss_document)
+            feed_items_from_rss = rss_document_to_feed_items(feed, rss_document)
 
-                return RefreshResult(feed=feed, number_of_items=number_of_items)
-    except (ClientError, TimeoutError, GoogleAPIError):
+            async with await repositories().mongo_client.start_session() as mongo_session:
+                async with mongo_session.start_transaction():
+                    number_of_items = await upsert_new_items_for_feed(feed, feed_from_rss, feed_items_from_rss)
+
+            return RefreshResult(feed=feed, number_of_items=number_of_items)
+    except (ClientError, TimeoutError):
         log.exception("Error while refreshing feed %s", feed)
         return None

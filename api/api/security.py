@@ -45,7 +45,7 @@ class TokenVerifier:
         return jwt.encode(
             payload={
                 "name": user.email_address,
-                "user_id": user.user_id,
+                "user_id": user.user_id.__str__(),
                 "otp_verified": token_verified,
                 "exp": datetime.utcnow() + timedelta(days=7),
             },
@@ -64,7 +64,7 @@ class Security:
         403 FORBIDDEN is returned.
         """
         user_from_token = await TokenVerifier.verify(authorization_header)
-        user_from_repo = self.user_repository.fetch_user_by_email(user_from_token["name"])
+        user_from_repo = await self.user_repository.fetch_user_by_email(user_from_token["name"])
         if user_from_repo is None:
             raise HTTPException(status_code=HTTP_401_UNAUTHORIZED)
         if check_totp and user_from_repo.otp_hash is not None and not user_from_token["otp_verified"]:

@@ -4,10 +4,10 @@ from faker import Faker
 
 from api.security import TokenVerifier
 from api.user_api import start_totp_registration, confirm_totp, TOTPVerificationRequest
+from core_lib.application_data import Repositories
 from core_lib.repositories import User
-from core_lib.user import signup, _generate_hash, _generate_salt
+from core_lib.user import _generate_hash, _generate_salt
 from core_lib.utils import bytes_to_str_base64
-from tests.mock_repositories import MockRepositories
 
 
 @pytest.fixture
@@ -36,9 +36,9 @@ def signed_up_user_password_hash(signed_up_user_password: str, generate_password
 
 
 @pytest.fixture
-def signed_up_user(
+async def signed_up_user(
     faker: Faker,
-    repositories: MockRepositories,
+    repositories: Repositories,
     signed_up_user_email_address: str,
     signed_up_user_password_hash: bytes,
     generate_password_salt: bytes,
@@ -50,7 +50,7 @@ def signed_up_user(
         password_salt=bytes_to_str_base64(generate_password_salt),
         is_approved=False,
     )
-    user = repositories.user_repository.upsert(user)
+    user = await repositories.user_repository.upsert(user)
     return user
 
 
@@ -70,9 +70,9 @@ def approved_up_user_password_hash(approved_up_user_password: str, generate_pass
 
 
 @pytest.fixture
-def approved_up_user(
+async def approved_up_user(
     faker: Faker,
-    repositories: MockRepositories,
+    repositories: Repositories,
     approved_up_user_email_address: str,
     approved_up_user_password_hash: bytes,
     generate_password_salt: bytes,
@@ -84,7 +84,7 @@ def approved_up_user(
         password_salt=bytes_to_str_base64(generate_password_salt),
         is_approved=True,
     )
-    user = repositories.user_repository.upsert(user)
+    user = await repositories.user_repository.upsert(user)
     return user
 
 
@@ -111,7 +111,7 @@ def totp_user_password_hash(totp_user_password: str, generate_password_salt: byt
 @pytest.fixture
 async def totp_user(
     faker: Faker,
-    repositories: MockRepositories,
+    repositories: Repositories,
     totp_user_email_address: str,
     totp_user_password_hash: bytes,
     generate_password_salt: bytes,
@@ -124,12 +124,12 @@ async def totp_user(
         is_approved=True,
     )
     totp_bearer = f"Bearer {TokenVerifier.create_token(user)}"
-    user = repositories.user_repository.upsert(user)
+    user = await repositories.user_repository.upsert(user)
     totp_response = await start_totp_registration(authorization=totp_bearer)
     verification_code = pyotp.TOTP(totp_response.generated_secret).now()
     await confirm_totp(TOTPVerificationRequest(totp_value=verification_code), totp_bearer)
 
-    return user
+    return await repositories.user_repository.fetch_user_by_email(user.email_address)
 
 
 @pytest.fixture

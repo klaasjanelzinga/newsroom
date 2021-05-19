@@ -3,23 +3,23 @@ from faker import Faker
 from fastapi import HTTPException
 
 from api.user_api import update_profile, UpdateUserProfileRequest, fetch_avatar_image
+from core_lib.application_data import Repositories
 from core_lib.repositories import User
-from tests.mock_repositories import MockRepositories
 
 
 @pytest.mark.asyncio
-async def test_change_display_name(repositories: MockRepositories, faker: Faker, user: User, user_bearer_token):
+async def test_change_display_name(repositories: Repositories, faker: Faker, user: User, user_bearer_token):
     new_name = faker.name()
     new_avatar = faker.paragraph()
     update_profile_request = UpdateUserProfileRequest(
         display_name=new_name, avatar_image=new_avatar, avatar_action="keep"
     )
     response = await update_profile(update_profile_request, user_bearer_token)
+    user = await repositories.user_repository.fetch_user_by_email(user.email_address)
     assert response.display_name == new_name
     assert response.email_address == user.email_address
     assert response.is_approved == user.is_approved
     assert user.display_name == new_name
-    assert repositories.user_repository.fetch_user_by_email(user.email_address).display_name == new_name
 
     avatar = await fetch_avatar_image(user_bearer_token)
     assert avatar.avatar_image == new_avatar
@@ -37,7 +37,7 @@ async def test_change_display_name(repositories: MockRepositories, faker: Faker,
 
 @pytest.mark.asyncio
 async def test_change_display_name_authorization(
-    repositories: MockRepositories, faker: Faker, user: User, user_bearer_token
+    repositories: Repositories, faker: Faker, user: User, user_bearer_token
 ):
     with pytest.raises(HTTPException) as http_exception:
         update_profile_request = UpdateUserProfileRequest(display_name="new name", avatar_action="keep")
@@ -46,7 +46,7 @@ async def test_change_display_name_authorization(
 
 
 @pytest.mark.asyncio
-async def test_keep_avatar_but_dont_send(repositories: MockRepositories, faker: Faker, user: User, user_bearer_token):
+async def test_keep_avatar_but_dont_send(repositories: Repositories, faker: Faker, user: User, user_bearer_token):
     new_name = faker.name()
     new_avatar = faker.paragraph()
     update_profile_request = UpdateUserProfileRequest(

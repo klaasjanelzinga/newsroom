@@ -36,7 +36,8 @@ interface SavedNewsState {
 
 class SavedNews extends React.Component<SavedNewsProps, SavedNewsState> {
     api: Api
-    token: string | null = null
+    offset = 0
+    limit = 30
     item_control: ItemControl | null = null
     scrollable_view_items: ScrollableItem[] = []
 
@@ -63,16 +64,17 @@ class SavedNews extends React.Component<SavedNewsProps, SavedNewsState> {
             return
         }
 
-        const endpoint = "/saved-news"
-        const endpoint_with_token = this.token ? `${endpoint}?fetch_offset=${this.token}` : endpoint
+        this.setState({ error: null })
+
+        const endpoint = `/saved-news?fetch_offset=${this.offset}&fetch_limit=${this.limit}`
         this.api
-            .get<ScrollableItemsResponse<SavedNewsItem>>(endpoint_with_token)
+            .get<ScrollableItemsResponse<SavedNewsItem>>(endpoint)
             .then((saved_items_response) => {
-                this.token = saved_items_response[1].token
+                this.offset += saved_items_response[1].items.length
                 saved_items_response[1].items.forEach((item) => (item.is_saved = true))
                 this.setState({
                     saved_news_items: this.state.saved_news_items.concat(saved_items_response[1].items),
-                    no_more_items: atob(this.token) === "DONE",
+                    no_more_items: saved_items_response[1].items.length < this.limit,
                 })
             })
             .catch((reason: Error) => this.setState({ error: reason.message }))
@@ -83,7 +85,7 @@ class SavedNews extends React.Component<SavedNewsProps, SavedNewsState> {
 
     refresh(): void {
         this.setState({ saved_news_items: [], is_loading: true })
-        this.token = null
+        this.offset = 0
         this.fetch_saved_news_items()
     }
 
@@ -116,7 +118,7 @@ class SavedNews extends React.Component<SavedNewsProps, SavedNewsState> {
                         >
                             {this.state.saved_news_items.map((saved_news_item) => (
                                 <SavedNewsItemView
-                                    key={saved_news_item.saved_news_item_id}
+                                    key={saved_news_item._id}
                                     saved_news_item={saved_news_item}
                                     register_scrollable_item={(item): void => this.register_scrollable_item(item)}
                                 />

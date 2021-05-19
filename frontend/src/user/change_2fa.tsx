@@ -2,7 +2,6 @@ import * as React from "react"
 import { Button, Card, CardContent, createStyles, Typography, WithStyles, withStyles } from "@material-ui/core"
 import { withSnackbar, WithSnackbarProps } from "notistack"
 import { RouteComponentProps, withRouter } from "react-router-dom"
-import HeaderBar from "../headerbar/HeaderBar"
 import { Api } from "../Api"
 import { TokenBasedAuthenticator, withAuthHandling, WithAuthHandling } from "../WithAuthHandling"
 import Grid from "@material-ui/core/Grid"
@@ -132,8 +131,6 @@ class ChangeTotp extends React.Component<ChangeTotpAttrs, ChangeTotpState> {
         const { classes } = this.props
         return (
             <div>
-                <HeaderBar />
-
                 <div className={classes.cards}>
                     <Card className={classes.card}>
                         <CardContent>

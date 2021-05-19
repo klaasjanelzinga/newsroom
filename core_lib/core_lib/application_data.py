@@ -1,16 +1,14 @@
 import logging
-import os
+from typing import Optional
 
-from aiohttp import ClientSession, ClientTimeout
-from google.cloud import datastore
+from aiohttp import ClientSession
+from motor.motor_asyncio import AsyncIOMotorClient
 
-from core_lib.gemeente_groningen import feed_gemeente_groningen, gemeente_groningen_parser
 from core_lib.repositories import (
     FeedItemRepository,
     FeedRepository,
     NewsItemRepository,
     SavedNewsItemRepository,
-    SubscriptionRepository,
     UserRepository,
 )
 
@@ -19,25 +17,22 @@ log = logging.getLogger(__file__)
 
 
 class Repositories:
-    @staticmethod
-    def not_in_unit_tests() -> bool:
-        return "unit_tests" not in os.environ
-
-    def __init__(self) -> None:
+    def __init__(self, client: AsyncIOMotorClient, mongodb_db: str, client_session: ClientSession) -> None:
         log.info("Initializing repositories.")
-        self.client = datastore.Client()
-        self.user_repository = UserRepository(self.client)
-        self.news_item_repository = NewsItemRepository(self.client)
-        self.saved_news_item_repository = SavedNewsItemRepository(self.client)
-        self.feed_item_repository = FeedItemRepository(self.client)
-        self.feed_repository = FeedRepository(self.client)
-        self.subscription_repository = SubscriptionRepository(self.client)
-        timeout = ClientTimeout(total=290)
-        self.client_session = ClientSession(timeout=timeout)
+        self.mongo_client = client
+        self.database = self.mongo_client.get_database(mongodb_db)
+        self.user_repository = UserRepository(self.database)
+        self.news_item_repository = NewsItemRepository(self.database)
+        self.saved_news_item_repository = SavedNewsItemRepository(self.database)
+        self.feed_item_repository = FeedItemRepository(self.database)
+        self.feed_repository = FeedRepository(self.database)
+        self.client_session = client_session
 
 
-repositories: Repositories = Repositories() if Repositories.not_in_unit_tests() else None  # type: ignore
-html_feeds = [feed_gemeente_groningen]
-html_feed_parsers = {
-    feed_gemeente_groningen.feed_id: gemeente_groningen_parser,
-}
+_repositories: Optional[Repositories] = None
+
+
+def repositories() -> Repositories:
+    if _repositories is None:
+        raise Exception("Initialization error")
+    return _repositories

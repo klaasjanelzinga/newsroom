@@ -1,8 +1,7 @@
 name: Run tests
 on:
   push:
-    branches-ignore:
-      - main
+    branches: '**'
 jobs:
   build:
     name: make-docker-image-and-test
@@ -10,19 +9,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v1
-      - name: Decrypt the secret for google-app-engine
-        run: scripts/decrypt-google-appengine-credentials.sh
+      - name: Decrypt the test env file
         env:
-          GOOGLE_APP_ENGINE_KEY: ${{ secrets.GOOGLE_APP_ENGINE_KEY }}
-      - name: Decrypt the secret for google-app-engine deployer
-        run: scripts/decrypt-deployer-key.sh
-        env:
-          DEPLOYER_KEY: ${{ secrets.DEPLOYER_KEY }}
-      - name: Login to gcloud
-        run: gcloud auth activate-service-account --key-file secrets/deployer.json --project newsroom-v1
-      - name: Login docker to gcloud
-        run: gcloud auth configure-docker
-      - name: Build the python docker image
-        run: scripts/build-docker-images.sh --version $GITHUB_SHA
+          TEST_ENV_KEY: ${{secrets.TEST_ENV_KEY}}
+        run: scripts/decrypt-test-env-file.sh
       - name: Verify the build
-        run: docker run --env ENVIRONMENT=LOCALHOST -v `pwd`:/usr/src/app newsrooom/unittests:latest
+        run: make run-tests-in-docker

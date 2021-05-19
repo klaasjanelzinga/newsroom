@@ -1,0 +1,3 @@
+etc/dev.env filter=git-crypt diff=git-crypt
+etc/production.env filter=git-crypt diff=git-crypt
+etc/dev-local.env filter=git-crypt diff=git-crypt

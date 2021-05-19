@@ -28,3 +28,4 @@ venv.bak/
 .mypy_cache/
 
 htmlcov/
+infra/data

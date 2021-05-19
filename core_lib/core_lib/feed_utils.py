@@ -7,7 +7,7 @@ from urllib.parse import urlparse
 import pytz
 
 from core_lib.application_data import repositories
-from core_lib.repositories import Feed, FeedItem, NewsItem, User
+from core_lib.repositories import Feed, FeedItem, FeedSourceType, NewsItem, User
 from core_lib.utils import now_in_utc
 
 
@@ -24,18 +24,18 @@ def item_is_still_relevant(item: FeedItem) -> bool:
         return item.created_on > (datetime.now() - timedelta(hours=18))
 
 
-def upsert_new_feed_items_for_feed(feed: Feed, feed_items: List[FeedItem]) -> int:
+async def upsert_new_feed_items_for_feed(feed: Feed, feed_items: List[FeedItem]) -> int:
     current_feed_item_links = [
-        feed_item.link for feed_item in repositories.feed_item_repository.fetch_all_for_feed(feed)
+        feed_item.link for feed_item in await repositories().feed_item_repository.fetch_all_for_feed(feed)
     ]
     new_feed_items = [
         new_feed_item for new_feed_item in feed_items if new_feed_item.link not in current_feed_item_links
     ]
-    repositories.feed_item_repository.upsert_many(new_feed_items)
+    await repositories().feed_item_repository.upsert_many(new_feed_items)
     return len(new_feed_items)
 
 
-def upsert_new_items_for_feed(feed: Feed, updated_feed: Feed, feed_items_from_rss: List[FeedItem]) -> int:
+async def upsert_new_items_for_feed(feed: Feed, updated_feed: Feed, feed_items_from_rss: List[FeedItem]) -> int:
     """
     Upload new items as feed item and news item for users.
 
@@ -46,8 +46,8 @@ def upsert_new_items_for_feed(feed: Feed, updated_feed: Feed, feed_items_from_rs
 
     returns: Number of new NewsItems created.
     """
-    current_feed_items = repositories.feed_item_repository.fetch_all_for_feed(feed)
-    subscribed_users = repositories.user_repository.fetch_subscribed_to(feed)
+    current_feed_items = await repositories().feed_item_repository.fetch_all_for_feed(feed)
+    subscribed_users = await repositories().user_repository.fetch_subscribed_to(feed)
 
     updated_feed_items: List[FeedItem] = []  # updated feed_items that will be updated.
     new_feed_items: List[FeedItem] = []  # new feed_items that will be inserted.
@@ -55,7 +55,7 @@ def upsert_new_items_for_feed(feed: Feed, updated_feed: Feed, feed_items_from_rs
     updated_news_items: List[NewsItem] = []  # news items that are updated.
 
     for user in subscribed_users:
-        current_news_items = repositories.news_item_repository.fetch_all_non_read_for_feed(feed, user)
+        current_news_items = await repositories().news_item_repository.fetch_all_non_read_for_feed(feed, user)
         for new_feed_item in feed_items_from_rss:
             feed_items_with_same_link = [item for item in current_feed_items if item.link == new_feed_item.link]
             if len(feed_items_with_same_link) > 0:  # We have seen this item already, update last seen.
@@ -88,18 +88,18 @@ def upsert_new_items_for_feed(feed: Feed, updated_feed: Feed, feed_items_from_rs
                         updated_news_items.append(existing_news_item)
 
     # Upsert the new and updated feed_items.
-    repositories.user_repository.upsert_many(subscribed_users)
-    repositories.feed_item_repository.upsert_many(new_feed_items)
-    repositories.feed_item_repository.upsert_many(updated_feed_items)
-    repositories.news_item_repository.upsert_many(new_news_items)
-    repositories.news_item_repository.upsert_many(updated_news_items)
+    await repositories().user_repository.upsert_many(subscribed_users)
+    await repositories().feed_item_repository.upsert_many(new_feed_items)
+    await repositories().feed_item_repository.upsert_many(updated_feed_items)
+    await repositories().news_item_repository.upsert_many(new_news_items)
+    await repositories().news_item_repository.upsert_many(updated_news_items)
 
     # Update information in feed item with latest information from the url.
     feed.last_fetched = datetime.utcnow()
     feed.description = updated_feed.description
     feed.title = updated_feed.title
     feed.number_of_items = feed.number_of_items + len(new_feed_items)
-    repositories.feed_repository.upsert(feed)
+    await repositories().feed_repository.upsert(feed)
     return len(new_news_items)
 
 
@@ -144,3 +144,20 @@ def news_item_from_feed_item(feed_item: FeedItem, feed: Feed, user: User) -> New
         favicon=determine_favicon_link(feed_item, feed),
         created_on=now_in_utc(),
     )
+
+
+async def upsert_gemeente_groningen_feed() -> Feed:
+    feed = Feed(
+        url="https://gemeente.groningen.nl/actueel/nieuws",
+        title="Gemeente Groningen - algemeen nieuws",
+        description="Algemeen nieuws van de gemeente.",
+        feed_source_type=FeedSourceType.GEMEENTE_GRONINGEN,
+        link="https://gemeente.groningen.nl/actueel/nieuws",
+        image_url="https://gemeente.groningen.nl/sites/default/files/Logo-gemeente-Groningen---rood-zwart.png",
+        image_link="https://gemeente.groningen.nl",
+        image_title="Gemeente Groningen",
+    )
+    repo_feed = await repositories().feed_repository.find_by_url(feed.url)
+    if repo_feed is None:
+        repo_feed = await repositories().feed_repository.upsert(feed)
+    return repo_feed

@@ -12,8 +12,6 @@ COPY core_lib /usr/src/app/core_lib
 RUN cd core_lib && pip install -r requirements.txt
 RUN cd cron && pip install -r requirements.txt
 
-ENV SENTRY_DSN=$SENTRY_DSN
-
 VOLUME [ "/usr/src/app" ]
 
 CMD ["cron/entrypoint.sh"]

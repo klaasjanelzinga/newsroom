@@ -7,5 +7,3 @@ aiohttp
 aiofiles
 pydantic
 
-setuptools
-wheel

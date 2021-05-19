@@ -1,8 +1,7 @@
 import logging
 from typing import List, Optional
 
-from aiohttp import ClientSession
-from google.api_core.exceptions import ClientError, GoogleAPIError
+from aiohttp import ClientError, ClientSession
 from lxml.etree import ElementBase, fromstring
 
 from core_lib.application_data import repositories
@@ -35,7 +34,7 @@ def rdf_document_to_feed(rss_url: str, tree: ElementBase) -> Feed:
         title=title,
         description=description,
         link=link,
-        feed_source_type=FeedSourceType.RDF.name,
+        feed_source_type=FeedSourceType.RDF,
         category=category.text if category is not None else None,
         image_url=image_url if image_url is not None else None,
         image_title=None,
@@ -44,7 +43,7 @@ def rdf_document_to_feed(rss_url: str, tree: ElementBase) -> Feed:
 
 
 def rdf_document_to_feed_items(feed: Feed, tree: ElementBase) -> List[FeedItem]:
-    """ Creates a list of FeedItem objects from a xml tree for the feed. """
+    """Creates a list of FeedItem objects from a xml tree for the feed."""
     item_elements = tree.findall("{*}item")
     return [
         FeedItem(
@@ -64,13 +63,15 @@ async def refresh_rdf_feed(session: ClientSession, feed: Feed) -> Optional[Refre
     log.info("Refreshing rdf feed %s", feed)
     try:
         async with session.get(feed.url) as xml_response:
-            with repositories.client.transaction():
-                rdf_document = fromstring(await xml_response.read())
-                feed_from_rss = rdf_document_to_feed(feed.url, rdf_document)
-                feed_items_from_rss = rdf_document_to_feed_items(feed, rdf_document)
-                number_of_items = upsert_new_items_for_feed(feed, feed_from_rss, feed_items_from_rss)
+            rdf_document = fromstring(await xml_response.read())
+            feed_from_rss = rdf_document_to_feed(feed.url, rdf_document)
+            feed_items_from_rss = rdf_document_to_feed_items(feed, rdf_document)
 
-                return RefreshResult(feed=feed, number_of_items=number_of_items)
-    except (ClientError, TimeoutError, GoogleAPIError):
+            async with await repositories().mongo_client.start_session() as mongo_session:
+                async with mongo_session.start_transaction():
+                    number_of_items = await upsert_new_items_for_feed(feed, feed_from_rss, feed_items_from_rss)
+            return RefreshResult(feed=feed, number_of_items=number_of_items)
+
+    except (ClientError, TimeoutError):
         log.exception("Error while refreshing feed %s", feed)
         return None

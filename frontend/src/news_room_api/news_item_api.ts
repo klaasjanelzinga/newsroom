@@ -1,5 +1,5 @@
 export interface NewsItem {
-    news_item_id: string
+    _id: string
     feed_id: string
     feed_item_id: string
 
