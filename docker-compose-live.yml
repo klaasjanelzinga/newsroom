@@ -3,8 +3,6 @@ version: '3.3'
 services:
   api:
     image: ghcr.io/klaasjanelzinga/newsrooom/api:${VERSION}
-    depends_on:
-      - mongo
     ports:
       - "127.0.0.1:9001:5001"
     env_file:
@@ -12,8 +10,6 @@ services:
 
   cron:
     image: ghcr.io/klaasjanelzinga/newsrooom/cron:${VERSION}
-    depends_on:
-      - mongo
     ports:
       - "127.0.0.1:9002:5002"
     env_file:
@@ -31,35 +27,7 @@ services:
     environment:
       PORT: 3000
 
-  mongo:
-    image: ghcr.io/klaasjanelzinga/newsrooom/mongo:${VERSION}
-    env_file:
-      - etc/production.env
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: $MONGO_ROOT_USER
-      MONGO_INITDB_ROOT_PASSWORD: $MONGO_ROOT_PASS
-      MONGO_INITDB_USERNAME: $MONGO_USER
-      MONGO_INITDB_PASSWORD: $MONGO_PASS
-      MONGO_INITDB_DATABASE: $MONGO_DB
-    volumes:
-      - ./infra/data/mongodb-live:/data/db
-
-  mongo-express:
-    image: mongo-express:0.54
-    depends_on:
-      - mongo
-    ports:
-      - "127.0.0.1:9012:8081"
-    env_file:
-      - etc/production.env
-    environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: $MONGO_ROOT_USER
-      ME_CONFIG_MONGODB_ADMINPASSWORD: $MONGO_ROOT_PASS
-      ME_CONFIG_BASICAUTH_USERNAME: ''
-      ME_CONFIG_BASICAUTH_PASSWORD: ''
-      ME_CONFIG_MONGODB_ENABLE_ADMIN: 'true'
-      ME_CONFIG_MONGODB_PORT: $MONGO_PORT
-      ME_CONFIG_MONGODB_SERVER: $MONGO_HOST
-      ME_CONFIG_OPTIONS_EDITORTHEME: 'default'
-      ME_CONFIG_REQUEST_SIZE: '100kb'
-      ME_CONFIG_SITE_BASEURL: '/'
+networks:
+  default:
+    name: infranetwork
+    external: true

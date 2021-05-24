@@ -51,15 +51,13 @@ upgrade-requirements:
 # -------------------------------------------------------
 # Devops
 devops-mongo-express:
-	ssh -L 5901:127.0.0.1:9012 test.n-kj.nl
+	ssh -L 5901:127.0.0.1:5901 test.n-kj.nl
 
 live-up:
 	docker-compose -f docker-compose-live.yml --env-file etc/production.env up --detach
 
 live-down:
 	docker-compose -f docker-compose-live.yml --env-file etc/production.env down
-
-
 
 # -------------------------------------------------------
 # Test application

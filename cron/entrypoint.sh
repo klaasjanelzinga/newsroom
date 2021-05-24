@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
 cd cron
-uvicorn cron.__main__:app --reload --host 0.0.0.0 --port 5002
+uvicorn cron.__main__:app --host 0.0.0.0 --port 5002

@@ -110,25 +110,25 @@ async def client_session():
     await client_session.close()
 
 
-def clean_data_repositories(repository: Repositories) -> None:
-    repository.feed_repository.feeds_collection.delete_many({})
-    repository.feed_item_repository.feed_items_collection.delete_many({})
-    repository.news_item_repository.news_item_collection.delete_many({})
-    repository.saved_news_item_repository.saved_items_collection.delete_many({})
+async def clean_data_repositories(repository: Repositories) -> None:
+    await repository.feed_repository.feeds_collection.delete_many({})
+    await repository.feed_item_repository.feed_items_collection.delete_many({})
+    await repository.news_item_repository.news_item_collection.delete_many({})
+    await repository.saved_news_item_repository.saved_items_collection.delete_many({})
 
 
-def clean_repositories(repository: Repositories) -> None:
-    repository.user_repository.users_collection.delete_many({})
-    clean_data_repositories(repository)
+async def clean_repositories(repository: Repositories) -> None:
+    await repository.user_repository.users_collection.delete_many({})
+    await clean_data_repositories(repository)
 
 
 @pytest.fixture()
-def repositories(mongodb_client: AsyncIOMotorClient, mongo_db: str, client_session: ClientSession) -> Repositories:
+async def repositories(mongodb_client: AsyncIOMotorClient, mongo_db: str, client_session: ClientSession) -> Repositories:
     repository = Repositories(client=mongodb_client, mongodb_db=mongo_db, client_session=client_session)
     application_data._repositories = repository
     api_application_data._security = Security(repository.user_repository)
 
-    clean_repositories(repository)
+    await clean_repositories(repository)
     return repository
 
 

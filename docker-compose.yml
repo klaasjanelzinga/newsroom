@@ -40,14 +40,6 @@ services:
     command: sh -c "cd /usr/src/app && cp src/Config.localhost.js src/Config.js && npm ci && npm start && wait $$"
 
 # --- Infrastructure ---
-  redis:
-    build:
-      context: infra/redis
-      dockerfile: Dockerfile
-    ports:
-      - "5010:6379"
-    volumes:
-      - ./infra/data/redis:/data
 
   mongo:
     build:
