@@ -65,7 +65,7 @@ async def test_parse_sample_rss_feeds(
     test_url = faker.url()
 
     for xml_test_file in xml_test_files:
-        clean_data_repositories(repositories)
+        await clean_data_repositories(repositories)
 
         response = await fetch_feed_information_for_url(
             response=response_mock, url=test_url, authorization=user_bearer_token
