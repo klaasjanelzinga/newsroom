@@ -123,7 +123,9 @@ async def clean_repositories(repository: Repositories) -> None:
 
 
 @pytest.fixture()
-async def repositories(mongodb_client: AsyncIOMotorClient, mongo_db: str, client_session: ClientSession) -> Repositories:
+async def repositories(
+    mongodb_client: AsyncIOMotorClient, mongo_db: str, client_session: ClientSession
+) -> Repositories:
     repository = Repositories(client=mongodb_client, mongodb_db=mongo_db, client_session=client_session)
     application_data._repositories = repository
     api_application_data._security = Security(repository.user_repository)
