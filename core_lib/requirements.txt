@@ -54,7 +54,7 @@ typing-extensions==3.10.0.0
     #   pydantic
 tzlocal==2.1
     # via dateparser
-urllib3==1.26.4
+urllib3==1.26.5
     # via sentry-sdk
 yarl==1.6.3
     # via aiohttp
