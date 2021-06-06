@@ -42,13 +42,11 @@ class ReadNewsItemListResponse(BaseModel):
     response_model=NewsItemListResponse,
     responses={HTTP_200_OK: {"model": NewsItemListResponse, "description": "List is complete"}},
 )
-async def news_items(
-    fetch_offset: int, fetch_limit: int = 30, authorization: Optional[str] = Header(None)
-) -> NewsItemListResponse:
+async def news_items(fetch_limit: int = 30, authorization: Optional[str] = Header(None)) -> NewsItemListResponse:
     """Fetch the next set of news items."""
     fetch_limit = min(fetch_limit, 80)
     user = await security().get_approved_user(authorization)
-    result = await repositories().news_item_repository.fetch_items(user=user, offset=fetch_offset, limit=fetch_limit)
+    result = await repositories().news_item_repository.fetch_items(user=user, limit=fetch_limit)
 
     return NewsItemListResponse(news_items=result, number_of_unread_items=user.number_of_unread_items)
 

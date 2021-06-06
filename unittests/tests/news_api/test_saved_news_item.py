@@ -10,7 +10,7 @@ from core_lib.repositories import User, SavedNewsItem
 
 @pytest.mark.asyncio
 async def test_save_news_item(repositories: Repositories, user_with_subscription_to_feed: User, user_bearer_token: str):
-    unread_response = await news_items(fetch_offset=0, authorization=user_bearer_token)
+    unread_response = await news_items(authorization=user_bearer_token)
     just_some_news_item = choice(unread_response.news_items)
 
     response = await save_news_item(
@@ -44,7 +44,7 @@ async def test_save_news_item(repositories: Repositories, user_with_subscription
 async def test_save_fetch_and_remove_from_saved(
     repositories: Repositories, user_with_subscription_to_feed: User, user_bearer_token: str
 ):
-    unread_response = await news_items(fetch_offset=0, authorization=user_bearer_token)
+    unread_response = await news_items(authorization=user_bearer_token)
     just_some_news_item = choice(unread_response.news_items)
     news_item_id = just_some_news_item.news_item_id
 

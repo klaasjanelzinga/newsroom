@@ -38,12 +38,12 @@ interface NewsState {
 
 class News extends React.Component<NewsProps, NewsState> {
     api: Api
-    fetch_offset = 0
     fetch_limit = 30
     item_control: ItemControl | null = null
     scrollable_view_items: ScrollableItem[] = []
     mark_as_read_items: MarkAsReadItem[] = []
     no_more_items = false
+    news_item_ids: string[] = []
 
     state: NewsState = {
         news_items: [],
@@ -70,14 +70,17 @@ class News extends React.Component<NewsProps, NewsState> {
 
         this.setState({ error: null })
 
-        const endpoint_with_token = `/news-items?fetch_offset=${this.fetch_offset}&fetch_limit=${this.fetch_limit}`
+        const endpoint_with_token = `/news-items?&fetch_limit=${this.fetch_limit}`
         this.api
             .get<GetNewsItemsResponse>(endpoint_with_token)
             .then((newsItems) => {
-                this.fetch_offset += this.fetch_limit
                 this.no_more_items = newsItems[1].news_items.length < this.fetch_limit
+                const new_news_items = newsItems[1].news_items.filter(
+                    (new_item) => !this.news_item_ids.includes(new_item._id)
+                )
+                this.news_item_ids = this.news_item_ids.concat(new_news_items.map((item) => item._id))
                 this.setState({
-                    news_items: this.state.news_items.concat(newsItems[1].news_items),
+                    news_items: this.state.news_items.concat(new_news_items),
                     number_of_unread_items: newsItems[1].number_of_unread_items,
                     is_loading: false,
                 })
@@ -90,7 +93,6 @@ class News extends React.Component<NewsProps, NewsState> {
 
     refresh(): void {
         this.setState({ news_items: [], is_loading: true })
-        this.fetch_offset = 0
         this.no_more_items = false
         this.fetch_news_items()
     }
@@ -120,6 +122,7 @@ class News extends React.Component<NewsProps, NewsState> {
         /* Fetch new items if a lot is read */
         on_scroll$.subscribe(() => {
             const unread_count = this.state.news_items.filter((item) => !item.is_read).length
+            console.log("unread count", unread_count)
             if (unread_count < 12) {
                 this.fetch_news_items()
             }

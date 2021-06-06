@@ -14,7 +14,7 @@ async def test_get_news_items(
 ):
 
     # Nothing is read, all is unread.
-    unread_response = await news_items(fetch_offset=0, authorization=user_bearer_token)
+    unread_response = await news_items(authorization=user_bearer_token)
     assert unread_response.number_of_unread_items == 25
     assert len(unread_response.news_items) == 25
     just_some_news_item = choice(unread_response.news_items)
@@ -32,6 +32,6 @@ async def test_get_news_items(
     read_items_response = await read_news_items(fetch_offset=0, authorization=user_bearer_token)
     assert len(read_items_response.news_items) == 1
 
-    unread_response = await news_items(fetch_offset=0, authorization=user_bearer_token)
+    unread_response = await news_items(authorization=user_bearer_token)
     assert unread_response.number_of_unread_items == 24
     assert len(unread_response.news_items) == 24

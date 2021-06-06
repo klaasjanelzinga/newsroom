@@ -96,66 +96,70 @@ class SignUp extends React.Component<SignUpProps, SignUpState> {
                 <div className={classes.cards}>
                     <Card className={classes.card}>
                         <CardContent>
-                            <Grid container>
-                                <Grid item xs={12}>
-                                    <Typography component="h5" variant="h5">
-                                        Start the signing up process for newsroom:
-                                    </Typography>
+                            <form>
+                                <Grid container>
+                                    <Grid item xs={12}>
+                                        <Typography component="h5" variant="h5">
+                                            Start the signing up process for newsroom:
+                                        </Typography>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            required
+                                            id="email"
+                                            name="email"
+                                            label="Email address"
+                                            fullWidth
+                                            onChange={(e): void =>
+                                                this.setState({ email_address: e.currentTarget.value })
+                                            }
+                                            value={this.state.email_address}
+                                            autoComplete="username"
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            required
+                                            id="password"
+                                            name="password"
+                                            label="Password"
+                                            type="password"
+                                            onChange={(e): void => this.setState({ password: e.currentTarget.value })}
+                                            value={this.state.password}
+                                            fullWidth
+                                            autoComplete="password"
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            required
+                                            id="repeated_password"
+                                            name="repeated_password"
+                                            label="Repeat password"
+                                            type="password"
+                                            onChange={(e): void =>
+                                                this.setState({ password_repeated: e.currentTarget.value })
+                                            }
+                                            value={this.state.password_repeated}
+                                            fullWidth
+                                            autoComplete="password"
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <div className={classes.buttonBar}>
+                                            <Button
+                                                variant="contained"
+                                                color="primary"
+                                                className={classes.saveButton}
+                                                onClick={async (): Promise<void> => await this.sign_up()}
+                                                endIcon={<Icon>login</Icon>}
+                                            >
+                                                Sign up
+                                            </Button>
+                                        </div>
+                                    </Grid>
                                 </Grid>
-                                <Grid item xs={12}>
-                                    <TextField
-                                        required
-                                        id="email"
-                                        name="email"
-                                        label="Email address"
-                                        fullWidth
-                                        onChange={(e): void => this.setState({ email_address: e.currentTarget.value })}
-                                        value={this.state.email_address}
-                                        autoComplete="username"
-                                    />
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <TextField
-                                        required
-                                        id="password"
-                                        name="password"
-                                        label="Password"
-                                        type="password"
-                                        onChange={(e): void => this.setState({ password: e.currentTarget.value })}
-                                        value={this.state.password}
-                                        fullWidth
-                                        autoComplete="password"
-                                    />
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <TextField
-                                        required
-                                        id="repeated_password"
-                                        name="repeated_password"
-                                        label="Repeat password"
-                                        type="password"
-                                        onChange={(e): void =>
-                                            this.setState({ password_repeated: e.currentTarget.value })
-                                        }
-                                        value={this.state.password_repeated}
-                                        fullWidth
-                                        autoComplete="password"
-                                    />
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <div className={classes.buttonBar}>
-                                        <Button
-                                            variant="contained"
-                                            color="primary"
-                                            className={classes.saveButton}
-                                            onClick={async (): Promise<void> => await this.sign_up()}
-                                            endIcon={<Icon>login</Icon>}
-                                        >
-                                            Sign up
-                                        </Button>
-                                    </div>
-                                </Grid>
-                            </Grid>
+                            </form>
                         </CardContent>
                     </Card>
                 </div>
