@@ -94,6 +94,7 @@ class News extends React.Component<NewsProps, NewsState> {
     refresh(): void {
         this.setState({ news_items: [], is_loading: true })
         this.no_more_items = false
+        this.news_item_ids = []
         this.fetch_news_items()
     }
 

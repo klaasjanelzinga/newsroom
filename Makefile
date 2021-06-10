@@ -54,6 +54,8 @@ devops-mongo-express:
 	ssh -L 5901:127.0.0.1:5901 test.n-kj.nl
 
 live-up:
+	docker-compose -f docker-compose-live.yml --env-file etc/production.env pull
+	docker-compose -f docker-compose-live.yml --env-file etc/production.env down
 	docker-compose -f docker-compose-live.yml --env-file etc/production.env up --detach
 
 live-down:
