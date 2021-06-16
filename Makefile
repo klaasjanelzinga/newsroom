@@ -21,8 +21,8 @@ down: init-data-directory
 logs:
 	docker-compose logs -f
 
-mongo: init-data-directory
-	docker-compose --env-file etc/dev.env up mongo
+restore-live-backup-to-mongo:
+	docker-compose --env-file etc/dev.env exec mongo /restore-from-live.sh
 
 restart-frontend:
 	docker-compose restart frontend
@@ -57,9 +57,14 @@ live-up:
 	docker-compose -f docker-compose-live.yml --env-file etc/production.env pull
 	docker-compose -f docker-compose-live.yml --env-file etc/production.env down
 	docker-compose -f docker-compose-live.yml --env-file etc/production.env up --detach
+	docker rmi $(docker images -q)
 
 live-down:
 	docker-compose -f docker-compose-live.yml --env-file etc/production.env down
+
+scp-to-host:
+	scp Makefile docker-compose-live.yml scp://test.n-kj.nl//usr/newsroom
+	scp -r etc/production.env etc/production.env scp://test.n-kj.nl//usr/newsroom/etc
 
 # -------------------------------------------------------
 # Test application

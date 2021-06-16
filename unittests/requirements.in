@@ -7,6 +7,9 @@ pytest
 lxml
 coverage
 mypy
+types-dateparser
+types-python-dateutil
+types-pytz
 black
 isort==4.3.4
 PyHamcrest

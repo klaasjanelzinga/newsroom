@@ -59,6 +59,8 @@ services:
       - ./infra/data/mongodb:/data/db
       - ./infra/mongo/init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh
       - ./infra/mongo/mongo.conf:/etc/mongo.conf
+      - ./infra/mongo/restore-from-live.sh:/restore-from-live.sh
+      - ../infra/data/backups-live:/backups
 
   mongo-express:
     image: mongo-express:0.54
