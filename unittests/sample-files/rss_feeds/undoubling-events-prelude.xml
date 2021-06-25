@@ -1,0 +1,43 @@
+<rss version="2.0">
+    <channel>
+        <title>Events from all venues</title>
+        <link>https://api-venues.n-kj.nl/events.xml</link>
+        <description>Aggregation of several venues</description>
+        <webMaster>klaasjanelzinga@gmail.com</webMaster>
+        <managingEditor>klaasjanelzinga@gmail.com</managingEditor>
+        <generator>Python3</generator>
+        <category>Entertainment</category>
+        <image>
+            <url>https://api-venues.n-kj.nl/events.xml/channel-image.png</url>
+            <title>Events from all venues</title>
+            <link>https://api-venues.n-kj.nl/events.xml</link>
+        </image>
+        <item>
+            <title>Dummy event in [Melkweg NL-AMS]</title>
+            <link>https://www.melkweg.nl/nl/agenda/christone-kingfish-ingram-29-01-2022</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;De Amerikaanse Christone "Kingfish" Ingram is misschien pas 22 jaar, maar mag al een
+                indrukwekkende lijst van samenwerkingen afvinken. Zo dook de jonge&#160;bluesgitarist- en zanger voor
+                zijn debuutalbum de studio in met niemand minder dan Buddy Guy, Eddy Gales en Keb' Mo. Gezegend met een
+                enorm talent en met roots&#160;in de Mississippi Delta kun je zeggen dat hij een geboren bluesmuzikant
+                is in hart en nieren is. Zijn opmerkelijke bijnaam heeft "Kingfish" te danken aan zijn vader, die hem
+                een documentaire over Muddy Waters liet zien toen Ingram vijf jaar oud was. Het duurde&#160;niet lang
+                voor zijn talent werd opgemerkt.&#160;Zo prees Bluesmagazine het album als een "genot van begin tot
+                eind, met een opmerkelijke volwassenheid op papier en een stem die zijn herkomst uit de Deep South
+                belichaamt". Op vrijdag 23 juli komt de langverwachte opvolgplaat&#160;"662" uit, vernoemd naar de
+                telefooncode van zijn geboorteplaats. Verwacht een avond met nieuwe hartverscheurende bluessongs,&#160;bijgestaan
+                door gevoelige&#160;gitaarsolo's en Ingram's indringende stem.&lt;/p&gt;
+                &lt;img
+                src="https://s3-eu-west-1.amazonaws.com/static.melkweg.nl/uploads/images/scaled/agenda_thumbnail/28288"
+                alt="image for event"/&gt;
+                &lt;p&gt;When: 2022-01-29 20:00 -
+                Where: &lt;a href="https://www.melkweg.nl"&gt;Melkweg Amsterdam (Amsterdam, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.melkweg.nl/nl/agenda/christone-kingfish-ingram-29-01-2022</guid>
+            <source>https://www.melkweg.nl/agenda</source>
+            <author>https://www.melkweg.nl/agenda</author>
+            <pubDate>Fri, 25 Jun 2021 10:15:03</pubDate>
+        </item>
+    </channel>
+</rss>

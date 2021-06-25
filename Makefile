@@ -64,7 +64,7 @@ live-down:
 
 scp-to-host:
 	scp Makefile docker-compose-live.yml scp://test.n-kj.nl//usr/newsroom
-	scp -r etc/production.env etc/production.env scp://test.n-kj.nl//usr/newsroom/etc
+	scp -r etc/production.env scp://test.n-kj.nl//usr/newsroom/etc
 
 # -------------------------------------------------------
 # Test application

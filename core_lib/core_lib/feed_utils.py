@@ -12,8 +12,8 @@ from core_lib.utils import now_in_utc
 
 
 def are_titles_similar(title_1: str, title_2: str) -> bool:
-    title_1 = re.sub(r"\[.*]", "", title_1)
-    title_2 = re.sub(r"\[.*]", "", title_2)
+    title_1 = re.sub(r"\[.*?]", "", title_1)
+    title_2 = re.sub(r"\[.*?]", "", title_2)
     return len(title_1) > 10 and difflib.SequenceMatcher(None, title_1, title_2).ratio() > 0.516
 
 

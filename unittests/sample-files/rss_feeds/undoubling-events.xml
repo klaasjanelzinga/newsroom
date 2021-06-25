@@ -1,0 +1,882 @@
+<rss version="2.0">
+    <channel>
+        <title>Events from all venues</title>
+        <link>https://api-venues.n-kj.nl/events.xml</link>
+        <description>Aggregation of several venues</description>
+        <webMaster>klaasjanelzinga@gmail.com</webMaster>
+        <managingEditor>klaasjanelzinga@gmail.com</managingEditor>
+        <generator>Python3</generator>
+        <category>Entertainment</category>
+        <image>
+            <url>https://api-venues.n-kj.nl/events.xml/channel-image.png</url>
+            <title>Events from all venues</title>
+            <link>https://api-venues.n-kj.nl/events.xml</link>
+        </image>
+        <item>
+            <title>Christone &#8220;Kingfish&#8221; Ingram [Melkweg NL-AMS]</title>
+            <link>https://www.melkweg.nl/nl/agenda/christone-kingfish-ingram-29-01-2022</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;De Amerikaanse Christone "Kingfish" Ingram is misschien pas 22 jaar, maar mag al een
+                indrukwekkende lijst van samenwerkingen afvinken. Zo dook de jonge&#160;bluesgitarist- en zanger voor
+                zijn debuutalbum de studio in met niemand minder dan Buddy Guy, Eddy Gales en Keb' Mo. Gezegend met een
+                enorm talent en met roots&#160;in de Mississippi Delta kun je zeggen dat hij een geboren bluesmuzikant
+                is in hart en nieren is. Zijn opmerkelijke bijnaam heeft "Kingfish" te danken aan zijn vader, die hem
+                een documentaire over Muddy Waters liet zien toen Ingram vijf jaar oud was. Het duurde&#160;niet lang
+                voor zijn talent werd opgemerkt.&#160;Zo prees Bluesmagazine het album als een "genot van begin tot
+                eind, met een opmerkelijke volwassenheid op papier en een stem die zijn herkomst uit de Deep South
+                belichaamt". Op vrijdag 23 juli komt de langverwachte opvolgplaat&#160;"662" uit, vernoemd naar de
+                telefooncode van zijn geboorteplaats. Verwacht een avond met nieuwe hartverscheurende bluessongs,&#160;bijgestaan
+                door gevoelige&#160;gitaarsolo's en Ingram's indringende stem.&lt;/p&gt;
+                &lt;img
+                src="https://s3-eu-west-1.amazonaws.com/static.melkweg.nl/uploads/images/scaled/agenda_thumbnail/28288"
+                alt="image for event"/&gt;
+                &lt;p&gt;When: 2022-01-29 20:00 -
+                Where: &lt;a href="https://www.melkweg.nl"&gt;Melkweg Amsterdam (Amsterdam, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.melkweg.nl/nl/agenda/christone-kingfish-ingram-29-01-2022</guid>
+            <source>https://www.melkweg.nl/agenda</source>
+            <author>https://www.melkweg.nl/agenda</author>
+            <pubDate>Fri, 25 Jun 2021 10:15:03</pubDate>
+        </item>
+        <item>
+            <title>Nina June [Melkweg NL-AMS]</title>
+            <link>https://www.melkweg.nl/nl/agenda/nina-june-02-12-2021</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;De Amsterdamse zilverblonde zangeres Nina June maakt filmische popsongs over de zoektocht naar
+                liefde en zingeving in een tijd waarin vluchtigheid de norm lijkt te zijn. Stuk voor stuk zijn haar
+                songs sensuele verhalen over de paradox van intimiteit en onafhankelijkheid. Op haar op opkomende EP
+                &#8216;Side A - Our Garden&#8217; durft de singer-songwriter met een kritische blik naar zichzelf en de
+                wereld om zich heen te kijken en verbindt ze de onverbloemde emotie in haar teksten met gelaagde
+                arrangementen van piano, gitaar, strijkers en natuurlijke soundscapes. Nina&#8217;s muziek laat zich het
+                best beschrijven als &#8220;melancholic nostalgia&#8221; en roept daarmee de vergelijking op met
+                artiesten als Ane Brun, Air en The Paper Kites.&lt;/p&gt;
+                &lt;img
+                src="https://s3-eu-west-1.amazonaws.com/static.melkweg.nl/uploads/images/scaled/agenda_thumbnail/28309"
+                alt="image for event"/&gt;
+                &lt;p&gt;When: 2021-12-02 19:00 -
+                Where: &lt;a href="https://www.melkweg.nl"&gt;Melkweg Amsterdam (Amsterdam, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.melkweg.nl/nl/agenda/nina-june-02-12-2021</guid>
+            <source>https://www.melkweg.nl/agenda</source>
+            <author>https://www.melkweg.nl/agenda</author>
+            <pubDate>Fri, 25 Jun 2021 10:15:03</pubDate>
+        </item>
+        <item>
+            <title>Guus Meeuwis - Club Zoveel [013 NL-TIL]</title>
+            <link>https://www.013.nl/programma/6625/guus-meeuwis-club-zoveel</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;Guus Meeuwis - Club Zoveel&lt;/p&gt;
+                &lt;img src="https://www.013.nl/uploads/cache/event_main_mobile/5ee2a6923799d.jpg?version=1591912293"
+                alt="image for event"/&gt;
+                &lt;p&gt;When: 2021-07-08 20:30 -
+                Where: &lt;a href="https://www.013.nl"&gt;013 Tilburg (Tilburg, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.013.nl/programma/6625/guus-meeuwis-club-zoveel</guid>
+            <source>https://www.013.nl/programma</source>
+            <author>https://www.013.nl/programma</author>
+            <pubDate>Thu, 24 Jun 2021 18:15:01</pubDate>
+        </item>
+        <item>
+            <title>Guus Meeuwis - Club Zoveel [013 NL-TIL]</title>
+            <link>https://www.013.nl/programma/6623/guus-meeuwis-club-zoveel</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;Guus Meeuwis - Club Zoveel&lt;/p&gt;
+                &lt;img src="https://www.013.nl/uploads/cache/event_main_mobile/5ee2a6923799d.jpg?version=1591912293"
+                alt="image for event"/&gt;
+                &lt;p&gt;When: 2021-07-06 20:30 -
+                Where: &lt;a href="https://www.013.nl"&gt;013 Tilburg (Tilburg, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.013.nl/programma/6623/guus-meeuwis-club-zoveel</guid>
+            <source>https://www.013.nl/programma</source>
+            <author>https://www.013.nl/programma</author>
+            <pubDate>Thu, 24 Jun 2021 18:15:01</pubDate>
+        </item>
+        <item>
+            <title>Guus Meeuwis - Club Zoveel [013 NL-TIL]</title>
+            <link>https://www.013.nl/programma/6621/guus-meeuwis-club-zoveel</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;Guus Meeuwis - Club Zoveel&lt;/p&gt;
+                &lt;img src="https://www.013.nl/uploads/cache/event_main_mobile/5ee2a6923799d.jpg?version=1591912293"
+                alt="image for event"/&gt;
+                &lt;p&gt;When: 2021-07-05 20:30 -
+                Where: &lt;a href="https://www.013.nl"&gt;013 Tilburg (Tilburg, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.013.nl/programma/6621/guus-meeuwis-club-zoveel</guid>
+            <source>https://www.013.nl/programma</source>
+            <author>https://www.013.nl/programma</author>
+            <pubDate>Thu, 24 Jun 2021 18:15:01</pubDate>
+        </item>
+        <item>
+            <title>Inge van Calkar [Simplon NL-GRN]</title>
+            <link>http://simplon.nl/?post_type=events&amp;p=21707</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;
+
+                Waar: Grote zaal
+
+                Open:
+
+                20:00 uur
+                Aanvang: 20:45 uur
+
+                Ticket: &#8364;15,-
+                Genre: Pop
+
+                &lt;/p&gt;
+                &lt;img src="https://simplon.nl/content/uploads/2020/03/ingevanc_web-600x600.jpg" alt="image for event"/&gt;
+                &lt;p&gt;When: 2021-09-11 20:45 -
+                Where: &lt;a href="https://www.simplon.nl"&gt;Simplon Groningen (Groningen, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>http://simplon.nl/?post_type=events&amp;p=21707</guid>
+            <source>https://www.simplon.nl</source>
+            <author>https://www.simplon.nl</author>
+            <pubDate>Thu, 24 Jun 2021 14:15:04</pubDate>
+        </item>
+        <item>
+            <title>Inge van Calkar [Simplon NL-GRN]</title>
+            <link>http://simplon.nl/?post_type=events&amp;p=21022</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;
+
+                Waar: Grote zaal
+
+                Open:
+
+                20:00 uur
+                Aanvang: 20:45 uur
+
+                Ticket: &#8364;15,-
+                Genre: Pop
+
+                &lt;/p&gt;
+                &lt;img src="https://simplon.nl/content/uploads/2020/03/IngevanCalkartourfoto1-600x600.jpg" alt="image
+                for event"/&gt;
+                &lt;p&gt;When: 2021-09-10 20:45 -
+                Where: &lt;a href="https://www.simplon.nl"&gt;Simplon Groningen (Groningen, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>http://simplon.nl/?post_type=events&amp;p=21022</guid>
+            <source>https://www.simplon.nl</source>
+            <author>https://www.simplon.nl</author>
+            <pubDate>Thu, 24 Jun 2021 14:15:04</pubDate>
+        </item>
+        <item>
+            <title>Milkshake Festival [Paradiso NL-AMS]</title>
+            <link>https://www.paradiso.nl/en/program/milkshake-festival/87199</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;For all who love&lt;/p&gt;
+                &lt;img src="https://api.paradiso.nl/img/events//Milkshake-banner-1.jpg" alt="image for event"/&gt;
+                &lt;p&gt;When: 2021-08-01 12:00 -
+                Where: &lt;a href="https://www.paradiso.nl"&gt;Paradiso Amsterdam (Amsterdam, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.paradiso.nl/en/program/milkshake-festival/87199</guid>
+            <source>https://www.paradiso.nl/</source>
+            <author>https://www.paradiso.nl/</author>
+            <pubDate>Thu, 24 Jun 2021 10:15:02</pubDate>
+        </item>
+        <item>
+            <title>Milkshake Festival [Paradiso NL-AMS]</title>
+            <link>https://www.paradiso.nl/en/program/milkshake-festival/87197</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;For all who love&lt;/p&gt;
+                &lt;img src="https://api.paradiso.nl/img/events//Milkshake2021_GiGi_event1.jpg" alt="image for event"/&gt;
+                &lt;p&gt;When: 2021-07-31 12:00 -
+                Where: &lt;a href="https://www.paradiso.nl"&gt;Paradiso Amsterdam (Amsterdam, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.paradiso.nl/en/program/milkshake-festival/87197</guid>
+            <source>https://www.paradiso.nl/</source>
+            <author>https://www.paradiso.nl/</author>
+            <pubDate>Thu, 24 Jun 2021 10:15:02</pubDate>
+        </item>
+        <item>
+            <title>The Art of Escapism [Melkweg NL-AMS]</title>
+            <link>https://www.melkweg.nl/nl/agenda/the-art-of-escapism-18-07-2021</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;De tentoonstelling The Art of Escapism toont de hunkering om een andere realiteit te betreden
+                en te vluchten uit het dagelijks bestaan. Ge&#239;nspireerd door het oeuvre van Holland Festivals
+                associate artist Gis&#232;le Vienne, presenteert Melkweg Expo kunstenaars die het hedendaags escapisme
+                vanuit verschillende disciplines verbeelden. Zo wordt de collectieve roes onderzocht waarin tijd en
+                ruimte andere regels volgen en waarin het fysieke lichaam het wint van de ratio.&#160;&#160;In een tijd
+                waarin alles wat collectief is wordt verboden en de coronapandemie iedereen thuis opsluit, is de drang
+                bij jongeren naar fysiek samenzijn, opgaan in de menigte en ontsnappen aan de realiteit nog nooit zo
+                groot geweest. The Art of Escapism ontleedt de schoonheid die schuilt in het opzoeken van grenzen, in de
+                extase van het loskomen van je eigen lichaam en in jezelf verliezen in wat je gelooft. Want vergis je
+                niet: elke fantasie, elk verlangen, elke hoop voor de toekomst is escapisme.&#160;Met: Thomas Bunt, Liza
+                Houben, Jan Janssenswillen, Fabian Landewee, Mary Ponomareva, George Voronov en&#160;Lukasz
+                Wierzbowski.The Art of Escapism&#160;is een samenwerking tussen Melkweg&#160;Expo, Holland Festival en
+                Vlaams Cultuurhuis de Brakke Grond. De expo The Art of Escapism is gratis te bezoeken in Melkweg Expo.&#160;Om
+                een soepel bezoek te garanderen vragen we bezoekers vooraf hier een ticket te reserveren.&#160;Je kan
+                ook ter plekke een reser&lt;/p&gt;
+                &lt;img
+                src="https://s3-eu-west-1.amazonaws.com/static.melkweg.nl/uploads/images/scaled/agenda_thumbnail/28190"
+                alt="image for event"/&gt;
+                &lt;p&gt;When: 2021-07-18 12:00 -
+                Where: &lt;a href="https://www.melkweg.nl"&gt;Melkweg Amsterdam (Amsterdam, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.melkweg.nl/nl/agenda/the-art-of-escapism-18-07-2021</guid>
+            <source>https://www.melkweg.nl/agenda</source>
+            <author>https://www.melkweg.nl/agenda</author>
+            <pubDate>Thu, 24 Jun 2021 06:15:03</pubDate>
+        </item>
+        <item>
+            <title>The Art of Escapism [Melkweg NL-AMS]</title>
+            <link>https://www.melkweg.nl/nl/agenda/the-art-of-escapism-17-07-2021</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;De tentoonstelling The Art of Escapism toont de hunkering om een andere realiteit te betreden
+                en te vluchten uit het dagelijks bestaan. Ge&#239;nspireerd door het oeuvre van Holland Festivals
+                associate artist Gis&#232;le Vienne, presenteert Melkweg Expo kunstenaars die het hedendaags escapisme
+                vanuit verschillende disciplines verbeelden. Zo wordt de collectieve roes onderzocht waarin tijd en
+                ruimte andere regels volgen en waarin het fysieke lichaam het wint van de ratio.&#160;&#160;In een tijd
+                waarin alles wat collectief is wordt verboden en de coronapandemie iedereen thuis opsluit, is de drang
+                bij jongeren naar fysiek samenzijn, opgaan in de menigte en ontsnappen aan de realiteit nog nooit zo
+                groot geweest. The Art of Escapism ontleedt de schoonheid die schuilt in het opzoeken van grenzen, in de
+                extase van het loskomen van je eigen lichaam en in jezelf verliezen in wat je gelooft. Want vergis je
+                niet: elke fantasie, elk verlangen, elke hoop voor de toekomst is escapisme.&#160;Met: Thomas Bunt, Liza
+                Houben, Jan Janssenswillen, Fabian Landewee, Mary Ponomareva, George Voronov en&#160;Lukasz
+                Wierzbowski.The Art of Escapism&#160;is een samenwerking tussen Melkweg&#160;Expo, Holland Festival en
+                Vlaams Cultuurhuis de Brakke Grond. De expo The Art of Escapism is gratis te bezoeken in Melkweg Expo.&#160;Om
+                een soepel bezoek te garanderen vragen we bezoekers vooraf hier een ticket te reserveren.&#160;Je kan
+                ook ter plekke een reser&lt;/p&gt;
+                &lt;img
+                src="https://s3-eu-west-1.amazonaws.com/static.melkweg.nl/uploads/images/scaled/agenda_thumbnail/28190"
+                alt="image for event"/&gt;
+                &lt;p&gt;When: 2021-07-17 12:00 -
+                Where: &lt;a href="https://www.melkweg.nl"&gt;Melkweg Amsterdam (Amsterdam, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.melkweg.nl/nl/agenda/the-art-of-escapism-17-07-2021</guid>
+            <source>https://www.melkweg.nl/agenda</source>
+            <author>https://www.melkweg.nl/agenda</author>
+            <pubDate>Thu, 24 Jun 2021 06:15:03</pubDate>
+        </item>
+        <item>
+            <title>The Art of Escapism [Melkweg NL-AMS]</title>
+            <link>https://www.melkweg.nl/nl/agenda/the-art-of-escapism-16-07-2021</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;De tentoonstelling The Art of Escapism toont de hunkering om een andere realiteit te betreden
+                en te vluchten uit het dagelijks bestaan. Ge&#239;nspireerd door het oeuvre van Holland Festivals
+                associate artist Gis&#232;le Vienne, presenteert Melkweg Expo kunstenaars die het hedendaags escapisme
+                vanuit verschillende disciplines verbeelden. Zo wordt de collectieve roes onderzocht waarin tijd en
+                ruimte andere regels volgen en waarin het fysieke lichaam het wint van de ratio.&#160;&#160;In een tijd
+                waarin alles wat collectief is wordt verboden en de coronapandemie iedereen thuis opsluit, is de drang
+                bij jongeren naar fysiek samenzijn, opgaan in de menigte en ontsnappen aan de realiteit nog nooit zo
+                groot geweest. The Art of Escapism ontleedt de schoonheid die schuilt in het opzoeken van grenzen, in de
+                extase van het loskomen van je eigen lichaam en in jezelf verliezen in wat je gelooft. Want vergis je
+                niet: elke fantasie, elk verlangen, elke hoop voor de toekomst is escapisme.&#160;Met: Thomas Bunt, Liza
+                Houben, Jan Janssenswillen, Fabian Landewee, Mary Ponomareva, George Voronov en&#160;Lukasz
+                Wierzbowski.The Art of Escapism&#160;is een samenwerking tussen Melkweg&#160;Expo, Holland Festival en
+                Vlaams Cultuurhuis de Brakke Grond. De expo The Art of Escapism is gratis te bezoeken in Melkweg Expo.&#160;Om
+                een soepel bezoek te garanderen vragen we bezoekers vooraf hier een ticket te reserveren.&#160;Je kan
+                ook ter plekke een reser&lt;/p&gt;
+                &lt;img
+                src="https://s3-eu-west-1.amazonaws.com/static.melkweg.nl/uploads/images/scaled/agenda_thumbnail/28190"
+                alt="image for event"/&gt;
+                &lt;p&gt;When: 2021-07-16 12:00 -
+                Where: &lt;a href="https://www.melkweg.nl"&gt;Melkweg Amsterdam (Amsterdam, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.melkweg.nl/nl/agenda/the-art-of-escapism-16-07-2021</guid>
+            <source>https://www.melkweg.nl/agenda</source>
+            <author>https://www.melkweg.nl/agenda</author>
+            <pubDate>Thu, 24 Jun 2021 06:15:03</pubDate>
+        </item>
+        <item>
+            <title>The Art of Escapism [Melkweg NL-AMS]</title>
+            <link>https://www.melkweg.nl/nl/agenda/the-art-of-escapism-15-07-2021</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;De tentoonstelling The Art of Escapism toont de hunkering om een andere realiteit te betreden
+                en te vluchten uit het dagelijks bestaan. Ge&#239;nspireerd door het oeuvre van Holland Festivals
+                associate artist Gis&#232;le Vienne, presenteert Melkweg Expo kunstenaars die het hedendaags escapisme
+                vanuit verschillende disciplines verbeelden. Zo wordt de collectieve roes onderzocht waarin tijd en
+                ruimte andere regels volgen en waarin het fysieke lichaam het wint van de ratio.&#160;&#160;In een tijd
+                waarin alles wat collectief is wordt verboden en de coronapandemie iedereen thuis opsluit, is de drang
+                bij jongeren naar fysiek samenzijn, opgaan in de menigte en ontsnappen aan de realiteit nog nooit zo
+                groot geweest. The Art of Escapism ontleedt de schoonheid die schuilt in het opzoeken van grenzen, in de
+                extase van het loskomen van je eigen lichaam en in jezelf verliezen in wat je gelooft. Want vergis je
+                niet: elke fantasie, elk verlangen, elke hoop voor de toekomst is escapisme.&#160;Met: Thomas Bunt, Liza
+                Houben, Jan Janssenswillen, Fabian Landewee, Mary Ponomareva, George Voronov en&#160;Lukasz
+                Wierzbowski.The Art of Escapism&#160;is een samenwerking tussen Melkweg&#160;Expo, Holland Festival en
+                Vlaams Cultuurhuis de Brakke Grond. De expo The Art of Escapism is gratis te bezoeken in Melkweg Expo.&#160;Om
+                een soepel bezoek te garanderen vragen we bezoekers vooraf hier een ticket te reserveren.&#160;Je kan
+                ook ter plekke een reser&lt;/p&gt;
+                &lt;img
+                src="https://s3-eu-west-1.amazonaws.com/static.melkweg.nl/uploads/images/scaled/agenda_thumbnail/28190"
+                alt="image for event"/&gt;
+                &lt;p&gt;When: 2021-07-15 12:00 -
+                Where: &lt;a href="https://www.melkweg.nl"&gt;Melkweg Amsterdam (Amsterdam, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.melkweg.nl/nl/agenda/the-art-of-escapism-15-07-2021</guid>
+            <source>https://www.melkweg.nl/agenda</source>
+            <author>https://www.melkweg.nl/agenda</author>
+            <pubDate>Thu, 24 Jun 2021 06:15:03</pubDate>
+        </item>
+        <item>
+            <title>The Art of Escapism [Melkweg NL-AMS]</title>
+            <link>https://www.melkweg.nl/nl/agenda/the-art-of-escapism-14-07-2021</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;De tentoonstelling The Art of Escapism toont de hunkering om een andere realiteit te betreden
+                en te vluchten uit het dagelijks bestaan. Ge&#239;nspireerd door het oeuvre van Holland Festivals
+                associate artist Gis&#232;le Vienne, presenteert Melkweg Expo kunstenaars die het hedendaags escapisme
+                vanuit verschillende disciplines verbeelden. Zo wordt de collectieve roes onderzocht waarin tijd en
+                ruimte andere regels volgen en waarin het fysieke lichaam het wint van de ratio.&#160;&#160;In een tijd
+                waarin alles wat collectief is wordt verboden en de coronapandemie iedereen thuis opsluit, is de drang
+                bij jongeren naar fysiek samenzijn, opgaan in de menigte en ontsnappen aan de realiteit nog nooit zo
+                groot geweest. The Art of Escapism ontleedt de schoonheid die schuilt in het opzoeken van grenzen, in de
+                extase van het loskomen van je eigen lichaam en in jezelf verliezen in wat je gelooft. Want vergis je
+                niet: elke fantasie, elk verlangen, elke hoop voor de toekomst is escapisme.&#160;Met: Thomas Bunt, Liza
+                Houben, Jan Janssenswillen, Fabian Landewee, Mary Ponomareva, George Voronov en&#160;Lukasz
+                Wierzbowski.The Art of Escapism&#160;is een samenwerking tussen Melkweg&#160;Expo, Holland Festival en
+                Vlaams Cultuurhuis de Brakke Grond. De expo The Art of Escapism is gratis te bezoeken in Melkweg Expo.&#160;Om
+                een soepel bezoek te garanderen vragen we bezoekers vooraf hier een ticket te reserveren.&#160;Je kan
+                ook ter plekke een reser&lt;/p&gt;
+                &lt;img
+                src="https://s3-eu-west-1.amazonaws.com/static.melkweg.nl/uploads/images/scaled/agenda_thumbnail/28190"
+                alt="image for event"/&gt;
+                &lt;p&gt;When: 2021-07-14 12:00 -
+                Where: &lt;a href="https://www.melkweg.nl"&gt;Melkweg Amsterdam (Amsterdam, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.melkweg.nl/nl/agenda/the-art-of-escapism-14-07-2021</guid>
+            <source>https://www.melkweg.nl/agenda</source>
+            <author>https://www.melkweg.nl/agenda</author>
+            <pubDate>Thu, 24 Jun 2021 06:15:03</pubDate>
+        </item>
+        <item>
+            <title>The Art of Escapism [Melkweg NL-AMS]</title>
+            <link>https://www.melkweg.nl/nl/agenda/the-art-of-escapism-13-07-2021</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;De tentoonstelling The Art of Escapism toont de hunkering om een andere realiteit te betreden
+                en te vluchten uit het dagelijks bestaan. Ge&#239;nspireerd door het oeuvre van Holland Festivals
+                associate artist Gis&#232;le Vienne, presenteert Melkweg Expo kunstenaars die het hedendaags escapisme
+                vanuit verschillende disciplines verbeelden. Zo wordt de collectieve roes onderzocht waarin tijd en
+                ruimte andere regels volgen en waarin het fysieke lichaam het wint van de ratio.&#160;&#160;In een tijd
+                waarin alles wat collectief is wordt verboden en de coronapandemie iedereen thuis opsluit, is de drang
+                bij jongeren naar fysiek samenzijn, opgaan in de menigte en ontsnappen aan de realiteit nog nooit zo
+                groot geweest. The Art of Escapism ontleedt de schoonheid die schuilt in het opzoeken van grenzen, in de
+                extase van het loskomen van je eigen lichaam en in jezelf verliezen in wat je gelooft. Want vergis je
+                niet: elke fantasie, elk verlangen, elke hoop voor de toekomst is escapisme.&#160;Met: Thomas Bunt, Liza
+                Houben, Jan Janssenswillen, Fabian Landewee, Mary Ponomareva, George Voronov en&#160;Lukasz
+                Wierzbowski.The Art of Escapism&#160;is een samenwerking tussen Melkweg&#160;Expo, Holland Festival en
+                Vlaams Cultuurhuis de Brakke Grond. De expo The Art of Escapism is gratis te bezoeken in Melkweg Expo.&#160;Om
+                een soepel bezoek te garanderen vragen we bezoekers vooraf hier een ticket te reserveren.&#160;Je kan
+                ook ter plekke een reser&lt;/p&gt;
+                &lt;img
+                src="https://s3-eu-west-1.amazonaws.com/static.melkweg.nl/uploads/images/scaled/agenda_thumbnail/28190"
+                alt="image for event"/&gt;
+                &lt;p&gt;When: 2021-07-13 12:00 -
+                Where: &lt;a href="https://www.melkweg.nl"&gt;Melkweg Amsterdam (Amsterdam, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.melkweg.nl/nl/agenda/the-art-of-escapism-13-07-2021</guid>
+            <source>https://www.melkweg.nl/agenda</source>
+            <author>https://www.melkweg.nl/agenda</author>
+            <pubDate>Thu, 24 Jun 2021 06:15:03</pubDate>
+        </item>
+        <item>
+            <title>The Art of Escapism [Melkweg NL-AMS]</title>
+            <link>https://www.melkweg.nl/nl/agenda/the-art-of-escapism-11-07-2021</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;De tentoonstelling The Art of Escapism toont de hunkering om een andere realiteit te betreden
+                en te vluchten uit het dagelijks bestaan. Ge&#239;nspireerd door het oeuvre van Holland Festivals
+                associate artist Gis&#232;le Vienne, presenteert Melkweg Expo kunstenaars die het hedendaags escapisme
+                vanuit verschillende disciplines verbeelden. Zo wordt de collectieve roes onderzocht waarin tijd en
+                ruimte andere regels volgen en waarin het fysieke lichaam het wint van de ratio.&#160;&#160;In een tijd
+                waarin alles wat collectief is wordt verboden en de coronapandemie iedereen thuis opsluit, is de drang
+                bij jongeren naar fysiek samenzijn, opgaan in de menigte en ontsnappen aan de realiteit nog nooit zo
+                groot geweest. The Art of Escapism ontleedt de schoonheid die schuilt in het opzoeken van grenzen, in de
+                extase van het loskomen van je eigen lichaam en in jezelf verliezen in wat je gelooft. Want vergis je
+                niet: elke fantasie, elk verlangen, elke hoop voor de toekomst is escapisme.&#160;Met: Thomas Bunt, Liza
+                Houben, Jan Janssenswillen, Fabian Landewee, Mary Ponomareva, George Voronov en&#160;Lukasz
+                Wierzbowski.The Art of Escapism&#160;is een samenwerking tussen Melkweg&#160;Expo, Holland Festival en
+                Vlaams Cultuurhuis de Brakke Grond. De expo The Art of Escapism is gratis te bezoeken in Melkweg Expo.&#160;Om
+                een soepel bezoek te garanderen vragen we bezoekers vooraf hier een ticket te reserveren.&#160;Je kan
+                ook ter plekke een reser&lt;/p&gt;
+                &lt;img
+                src="https://s3-eu-west-1.amazonaws.com/static.melkweg.nl/uploads/images/scaled/agenda_thumbnail/28190"
+                alt="image for event"/&gt;
+                &lt;p&gt;When: 2021-07-11 12:00 -
+                Where: &lt;a href="https://www.melkweg.nl"&gt;Melkweg Amsterdam (Amsterdam, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.melkweg.nl/nl/agenda/the-art-of-escapism-11-07-2021</guid>
+            <source>https://www.melkweg.nl/agenda</source>
+            <author>https://www.melkweg.nl/agenda</author>
+            <pubDate>Thu, 24 Jun 2021 06:15:03</pubDate>
+        </item>
+        <item>
+            <title>The Art of Escapism [Melkweg NL-AMS]</title>
+            <link>https://www.melkweg.nl/nl/agenda/the-art-of-escapism-10-07-2021</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;De tentoonstelling The Art of Escapism toont de hunkering om een andere realiteit te betreden
+                en te vluchten uit het dagelijks bestaan. Ge&#239;nspireerd door het oeuvre van Holland Festivals
+                associate artist Gis&#232;le Vienne, presenteert Melkweg Expo kunstenaars die het hedendaags escapisme
+                vanuit verschillende disciplines verbeelden. Zo wordt de collectieve roes onderzocht waarin tijd en
+                ruimte andere regels volgen en waarin het fysieke lichaam het wint van de ratio.&#160;&#160;In een tijd
+                waarin alles wat collectief is wordt verboden en de coronapandemie iedereen thuis opsluit, is de drang
+                bij jongeren naar fysiek samenzijn, opgaan in de menigte en ontsnappen aan de realiteit nog nooit zo
+                groot geweest. The Art of Escapism ontleedt de schoonheid die schuilt in het opzoeken van grenzen, in de
+                extase van het loskomen van je eigen lichaam en in jezelf verliezen in wat je gelooft. Want vergis je
+                niet: elke fantasie, elk verlangen, elke hoop voor de toekomst is escapisme.&#160;Met: Thomas Bunt, Liza
+                Houben, Jan Janssenswillen, Fabian Landewee, Mary Ponomareva, George Voronov en&#160;Lukasz
+                Wierzbowski.The Art of Escapism&#160;is een samenwerking tussen Melkweg&#160;Expo, Holland Festival en
+                Vlaams Cultuurhuis de Brakke Grond. De expo The Art of Escapism is gratis te bezoeken in Melkweg Expo.&#160;Om
+                een soepel bezoek te garanderen vragen we bezoekers vooraf hier een ticket te reserveren.&#160;Je kan
+                ook ter plekke een reser&lt;/p&gt;
+                &lt;img
+                src="https://s3-eu-west-1.amazonaws.com/static.melkweg.nl/uploads/images/scaled/agenda_thumbnail/28190"
+                alt="image for event"/&gt;
+                &lt;p&gt;When: 2021-07-10 12:00 -
+                Where: &lt;a href="https://www.melkweg.nl"&gt;Melkweg Amsterdam (Amsterdam, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.melkweg.nl/nl/agenda/the-art-of-escapism-10-07-2021</guid>
+            <source>https://www.melkweg.nl/agenda</source>
+            <author>https://www.melkweg.nl/agenda</author>
+            <pubDate>Thu, 24 Jun 2021 06:15:03</pubDate>
+        </item>
+        <item>
+            <title>The Art of Escapism [Melkweg NL-AMS]</title>
+            <link>https://www.melkweg.nl/nl/agenda/the-art-of-escapism-09-07-2021</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;De tentoonstelling The Art of Escapism toont de hunkering om een andere realiteit te betreden
+                en te vluchten uit het dagelijks bestaan. Ge&#239;nspireerd door het oeuvre van Holland Festivals
+                associate artist Gis&#232;le Vienne, presenteert Melkweg Expo kunstenaars die het hedendaags escapisme
+                vanuit verschillende disciplines verbeelden. Zo wordt de collectieve roes onderzocht waarin tijd en
+                ruimte andere regels volgen en waarin het fysieke lichaam het wint van de ratio.&#160;&#160;In een tijd
+                waarin alles wat collectief is wordt verboden en de coronapandemie iedereen thuis opsluit, is de drang
+                bij jongeren naar fysiek samenzijn, opgaan in de menigte en ontsnappen aan de realiteit nog nooit zo
+                groot geweest. The Art of Escapism ontleedt de schoonheid die schuilt in het opzoeken van grenzen, in de
+                extase van het loskomen van je eigen lichaam en in jezelf verliezen in wat je gelooft. Want vergis je
+                niet: elke fantasie, elk verlangen, elke hoop voor de toekomst is escapisme.&#160;Met: Thomas Bunt, Liza
+                Houben, Jan Janssenswillen, Fabian Landewee, Mary Ponomareva, George Voronov en&#160;Lukasz
+                Wierzbowski.The Art of Escapism&#160;is een samenwerking tussen Melkweg&#160;Expo, Holland Festival en
+                Vlaams Cultuurhuis de Brakke Grond. De expo The Art of Escapism is gratis te bezoeken in Melkweg Expo.&#160;Om
+                een soepel bezoek te garanderen vragen we bezoekers vooraf hier een ticket te reserveren.&#160;Je kan
+                ook ter plekke een reser&lt;/p&gt;
+                &lt;img
+                src="https://s3-eu-west-1.amazonaws.com/static.melkweg.nl/uploads/images/scaled/agenda_thumbnail/28190"
+                alt="image for event"/&gt;
+                &lt;p&gt;When: 2021-07-09 12:00 -
+                Where: &lt;a href="https://www.melkweg.nl"&gt;Melkweg Amsterdam (Amsterdam, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.melkweg.nl/nl/agenda/the-art-of-escapism-09-07-2021</guid>
+            <source>https://www.melkweg.nl/agenda</source>
+            <author>https://www.melkweg.nl/agenda</author>
+            <pubDate>Thu, 24 Jun 2021 06:15:03</pubDate>
+        </item>
+        <item>
+            <title>The Art of Escapism [Melkweg NL-AMS]</title>
+            <link>https://www.melkweg.nl/nl/agenda/the-art-of-escapism-08-07-2021</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;De tentoonstelling The Art of Escapism toont de hunkering om een andere realiteit te betreden
+                en te vluchten uit het dagelijks bestaan. Ge&#239;nspireerd door het oeuvre van Holland Festivals
+                associate artist Gis&#232;le Vienne, presenteert Melkweg Expo kunstenaars die het hedendaags escapisme
+                vanuit verschillende disciplines verbeelden. Zo wordt de collectieve roes onderzocht waarin tijd en
+                ruimte andere regels volgen en waarin het fysieke lichaam het wint van de ratio.&#160;&#160;In een tijd
+                waarin alles wat collectief is wordt verboden en de coronapandemie iedereen thuis opsluit, is de drang
+                bij jongeren naar fysiek samenzijn, opgaan in de menigte en ontsnappen aan de realiteit nog nooit zo
+                groot geweest. The Art of Escapism ontleedt de schoonheid die schuilt in het opzoeken van grenzen, in de
+                extase van het loskomen van je eigen lichaam en in jezelf verliezen in wat je gelooft. Want vergis je
+                niet: elke fantasie, elk verlangen, elke hoop voor de toekomst is escapisme.&#160;Met: Thomas Bunt, Liza
+                Houben, Jan Janssenswillen, Fabian Landewee, Mary Ponomareva, George Voronov en&#160;Lukasz
+                Wierzbowski.The Art of Escapism&#160;is een samenwerking tussen Melkweg&#160;Expo, Holland Festival en
+                Vlaams Cultuurhuis de Brakke Grond. De expo The Art of Escapism is gratis te bezoeken in Melkweg Expo.&#160;Om
+                een soepel bezoek te garanderen vragen we bezoekers vooraf hier een ticket te reserveren.&#160;Je kan
+                ook ter plekke een reser&lt;/p&gt;
+                &lt;img
+                src="https://s3-eu-west-1.amazonaws.com/static.melkweg.nl/uploads/images/scaled/agenda_thumbnail/28190"
+                alt="image for event"/&gt;
+                &lt;p&gt;When: 2021-07-08 12:00 -
+                Where: &lt;a href="https://www.melkweg.nl"&gt;Melkweg Amsterdam (Amsterdam, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.melkweg.nl/nl/agenda/the-art-of-escapism-08-07-2021</guid>
+            <source>https://www.melkweg.nl/agenda</source>
+            <author>https://www.melkweg.nl/agenda</author>
+            <pubDate>Thu, 24 Jun 2021 06:15:03</pubDate>
+        </item>
+        <item>
+            <title>The Art of Escapism [Melkweg NL-AMS]</title>
+            <link>https://www.melkweg.nl/nl/agenda/the-art-of-escapism-07-07-2021</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;De tentoonstelling The Art of Escapism toont de hunkering om een andere realiteit te betreden
+                en te vluchten uit het dagelijks bestaan. Ge&#239;nspireerd door het oeuvre van Holland Festivals
+                associate artist Gis&#232;le Vienne, presenteert Melkweg Expo kunstenaars die het hedendaags escapisme
+                vanuit verschillende disciplines verbeelden. Zo wordt de collectieve roes onderzocht waarin tijd en
+                ruimte andere regels volgen en waarin het fysieke lichaam het wint van de ratio.&#160;&#160;In een tijd
+                waarin alles wat collectief is wordt verboden en de coronapandemie iedereen thuis opsluit, is de drang
+                bij jongeren naar fysiek samenzijn, opgaan in de menigte en ontsnappen aan de realiteit nog nooit zo
+                groot geweest. The Art of Escapism ontleedt de schoonheid die schuilt in het opzoeken van grenzen, in de
+                extase van het loskomen van je eigen lichaam en in jezelf verliezen in wat je gelooft. Want vergis je
+                niet: elke fantasie, elk verlangen, elke hoop voor de toekomst is escapisme.&#160;Met: Thomas Bunt, Liza
+                Houben, Jan Janssenswillen, Fabian Landewee, Mary Ponomareva, George Voronov en&#160;Lukasz
+                Wierzbowski.The Art of Escapism&#160;is een samenwerking tussen Melkweg&#160;Expo, Holland Festival en
+                Vlaams Cultuurhuis de Brakke Grond. De expo The Art of Escapism is gratis te bezoeken in Melkweg Expo.&#160;Om
+                een soepel bezoek te garanderen vragen we bezoekers vooraf hier een ticket te reserveren.&#160;Je kan
+                ook ter plekke een reser&lt;/p&gt;
+                &lt;img
+                src="https://s3-eu-west-1.amazonaws.com/static.melkweg.nl/uploads/images/scaled/agenda_thumbnail/28190"
+                alt="image for event"/&gt;
+                &lt;p&gt;When: 2021-07-07 12:00 -
+                Where: &lt;a href="https://www.melkweg.nl"&gt;Melkweg Amsterdam (Amsterdam, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.melkweg.nl/nl/agenda/the-art-of-escapism-07-07-2021</guid>
+            <source>https://www.melkweg.nl/agenda</source>
+            <author>https://www.melkweg.nl/agenda</author>
+            <pubDate>Thu, 24 Jun 2021 06:15:03</pubDate>
+        </item>
+        <item>
+            <title>The Art of Escapism [Melkweg NL-AMS]</title>
+            <link>https://www.melkweg.nl/nl/agenda/the-art-of-escapism-06-07-2021</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;De tentoonstelling The Art of Escapism toont de hunkering om een andere realiteit te betreden
+                en te vluchten uit het dagelijks bestaan. Ge&#239;nspireerd door het oeuvre van Holland Festivals
+                associate artist Gis&#232;le Vienne, presenteert Melkweg Expo kunstenaars die het hedendaags escapisme
+                vanuit verschillende disciplines verbeelden. Zo wordt de collectieve roes onderzocht waarin tijd en
+                ruimte andere regels volgen en waarin het fysieke lichaam het wint van de ratio.&#160;&#160;In een tijd
+                waarin alles wat collectief is wordt verboden en de coronapandemie iedereen thuis opsluit, is de drang
+                bij jongeren naar fysiek samenzijn, opgaan in de menigte en ontsnappen aan de realiteit nog nooit zo
+                groot geweest. The Art of Escapism ontleedt de schoonheid die schuilt in het opzoeken van grenzen, in de
+                extase van het loskomen van je eigen lichaam en in jezelf verliezen in wat je gelooft. Want vergis je
+                niet: elke fantasie, elk verlangen, elke hoop voor de toekomst is escapisme.&#160;Met: Thomas Bunt, Liza
+                Houben, Jan Janssenswillen, Fabian Landewee, Mary Ponomareva, George Voronov en&#160;Lukasz
+                Wierzbowski.The Art of Escapism&#160;is een samenwerking tussen Melkweg&#160;Expo, Holland Festival en
+                Vlaams Cultuurhuis de Brakke Grond. De expo The Art of Escapism is gratis te bezoeken in Melkweg Expo.&#160;Om
+                een soepel bezoek te garanderen vragen we bezoekers vooraf hier een ticket te reserveren.&#160;Je kan
+                ook ter plekke een reser&lt;/p&gt;
+                &lt;img
+                src="https://s3-eu-west-1.amazonaws.com/static.melkweg.nl/uploads/images/scaled/agenda_thumbnail/28190"
+                alt="image for event"/&gt;
+                &lt;p&gt;When: 2021-07-06 12:00 -
+                Where: &lt;a href="https://www.melkweg.nl"&gt;Melkweg Amsterdam (Amsterdam, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.melkweg.nl/nl/agenda/the-art-of-escapism-06-07-2021</guid>
+            <source>https://www.melkweg.nl/agenda</source>
+            <author>https://www.melkweg.nl/agenda</author>
+            <pubDate>Thu, 24 Jun 2021 06:15:03</pubDate>
+        </item>
+        <item>
+            <title>The Art of Escapism [Melkweg NL-AMS]</title>
+            <link>https://www.melkweg.nl/nl/agenda/the-art-of-escapism-04-07-2021</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;De tentoonstelling The Art of Escapism toont de hunkering om een andere realiteit te betreden
+                en te vluchten uit het dagelijks bestaan. Ge&#239;nspireerd door het oeuvre van Holland Festivals
+                associate artist Gis&#232;le Vienne, presenteert Melkweg Expo kunstenaars die het hedendaags escapisme
+                vanuit verschillende disciplines verbeelden. Zo wordt de collectieve roes onderzocht waarin tijd en
+                ruimte andere regels volgen en waarin het fysieke lichaam het wint van de ratio.&#160;&#160;In een tijd
+                waarin alles wat collectief is wordt verboden en de coronapandemie iedereen thuis opsluit, is de drang
+                bij jongeren naar fysiek samenzijn, opgaan in de menigte en ontsnappen aan de realiteit nog nooit zo
+                groot geweest. The Art of Escapism ontleedt de schoonheid die schuilt in het opzoeken van grenzen, in de
+                extase van het loskomen van je eigen lichaam en in jezelf verliezen in wat je gelooft. Want vergis je
+                niet: elke fantasie, elk verlangen, elke hoop voor de toekomst is escapisme.&#160;Met: Thomas Bunt, Liza
+                Houben, Jan Janssenswillen, Fabian Landewee, Mary Ponomareva, George Voronov en&#160;Lukasz
+                Wierzbowski.The Art of Escapism&#160;is een samenwerking tussen Melkweg&#160;Expo, Holland Festival en
+                Vlaams Cultuurhuis de Brakke Grond. De expo The Art of Escapism is gratis te bezoeken in Melkweg Expo.&#160;Om
+                een soepel bezoek te garanderen vragen we bezoekers vooraf hier een ticket te reserveren.&#160;Je kan
+                ook ter plekke een reser&lt;/p&gt;
+                &lt;img
+                src="https://s3-eu-west-1.amazonaws.com/static.melkweg.nl/uploads/images/scaled/agenda_thumbnail/28190"
+                alt="image for event"/&gt;
+                &lt;p&gt;When: 2021-07-04 12:00 -
+                Where: &lt;a href="https://www.melkweg.nl"&gt;Melkweg Amsterdam (Amsterdam, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.melkweg.nl/nl/agenda/the-art-of-escapism-04-07-2021</guid>
+            <source>https://www.melkweg.nl/agenda</source>
+            <author>https://www.melkweg.nl/agenda</author>
+            <pubDate>Thu, 24 Jun 2021 06:15:03</pubDate>
+        </item>
+        <item>
+            <title>The Art of Escapism [Melkweg NL-AMS]</title>
+            <link>https://www.melkweg.nl/nl/agenda/the-art-of-escapism-03-07-2021</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;De tentoonstelling The Art of Escapism toont de hunkering om een andere realiteit te betreden
+                en te vluchten uit het dagelijks bestaan. Ge&#239;nspireerd door het oeuvre van Holland Festivals
+                associate artist Gis&#232;le Vienne, presenteert Melkweg Expo kunstenaars die het hedendaags escapisme
+                vanuit verschillende disciplines verbeelden. Zo wordt de collectieve roes onderzocht waarin tijd en
+                ruimte andere regels volgen en waarin het fysieke lichaam het wint van de ratio.&#160;&#160;In een tijd
+                waarin alles wat collectief is wordt verboden en de coronapandemie iedereen thuis opsluit, is de drang
+                bij jongeren naar fysiek samenzijn, opgaan in de menigte en ontsnappen aan de realiteit nog nooit zo
+                groot geweest. The Art of Escapism ontleedt de schoonheid die schuilt in het opzoeken van grenzen, in de
+                extase van het loskomen van je eigen lichaam en in jezelf verliezen in wat je gelooft. Want vergis je
+                niet: elke fantasie, elk verlangen, elke hoop voor de toekomst is escapisme.&#160;Met: Thomas Bunt, Liza
+                Houben, Jan Janssenswillen, Fabian Landewee, Mary Ponomareva, George Voronov en&#160;Lukasz
+                Wierzbowski.The Art of Escapism&#160;is een samenwerking tussen Melkweg&#160;Expo, Holland Festival en
+                Vlaams Cultuurhuis de Brakke Grond. De expo The Art of Escapism is gratis te bezoeken in Melkweg Expo.&#160;Om
+                een soepel bezoek te garanderen vragen we bezoekers vooraf hier een ticket te reserveren.&#160;Je kan
+                ook ter plekke een reser&lt;/p&gt;
+                &lt;img
+                src="https://s3-eu-west-1.amazonaws.com/static.melkweg.nl/uploads/images/scaled/agenda_thumbnail/28190"
+                alt="image for event"/&gt;
+                &lt;p&gt;When: 2021-07-03 12:00 -
+                Where: &lt;a href="https://www.melkweg.nl"&gt;Melkweg Amsterdam (Amsterdam, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.melkweg.nl/nl/agenda/the-art-of-escapism-03-07-2021</guid>
+            <source>https://www.melkweg.nl/agenda</source>
+            <author>https://www.melkweg.nl/agenda</author>
+            <pubDate>Thu, 24 Jun 2021 06:15:03</pubDate>
+        </item>
+        <item>
+            <title>The Art of Escapism [Melkweg NL-AMS]</title>
+            <link>https://www.melkweg.nl/nl/agenda/the-art-of-escapism-02-07-2021</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;De tentoonstelling The Art of Escapism toont de hunkering om een andere realiteit te betreden
+                en te vluchten uit het dagelijks bestaan. Ge&#239;nspireerd door het oeuvre van Holland Festivals
+                associate artist Gis&#232;le Vienne, presenteert Melkweg Expo kunstenaars die het hedendaags escapisme
+                vanuit verschillende disciplines verbeelden. Zo wordt de collectieve roes onderzocht waarin tijd en
+                ruimte andere regels volgen en waarin het fysieke lichaam het wint van de ratio.&#160;&#160;In een tijd
+                waarin alles wat collectief is wordt verboden en de coronapandemie iedereen thuis opsluit, is de drang
+                bij jongeren naar fysiek samenzijn, opgaan in de menigte en ontsnappen aan de realiteit nog nooit zo
+                groot geweest. The Art of Escapism ontleedt de schoonheid die schuilt in het opzoeken van grenzen, in de
+                extase van het loskomen van je eigen lichaam en in jezelf verliezen in wat je gelooft. Want vergis je
+                niet: elke fantasie, elk verlangen, elke hoop voor de toekomst is escapisme.&#160;Met: Thomas Bunt, Liza
+                Houben, Jan Janssenswillen, Fabian Landewee, Mary Ponomareva, George Voronov en&#160;Lukasz
+                Wierzbowski.The Art of Escapism&#160;is een samenwerking tussen Melkweg&#160;Expo, Holland Festival en
+                Vlaams Cultuurhuis de Brakke Grond. De expo The Art of Escapism is gratis te bezoeken in Melkweg Expo.&#160;Om
+                een soepel bezoek te garanderen vragen we bezoekers vooraf hier een ticket te reserveren.&#160;Je kan
+                ook ter plekke een reser&lt;/p&gt;
+                &lt;img
+                src="https://s3-eu-west-1.amazonaws.com/static.melkweg.nl/uploads/images/scaled/agenda_thumbnail/28190"
+                alt="image for event"/&gt;
+                &lt;p&gt;When: 2021-07-02 12:00 -
+                Where: &lt;a href="https://www.melkweg.nl"&gt;Melkweg Amsterdam (Amsterdam, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.melkweg.nl/nl/agenda/the-art-of-escapism-02-07-2021</guid>
+            <source>https://www.melkweg.nl/agenda</source>
+            <author>https://www.melkweg.nl/agenda</author>
+            <pubDate>Thu, 24 Jun 2021 06:15:03</pubDate>
+        </item>
+        <item>
+            <title>The Art of Escapism [Melkweg NL-AMS]</title>
+            <link>https://www.melkweg.nl/nl/agenda/the-art-of-escapism-01-07-2021</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;De tentoonstelling The Art of Escapism toont de hunkering om een andere realiteit te betreden
+                en te vluchten uit het dagelijks bestaan. Ge&#239;nspireerd door het oeuvre van Holland Festivals
+                associate artist Gis&#232;le Vienne, presenteert Melkweg Expo kunstenaars die het hedendaags escapisme
+                vanuit verschillende disciplines verbeelden. Zo wordt de collectieve roes onderzocht waarin tijd en
+                ruimte andere regels volgen en waarin het fysieke lichaam het wint van de ratio.&#160;&#160;In een tijd
+                waarin alles wat collectief is wordt verboden en de coronapandemie iedereen thuis opsluit, is de drang
+                bij jongeren naar fysiek samenzijn, opgaan in de menigte en ontsnappen aan de realiteit nog nooit zo
+                groot geweest. The Art of Escapism ontleedt de schoonheid die schuilt in het opzoeken van grenzen, in de
+                extase van het loskomen van je eigen lichaam en in jezelf verliezen in wat je gelooft. Want vergis je
+                niet: elke fantasie, elk verlangen, elke hoop voor de toekomst is escapisme.&#160;Met: Thomas Bunt, Liza
+                Houben, Jan Janssenswillen, Fabian Landewee, Mary Ponomareva, George Voronov en&#160;Lukasz
+                Wierzbowski.The Art of Escapism&#160;is een samenwerking tussen Melkweg&#160;Expo, Holland Festival en
+                Vlaams Cultuurhuis de Brakke Grond. De expo The Art of Escapism is gratis te bezoeken in Melkweg Expo.&#160;Om
+                een soepel bezoek te garanderen vragen we bezoekers vooraf hier een ticket te reserveren.&#160;Je kan
+                ook ter plekke een reser&lt;/p&gt;
+                &lt;img
+                src="https://s3-eu-west-1.amazonaws.com/static.melkweg.nl/uploads/images/scaled/agenda_thumbnail/28190"
+                alt="image for event"/&gt;
+                &lt;p&gt;When: 2021-07-01 12:00 -
+                Where: &lt;a href="https://www.melkweg.nl"&gt;Melkweg Amsterdam (Amsterdam, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.melkweg.nl/nl/agenda/the-art-of-escapism-01-07-2021</guid>
+            <source>https://www.melkweg.nl/agenda</source>
+            <author>https://www.melkweg.nl/agenda</author>
+            <pubDate>Thu, 24 Jun 2021 06:15:03</pubDate>
+        </item>
+        <item>
+            <title>The Art of Escapism [Melkweg NL-AMS]</title>
+            <link>https://www.melkweg.nl/nl/agenda/the-art-of-escapism-30-06-2021</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;De tentoonstelling The Art of Escapism toont de hunkering om een andere realiteit te betreden
+                en te vluchten uit het dagelijks bestaan. Ge&#239;nspireerd door het oeuvre van Holland Festivals
+                associate artist Gis&#232;le Vienne, presenteert Melkweg Expo kunstenaars die het hedendaags escapisme
+                vanuit verschillende disciplines verbeelden. Zo wordt de collectieve roes onderzocht waarin tijd en
+                ruimte andere regels volgen en waarin het fysieke lichaam het wint van de ratio.&#160;&#160;In een tijd
+                waarin alles wat collectief is wordt verboden en de coronapandemie iedereen thuis opsluit, is de drang
+                bij jongeren naar fysiek samenzijn, opgaan in de menigte en ontsnappen aan de realiteit nog nooit zo
+                groot geweest. The Art of Escapism ontleedt de schoonheid die schuilt in het opzoeken van grenzen, in de
+                extase van het loskomen van je eigen lichaam en in jezelf verliezen in wat je gelooft. Want vergis je
+                niet: elke fantasie, elk verlangen, elke hoop voor de toekomst is escapisme.&#160;Met: Thomas Bunt, Liza
+                Houben, Jan Janssenswillen, Fabian Landewee, Mary Ponomareva, George Voronov en&#160;Lukasz
+                Wierzbowski.The Art of Escapism&#160;is een samenwerking tussen Melkweg&#160;Expo, Holland Festival en
+                Vlaams Cultuurhuis de Brakke Grond. De expo The Art of Escapism is gratis te bezoeken in Melkweg Expo.&#160;Om
+                een soepel bezoek te garanderen vragen we bezoekers vooraf hier een ticket te reserveren.&#160;Je kan
+                ook ter plekke een reser&lt;/p&gt;
+                &lt;img
+                src="https://s3-eu-west-1.amazonaws.com/static.melkweg.nl/uploads/images/scaled/agenda_thumbnail/28190"
+                alt="image for event"/&gt;
+                &lt;p&gt;When: 2021-06-30 12:00 -
+                Where: &lt;a href="https://www.melkweg.nl"&gt;Melkweg Amsterdam (Amsterdam, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.melkweg.nl/nl/agenda/the-art-of-escapism-30-06-2021</guid>
+            <source>https://www.melkweg.nl/agenda</source>
+            <author>https://www.melkweg.nl/agenda</author>
+            <pubDate>Thu, 24 Jun 2021 06:15:03</pubDate>
+        </item>
+        <item>
+            <title>The Art of Escapism [Melkweg NL-AMS]</title>
+            <link>https://www.melkweg.nl/nl/agenda/the-art-of-escapism-29-06-2021</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;De tentoonstelling The Art of Escapism toont de hunkering om een andere realiteit te betreden
+                en te vluchten uit het dagelijks bestaan. Ge&#239;nspireerd door het oeuvre van Holland Festivals
+                associate artist Gis&#232;le Vienne, presenteert Melkweg Expo kunstenaars die het hedendaags escapisme
+                vanuit verschillende disciplines verbeelden. Zo wordt de collectieve roes onderzocht waarin tijd en
+                ruimte andere regels volgen en waarin het fysieke lichaam het wint van de ratio.&#160;&#160;In een tijd
+                waarin alles wat collectief is wordt verboden en de coronapandemie iedereen thuis opsluit, is de drang
+                bij jongeren naar fysiek samenzijn, opgaan in de menigte en ontsnappen aan de realiteit nog nooit zo
+                groot geweest. The Art of Escapism ontleedt de schoonheid die schuilt in het opzoeken van grenzen, in de
+                extase van het loskomen van je eigen lichaam en in jezelf verliezen in wat je gelooft. Want vergis je
+                niet: elke fantasie, elk verlangen, elke hoop voor de toekomst is escapisme.&#160;Met: Thomas Bunt, Liza
+                Houben, Jan Janssenswillen, Fabian Landewee, Mary Ponomareva, George Voronov en&#160;Lukasz
+                Wierzbowski.The Art of Escapism&#160;is een samenwerking tussen Melkweg&#160;Expo, Holland Festival en
+                Vlaams Cultuurhuis de Brakke Grond. De expo The Art of Escapism is gratis te bezoeken in Melkweg Expo.&#160;Om
+                een soepel bezoek te garanderen vragen we bezoekers vooraf hier een ticket te reserveren.&#160;Je kan
+                ook ter plekke een reser&lt;/p&gt;
+                &lt;img
+                src="https://s3-eu-west-1.amazonaws.com/static.melkweg.nl/uploads/images/scaled/agenda_thumbnail/28190"
+                alt="image for event"/&gt;
+                &lt;p&gt;When: 2021-06-29 12:00 -
+                Where: &lt;a href="https://www.melkweg.nl"&gt;Melkweg Amsterdam (Amsterdam, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.melkweg.nl/nl/agenda/the-art-of-escapism-29-06-2021</guid>
+            <source>https://www.melkweg.nl/agenda</source>
+            <author>https://www.melkweg.nl/agenda</author>
+            <pubDate>Thu, 24 Jun 2021 06:15:03</pubDate>
+        </item>
+        <item>
+            <title>The Art of Escapism [Melkweg NL-AMS]</title>
+            <link>https://www.melkweg.nl/nl/agenda/the-art-of-escapism-27-06-2021</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;De tentoonstelling The Art of Escapism toont de hunkering om een andere realiteit te betreden
+                en te vluchten uit het dagelijks bestaan. Ge&#239;nspireerd door het oeuvre van Holland Festivals
+                associate artist Gis&#232;le Vienne, presenteert Melkweg Expo kunstenaars die het hedendaags escapisme
+                vanuit verschillende disciplines verbeelden. Zo wordt de collectieve roes onderzocht waarin tijd en
+                ruimte andere regels volgen en waarin het fysieke lichaam het wint van de ratio.&#160;&#160;In een tijd
+                waarin alles wat collectief is wordt verboden en de coronapandemie iedereen thuis opsluit, is de drang
+                bij jongeren naar fysiek samenzijn, opgaan in de menigte en ontsnappen aan de realiteit nog nooit zo
+                groot geweest. The Art of Escapism ontleedt de schoonheid die schuilt in het opzoeken van grenzen, in de
+                extase van het loskomen van je eigen lichaam en in jezelf verliezen in wat je gelooft. Want vergis je
+                niet: elke fantasie, elk verlangen, elke hoop voor de toekomst is escapisme.&#160;Met: Thomas Bunt, Liza
+                Houben, Jan Janssenswillen, Fabian Landewee, Mary Ponomareva, George Voronov en&#160;Lukasz
+                Wierzbowski.The Art of Escapism&#160;is een samenwerking tussen Melkweg&#160;Expo, Holland Festival en
+                Vlaams Cultuurhuis de Brakke Grond. De expo The Art of Escapism is gratis te bezoeken in Melkweg Expo.&#160;Om
+                een soepel bezoek te garanderen vragen we bezoekers vooraf hier een ticket te reserveren.&#160;Je kan
+                ook ter plekke een reser&lt;/p&gt;
+                &lt;img
+                src="https://s3-eu-west-1.amazonaws.com/static.melkweg.nl/uploads/images/scaled/agenda_thumbnail/28190"
+                alt="image for event"/&gt;
+                &lt;p&gt;When: 2021-06-27 12:00 -
+                Where: &lt;a href="https://www.melkweg.nl"&gt;Melkweg Amsterdam (Amsterdam, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.melkweg.nl/nl/agenda/the-art-of-escapism-27-06-2021</guid>
+            <source>https://www.melkweg.nl/agenda</source>
+            <author>https://www.melkweg.nl/agenda</author>
+            <pubDate>Thu, 24 Jun 2021 06:15:03</pubDate>
+        </item>
+        <item>
+            <title>The Art of Escapism [Melkweg NL-AMS]</title>
+            <link>https://www.melkweg.nl/nl/agenda/the-art-of-escapism-26-06-2021</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;De tentoonstelling The Art of Escapism toont de hunkering om een andere realiteit te betreden
+                en te vluchten uit het dagelijks bestaan. Ge&#239;nspireerd door het oeuvre van Holland Festivals
+                associate artist Gis&#232;le Vienne, presenteert Melkweg Expo kunstenaars die het hedendaags escapisme
+                vanuit verschillende disciplines verbeelden. Zo wordt de collectieve roes onderzocht waarin tijd en
+                ruimte andere regels volgen en waarin het fysieke lichaam het wint van de ratio.&#160;&#160;In een tijd
+                waarin alles wat collectief is wordt verboden en de coronapandemie iedereen thuis opsluit, is de drang
+                bij jongeren naar fysiek samenzijn, opgaan in de menigte en ontsnappen aan de realiteit nog nooit zo
+                groot geweest. The Art of Escapism ontleedt de schoonheid die schuilt in het opzoeken van grenzen, in de
+                extase van het loskomen van je eigen lichaam en in jezelf verliezen in wat je gelooft. Want vergis je
+                niet: elke fantasie, elk verlangen, elke hoop voor de toekomst is escapisme.&#160;Met: Thomas Bunt, Liza
+                Houben, Jan Janssenswillen, Fabian Landewee, Mary Ponomareva, George Voronov en&#160;Lukasz
+                Wierzbowski.The Art of Escapism&#160;is een samenwerking tussen Melkweg&#160;Expo, Holland Festival en
+                Vlaams Cultuurhuis de Brakke Grond. De expo The Art of Escapism is gratis te bezoeken in Melkweg Expo.&#160;Om
+                een soepel bezoek te garanderen vragen we bezoekers vooraf hier een ticket te reserveren.&#160;Je kan
+                ook ter plekke een reser&lt;/p&gt;
+                &lt;img
+                src="https://s3-eu-west-1.amazonaws.com/static.melkweg.nl/uploads/images/scaled/agenda_thumbnail/28190"
+                alt="image for event"/&gt;
+                &lt;p&gt;When: 2021-06-26 12:00 -
+                Where: &lt;a href="https://www.melkweg.nl"&gt;Melkweg Amsterdam (Amsterdam, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.melkweg.nl/nl/agenda/the-art-of-escapism-26-06-2021</guid>
+            <source>https://www.melkweg.nl/agenda</source>
+            <author>https://www.melkweg.nl/agenda</author>
+            <pubDate>Thu, 24 Jun 2021 06:15:03</pubDate>
+        </item>
+        <item>
+            <title>The Art of Escapism [Melkweg NL-AMS]</title>
+            <link>https://www.melkweg.nl/nl/agenda/the-art-of-escapism-25-06-2021</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;De tentoonstelling The Art of Escapism toont de hunkering om een andere realiteit te betreden
+                en te vluchten uit het dagelijks bestaan. Ge&#239;nspireerd door het oeuvre van Holland Festivals
+                associate artist Gis&#232;le Vienne, presenteert Melkweg Expo kunstenaars die het hedendaags escapisme
+                vanuit verschillende disciplines verbeelden. Zo wordt de collectieve roes onderzocht waarin tijd en
+                ruimte andere regels volgen en waarin het fysieke lichaam het wint van de ratio.&#160;&#160;In een tijd
+                waarin alles wat collectief is wordt verboden en de coronapandemie iedereen thuis opsluit, is de drang
+                bij jongeren naar fysiek samenzijn, opgaan in de menigte en ontsnappen aan de realiteit nog nooit zo
+                groot geweest. The Art of Escapism ontleedt de schoonheid die schuilt in het opzoeken van grenzen, in de
+                extase van het loskomen van je eigen lichaam en in jezelf verliezen in wat je gelooft. Want vergis je
+                niet: elke fantasie, elk verlangen, elke hoop voor de toekomst is escapisme.&#160;Met: Thomas Bunt, Liza
+                Houben, Jan Janssenswillen, Fabian Landewee, Mary Ponomareva, George Voronov en&#160;Lukasz
+                Wierzbowski.The Art of Escapism&#160;is een samenwerking tussen Melkweg&#160;Expo, Holland Festival en
+                Vlaams Cultuurhuis de Brakke Grond. De expo The Art of Escapism is gratis te bezoeken in Melkweg Expo.&#160;Om
+                een soepel bezoek te garanderen vragen we bezoekers vooraf hier een ticket te reserveren.&#160;Je kan
+                ook ter plekke een reser&lt;/p&gt;
+                &lt;img
+                src="https://s3-eu-west-1.amazonaws.com/static.melkweg.nl/uploads/images/scaled/agenda_thumbnail/28190"
+                alt="image for event"/&gt;
+                &lt;p&gt;When: 2021-06-25 12:00 -
+                Where: &lt;a href="https://www.melkweg.nl"&gt;Melkweg Amsterdam (Amsterdam, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.melkweg.nl/nl/agenda/the-art-of-escapism-25-06-2021</guid>
+            <source>https://www.melkweg.nl/agenda</source>
+            <author>https://www.melkweg.nl/agenda</author>
+            <pubDate>Thu, 24 Jun 2021 06:15:03</pubDate>
+        </item>
+        <item>
+            <title>The Art of Escapism [Melkweg NL-AMS]</title>
+            <link>https://www.melkweg.nl/nl/agenda/the-art-of-escapism-24-06-2021</link>
+            <description>&lt;html&gt;&lt;body&gt;
+                &lt;p&gt;De tentoonstelling The Art of Escapism toont de hunkering om een andere realiteit te betreden
+                en te vluchten uit het dagelijks bestaan. Ge&#239;nspireerd door het oeuvre van Holland Festivals
+                associate artist Gis&#232;le Vienne, presenteert Melkweg Expo kunstenaars die het hedendaags escapisme
+                vanuit verschillende disciplines verbeelden. Zo wordt de collectieve roes onderzocht waarin tijd en
+                ruimte andere regels volgen en waarin het fysieke lichaam het wint van de ratio.&#160;&#160;In een tijd
+                waarin alles wat collectief is wordt verboden en de coronapandemie iedereen thuis opsluit, is de drang
+                bij jongeren naar fysiek samenzijn, opgaan in de menigte en ontsnappen aan de realiteit nog nooit zo
+                groot geweest. The Art of Escapism ontleedt de schoonheid die schuilt in het opzoeken van grenzen, in de
+                extase van het loskomen van je eigen lichaam en in jezelf verliezen in wat je gelooft. Want vergis je
+                niet: elke fantasie, elk verlangen, elke hoop voor de toekomst is escapisme.&#160;Met: Thomas Bunt, Liza
+                Houben, Jan Janssenswillen, Fabian Landewee, Mary Ponomareva, George Voronov en&#160;Lukasz
+                Wierzbowski.The Art of Escapism&#160;is een samenwerking tussen Melkweg&#160;Expo, Holland Festival en
+                Vlaams Cultuurhuis de Brakke Grond. De expo The Art of Escapism is gratis te bezoeken in Melkweg Expo.&#160;Om
+                een soepel bezoek te garanderen vragen we bezoekers vooraf hier een ticket te reserveren.&#160;Je kan
+                ook ter plekke een reser&lt;/p&gt;
+                &lt;img
+                src="https://s3-eu-west-1.amazonaws.com/static.melkweg.nl/uploads/images/scaled/agenda_thumbnail/28190"
+                alt="image for event"/&gt;
+                &lt;p&gt;When: 2021-06-24 12:00 -
+                Where: &lt;a href="https://www.melkweg.nl"&gt;Melkweg Amsterdam (Amsterdam, NL)&lt;/a&gt;&lt;/p&gt;
+                &lt;/body&gt;&lt;/html&gt;
+            </description>
+            <guid>https://www.melkweg.nl/nl/agenda/the-art-of-escapism-24-06-2021</guid>
+            <source>https://www.melkweg.nl/agenda</source>
+            <author>https://www.melkweg.nl/agenda</author>
+            <pubDate>Thu, 24 Jun 2021 06:15:03</pubDate>
+        </item>
+    </channel>
+</rss>
