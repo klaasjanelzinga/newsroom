@@ -5,7 +5,6 @@ from typing import Any, Dict, Iterator, List, Optional
 
 from bson import ObjectId
 from motor.motor_asyncio import AsyncIOMotorDatabase
-import pydantic
 from pydantic import Field
 from pydantic.main import BaseModel
 from pymongo import ASCENDING, DESCENDING, ReplaceOne
@@ -351,6 +350,10 @@ class UserRepository:
             await self.users_collection.bulk_write(replace_requests)
         return users
 
+    async def add_new_items_count(self, user_id: str, new_items_count: int) -> User:
+        await self.users_collection.update_one({"_id": user_id}, {"$inc": {"number_of_unread_items": new_items_count}})
+        return User.parse_obj(await self.users_collection.find_one({"_id": user_id}))
+
     async def fetch_subscribed_to(self, feed: Feed) -> List[User]:
         result = self.users_collection.find()
         users = [User.parse_obj(user) async for user in result]
@@ -370,8 +373,3 @@ class UserRepository:
         if avatar is None:
             return None
         return Avatar.parse_obj(avatar)
-
-
-class RefreshResult(pydantic.main.BaseModel):
-    feed: Feed
-    number_of_items: int

@@ -1,13 +1,13 @@
 import logging
-from typing import List, Optional
+from typing import List
 
 from aiohttp import ClientError, ClientSession
 from lxml.etree import ElementBase, fromstring
 
 from core_lib.application_data import repositories
 from core_lib.atom_feed import _parse_optional_datetime
-from core_lib.feed_utils import upsert_new_items_for_feed
-from core_lib.repositories import Feed, FeedItem, FeedSourceType, RefreshResult
+from core_lib.feed_utils import UpdateResult, upsert_new_items_for_feed
+from core_lib.repositories import Feed, FeedItem, FeedSourceType
 from core_lib.utils import now_in_utc, parse_description, sanitize_link
 
 log = logging.getLogger(__file__)
@@ -59,7 +59,7 @@ def rdf_document_to_feed_items(feed: Feed, tree: ElementBase) -> List[FeedItem]:
     ]
 
 
-async def refresh_rdf_feed(session: ClientSession, feed: Feed) -> Optional[RefreshResult]:
+async def refresh_rdf_feed(session: ClientSession, feed: Feed) -> UpdateResult:
     log.info("Refreshing rdf feed %s", feed)
     try:
         async with session.get(feed.url) as xml_response:
@@ -69,9 +69,9 @@ async def refresh_rdf_feed(session: ClientSession, feed: Feed) -> Optional[Refre
 
             async with await repositories().mongo_client.start_session() as mongo_session:
                 async with mongo_session.start_transaction():
-                    number_of_items = await upsert_new_items_for_feed(feed, feed_from_rss, feed_items_from_rss)
-            return RefreshResult(feed=feed, number_of_items=number_of_items)
+                    update_result = await upsert_new_items_for_feed(feed, feed_from_rss, feed_items_from_rss)
+            return update_result
 
     except (ClientError, TimeoutError):
         log.exception("Error while refreshing feed %s", feed)
-        return None
+        return UpdateResult()

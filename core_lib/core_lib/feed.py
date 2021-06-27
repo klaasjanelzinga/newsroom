@@ -8,7 +8,7 @@ from lxml.etree import fromstring
 
 from core_lib.application_data import repositories
 from core_lib.atom_feed import atom_document_to_feed, atom_document_to_feed_items, is_atom_file, refresh_atom_feed
-from core_lib.feed_utils import news_items_from_feed_items, upsert_new_feed_items_for_feed
+from core_lib.feed_utils import UpdateResult, news_items_from_feed_items, upsert_new_feed_items_for_feed
 from core_lib.html_feed import refresh_html_feed
 from core_lib.rdf_feed import is_rdf_document, rdf_document_to_feed, rdf_document_to_feed_items, refresh_rdf_feed
 from core_lib.repositories import Feed, FeedItem, FeedSourceType, User
@@ -78,11 +78,12 @@ async def subscribe_user_to_feed(
 
     async with await repositories().mongo_client.start_session() as session:
         async with session.start_transaction():
-            user.subscribed_to.append(feed.feed_id)
             feed.number_of_subscriptions = feed.number_of_subscriptions + 1
             feed_items = await repositories().feed_item_repository.fetch_all_for_feed(feed)
             news_items = news_items_from_feed_items(feed_items, feed, user)
-            user.number_of_unread_items += len(news_items)
+
+            user = await repositories().user_repository.add_new_items_count(user.user_id, len(news_items))
+            user.subscribed_to.append(feed.feed_id)
 
             await repositories().user_repository.upsert(user)
             await repositories().feed_repository.upsert(feed)
@@ -143,5 +144,17 @@ async def refresh_all_feeds() -> int:
         ]
     )
 
-    await asyncio.gather(*tasks)
+    results = await asyncio.gather(*tasks)
+
+    # Aggregate results
+    update_results = UpdateResult()
+    for result in results:
+        for user_id, count in result.user_to_number_new_items_map.items():
+            update_results.add(user_id, count)
+
+    # Update aggregated new items counter per user.
+    for user_id, new_items_count in update_results.user_to_number_new_items_map.items():
+        await repositories().user_repository.add_new_items_count(user_id, new_items_count)
+
+    log.info("New items %s", str(update_results))
     return len(tasks)

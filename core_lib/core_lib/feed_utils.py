@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 import difflib
 import re
-from typing import List
+from typing import Dict, List
 from urllib.parse import urlparse
 
 import pytz
@@ -35,7 +35,22 @@ async def upsert_new_feed_items_for_feed(feed: Feed, feed_items: List[FeedItem])
     return len(new_feed_items)
 
 
-async def upsert_new_items_for_feed(feed: Feed, updated_feed: Feed, feed_items_from_rss: List[FeedItem]) -> int:
+class UpdateResult:
+    def __init__(self) -> None:
+        self.user_to_number_new_items_map: Dict[str, int] = {}
+
+    def __repr__(self) -> str:
+        return str(self.user_to_number_new_items_map)
+
+    def add(self, user_id: str, new_items: int) -> None:
+        if user_id not in self.user_to_number_new_items_map:
+            self.user_to_number_new_items_map[user_id] = 0
+        self.user_to_number_new_items_map[user_id] = self.user_to_number_new_items_map[user_id] + new_items
+
+
+async def upsert_new_items_for_feed(
+    feed: Feed, updated_feed: Feed, feed_items_from_rss: List[FeedItem]
+) -> UpdateResult:
     """
     Upload new items as feed item and news item for users.
 
@@ -53,8 +68,10 @@ async def upsert_new_items_for_feed(feed: Feed, updated_feed: Feed, feed_items_f
     new_feed_items: List[FeedItem] = []  # new feed_items that will be inserted.
     new_news_items: List[NewsItem] = []  # news items that will be inserted.
     updated_news_items: List[NewsItem] = []  # news items that are updated.
+    update_result = UpdateResult()
 
     for user in subscribed_users:
+        number_of_new_items = 0
         current_news_items = await repositories().news_item_repository.fetch_all_non_read_for_feed(feed, user)
         for new_feed_item in feed_items_from_rss:
             feed_items_with_same_link = [item for item in current_feed_items if item.link == new_feed_item.link]
@@ -77,7 +94,7 @@ async def upsert_new_items_for_feed(feed: Feed, updated_feed: Feed, feed_items_f
                 if len(news_items_similar_titles) == 0:
                     new_news_item = news_item_from_feed_item(new_feed_item, feed, user)
                     new_news_items.append(new_news_item)
-                    user.number_of_unread_items += 1
+                    number_of_new_items += 1
                     current_news_items.append(new_news_item)
                 else:
                     for existing_news_item in news_items_similar_titles:
@@ -86,9 +103,9 @@ async def upsert_new_items_for_feed(feed: Feed, updated_feed: Feed, feed_items_f
                         )
                         existing_news_item.published = new_feed_item.published or now_in_utc()
                         updated_news_items.append(existing_news_item)
+        update_result.add(user.user_id, number_of_new_items)
 
     # Upsert the new and updated feed_items.
-    await repositories().user_repository.upsert_many(subscribed_users)
     await repositories().feed_item_repository.upsert_many(new_feed_items)
     await repositories().feed_item_repository.upsert_many(updated_feed_items)
     await repositories().news_item_repository.upsert_many(new_news_items)
@@ -100,7 +117,7 @@ async def upsert_new_items_for_feed(feed: Feed, updated_feed: Feed, feed_items_f
     feed.title = updated_feed.title
     feed.number_of_items = feed.number_of_items + len(new_feed_items)
     await repositories().feed_repository.upsert(feed)
-    return len(new_news_items)
+    return update_result
 
 
 def news_items_from_feed_items(feed_items: List[FeedItem], feed: Feed, user: User) -> List[NewsItem]:
