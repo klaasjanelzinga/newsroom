@@ -123,7 +123,6 @@ class News extends React.Component<NewsProps, NewsState> {
         /* Fetch new items if a lot is read */
         on_scroll$.subscribe(() => {
             const unread_count = this.state.news_items.filter((item) => !item.is_read).length
-            console.log("unread count", unread_count)
             if (unread_count < 12) {
                 this.fetch_news_items()
             }

@@ -125,20 +125,21 @@ def news_items_from_feed_items(feed_items: List[FeedItem], feed: Feed, user: Use
 
 
 domain_to_favicon_map = {
-    "www.sikkom.nl": "https://www.sikkom.nl/wp-content/themes/sikkom-v3/img/favicon.ico",
-    "www.gic.nl": "https://www.gic.nl/img/favicon.ico",
-    "www.rtvnoord.nl": "https://www.rtvnoord.nl/Content/Images/noord/touch-icon-iphone.png",
+    "www.sikkom.nl": "/favicons/sikkom.png",
+    "www.gic.nl": "/favicons/groningen-internet-courant.png",
+    "www.rtvnoord.nl": "/favicons/rtv-noord.ico",
     "www.filtergroningen.nl": "https://i1.wp.com/www.filtergroningen.nl/wp-content/uploads/2017/03/favicon.png?fit=32%2C32&#038;ssl=1",
-    "www.tivolivredenburg.nl": "https://www.tivolivredenburg.nl/wp-content/themes/tivolivredenburg/favicon.ico",
-    "www.vera-groningen.nl": "https://www.vera-groningen.nl/vera/assets/img/favicon.png",
-    "www.desmaakvanstad.nl": "https://www.desmaakvanstad.nl/wp-content/uploads/2017/08/cropped-FAVICON-1.jpg",
-    "www.focusgroningen.nl": "https://www.focusgroningen.nl/wp-content/uploads/2013/10/fffff1.png",
-    "campus.groningen.nl": "https://campus.groningen.nl/img/favicons/campus-groningen/favicon-32x32.png",
-    "www.paradiso.nl": "https://www.paradiso.nl/favicon-theme-default.png",
-    "www.waag.org": "https://waag.org/sites/waag/files/favicon.ico",
-    "www.simplon.nl": "https://simplon.nl/wildpress/assets/images/favicon.ico",
-    "forum.manjaro.org": "https://manjaro.org/img/favicon.png",
-    "gemeente.groningen.nl": "https://gemeente.groningen.nl/sites/all/themes/custom/groningen/favicon.ico",
+    "www.tivolivredenburg.nl": "/favicons/tivoli.ico",
+    "www.vera-groningen.nl": "/favicons/vera.png",
+    "www.desmaakvanstad.nl": "/favicons/smaak-stad.jpg",
+    "www.focusgroningen.nl": "/favicons/focus-groningen.png",
+    "campus.groningen.nl": "/favicons/campus-groningen.png",
+    "www.paradiso.nl": "/favicons/paradiso.png",
+    "www.waag.org": "/favicons/waag.ico",
+    "www.simplon.nl": "/favicons/simplon.png",
+    "forum.manjaro.org": "/favicons/manjaro.png",
+    "gemeente.groningen.nl": "/favicons/gemeente-groningen.png",
+    "www.nu.nl": "/favicons/nu_logo.svg",
 }
 
 

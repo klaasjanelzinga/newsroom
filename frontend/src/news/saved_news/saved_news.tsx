@@ -12,6 +12,8 @@ import ScrollableItems, { ItemControl, ScrollableItem } from "../scrollable_item
 import { SavedNewsItem, ScrollableItemsResponse } from "../../news_room_api/saved_news_api"
 import SavedNewsItemView from "./saved_news_item_view"
 import NewsBar from "../news_bar"
+import { Observable } from "rxjs"
+import { debounceTime } from "rxjs/operators"
 
 const styles = createStyles({
     newsRoot: {
@@ -60,7 +62,7 @@ class SavedNews extends React.Component<SavedNewsProps, SavedNewsState> {
     }
 
     fetch_saved_news_items(): void {
-        if (this.state.is_loading) {
+        if (this.state.is_loading || this.state.no_more_items) {
             return
         }
 
@@ -81,6 +83,16 @@ class SavedNews extends React.Component<SavedNewsProps, SavedNewsState> {
             .finally(() => {
                 this.setState({ is_loading: false })
             })
+    }
+
+    on_scroll(on_scroll$: Observable<Event>): void {
+        on_scroll$.pipe(debounceTime(1000)).subscribe((): void => {
+            const total_items = this.scrollable_view_items.length
+            const items_scrolled_away = this.scrollable_view_items.filter((item) => item.reportYPosition() < 0).length
+            if (total_items - items_scrolled_away < 12) {
+                this.fetch_saved_news_items()
+            }
+        })
     }
 
     refresh(): void {
@@ -115,6 +127,7 @@ class SavedNews extends React.Component<SavedNewsProps, SavedNewsState> {
                             is_loading={this.state.is_loading}
                             scrollable_items={(): ScrollableItem[] => this.scrollable_view_items}
                             refresh={(): void => this.refresh()}
+                            on_scroll={(on_scroll$: Observable<Event>): void => this.on_scroll(on_scroll$)}
                         >
                             {this.state.saved_news_items.map((saved_news_item) => (
                                 <SavedNewsItemView

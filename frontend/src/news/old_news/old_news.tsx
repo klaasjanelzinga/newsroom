@@ -72,7 +72,7 @@ class OldNews extends React.Component<OldNewsProps, OldNewsState> {
             .get<GetNewsItemsResponse>(endpoint)
             .then((newsItems) => {
                 this.offset += newsItems[1].news_items.length
-                this.no_more_items = newsItems[1].news_items.length === this.limit
+                this.no_more_items = newsItems[1].news_items.length < this.limit
                 this.setState({
                     news_items: this.state.news_items.concat(newsItems[1].news_items),
                     number_of_unread_items: newsItems[1].number_of_unread_items,
@@ -94,8 +94,9 @@ class OldNews extends React.Component<OldNewsProps, OldNewsState> {
     on_scroll(on_scroll$: Observable<Event>): void {
         /* Fetch new items if a lot is read */
         on_scroll$.subscribe(() => {
-            const unread_count = this.state.news_items.filter((item) => !item.is_read).length
-            if (unread_count < 12) {
+            const total_items = this.scrollable_view_items.length
+            const items_scrolled_away = this.scrollable_view_items.filter((item) => item.reportYPosition() < 0).length
+            if (total_items - items_scrolled_away < 12) {
                 this.fetch_news_items()
             }
         })
