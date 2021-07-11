@@ -99,7 +99,7 @@ async def upsert_new_items_for_feed(
                 else:
                     for existing_news_item in news_items_similar_titles:
                         existing_news_item.append_alternate(
-                            new_feed_item.link, new_feed_item.title, determine_favicon_link(new_feed_item, feed)
+                            new_feed_item.link, new_feed_item.title, determine_favicon_link(new_feed_item)
                         )
                         existing_news_item.published = new_feed_item.published or now_in_utc()
                         updated_news_items.append(existing_news_item)
@@ -125,30 +125,40 @@ def news_items_from_feed_items(feed_items: List[FeedItem], feed: Feed, user: Use
 
 
 domain_to_favicon_map = {
-    "www.sikkom.nl": "/favicons/sikkom.png",
-    "www.gic.nl": "/favicons/groningen-internet-courant.png",
-    "www.rtvnoord.nl": "/favicons/rtv-noord.ico",
-    "www.filtergroningen.nl": "https://i1.wp.com/www.filtergroningen.nl/wp-content/uploads/2017/03/favicon.png?fit=32%2C32&#038;ssl=1",
-    "www.tivolivredenburg.nl": "/favicons/tivoli.ico",
-    "www.vera-groningen.nl": "/favicons/vera.png",
-    "www.desmaakvanstad.nl": "/favicons/smaak-stad.jpg",
-    "www.focusgroningen.nl": "/favicons/focus-groningen.png",
-    "campus.groningen.nl": "/favicons/campus-groningen.png",
-    "www.paradiso.nl": "/favicons/paradiso.png",
-    "www.waag.org": "/favicons/waag.ico",
-    "www.simplon.nl": "/favicons/simplon.png",
-    "forum.manjaro.org": "/favicons/manjaro.png",
-    "gemeente.groningen.nl": "/favicons/gemeente-groningen.png",
-    "www.nu.nl": "/favicons/nu_logo.svg",
+    r"^.*.sikkom.nl": "/favicons/sikkom.png",
+    r"^.*.gic.nl": "/favicons/groningen-internet-courant.png",
+    r"^.*.rtvnoord.nl": "/favicons/rtv-noord.ico",
+    r"^.*.filtergroningen.nl": "https://i1.wp.com/www.filtergroningen.nl/wp-content/uploads/2017/03/favicon.png?fit=32%2C32&#038;ssl=1",
+    r"^.*.tivolivredenburg.nl": "/favicons/tivoli.ico",
+    r"^.*.vera-groningen.nl": "/favicons/vera.png",
+    r"^.*.desmaakvanstad.nl": "/favicons/smaak-stad.jpg",
+    r"^.*.focusgroningen.nl": "/favicons/focus-groningen.png",
+    r"campus.groningen.nl": "/favicons/campus-groningen.png",
+    r"^.*.paradiso.nl": "/favicons/paradiso.png",
+    r"^.*.waag.org": "/favicons/waag.ico",
+    r"^.*.simplon.nl": "/favicons/simplon.png",
+    r"^.*.nu.nl": "/favicons/nu_logo.svg",
+    r".*manjaro.org": "/favicons/manjaro.png",
+    r"gemeente.groningen.nl": "/favicons/gemeente-groningen.png",
+    r"thequietus.com": "/favicons/the-quietus.ico",
+    r"^.*.slashdot.org": "/favicons/slashdot.ico",
+    r"^.*pitchfork.com": "/favicons/pitchfork.png",
+    r"^.*.oogtv.nl": "/favicons/oog-tv.png",
+    r"^.*.matrix.org": "/favicons/matrix-logo.svg",
+    r"^.*.arstechica.com": "/favicons/arstechnica.ico",
+    r"^.*.jetbrains.png": "/favicons/jetbrains.png",
+    r"^.*.melkweg.nl": "/favicons/melkweg.ico",
+    r"^.*.013.nl": "/favicons/013.ico",
+    r"^.*.spotgroningen.nl": "/favicons/spot-groningen.ico",
 }
 
 
-def determine_favicon_link(feed_item: FeedItem, feed: Feed) -> str:
+def determine_favicon_link(feed_item: FeedItem) -> str:
     feed_item_link_domain = urlparse(feed_item.link).netloc
-    feed_domain = urlparse(feed.url).netloc
-    if feed_item_link_domain == feed_domain:
-        return feed.image_url or f"https://{feed_domain}/favicon.ico"
-    return domain_to_favicon_map.get(feed_item_link_domain, f"https://{feed_item_link_domain}/favicon.ico")
+    for regex, favicon in domain_to_favicon_map.items():
+        if re.match(regex, feed_item_link_domain):
+            return favicon
+    return "/favicon.ico"
 
 
 def news_item_from_feed_item(feed_item: FeedItem, feed: Feed, user: User) -> NewsItem:
@@ -161,7 +171,7 @@ def news_item_from_feed_item(feed_item: FeedItem, feed: Feed, user: User) -> New
         description=feed_item.description,
         link=feed_item.link,
         published=feed_item.published or now_in_utc(),
-        favicon=determine_favicon_link(feed_item, feed),
+        favicon=determine_favicon_link(feed_item),
         created_on=now_in_utc(),
     )
 

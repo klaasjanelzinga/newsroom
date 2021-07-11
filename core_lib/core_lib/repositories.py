@@ -296,7 +296,7 @@ class NewsItemRepository:
     async def fetch_read_items(self, user: User, offset: int, limit: int) -> List[NewsItem]:
         result = (
             self.news_item_collection.find(
-                {"user_id": user.user_id, "is_read": True}, sort=[("published", ASCENDING), ("_id", ASCENDING)]
+                {"user_id": user.user_id, "is_read": True}, sort=[("published", DESCENDING), ("_id", DESCENDING)]
             )
             .skip(offset)
             .limit(limit)
