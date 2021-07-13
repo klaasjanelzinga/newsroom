@@ -35,7 +35,9 @@ def gemeente_groningen_parser(feed: Feed, html_source: str) -> List[FeedItem]:
             description=_description(article),
             link=_link(article),
             last_seen=now_in_utc(),
-            published=datetime.fromisoformat(article.find("time")["datetime"]),
+            published=(
+                datetime.fromisoformat(article.find("time")["datetime"]) if article.find("time") else now_in_utc()
+            ),
             created_on=now_in_utc(),
         )
         for article in articles
