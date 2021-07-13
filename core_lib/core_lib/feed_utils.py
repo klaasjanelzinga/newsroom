@@ -126,7 +126,7 @@ def news_items_from_feed_items(feed_items: List[FeedItem], feed: Feed, user: Use
 
 domain_to_favicon_map = {
     r"^.*.sikkom.nl": "/favicons/sikkom.png",
-    r"^.*.gic.nl": "/favicons/groningen-internet-courant.png",
+    r"^.*.gic.nl": "/favicons/groninger-internet-courant.png",
     r"^.*.rtvnoord.nl": "/favicons/rtv-noord.ico",
     r"^.*.filtergroningen.nl": "https://i1.wp.com/www.filtergroningen.nl/wp-content/uploads/2017/03/favicon.png?fit=32%2C32&#038;ssl=1",
     r"^.*.tivolivredenburg.nl": "/favicons/tivoli.ico",
@@ -135,21 +135,22 @@ domain_to_favicon_map = {
     r"^.*.focusgroningen.nl": "/favicons/focus-groningen.png",
     r"campus.groningen.nl": "/favicons/campus-groningen.png",
     r"^.*.paradiso.nl": "/favicons/paradiso.png",
-    r"^.*.waag.org": "/favicons/waag.ico",
-    r"^.*.simplon.nl": "/favicons/simplon.png",
+    r"waag.org": "/favicons/waag.ico",
+    r"simplon.nl": "/favicons/simplon.png",
     r"^.*.nu.nl": "/favicons/nu_logo.svg",
-    r".*manjaro.org": "/favicons/manjaro.png",
+    r".*.manjaro.org": "/favicons/manjaro.png",
     r"gemeente.groningen.nl": "/favicons/gemeente-groningen.png",
     r"thequietus.com": "/favicons/the-quietus.ico",
-    r"^.*.slashdot.org": "/favicons/slashdot.ico",
+    r"^.*slashdot.org": "/favicons/slashdot.ico",
     r"^.*pitchfork.com": "/favicons/pitchfork.png",
     r"^.*.oogtv.nl": "/favicons/oog-tv.png",
-    r"^.*.matrix.org": "/favicons/matrix-logo.svg",
-    r"^.*.arstechica.com": "/favicons/arstechnica.ico",
+    r"matrix.org": "/favicons/matrix-logo.png",
+    r"^.*.arstechnica.com": "/favicons/arstechnica.ico",
     r"^.*.jetbrains.png": "/favicons/jetbrains.png",
     r"^.*.melkweg.nl": "/favicons/melkweg.ico",
     r"^.*.013.nl": "/favicons/013.ico",
     r"^.*.spotgroningen.nl": "/favicons/spot-groningen.ico",
+    r"^.*.python.org": "/favicons/python.png",
 }
 
 

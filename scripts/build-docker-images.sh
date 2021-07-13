@@ -38,8 +38,3 @@ do
   docker push ${ghcrio_image_name}:latest
 done
 
-echo "Building infra containers"
-infra_dir=${script_dir}/../infra
-(cd $infra_dir/mongo && docker build -t ghcr.io/klaasjanelzinga/${application}/mongo:$VERSION .)
-
-docker push ghcr.io/klaasjanelzinga/${application}/mongo:$VERSION
